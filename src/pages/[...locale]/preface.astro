@@ -1,0 +1,43 @@
+---
+import { i18n } from "astro:config/client";
+import { getCollection } from "astro:content";
+import Time from "$utils/time";
+import Base from "$layouts/Base.astro";
+import i18nit from "$i18n";
+
+export async function getStaticPaths() {
+	return i18n!.locales.map(locale => ({ params: { locale: locale == i18n!.defaultLocale ? undefined : (locale as string) } }));
+}
+
+const { locale = i18n!.defaultLocale } = Astro.params;
+
+const t = i18nit(locale);
+
+const prefaces = (
+	await getCollection("preface", preface => {
+		const [language, id] = preface.id.split("/");
+		preface.id = id;
+
+		return language == locale;
+	})
+).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
+---
+
+<Base title={t("nav.preface")} {locale}>
+	<main class="flex flex-col">
+		<h2>{t("home.prefaces")}</h2>
+		<ul class="flex flex-col list-none">
+			{
+				prefaces.map(preface => [
+					<hr class="my-5 border-b border-b-solid border-primary" />,
+					<li>
+						<h4 title={Time.full(preface.data.timestamp)} class="mb-5 text-5">
+							{Time.locale(preface.data.timestamp, locale)}
+						</h4>
+						<article class="markdown" set:html={preface.rendered?.html} />
+					</li>
+				])
+			}
+		</ul>
+	</main>
+</Base>

@@ -1,0 +1,17 @@
+---
+import { Icon as I } from "astro-icon/components";
+
+interface Props {
+	name: string; // Icon name/identifier (required) - corresponds to icon file or icon set key
+	inline?: boolean; // Whether to render as inline element (optional) - affects display behavior
+	size?: number | string; // Icon size in pixels or CSS units (optional) - controls width/height
+	title?: string; // Tooltip text to display on hover (optional) - enhances accessibility
+}
+
+const { name, inline, size, title } = Astro.props;
+---
+
+<figure class="relative inline-flex items-center font-normal group">
+	<I {name} {size} is:inline={inline} />
+	{title && <figcaption class="absolute bottom-full left-50% transform-translate-x--50% mb-1 border-rd-1 py-1 px-1.25 w-max c-background bg-primary text-3.5 pointer-events-none opacity-0 invisible transition-[opacity,visibility] group-hover:(opacity-100 visible)">{title}</figcaption>}
+</figure>

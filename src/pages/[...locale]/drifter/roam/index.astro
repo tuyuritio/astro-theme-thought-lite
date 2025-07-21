@@ -1,0 +1,55 @@
+---
+import { i18n } from "astro:config/client";
+import { Icon } from "astro-icon/components";
+import { Token } from "$utils/token";
+import Base from "$layouts/Base.astro";
+import i18nit from "$i18n";
+
+export const prerender = false;
+
+const { locale = i18n!.defaultLocale } = Astro.params;
+
+const t = i18nit(locale);
+
+// Check if user is already authenticated via passport token
+const passport = await Token.check("passport", Astro.cookies);
+// Redirect authenticated users to dashboard to prevent duplicate login
+if (passport?.visa) return Astro.redirect("/drifter/dock", 302);
+
+// Access environment variables for OAuth configuration
+const env = import.meta.env;
+
+// Check which OAuth providers are configured with client credentials
+let GitHub = env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET;
+let Google = env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET;
+let X = env.TWITTER_CLIENT_ID && env.TWITTER_CLIENT_SECRET;
+---
+
+<Base title={t("nav.drifter")} {locale}>
+	<main class="flex flex-col justify-center items-center gap-5 h-[30vh] [&>a]:(flex items-center justify-center gap-2 w-200px border-2 border-solid border-primary p-2 rounded-1 font-bold)">
+		{
+			GitHub && (
+				<a href="/drifter/roam/anchor/GitHub">
+					<Icon name="simple-icons:github" />
+					<span>{t("oauth.github")}</span>
+				</a>
+			)
+		}
+		{
+			Google && (
+				<a href="/drifter/roam/anchor/Google">
+					<Icon name="simple-icons:google" />
+					<span>{t("oauth.google")}</span>
+				</a>
+			)
+		}
+		{
+			X && (
+				<a href="/drifter/roam/anchor/X">
+					<Icon name="simple-icons:x" />
+					<span>{t("oauth.x")}</span>
+				</a>
+			)
+		}
+	</main>
+</Base>

@@ -1,0 +1,103 @@
+---
+import type { MarkdownHeading } from "astro";
+import { i18n } from "astro:config/client";
+import { getCollection, render } from "astro:content";
+import Time from "$utils/time";
+import Base from "$layouts/Base.astro";
+import Icon from "$components/Icon.astro";
+import Comments from "$components/comment/Section.astro";
+import TOC from "$components/note/TOC.astro";
+import Action from "$components/note/Action.svelte";
+import i18nit from "$i18n";
+
+export async function getStaticPaths() {
+	// Get all notes excluding drafts
+	const notes = await getCollection("note", note => !note.data.draft);
+
+	return notes.map(note => {
+		// Extract language and note ID from file path structure
+		const [language, ...id] = note.id.split("/");
+
+		// Generate path params with optional locale (omit for default locale)
+		return { params: { locale: language == i18n?.defaultLocale ? undefined : language, id: id.join("/") }, props: { note } };
+	});
+}
+
+const { locale = i18n!.defaultLocale } = Astro.params;
+const { note } = Astro.props;
+// Render markdown content and extract headings for TOC
+const { Content, headings } = await render(note);
+
+// Build hierarchical table of contents from flat heading list
+type Heading = MarkdownHeading & { subheadings: Heading[] };
+const table_of_contents: Heading[] = [];
+const stack: Heading[] = [];
+for (const item of headings) {
+	// Pop headings from stack that are at same or deeper level
+	while (stack[stack.length - 1]?.depth >= item.depth) stack.pop();
+	const heading: Heading = { ...item, subheadings: [] };
+
+	if (stack.length > 0) {
+		// Add as subheading to current parent
+		const parent = stack[stack.length - 1];
+		parent.subheadings.push(heading);
+	} else {
+		// Add as top-level heading
+		table_of_contents.push(heading);
+	}
+
+	stack.push(heading);
+}
+
+const t = i18nit(locale);
+---
+
+<Base title={note.data.title} {locale} description={note.data.description} article={{ timestamp: note.data.timestamp, section: note.data.series, tags: note.data.tags }}>
+	<main class="flex flex-col">
+		<div class="flex flex-col-reverse flex-wrap gap-5 sm:(flex-row flex-nowrap)">
+			<article class="flex flex-col gap-4 w-full">
+				<h1 class="text-3xl">{note.data.title}</h1>
+				<header class="flex flex-col gap-3 sm:flex-row children:(flex items-center gap-1 text-3.5 c-secondary)">
+					<time title={Time.full(note.data.timestamp)}><Icon name="octicon:calendar-16" size="1rem" />{Time(note.data.timestamp)}</time>
+					{
+						note.data.series && (
+							<span>
+								<Icon name="octicon:repo-16" size="1rem" />
+								{note.data.series}
+							</span>
+						)
+					}
+					{
+						note.data.tags?.length && (
+							<span>
+								<Icon name="octicon:tag-16" size="1rem" />
+								{note.data.tags?.join("; ")}
+							</span>
+						)
+					}
+				</header>
+				<hr class="border-b border-b-solid border-weak" />
+				<section id="markdown-content" class="markdown"><Content /></section>
+			</article>
+			{
+				note.data.contents && (
+					<aside class="hidden sm:(block flex-shrink-0 w-200px)">
+						<div class="sticky top-3 flex flex-col gap-2">
+							<h3>{t("note.contents")}</h3>
+							<nav class="overflow-y-auto">
+								<TOC headings={table_of_contents} />
+							</nav>
+						</div>
+					</aside>
+				)
+			}
+		</div>
+		<blockquote id="comment-section" class="my-5">
+			<Comments {locale} section="note" item={note.id} />
+		</blockquote>
+		<Action client:load>
+			<Icon name="octicon:move-to-top-16" size={15} title={t("note.top")} slot="top" />
+			<Icon name="octicon:comment-16" size={15} title={t("note.comment")} slot="comment" />
+		</Action>
+	</main>
+</Base>

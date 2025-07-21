@@ -1,0 +1,39 @@
+---
+import { i18n } from "astro:config/client";
+import { actions } from "astro:actions";
+import Base from "$layouts/Base.astro";
+import Note from "$components/note/Note.svelte";
+import Icon from "$components/Icon.astro";
+import i18nit from "$i18n";
+
+export const prerender = false;
+
+const { locale = i18n!.defaultLocale } = Astro.params;
+
+const t = i18nit(locale);
+
+const size = 20;
+const page = Number(Astro.url.searchParams.get("page")) || 1;
+const series = Astro.url.searchParams.get("series");
+const tags = Astro.url.searchParams.getAll("tag");
+
+const { data, error } = await Astro.callAction(actions.note.list, { locale, size, page, series, tags });
+if (error) {
+	switch (error.code) {
+		default:
+			return Astro.redirect("/500", 302);
+	}
+}
+
+const { notes, pages, page: index, series_list, tag_list } = data;
+---
+
+<Base title={t("nav.note")} {locale}>
+	<main class="flex flex-col grow">
+		<Note client:load {locale} {notes} {pages} page={index} {size} {series_list} {tag_list} {series} {tags}>
+			<Icon name="octicon:arrow-left-16" slot="left" />
+			<Icon name="octicon:arrow-right-16" slot="right" />
+			<Icon name="octicon:kebab-horizontal-16" slot="dots" />
+		</Note>
+	</main>
+</Base>

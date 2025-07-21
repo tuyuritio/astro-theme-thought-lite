@@ -1,0 +1,265 @@
+import { ActionError, defineAction } from "astro:actions";
+import { getCollection } from "astro:content";
+import { z } from "astro:schema";
+import { and, eq, sql } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/d1";
+import { Comment, Drifter, Notification } from "$db/schema";
+import { enhash, Token } from "$utils/token";
+import notify from "$utils/notify";
+import i18nit from "$i18n";
+
+const env = import.meta.env;
+
+/**
+ * Define the Comment structure
+ */
+export type Comment = {
+	ID: string,
+	section: string,
+	item: string,
+	reply: string | null,
+	drifter: string,
+	timestamp: Date,
+	content: string,
+	history: Comment[],
+	subcomments: Comment[]
+};
+
+export const comment = {
+	// Action to create a new comment or edit an existing one
+	create: defineAction({
+		input: z.object({
+			section: z.string(),				// The section this comment belongs to
+			item: z.string(),					// The item ID this comment belongs to
+			reply: z.string().nullish(),		// ID of replied comment if this is a reply
+			content: z.string(),				// The comment content
+			link: z.string().url()				// URL link for notifications
+		}),
+		handler: async ({ section, item, reply, content, link }, { cookies, locals }) => {
+			// Verify user authentication
+			const drifter = (await Token.check("passport", cookies)).visa;
+			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
+
+			// Apply rate limiting to prevent spam
+			const { success } = await locals.runtime.env.COMMENT_LIMIT.limit({ key: drifter });
+			if (!success) throw new ActionError({ code: "TOO_MANY_REQUESTS" });
+
+			// Generate unique comment ID and timestamp
+			const now = new Date();
+			let ID = enhash(content + reply + now).substring(0, 8);
+
+			// Initialize database connection
+			let db = drizzle(locals.runtime.env.DB);
+
+			// Insert the new comment
+			await db
+				.insert(Comment)
+				.values({
+					ID,
+					section,
+					item,
+					reply,
+					drifter,
+					timestamp: now.getTime(),
+					content
+				});
+
+			// Prepare notification subscriptions array
+			let subscriptions: { locale: string; endpoint: string; p256dh: string; auth: string; }[] = [];
+
+			if (reply) {
+				// Notify the original commenter when someone replies to their comment
+				subscriptions = await db
+					.select({ locale: Notification.locale, endpoint: Notification.endpoint, p256dh: Notification.p256dh, auth: Notification.auth })
+					.from(Comment)
+					.innerJoin(Notification, eq(Notification.drifter, Comment.drifter))
+					.where(eq(Comment.ID, reply));
+			} else if (env.AUTHOR_ID) {
+				// Notify the site author when there's a new top-level comment
+				subscriptions = await db
+					.select({ locale: Notification.locale, endpoint: Notification.endpoint, p256dh: Notification.p256dh, auth: Notification.auth })
+					.from(Notification)
+					.where(eq(Notification.drifter, env.AUTHOR_ID));
+			}
+
+			// Send push notifications to subscribers
+			subscriptions.forEach(subscription => {
+				const t = i18nit(subscription.locale);
+				let message = { title: "", body: "", url: link };
+
+				if (reply) {
+					// Notification for reply to comment
+					message.title = t("notification.reply.title");
+					message.body = t("notification.reply.body");
+				} else if (env.AUTHOR_ID) {
+					// Notification for new comment to author
+					message.title = t("notification.fresh.title");
+					message.body = t("notification.fresh.body");
+				}
+
+				// Send notification in the background
+				// The `ctx.waitUntil()` method is specific to Cloudflare Workers.
+				// Remove failed notification endpoints from database
+				locals.runtime.ctx.waitUntil(notify({ endpoint: subscription.endpoint, p256dh: subscription.p256dh, auth: subscription.auth }, message).then(success => success || db
+					.delete(Notification)
+					.where(and(eq(Notification.endpoint, subscription.endpoint), eq(Notification.drifter, drifter)))
+				));
+			});
+		}
+	}),
+
+	edit: defineAction({
+		input: z.object({
+			ID: z.string(),			// The comment ID to edit
+			content: z.string()		// New content for the comment
+		}),
+		handler: async ({ ID, content }, { cookies, locals }) => {
+			// Verify user authentication
+			const drifter = (await Token.check("passport", cookies)).visa;
+			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
+
+			// Initialize database connection
+			let db = drizzle(locals.runtime.env.DB);
+
+			// Generate new comment ID and timestamp for the edited version
+			const now = new Date();
+			const edit = enhash(content + ID + now).substring(0, 8);
+
+			// Update the original comment to point to the new edited version and return all data for cloning
+			const comments = await db
+				.update(Comment)
+				.set({ edit })
+				.where(and(eq(Comment.ID, ID), eq(Comment.drifter, drifter)))
+				.returning();
+
+			if (comments.length === 0) throw new ActionError({ code: "NOT_FOUND" });
+
+			const comment = comments[0];
+
+			// Clone the original comment with new content and timestamp
+			await db
+				.insert(Comment)
+				.values({
+					ID: edit,
+					section: comment.section,
+					item: comment.item,
+					reply: comment.reply,
+					drifter: comment.drifter,
+					timestamp: now.getTime(),
+					content
+				});
+		}
+	}),
+
+	// Action to delete a comment (marks it as edited by itself)
+	delete: defineAction({
+		input: z.object({
+			ID: z.string(),		// The comment ID to delete
+		}),
+		handler: async ({ ID }, { cookies, locals }) => {
+			// Verify user authentication
+			const drifter = (await Token.check("passport", cookies)).visa;
+			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
+
+			// Initialize database connection
+			let db = drizzle(locals.runtime.env.DB);
+
+			// Mark the comment as deleted by setting edit field to its own ID
+			// This creates a self-reference indicating deletion while preserving the record
+			await db
+				.update(Comment)
+				.set({ edit: ID })
+				.where(and(eq(Comment.ID, ID), eq(Comment.drifter, drifter)));
+		}
+	}),
+
+	// Action to retrieve and list all comments for a specific section and item
+	list: defineAction({
+		input: z.object({
+			section: z.string(),	// The section this comment belongs to
+			item: z.string()		// The item ID to get comments for
+		}),
+		handler: async ({ section, item }, { cookies, locals }) => {
+			// Get the site author ID
+			const author = env.AUTHOR_ID ?? null;
+
+			// Initialize database connection
+			let db = drizzle(locals.runtime.env.DB);
+
+			// Fetch all comments for the specified note with user information
+			let comments = await db
+				.select({
+					ID: Comment.ID,
+					section: Comment.section,
+					item: Comment.item,
+					reply: Comment.reply,
+					drifter: Comment.drifter,
+					timestamp: Comment.timestamp,
+					content: Comment.content,
+					edit: Comment.edit,
+					// Use display name if available, otherwise use handle
+					name: sql`CASE WHEN ${Drifter.name} IS NULL OR ${Drifter.name} = '' THEN ${Drifter.handle} ELSE ${Drifter.name} END`,
+					description: Drifter.description,
+					image: Drifter.image,
+					homepage: Drifter.homepage,
+					notify: Drifter.notify,
+					// Mark if this user is the site author
+					author: sql`CASE WHEN ${Drifter.ID} = ${author} THEN 1 ELSE 0 END`
+				})
+				.from(Comment)
+				.where(and(eq(Comment.section, section), eq(Comment.item, item)))
+				.orderBy(Comment.timestamp)
+				.leftJoin(Drifter, eq(Comment.drifter, Drifter.ID));
+
+			// Create a map for efficient comment lookup and initialize subcomments & history arrays
+			const map = new Map<string, any>();
+			comments.forEach((comment: any) => map.set(comment.ID, ((comment).subcomments = [], comment.history = [], comment)));
+			const list = new Map(map);
+
+			// Build comment tree structure with replies and edit history
+			const treeification: Comment[] = [];
+			while (list.size) {
+				let comment = list.values().next().value;
+
+				// Process edit history chain
+				let edit;
+				while (edit = map.get(comment.edit)) {
+					if (edit.ID === comment.ID) {
+						// Self-reference indicates deletion
+						delete comment.content;
+						delete comment.html;
+					} else {
+						// Build edit history chain
+						comment.history.push(comment);
+						edit.history = comment.history;
+					}
+
+					// Preserve subcomments through edit chain
+					edit.subcomments = comment.subcomments;
+					comment.history = [];
+					delete comment.edit;
+					list.delete(comment.ID);
+
+					comment = edit;
+				}
+
+				// Organize comments into tree structure
+				if (comment.reply) {
+					// This is a reply, add to parent's subcomments
+					map.get(comment.reply).subcomments.push(comment);
+				} else {
+					// This is a top-level comment
+					treeification.push(comment);
+				}
+
+				list.delete(comment.ID);
+			}
+
+			// Get user authentication
+			const passport = await Token.check("passport", cookies);
+			const visa = passport?.visa;
+
+			return { treeification, visa };
+		}
+	})
+}

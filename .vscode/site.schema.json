@@ -1,0 +1,79 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "Astro Theme ThoughtLite Site Configuration",
+	"type": "object",
+	"properties": {
+		"title": {
+			"title": "Site Title",
+			"type": "string"
+		},
+		"author": {
+			"oneOf": [
+				{
+					"title": "Author Name",
+					"type": "string"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"name": {
+							"title": "Author Name",
+							"type": "string"
+						},
+						"email": {
+							"title": "Author Email",
+							"type": "string",
+							"format": "email"
+						},
+						"link": {
+							"title": "Author Homepage Link",
+							"type": "string",
+							"format": "uri"
+						}
+					},
+					"required": [
+						"name"
+					]
+				}
+			]
+		},
+		"description": {
+			"title": "Site Description",
+			"type": "string"
+		},
+		"copyright": {
+			"title": "Creative Commons License Configuration",
+			"type": "object",
+			"properties": {
+				"type": {
+					"title": "Creative Commons 4.0 License Type",
+					"enum": [
+						"CC0 1.0",
+						"CC BY 4.0",
+						"CC BY-SA 4.0",
+						"CC BY-NC 4.0",
+						"CC BY-NC-SA 4.0",
+						"CC BY-ND 4.0",
+						"CC BY-NC-ND 4.0"
+					]
+				},
+				"year": {
+					"title": "License Year",
+					"type": "string",
+					"pattern": "^\\d{4}(-\\d{4})?$"
+				}
+			},
+			"required": [
+				"type",
+				"year"
+			]
+		}
+	},
+	"required": [
+		"title",
+		"author",
+		"description",
+		"copyright"
+	],
+	"additionalProperties": false
+}

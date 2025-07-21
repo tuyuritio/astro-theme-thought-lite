@@ -1,0 +1,44 @@
+---
+const { title, subtitle, description, author, article } = Astro.props;
+---
+
+<html lang={Astro.currentLocale}>
+	<head>
+		<title>{subtitle && `${subtitle} |`} {title}</title>
+		<meta name="description" content={description} />
+
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+
+		<meta property="og:title" content={`${subtitle && `${subtitle} | `}${title}`} />
+		<meta property="og:type" content={(article && "article") || "website"} />
+		<meta property="og:image" content={new URL("/favicon.svg", Astro.site)} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+
+		{article && [<meta property="article:author" content={author} />, <meta property="article:published_time" content={article.timestamp.toISOString()} />, article.section && <meta property="article:section" content={article.section} />, article.tags?.map((tag: string) => <meta property="article:tag" content={tag} />)]}
+
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+		<meta name="apple-mobile-web-app-title" content={title} />
+		<link rel="manifest" href="/site.webmanifest" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+
+		<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+		<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+		<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playwrite+MX:wght@100..400" onload="this.onload=null;this.rel='stylesheet'" />
+		<link rel="preload" as="style" href="https://fontsapi.zeoseven.com/442/main/result.css" onload="this.onload=null;this.rel='stylesheet'" />
+		<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.4/katex.min.css" onload="this.onload=null;this.rel='stylesheet'" />
+
+		<script is:inline>
+			var theme = localStorage.getItem("theme");
+			if (theme) document.documentElement.dataset.theme = theme;
+		</script>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>

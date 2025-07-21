@@ -1,0 +1,109 @@
+'404': 見つかりません
+'500': 内部エラー
+about:
+  claim: ○○声明
+  introduction: ○○紹介
+  roll: ○○連結
+back: 玄関へ戻る
+cancel: 取消
+comment:
+  author: 筆者
+  delay: '{seconds} 秒'
+  edit:
+    history: 編集歴史
+    name: 編集
+  empty: 評論内容空欄
+  failure: 申し訳ありませんが、感想は送信されませんでした
+  fetch:
+    failure: 評論取得失敗
+  history: 履歴
+  limit: 過剰評論
+  placeholder: 感想刻印此処
+  remove:
+    failure: 評論削除失敗
+    name: 評論削除
+    success: 評論削除成功
+  removed: 評論削除
+  reply: 返信
+  share:
+    name: 共有
+    success: 連結複製完了
+  submit: 評論
+  success: アイデアが提供されました
+  time: 送信時間
+confirm: 確認
+delete: 削除
+drifter:
+  deactivate:
+    cancel: 佇み続ける
+    confirm: 無効化を確認
+    consequences:
+      comment: このアカウントでコメントを投稿できなくなります
+      comments: すべてのコメントは保持されますが匿名化されます
+      data: すべての個人情報が削除されます
+      new: 再認証すると新しいアカウントが作成されます
+      notification: 通知を受け取れなくなります
+    description: 無効化を確認すると、あなたのアカウントは：
+    failure: 無効化に失敗しました
+    name: 揚帆出航
+    success: アカウントが無効化されました
+    title: アカウントを無効化してもよろしいですか？
+    warning: この操作は元に戻せません！
+  homepage: 公式本頁
+  logout: 録出
+  sync:
+    failure: 同期失敗
+    fetch: 情報同期中
+    name: 同期
+    success: 同期成功
+  update:
+    failure: 更新失敗
+    name: 更新
+    success: 更新成功
+home:
+  heatmap:
+    empty: 無字
+    jotting: 随筆 {count} 件
+    note: 文記 {count} 件
+  newest: 最新文記
+  prefaces: 序文歴史
+jotting:
+  fetch:
+    failure: 随筆取得失敗
+  tag: 付札
+nav:
+  about: 情報
+  drifter: 旅人
+  home: 玄関
+  jotting: 随筆
+  note: 文記
+  preface: 序文
+  subscription: 購読
+note:
+  comment: 評論
+  contents: 目次
+  fetch:
+    failure: 文記取得失敗
+  metadata: 属性
+  series: 系列
+  tag: 付札
+  top: 至頂
+notification:
+  denied: デスクトップ通知の許可を拒否しました
+  disable:
+    failure: デスクトップ通知の無効化に失敗しました
+    success: デスクトップ通知は無効になっています
+  enable:
+    failure: デスクトップ通知を有効にすることができませんでした
+    success: デスクトップ通知が有効になっています
+  fresh:
+    body: クリックして、内容を観に移動します
+    title: 文の下に、そっと新しい声
+  name: デスクトップ通知
+  reply:
+    body: クリックして、交流記録を辿ります
+    title: 片言が響きとなって返ってきました
+oauth:
+  github: GitHub 登録
+  google: Google 登録
+  x: X 登録

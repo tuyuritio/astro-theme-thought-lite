@@ -1,0 +1,94 @@
+---
+import { Icon } from "astro-icon/components";
+
+let { author, copyright } = Astro.props;
+
+let CC_URL: string;
+let CC_label: string;
+
+// Map Creative Commons license types to their official URLs and descriptions
+switch (copyright.type) {
+	case "CC BY 4.0":
+		CC_URL = "https://creativecommons.org/licenses/by/4.0/";
+		CC_label = "Attribution 4.0 International";
+		break;
+
+	case "CC BY-SA 4.0":
+		CC_URL = "https://creativecommons.org/licenses/by-sa/4.0/";
+		CC_label = "Attribution-ShareAlike 4.0 International";
+		break;
+
+	case "CC BY-NC 4.0":
+		CC_URL = "https://creativecommons.org/licenses/by-nc/4.0/";
+		CC_label = "Creative Commons Attribution-NonCommercial 4.0 International";
+		break;
+
+	case "CC BY-NC-SA 4.0":
+		CC_URL = "https://creativecommons.org/licenses/by-nc-sa/4.0/";
+		CC_label = "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International";
+		break;
+
+	case "CC BY-ND 4.0":
+		CC_URL = "https://creativecommons.org/licenses/by-nd/4.0/";
+		CC_label = "Creative Commons Attribution-NoDerivatives 4.0 International";
+		break;
+
+	case "CC BY-NC-ND 4.0":
+		CC_URL = "https://creativecommons.org/licenses/by-nc-nd/4.0/";
+		CC_label = "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International";
+		break;
+
+	default:
+	case "CC0 1.0":
+		CC_URL = "https://creativecommons.org/publicdomain/zero/1.0/";
+		CC_label = "CC0 1.0 Universal";
+		break;
+}
+
+// Build array of Creative Commons icons based on license type
+// Start with base CC icon, then add specific license component icons
+const CC_icons = ["fa6-brands:creative-commons"];
+if (copyright.type === "CC0 1.0") {
+	// CC0 uses a special "zero" icon
+	CC_icons.push("fa6-brands:creative-commons-zero");
+} else {
+	// For other licenses, add icons based on license components
+	if (copyright.type.includes("BY")) CC_icons.push("fa6-brands:creative-commons-by"); // Attribution required
+	if (copyright.type.includes("NC")) CC_icons.push("fa6-brands:creative-commons-nc"); // Non-commercial
+	if (copyright.type.includes("SA")) CC_icons.push("fa6-brands:creative-commons-sa"); // Share-alike
+	if (copyright.type.includes("ND")) CC_icons.push("fa6-brands:creative-commons-nd"); // No derivatives
+}
+---
+
+<footer class="flex items-center justify-center sm:justify-between my-5 sm:my-2 text-size-sm font-mono">
+	<div class="flex items-center gap-1">
+		{
+			copyright.type != "CC0 1.0" && [
+				<span>
+					<Icon name="fa6-regular:copyright" />
+				</span>,
+				<span>{copyright.year}</span>
+			]
+		}
+		{
+			typeof author === "string" ? (
+				<span>{author}</span>
+			) : !author.link ? (
+				<span>{author.name}</span>
+			) : (
+				<a href={author.link} target="_blank" rel="noopener noreferrer">
+					{author.name}
+				</a>
+			)
+		}
+		<span>|</span>
+		<a target="_blank" href={CC_URL} aria-label={CC_label} class="flex items-center gap-1">
+			{CC_icons.map(icon => <Icon name={icon} />)}
+		</a>
+	</div>
+	<code class="hidden sm:flex items-center gap-2.5">
+		<p>Powered by</p>
+		<a href="https://astro.build/" aria-label="Astro" target="_blank"><Icon name="simple-icons:astro" /></a>
+		<a href="https://svelte.dev/" aria-label="Svelte" target="_blank"><Icon name="simple-icons:svelte" /></a>
+	</code>
+</footer>

@@ -1,0 +1,109 @@
+'404': 页面未找到
+'500': 服务器错误
+about:
+  claim: ○○声明
+  introduction: ○○自述
+  roll: ○○连结
+back: 重返序章
+cancel: 取消
+comment:
+  author: 笔者
+  delay: '{seconds} 秒'
+  edit:
+    history: 编辑历史
+    name: 编辑
+  empty: 评论内容为空
+  failure: 抱歉，想法未能送达
+  fetch:
+    failure: 获取评论出错
+  history: 历史
+  limit: 评论过于频繁
+  placeholder: 于此留下想法
+  remove:
+    failure: 删除评论失败
+    name: 删除评论
+    success: 评论删除成功
+  removed: 评论删除
+  reply: 回复
+  share:
+    name: 分享
+    success: 链接已复制
+  submit: 评论
+  success: 想法已送达
+  time: 发送时间
+confirm: 确认
+delete: 删除
+drifter:
+  deactivate:
+    cancel: 继续驻足
+    confirm: 确认注销
+    consequences:
+      comment: 无法再使用当前账号发布评论
+      comments: 所有评论都将保留但匿名化处理
+      data: 所有个人信息将被清除
+      new: 重新授权登录将创建全新账号
+      notification: 无法再接收任何通知
+    description: 若确认注销，您的账号将会：
+    failure: 注销失败
+    name: 解缆远航
+    success: 账号已注销
+    title: 您确定要注销账号吗？
+    warning: 这是不可逆的操作！
+  homepage: 个人主页
+  logout: 登出
+  sync:
+    failure: 同步失败
+    fetch: 信息同步中
+    name: 同步
+    success: 同步成功
+  update:
+    failure: 更新失败
+    name: 更新
+    success: 更新成功
+home:
+  heatmap:
+    empty: 无字
+    jotting: 随笔 {count} 则
+    note: 文记 {count} 篇
+  newest: 最新文记
+  prefaces: 序文一览
+jotting:
+  fetch:
+    failure: 获取随笔出错
+  tag: 标签
+nav:
+  about: 絮述
+  drifter: 旅人
+  home: 序章
+  jotting: 随笔
+  note: 文记
+  preface: 序文
+  subscription: 订阅
+note:
+  comment: 前往评论
+  contents: 目录
+  fetch:
+    failure: 获取文记出错
+  metadata: 属性
+  series: 系列
+  tag: 标签
+  top: 回到顶部
+notification:
+  denied: 您已拒绝桌面通知权限
+  disable:
+    failure: 禁用桌面通知失败
+    success: 桌面通知已禁用
+  enable:
+    failure: 启用桌面通知失败
+    success: 桌面通知已启用
+  fresh:
+    body: 点击前往共织灵光
+    title: 新声悄至，文下有言
+  name: 桌面通知
+  reply:
+    body: 点击回溯交流轨迹
+    title: 片语有声，回响已至
+oauth:
+  github: GitHub 登录
+  google: Google 登录
+  x: X 登录

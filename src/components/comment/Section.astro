@@ -1,0 +1,42 @@
+---
+import Icon from "$components/Icon.astro";
+import i18nit from "$i18n";
+import Thread from "./Thread.svelte";
+
+interface Props {
+	locale: string;
+	section: string;
+	item: string;
+}
+
+const { locale, section, item } = Astro.props;
+const t = i18nit(locale);
+
+const env = import.meta.env;
+
+// Check which OAuth providers are configured for comment authentication
+const OAuth = {
+	GitHub: env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET,
+	Google: env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET,
+	X: env.TWITTER_CLIENT_ID && env.TWITTER_CLIENT_SECRET
+};
+---
+
+<Thread client:visible {locale} {section} {item} {OAuth}>
+	<Icon name="svg-spinners:3-dots-move" size={25} slot="loading" />
+	<Icon name="svg-spinners:pulse-3" size={30} slot="rendering" />
+	<Icon name="fa6-solid:signature" title={t("comment.author")} slot="signature" />
+	<Icon name="octicon:home-16" slot="home" />
+	<Icon name="octicon:mail-16" slot="mail" />
+	<Icon name="octicon:alert-16" slot="alert" />
+	<Icon name="simple-icons:github" slot="GitHub" />
+	<Icon name="simple-icons:google" slot="Google" />
+	<Icon name="simple-icons:x" slot="X" />
+	<Icon name="octicon:reply-16" title={t("comment.reply")} slot="reply" />
+	<Icon name="octicon:history-16" title={t("comment.history")} slot="history" />
+	<Icon name="octicon:share-android-16" title={t("comment.share.name")} slot="share" />
+	<Icon name="octicon:pencil-16" title={t("comment.edit.name")} slot="edit" />
+	<Icon name="octicon:trash-16" title={t("delete")} slot="remove" />
+	<Icon name="octicon:smiley-16" slot="emoji" />
+	<Icon name="octicon:file-code-16" slot="preview" />
+</Thread>

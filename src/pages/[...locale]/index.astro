@@ -1,0 +1,112 @@
+---
+import { i18n } from "astro:config/client";
+import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
+import Time from "$utils/time";
+import Base from "$layouts/Base.astro";
+import Heatmap from "$components/Heatmap.svelte";
+import i18nit from "$i18n";
+import { render } from "astro:content";
+
+export async function getStaticPaths() {
+	// Create path for each locale, omitting default locale from URL
+	return i18n!.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
+}
+
+const { locale = i18n!.defaultLocale } = Astro.params;
+
+const t = i18nit(locale);
+
+// Get preface content for current locale, sorted by timestamp (newest first)
+const prefaces = (
+	await getCollection("preface", preface => {
+		// Extract language and ID from file path structure
+		const [language, id] = preface.id.split("/");
+		preface.id = id;
+
+		// Filter by current locale
+		return language == locale;
+	})
+).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
+
+// Get published notes for current locale, sorted by timestamp (newest first)
+const notes = (
+	await getCollection("note", note => {
+		// Extract language and note ID from file path structure
+		const [language] = note.id.split("/");
+
+		// Filter published notes by current locale
+		return !note.data.draft && language == locale;
+	})
+).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
+
+// Get published jottings for current locale
+const jottings = await getCollection("jotting", jotting => {
+	// Extract language and jotting ID from file path structure
+	const [language] = jotting.id.split("/");
+
+	// Filter published jottings by current locale
+	return !jotting.data.draft && language == locale;
+});
+
+// Get the most recent note and preface for display
+const newest = notes[0];
+const preface = prefaces[0];
+// Render preface content if available, otherwise use empty object
+const { Content } = preface ? await render(preface) : ({} as any);
+---
+
+<Base title={t("nav.home")} {locale}>
+	<main class="flex flex-col gap-5 sm:gap-20 flex-grow">
+		<header class="flex items-center justify-center flex-wrap-reverse grow-0.6">
+			<article class="mr-a font-cursive font-thin text-xl sm:text-size-2xl line-height-loose">
+				<p>Life is sailing.</p>
+				<div class="flex flex-wrap">
+					<p>With heart as the compass,</p>
+					<p>&ensp;just soar into the clouds.</p>
+				</div>
+			</article>
+			<Icon name="cloud-boat" size={100} />
+		</header>
+
+		{
+			preface && (
+				<section class="flex flex-col">
+					<article class="markdown">
+						<Content />
+					</article>
+					<a href={getRelativeLocaleUrl(locale, "/preface")} class="self-end my-2 text-size-sm c-secondary">
+						—— {Time.date.locale(preface.data.timestamp, locale)}
+					</a>
+				</section>
+			)
+		}
+
+		{
+			newest && (
+				<footer class="flex items-center flex-wrap-reverse gap-10">
+					<Heatmap {locale} {notes} {jottings} />
+
+					<blockquote class="flex-grow">
+						<h3>{t("home.newest")}</h3>
+						<div class="flex justify-between mt-2">
+							<a href={getRelativeLocaleUrl(locale, `/note/${newest.id.split("/").slice(1).join("/")}`)} class="hover:underline">
+								{newest.data.series ? `${newest.data.series} | ` : ""}
+								{newest.data.title}
+							</a>
+							<div class="hidden sm:flex gap-1">
+								{newest.data.tags?.map(tag => (
+									<span class="c-remark text-size-sm">#{tag}</span>
+								))}
+							</div>
+						</div>
+						<time title={Time.full(newest.data.timestamp, Time.user_timezone)} class="c-remark font-mono text-xs">
+							{Time(newest.data.timestamp)}
+						</time>
+					</blockquote>
+				</footer>
+			)
+		}
+	</main>
+</Base>

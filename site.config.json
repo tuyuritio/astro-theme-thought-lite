@@ -1,0 +1,13 @@
+{
+	"title": "ThoughtLite",
+	"author": {
+		"name": "Your Name",
+		"email": "hi@your.mail",
+		"link": "https://your.website"
+	},
+	"description": "A modern Astro theme focused on content creation.",
+	"copyright": {
+		"type": "CC BY-NC-ND 4.0",
+		"year": "2025"
+	}
+}

@@ -1,0 +1,66 @@
+---
+import { i18n } from "astro:config/client";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
+import config from "$config";
+import App from "$layouts/App.astro";
+import Navigator from "$components/header/Navigator.svelte";
+import Footer from "$components/Footer.astro";
+import Tip from "$components/Tip.svelte";
+import "$styles/global.less";
+import "$styles/markdown.less";
+import "medium-zoom/dist/style.css";
+
+let route = Astro.url.pathname;
+
+const { locale = i18n?.defaultLocale, title: subtitle, description = config.description, article } = Astro.props;
+const title = config.title;
+---
+
+<script>
+	import zoom from "medium-zoom/dist/pure";
+
+	const init_zoom = () => zoom(".markdown img", { background: "#00000044" });
+	init_zoom();
+
+	document.addEventListener("astro:page-load", () => {
+		init_zoom();
+	});
+</script>
+
+<App {title} {subtitle} {description} {article} author={typeof config.author == "string" ? config.author : config.author.name}>
+	<Tip client:load>
+		<Icon name="octicon:info-16" slot="information" is:inline />
+		<Icon name="octicon:check-circle-16" slot="success" is:inline />
+		<Icon name="octicon:question-16" slot="question" is:inline />
+		<Icon name="octicon:alert-16" slot="warning" is:inline />
+		<Icon name="octicon:x-circle-16" slot="error" is:inline />
+		<Icon name="octicon:x-16" slot="x" is:inline />
+	</Tip>
+	<div class="flex flex-col mx-a px-3 w-[min(100%,1000px)]">
+		<div id="body" class="flex flex-col min-h-screen">
+			<header class="sticky top-0 flex items-center justify-between pt-3 pb-1 mb-4 bg-background z-1 sm:(static pb-12)">
+				<a href={getRelativeLocaleUrl(locale)} class="text-size-lg sm:text-size-2xl font-bold">{title}</a>
+
+				<Navigator {locale} {route} client:load>
+					<Icon name="octicon:home-16" slot="home" is:inline />
+					<Icon name="octicon:list-unordered-16" slot="note" />
+					<Icon name="octicon:mention-16" slot="information" />
+					<Icon name="octicon:person-16" slot="drifter" />
+					<Icon name="octicon:note-16" slot="jotting" />
+					<Icon name="octicon:globe-16" slot="globe" />
+					<Icon name="octicon:rss-16" slot="rss" />
+					<Icon name="octicon:rocket-16" slot="rocket" />
+					<Icon name="octicon:sun-16" slot="sun" />
+					<Icon name="octicon:moon-16" slot="moon" />
+					<Icon name="octicon:three-bars-16" slot="bars" />
+					<Icon name="octicon:x-16" slot="close" is:inline />
+				</Navigator>
+			</header>
+
+			<slot />
+		</div>
+
+		<Footer author={config.author} copyright={config.copyright} />
+	</div>
+</App>

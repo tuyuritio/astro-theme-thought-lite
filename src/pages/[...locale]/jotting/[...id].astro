@@ -1,0 +1,33 @@
+---
+import { i18n } from "astro:config/client";
+import { getCollection, render } from "astro:content";
+import Time from "$utils/time";
+import Base from "$layouts/Base.astro";
+import Icon from "$components/Icon.astro";
+
+export async function getStaticPaths() {
+	const jottings = await getCollection("jotting", jotting => !jotting.data.draft);
+
+	return jottings.map(jotting => {
+		const [language, ...id] = jotting.id.split("/");
+
+		return { params: { locale: language == i18n?.defaultLocale ? undefined : language, id: id.join("/") }, props: { jotting } };
+	});
+}
+
+const { locale = i18n!.defaultLocale } = Astro.params;
+const { jotting } = Astro.props;
+const { Content } = await render(jotting);
+---
+
+<Base title={jotting.data.title} {locale} description={jotting.data.description} article={{ timestamp: jotting.data.timestamp, tags: jotting.data.tags }}>
+	<main class="flex flex-col gap-4">
+		<h1 class="text-3xl">{jotting.data.title}</h1>
+		<header class="flex gap-3 children:(flex items-center gap-1 text-3.5 c-secondary)">
+			<time title={Time.full(jotting.data.timestamp)}><Icon name="octicon:calendar-16" />{Time(jotting.data.timestamp)}</time>
+			<span><Icon name="octicon:tag-16" />{jotting.data.tags?.join("; ")}</span>
+		</header>
+		<hr class="border-b border-b-solid border-weak" />
+		<section class="markdown mb-10"><Content /></section>
+	</main>
+</Base>

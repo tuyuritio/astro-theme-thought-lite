@@ -1,0 +1,38 @@
+---
+import { i18n } from "astro:config/client";
+import { actions } from "astro:actions";
+import Base from "$layouts/Base.astro";
+import Jotting from "$components/Jotting.svelte";
+import Icon from "$components/Icon.astro";
+import i18nit from "$i18n";
+
+export const prerender = false;
+
+const { locale = i18n!.defaultLocale } = Astro.params;
+
+const t = i18nit(locale);
+
+const size = 20;
+const page = Number(Astro.url.searchParams.get("page")) || 1;
+const tags = Astro.url.searchParams.getAll("tag");
+
+const { data, error } = await Astro.callAction(actions.jotting.list, { locale, size, page, tags });
+if (error) {
+	switch (error.code) {
+		default:
+			return Astro.redirect("/500", 302);
+	}
+}
+
+const { jottings, pages, page: index, tag_list } = data;
+---
+
+<Base title={t("nav.jotting")} {locale}>
+	<main class="flex flex-col grow">
+		<Jotting client:load {locale} {jottings} {pages} page={index} {size} {tag_list} {tags}>
+			<Icon name="octicon:arrow-left-16" slot="left" />
+			<Icon name="octicon:arrow-right-16" slot="right" />
+			<Icon name="octicon:kebab-horizontal-16" slot="dots" />
+		</Jotting>
+	</main>
+</Base>

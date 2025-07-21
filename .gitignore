@@ -1,0 +1,28 @@
+# build output
+.wrangler
+dist/
+
+# generated types
+.astro/
+.vscode/count
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.todo*
+
+# environment variables
+.env
+.env.production
+wrangler.toml
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/

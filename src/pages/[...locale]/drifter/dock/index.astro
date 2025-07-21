@@ -1,0 +1,42 @@
+---
+import { i18n } from "astro:config/client";
+import { actions } from "astro:actions";
+import { Token } from "$utils/token";
+import Base from "$layouts/Base.astro";
+import Icon from "$components/Icon.astro";
+import Drifter from "$components/Drifter.svelte";
+import i18nit from "$i18n";
+
+export const prerender = false;
+
+const { locale = i18n!.defaultLocale } = Astro.params;
+
+const t = i18nit(locale);
+
+const passport = await Token.check("passport", Astro.cookies);
+if (!passport?.visa) return Astro.redirect("/drifter/roam", 302);
+
+const { data, error } = await Astro.callAction(actions.drifter.profile, null);
+if (error) {
+	switch (error.code) {
+		case "UNAUTHORIZED":
+			Token.revoke("passport", Astro.cookies);
+			return Astro.redirect("/drifter/roam", 302);
+
+		default:
+			return Astro.redirect("/500", 302);
+	}
+}
+---
+
+<Base title={t("nav.drifter")} {locale}>
+	<main class="flex flex-col grow">
+		<Drifter client:load {locale} drifter={data.drifter}>
+			<Icon name="simple-icons:github" size={25} slot="GitHub" />
+			<Icon name="simple-icons:google" size={25} slot="Google" />
+			<Icon name="simple-icons:x" size={25} slot="X" />
+			<Icon name="octicon:sync-16" title={t("drifter.sync.name")} size={18} slot="sync" />
+			<Icon name="octicon:sign-out-16" title={t("drifter.logout")} size={18} slot="signout" />
+		</Drifter>
+	</main>
+</Base>

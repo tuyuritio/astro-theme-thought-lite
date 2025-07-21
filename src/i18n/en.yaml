@@ -1,0 +1,109 @@
+'404': Not Found
+'500': Internal Server Error
+about:
+  claim: Claim
+  introduction: Introduction
+  roll: Link Roll
+back: Go Home
+cancel: Cancel
+comment:
+  author: Author
+  delay: '{seconds} second(s)'
+  edit:
+    history: Edit History
+    name: Edit
+  empty: Comment is empty
+  failure: Sorry, your thoughts couldn't be sent
+  fetch:
+    failure: Error loading comments
+  history: History
+  limit: Comments are too frequent
+  placeholder: Leave your thoughts here
+  remove:
+    failure: Comment deletion failed
+    name: Delete Comment
+    success: Comment deleted
+  removed: Comment deleted
+  reply: Reply
+  share:
+    name: Share
+    success: Link copied
+  submit: Submit
+  success: Your thousghts have been delivered
+  time: Posted at
+confirm: Confirm
+delete: Delete
+drifter:
+  deactivate:
+    cancel: Linger on
+    confirm: Confirm Deactivation
+    consequences:
+      comment: No longer able to post comments with this account
+      comments: All comments will be retained but anonymized
+      data: All personal information will be deleted
+      new: Re-authorization will create a new account
+      notification: No longer receive any notifications
+    description: 'If you confirm deactivation, your account will:'
+    failure: Deactivation failed
+    name: Cast off
+    success: Account successfully deactivated
+    title: Are you sure to deactivate your account?
+    warning: This action is irreversible!
+  homepage: Homepage
+  logout: Logout
+  sync:
+    failure: Synchronization failed
+    fetch: Synchronizing information
+    name: Synchronize
+    success: Synchronization successful
+  update:
+    failure: Update failed
+    name: Update
+    success: Update successful
+home:
+  heatmap:
+    empty: No words
+    jotting: '{count} jotting(s)'
+    note: '{count} note(s)'
+  newest: Newest Note
+  prefaces: Prefaces
+jotting:
+  fetch:
+    failure: Error loading jottings
+  tag: Tag
+nav:
+  about: About
+  drifter: Drifter
+  home: Home
+  jotting: Jotting
+  note: Note
+  preface: Preface
+  subscription: Subscription
+note:
+  comment: Comments
+  contents: Contents
+  fetch:
+    failure: Error loading notes
+  metadata: Metadata
+  series: Series
+  tag: Tag
+  top: To Top
+notification:
+  denied: You have denied desktop notification permission
+  disable:
+    failure: Failed to disable desktop notifications
+    success: Desktop notifications are disabled
+  enable:
+    failure: Failed to enable desktop notifications
+    success: Desktop notifications are enabled
+  fresh:
+    body: Click to see the comment
+    title: A quiet new voice beneath your words.
+  name: Desktop Notification
+  reply:
+    body: Click to trace back the communication
+    title: A fragment speaks, and the echo has come.
+oauth:
+  github: Login with GitHub
+  google: Login with Google
+  x: Login with X

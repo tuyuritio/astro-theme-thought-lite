@@ -1,0 +1,104 @@
+---
+import { i18n } from "astro:config/client";
+import { getCollection } from "astro:content";
+import Time from "$utils/time";
+import Base from "$layouts/Base.astro";
+import i18nit from "$i18n";
+import { render } from "astro:content";
+
+export async function getStaticPaths() {
+	return i18n?.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
+}
+
+const { locale = i18n!.defaultLocale } = Astro.params;
+
+const t = i18nit(locale);
+
+const information = await getCollection("information", information => {
+	const [language, id] = information.id.split("/");
+	information.id = id;
+	return language == locale;
+});
+
+let introduction = information.find(info => info.id == "introduction");
+let claim = information.find(info => info.id == "claim");
+let roll = information.find(info => info.id == "roll");
+
+const { Content: Introduction } = introduction ? await render(introduction) : (null as any);
+const { Content: Claim } = claim ? await render(claim) : (null as any);
+const { Content: Roll } = roll ? await render(roll) : (null as any);
+
+let chronicle = information.find(info => info.id == "chronicle")?.data;
+let chronicles = Object.entries<string[]>(chronicle ?? {})
+	.map(([date, events]) => ({ date: new Date(date), events: events ?? [] }))
+	.sort((a, b) => b.date.getTime() - a.date.getTime());
+---
+
+<style lang="less">
+	article {
+		div {
+			margin-bottom: 2rem;
+
+			h1 {
+				margin-bottom: 1rem;
+
+				font-size: 1.8rem;
+			}
+		}
+	}
+</style>
+
+<Base title={t("nav.about")} {locale}>
+	<main class="flex justify-between flex-wrap gap-2 sm:flex-nowrap">
+		<article class="flex flex-col">
+			{
+				introduction && (
+					<div>
+						<h1>{t("about.introduction")}</h1>
+						<samp class="markdown">
+							<Introduction />
+						</samp>
+					</div>
+				)
+			}
+			{
+				claim && (
+					<div>
+						<h1>{t("about.claim")}</h1>
+						<samp class="markdown">
+							<Claim />
+						</samp>
+					</div>
+				)
+			}
+			{
+				roll && (
+					<div>
+						<h1>{t("about.roll")}</h1>
+						<samp class="markdown">
+							<Roll />
+						</samp>
+					</div>
+				)
+			}
+		</article>
+
+		<aside class="flex flex-col justify-between flex-basis-300px flex-shrink-0 mb-3 pl-5">
+			<ul class="list-none">
+				{
+					chronicles.map(chronicle => (
+						<li class="relative mb-2 pb-2 before:(absolute content-empty top-3.4 left--3.8 h-full border-l-2 border-l-solid border-primary) last:after:(absolute content-empty left--5 bottom--4 w-2 h-2 border-2 border-solid border-primary rounded-full bg-primary)">
+							<span class="relative font-mono before:(absolute content-empty inline-block top-1 left--5 w-2 h-2 border-2 border-solid border-primary  rounded-full)">{Time.date(chronicle.date)}</span>
+							<ul class="my-2 pl-4 list-none">
+								{chronicle.events.map(event => {
+									const remove = event?.match(/^~(?!~)(.*)$/);
+									return <li class="relative my-1 before:(absolute content-empty inline-block top-2 left--4 w-1 h-1 border border-solid border-primary rounded-full)">{remove ? <del>{remove[1]}</del> : event}</li>;
+								})}
+							</ul>
+						</li>
+					))
+				}
+			</ul>
+		</aside>
+	</main>
+</Base>

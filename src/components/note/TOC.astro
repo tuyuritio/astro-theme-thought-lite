@@ -1,0 +1,123 @@
+---
+const Self = Astro.self;
+
+const { headings } = Astro.props;
+---
+
+<style lang="less">
+	ul {
+		margin-left: 1rem;
+
+		font-size: 0.9rem;
+		list-style: none;
+
+		a {
+			color: var(--weak-color);
+			line-height: 1.5;
+
+			transition:
+				color 0.15s ease-in-out,
+				font-weight 0.15s ease-in-out;
+
+			&:hover,
+			&:is(li.indicate > a) {
+				font-weight: bold;
+				color: var(--primary-color);
+			}
+		}
+
+		li {
+			position: relative;
+
+			&::before {
+				content: "";
+				position: absolute;
+				top: -0.2rem;
+				left: -0.5rem;
+				height: 100%;
+				border-left: 1px solid var(--remark-color);
+			}
+
+			&:last-child {
+				&::before {
+					height: 1rem;
+				}
+			}
+
+			&::after {
+				content: "";
+				position: absolute;
+				top: 0.8rem;
+				left: -0.5rem;
+				border-bottom: 1px solid var(--remark-color);
+				width: 5px;
+			}
+		}
+
+		ul {
+			margin-top: 0.2rem;
+		}
+	}
+</style>
+
+<ul>
+	{
+		headings.map((heading: any) => (
+			<li id={`indicator-${heading.slug}`}>
+				<a href={`#${heading.slug}`}>{heading.text}</a>
+				{heading.subheadings?.length > 0 && <Self headings={heading.subheadings} />}
+			</li>
+		))
+	}
+</ul>
+
+<script>
+	// Global variable to store the IntersectionObserver instance
+	// Used to clean up previous observer when re-initializing
+	let observer: IntersectionObserver | undefined;
+
+	/**
+	 * Initialize Table of Contents functionality with scroll-based highlighting
+	 * Sets up intersection observer to highlight current section in TOC
+	 */
+	function TOC() {
+		// Create a Map for efficient lookup of TOC indicators by heading slug
+		// Maps heading slug to corresponding TOC list item element
+		const indicators = new Map<string, Element>(
+			document
+				.querySelectorAll("li[id^='indicator-']") // Select all TOC indicator elements
+				.values()
+				.map(indicator => [
+					indicator.id.replace(/^indicator-/, ""), // Extract slug from "indicator-{slug}" format
+					indicator // Store the indicator element
+				])
+		);
+
+		// Disconnect previous observer to prevent memory leaks
+		observer?.disconnect();
+
+		// Create new IntersectionObserver to detect when headings enter/leave viewport
+		observer = new IntersectionObserver(entries =>
+			entries.forEach(
+				({ target, isIntersecting }) =>
+					// Toggle "indicate" class on corresponding TOC item based on visibility
+					indicators
+						.get(target.getAttribute("aria-labelledby")!) // Get heading slug from aria-labelledby
+						?.classList.toggle("indicate", isIntersecting) // Add/remove highlight class
+			)
+		);
+
+		// Find all heading sections in the markdown content and observe them
+		document
+			.querySelector("#markdown-content") // Get main content container
+			?.querySelectorAll("section[data-heading-rank]") // Find all heading sections
+			.forEach(section => observer?.observe(section)); // Start observing each section
+	}
+
+	// Initialize TOC functionality when page loads
+	TOC();
+
+	// Re-initialize TOC after Astro's view transitions complete
+	// This ensures TOC works correctly with client-side navigation
+	document.addEventListener("astro:after-swap", TOC);
+</script>
