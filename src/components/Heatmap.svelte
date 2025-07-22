@@ -9,15 +9,19 @@
 				{#if number > 0}
 					{#if day.notes.length > 0}
 						<p class="my-1">{t("home.heatmap.note", { count: day.notes.length })}：</p>
-						{#each day.notes as note}
-							<ul><a href={getRelativeLocaleUrl(locale, `/note/${note.id.split("/").slice(1).join("/")}`)} aria-label={note.data.title} class="ml-1 hover:underline">{note.data.title}</a></ul>
-						{/each}
+						<ul class="flex flex-col gap-0.5">
+							{#each day.notes as note}
+								<a href={getRelativeLocaleUrl(locale, `/note/${note.id.split("/").slice(1).join("/")}`)} aria-label={note.data.title} class="ml-1 hover:underline">{note.data.title}</a>
+							{/each}
+						</ul>
 					{/if}
 					{#if day.jottings.length > 0}
 						<p class="my-1">{t("home.heatmap.jotting", { count: day.jottings.length })}：</p>
-						{#each day.jottings as jotting}
-							<ul><a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} aria-label={jotting.data.title} class="ml-1 hover:underline">{jotting.data.title}</a></ul>
-						{/each}
+						<ul class="flex flex-col gap-0.5">
+							{#each day.jottings as jotting}
+								<a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} aria-label={jotting.data.title} class="ml-1 hover:underline">{jotting.data.title}</a>
+							{/each}
+						</ul>
 					{/if}
 				{:else}
 					<p class="mt-1">{t("home.heatmap.empty")}</p>
