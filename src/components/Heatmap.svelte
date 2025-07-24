@@ -36,7 +36,9 @@
 	import Time from "$utils/time";
 	import i18nit from "$i18n";
 
-	let { locale, notes, jottings }: { locale: string; notes: any[]; jottings: any[] } = $props();
+	let { locale, notes, jottings, weeks = 20 }: { locale: string; notes: any[]; jottings: any[]; weeks: number } = $props();
+
+	const days = weeks * 7; // Convert weeks to days for heatmap
 
 	// Initialize translation function for current locale
 	const t = i18nit(locale);
@@ -48,7 +50,7 @@
 
 	// Create 140-day heatmap data structure (roughly 4+ months of activity)
 	// Each day contains: date, empty arrays for notes and jottings
-	const heatmap = Array.from({ length: 140 }, (_, day) => ({
+	const heatmap = Array.from({ length: days }, (_, day) => ({
 		date: Time.subtractDays(start, day), // Calculate date going backwards from today
 		notes: [] as any[], // Notes published on this day
 		jottings: [] as any[] // Jottings published on this day
@@ -57,18 +59,18 @@
 	// Populate heatmap with notes data
 	notes.forEach(note => {
 		// Calculate how many days ago this note was published
-		let days = Time.diffDays(start, note.data.timestamp);
+		let gap = Time.diffDays(start, note.data.timestamp);
 
 		// Only include notes from the last 100 days
-		if (0 <= days && days < 100) heatmap[days].notes.push(note);
+		if (0 <= gap && gap < days) heatmap[gap].notes.push(note);
 	});
 
 	// Populate heatmap with jottings data
 	jottings.forEach(jotting => {
 		// Calculate how many days ago this jotting was published
-		let days = Time.diffDays(start, jotting.data.timestamp);
+		let gap = Time.diffDays(start, jotting.data.timestamp);
 
 		// Only include jottings from the last 100 days
-		if (0 <= days && days < 100) heatmap[days].jottings.push(jotting);
+		if (0 <= gap && gap < days) heatmap[gap].jottings.push(jotting);
 	});
 </script>
