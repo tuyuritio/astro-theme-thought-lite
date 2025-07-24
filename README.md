@@ -1,6 +1,9 @@
 # ThoughtLite
 
 <div align="center">
+    <img src=".github/assets/preview-light.webp">
+    <img src=".github/assets/preview-dark.webp">
+    <p></p>
     <p>A modern <a href="https://astro.build/">Astro</a> theme optimized for <a href="https://www.cloudflare.com/">Cloudflare</a>, focused on content creation 🌟</p>
     <small><ins>English</ins></small> <small><a href="README_zh-cn.md">简体中文</a></small> <small><a href="README_ja.md">日本語</a></small>
 </div>
