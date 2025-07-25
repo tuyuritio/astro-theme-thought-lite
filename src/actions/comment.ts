@@ -102,7 +102,7 @@ export const comment = {
 				// Remove failed notification endpoints from database
 				locals.runtime.ctx.waitUntil(notify({ endpoint: subscription.endpoint, p256dh: subscription.p256dh, auth: subscription.auth }, message).then(success => success || db
 					.delete(Notification)
-					.where(and(eq(Notification.endpoint, subscription.endpoint), eq(Notification.drifter, drifter)))
+					.where(and(eq(Notification.endpoint, subscription.endpoint)))
 				));
 			});
 		}
