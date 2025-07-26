@@ -54,16 +54,28 @@ export namespace Token {
 	}
 
 	/**
-	 * Verify and decrypt a JWT token from cookies
+	 * Verify and decrypt a JWT token from cookies with renewal
 	 * @param name - Cookie name containing the token
 	 * @param cookies - Astro cookies object for reading the cookie
+	 * @param renew - Whether to renew token (default: true)
 	 * @returns Decrypted JWT payload or null if invalid/missing
 	 */
-	export async function check(name: string, cookies: AstroCookies): Promise<any> {
+	export async function check(name: string, cookies: AstroCookies, renew: boolean = true): Promise<any> {
 		try {
 			if (!cookies.has(name)) return null;
+
 			// Decrypt and verify the JWT token
-			return (await jwtDecrypt(cookies.get(name)!.value, Buffer.from(PASS_KEY, "base64"))).payload as any;
+			const result = await jwtDecrypt(cookies.get(name)!.value, Buffer.from(PASS_KEY, "base64"));
+			const payload = result.payload as any;
+
+			// Check if token should be renewed
+			if (payload.exp && renew) {
+				// Create new payload without exp claim (will be set by issue method)
+				const { exp, iat, ...renewal } = payload;
+				await issue(name, cookies, renewal);
+			}
+
+			return payload;
 		} catch (error) {
 			// Return null for invalid or expired tokens
 			return null;
