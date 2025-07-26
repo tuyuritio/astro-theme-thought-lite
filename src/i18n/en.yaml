@@ -111,6 +111,11 @@ notification:
     body: Click to trace back the communication
     title: A fragment speaks, and the echo has come.
 oauth:
+  benefit:
+    captcha: No need to resolve CAPTCHA
+    comment: Edit and delete your own comments
+    notification: Receive desktop notifications for comment replies
+    homepage: Display your personal homepage
   github: Login with GitHub
   google: Login with Google
   name: Login

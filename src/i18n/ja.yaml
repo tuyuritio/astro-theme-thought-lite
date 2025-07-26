@@ -111,6 +111,11 @@ notification:
     body: クリックして、交流記録を辿ります
     title: 片言が響きとなって返ってきました
 oauth:
+  benefit:
+    captcha: 人間判定が不要
+    comment: 自分のコメントを編集・削除
+    notification: コメント返信のデスクトップ通知を受信
+    homepage: 自分の公式本頁を表示
   github: GitHub 登録
   google: Google 登録
   name: ログイン

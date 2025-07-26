@@ -59,7 +59,7 @@ export const comment = {
 						})
 					});
 
-					const result = await response.json()
+					const result = await response.json();
 					if (!result.success) throw new ActionError({ code: "FORBIDDEN" });
 				} else {
 					// If unauthenticated and nomad is unavailable, throw unauthorized error

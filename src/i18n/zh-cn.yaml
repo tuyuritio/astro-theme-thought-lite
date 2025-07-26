@@ -111,6 +111,11 @@ notification:
     body: 点击回溯交流轨迹
     title: 片语有声，回响已至
 oauth:
+  benefit:
+    captcha: 无需进行人机验证
+    comment: 编辑和删除自己的评论
+    notification: 接收评论回复的桌面通知
+    homepage: 展示自己的个人主页
   github: GitHub 登录
   google: Google 登录
   name: 登录

@@ -2,7 +2,16 @@
 	<div class="flex flex-col items-center gap-5">
 		<h2>{t("oauth.name")}</h2>
 
-		<div class="flex flex-col items-center gap-2 [&>a]:(flex items-center justify-center gap-2 w-200px border-2 border-solid p-1 rounded-1 font-bold)">
+		<ul class="flex flex-col gap-1 list-inside mx-4">
+			<li>{t("oauth.benefit.captcha")}</li>
+			<li>{t("oauth.benefit.comment")}</li>
+			<li>{t("oauth.benefit.notification")}</li>
+			<li>{t("oauth.benefit.homepage")}</li>
+		</ul>
+
+		<hr class="border-b-1 border-b-dashed w-full" />
+
+		<div class="flex flex-col items-center gap-2 [&>a]:(flex items-center justify-center gap-2 w-200px border-2 border-solid border-secondary p-1 rounded-1 font-bold)">
 			{#if OAuth.GitHub}<a href="/drifter/roam/anchor/GitHub">{@render icon.GitHub()}<span>{t("oauth.github")}</span></a>{/if}
 			{#if OAuth.Google}<a href="/drifter/roam/anchor/Google">{@render icon.Google()}<span>{t("oauth.google")}</span></a>{/if}
 			{#if OAuth.X}<a href="/drifter/roam/anchor/X">{@render icon.X()}<span>{t("oauth.x")}</span></a>{/if}
