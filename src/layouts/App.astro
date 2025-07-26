@@ -1,5 +1,8 @@
 ---
 const { title, subtitle, description, author, article } = Astro.props;
+
+const env = import.meta.env;
+const nomad = env.CLOUDFLARE_TURNSTILE_SITE_KEY && env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
 ---
 
 <html lang={Astro.currentLocale}>
@@ -32,6 +35,8 @@ const { title, subtitle, description, author, article } = Astro.props;
 		<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playwrite+MX:wght@100..400" onload="this.onload=null;this.rel='stylesheet'" />
 		<link rel="preload" as="style" href="https://fontsapi.zeoseven.com/442/main/result.css" onload="this.onload=null;this.rel='stylesheet'" />
 		<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.4/katex.min.css" onload="this.onload=null;this.rel='stylesheet'" />
+
+		{nomad && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback" async defer is:inline />}
 
 		<script is:inline>
 			var theme = localStorage.getItem("theme");

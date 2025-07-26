@@ -41,10 +41,14 @@
 					{#if comment.description}<span title={comment.description} class="c-secondary text-3 line-height-normal whitespace-nowrap [text-overflow:ellipsis] overflow-hidden">{comment.description}</span>{/if}
 				</dt>
 			{:else}
-				<img src="/akkarin.webp" alt="left-drifter" class="w-9 h-9 border border-solid border-weak rounded-full" />
+				<img src={comment.nickname ? "/nomad.webp" : "/akkarin.webp"} alt="left-drifter" class="w-9 h-9 border border-solid border-weak rounded-full" />
 				<dt class="flex flex-col gap-0.5 min-w-0">
 					<p class="flex items-center gap-1">
-						<b class="c-weak">离港旅人</b>
+						{#if comment.nickname}
+							<b>{comment.nickname}</b>
+						{:else}
+							<b class="c-weak">{t("drifter.deactivate.done")}</b>
+						{/if}
 						<span>·</span>
 						<time title={Time.full(comment.timestamp)} class="text-3">{Time(comment.timestamp).replace("-", " ")}</time>
 					</p>
@@ -55,7 +59,7 @@
 			{#if comment.content}
 				<div class="markdown comment">{#await remark.process(comment.content) then html}{@html html}{/await}</div>
 				<dd class="flex gap-4 mt-2">
-					<button onclick={() => ((reply_view = !reply_view), (edit_view = false))} disabled={!drifter}>{@render icon.reply()}</button>
+					<button onclick={() => ((reply_view = !reply_view), (edit_view = false))} disabled={!turnstile && !drifter}>{@render icon.reply()}</button>
 					{#if comment.history.length > 0}<button onclick={() => (history_view = true)}>{@render icon.history()}</button>{/if}
 					<button onclick={share}>{@render icon.share()}</button>
 					{#if comment.drifter === drifter}
@@ -70,13 +74,13 @@
 	</dl>
 	<div class:ml-7={layer < MAX_LAYER}>
 		{#if reply_view && !edit_view}
-			<Reply {locale} {OAuth} {drifter} section={comment.section} item={comment.item} reply={comment.ID} {icon} {refresh} bind:view={reply_view} bind:limit />
+			<Reply {locale} {OAuth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.ID} {icon} {refresh} bind:view={reply_view} bind:limit />
 		{:else if edit_view && !reply_view}
-			<Reply {locale} {OAuth} {drifter} section={comment.section} item={comment.item} reply={comment.reply} edit={comment.ID} text={comment.content} {icon} {refresh} bind:view={edit_view} bind:limit />
+			<Reply {locale} {OAuth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.reply} edit={comment.ID} text={comment.content} {icon} {refresh} bind:view={edit_view} bind:limit />
 		{/if}
 
 		{#each comment.subcomments as subcomment}
-			<Self {locale} {OAuth} {drifter} comment={subcomment} {icon} {refresh} layer={layer + 1} bind:limit />
+			<Self {locale} {OAuth} {turnstile} {drifter} comment={subcomment} {icon} {refresh} layer={layer + 1} bind:limit />
 		{/each}
 	</div>
 </main>
@@ -91,7 +95,9 @@
 	import Self from "./Comment.svelte";
 	import Reply from "./Reply.svelte";
 
-	let { locale, OAuth, drifter, comment, icon, refresh, layer = 1, limit = $bindable(0) }: { locale: string; OAuth: any; drifter?: string; comment: any; icon: any; refresh: any; layer?: number; limit?: number } = $props();
+	let { locale, OAuth, turnstile, drifter, comment, icon, refresh, layer = 1, limit = $bindable(0) }: { locale: string; OAuth: any; turnstile?: string; drifter?: string; comment: any; icon: any; refresh: any; layer?: number; limit?: number } = $props();
+
+	const t = i18nit(locale);
 
 	// Maximum nesting depth for comment threads to prevent infinite recursion
 	const MAX_LAYER = 5;
@@ -103,8 +109,6 @@
 	// Control visibility of history and delete confirmation modals
 	let history_view = $state(false);
 	let delete_view = $state(false);
-
-	const t = i18nit(locale);
 
 	/**
 	 * Copy comment permalink to clipboard for sharing

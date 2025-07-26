@@ -18,6 +18,10 @@ comment:
     failure: 获取评论出错
   history: 历史
   limit: 评论过于频繁
+  login: 登录以传递想法
+  nickname:
+    empty: 昵称不能为空
+    name: 昵称
   placeholder: 于此留下想法
   remove:
     failure: 删除评论失败
@@ -31,6 +35,8 @@ comment:
   submit: 评论
   success: 想法已送达
   time: 发送时间
+  verify:
+    failure: 人机校验失败
 confirm: 确认
 delete: 删除
 drifter:
@@ -44,6 +50,7 @@ drifter:
       new: 重新授权登录将创建全新账号
       notification: 无法再接收任何通知
     description: 若确认注销，您的账号将会：
+    done: 离港旅人
     failure: 注销失败
     name: 解缆远航
     success: 账号已注销
@@ -106,4 +113,5 @@ notification:
 oauth:
   github: GitHub 登录
   google: Google 登录
+  name: 登录
   x: X 登录

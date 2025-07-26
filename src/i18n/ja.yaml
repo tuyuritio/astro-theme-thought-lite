@@ -18,6 +18,10 @@ comment:
     failure: 評論取得失敗
   history: 履歴
   limit: 過剰評論
+  login: ログインしてアイデアを共有しましょう
+  nickname:
+    empty: 渾名は空にすることはできません
+    name: 渾名
   placeholder: 感想刻印此処
   remove:
     failure: 評論削除失敗
@@ -31,6 +35,8 @@ comment:
   submit: 評論
   success: アイデアが提供されました
   time: 送信時間
+  verify:
+    failure: 人間判定に失敗しました
 confirm: 確認
 delete: 削除
 drifter:
@@ -44,6 +50,7 @@ drifter:
       new: 再認証すると新しいアカウントが作成されます
       notification: 通知を受け取れなくなります
     description: 無効化を確認すると、あなたのアカウントは：
+    done: 旅立った人
     failure: 無効化に失敗しました
     name: 揚帆出航
     success: アカウントが無効化されました
@@ -106,4 +113,5 @@ notification:
 oauth:
   github: GitHub 登録
   google: Google 登録
+  name: ログイン
   x: X 登録

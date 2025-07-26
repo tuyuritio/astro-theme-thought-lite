@@ -1,17 +1,31 @@
-<main transition:slide={{ duration: 150 }} class="relative mt-5">
-	{#if !drifter}
-		<div id="forbid" class="absolute flex flex-col items-center justify-center gap-1 w-full h-full font-bold cursor-not-allowed [&>a]:(flex items-center justify-center gap-2 w-200px border-2 border-solid border-primary p-1 rounded-1)">
+<Modal bind:open={anchor_view}>
+	<div class="flex flex-col items-center gap-5">
+		<h2>{t("oauth.name")}</h2>
+
+		<div class="flex flex-col items-center gap-2 [&>a]:(flex items-center justify-center gap-2 w-200px border-2 border-solid p-1 rounded-1 font-bold)">
 			{#if OAuth.GitHub}<a href="/drifter/roam/anchor/GitHub">{@render icon.GitHub()}<span>{t("oauth.github")}</span></a>{/if}
 			{#if OAuth.Google}<a href="/drifter/roam/anchor/Google">{@render icon.Google()}<span>{t("oauth.google")}</span></a>{/if}
 			{#if OAuth.X}<a href="/drifter/roam/anchor/X">{@render icon.X()}<span>{t("oauth.x")}</span></a>{/if}
 		</div>
+
+		<button class="form-button" onclick={() => (anchor_view = false)}>{t("cancel")}</button>
+	</div>
+</Modal>
+
+<main transition:slide={{ duration: 150 }} class="relative mt-5">
+	{#if !turnstile && !drifter}
+		<div class="absolute flex flex-col items-center justify-center gap-1 w-full h-full font-bold cursor-not-allowed">
+			<button onclick={() => (anchor_view = true)} class="border-2 border-solid py-1 px-2 rounded-1 font-bold">{t("comment.login")}</button>
+		</div>
 	{/if}
-	<div class={!drifter ? "pointer-events-none filter-blur" : ""}>
-		<fieldset disabled={!drifter} class="flex flex-col gap-2 pt-2 px-2 pb-1 border-2 border-solid border-weak rounded-1">
+	<div class={!turnstile && !drifter ? "pointer-events-none filter-blur" : ""}>
+		<fieldset class="flex flex-col gap-2 pt-2 px-2 pb-1 border-2 border-solid border-weak rounded-1">
 			<article class="flex flex-col min-h-20 overflow-auto resize-y">
 				<textarea hidden={preview} placeholder="   {t('comment.placeholder')}" bind:this={textarea} bind:value={content} class="grow w-full bg-transparent text-4 outline-none resize-none"></textarea>
 				{#if preview}
-					{#await remark.process(content) then html}
+					{#await remark.process(content)}
+						{@render icon.rendering()}
+					{:then html}
 						<div class="markdown comment">{@html html}</div>
 					{/await}
 				{/if}
@@ -28,7 +42,20 @@
 				</figure>
 				<label class="flex items-center cursor-pointer">{@render icon.preview()}<input type="checkbox" class="switch" bind:checked={preview} /></label>
 				<div class="grow"></div>
-				<button id="submit" class="rounded-1 py-1 px-2 c-background bg-secondary" disabled={!drifter || limit > 0} onclick={submit_comment}>{limit > 0 ? t("comment.delay", { seconds: Math.ceil(limit) }) : edit ? t("comment.edit.name") : t("comment.submit")}</button>
+				{#if nomad}
+					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="border-weak! w-35 px-1" />
+					<div bind:this={turnstile_element}></div>
+					<button class="border-2 border-solid c-secondary rounded-1 py-0.5 px-2" onclick={() => (anchor_view = true)}>{t("oauth.name")}</button>
+				{/if}
+				<button id="submit" class="rounded-1 py-1 px-2 c-background bg-secondary" disabled={limit > 0 || (nomad && !CAPTCHA)} onclick={submit_comment}>
+					{#if limit > 0}
+						{t("comment.delay", { seconds: Math.ceil(limit) })}
+					{:else if nomad && !CAPTCHA}
+						{@render icon.verifying()}
+					{:else}
+						{edit ? t("comment.edit.name") : t("comment.submit")}
+					{/if}
+				</button>
 			</section>
 		</fieldset>
 	</div>
@@ -37,16 +64,24 @@
 <script lang="ts">
 	import { actions } from "astro:actions";
 	import { slide } from "svelte/transition";
+	import { onMount } from "svelte";
 	import remark from "$utils/remark";
+	import Modal from "$components/Modal.svelte";
 	import { push_tip } from "$components/Tip.svelte";
 	import i18nit from "$i18n";
 
-	let { locale, OAuth, drifter, section, item, reply, edit, text, icon, refresh, view = $bindable(), limit = $bindable(0) }: { locale: string; OAuth: any; drifter?: string; section: string; item: string; reply?: string; edit?: string; text?: string; icon: any; refresh: any; view?: boolean; limit?: number } = $props();
+	let { locale, OAuth, turnstile, drifter, section, item, reply, edit, text, icon, refresh, view = $bindable(), limit = $bindable(0) }: { locale: string; OAuth: any; turnstile?: string; drifter?: string; section: string; item: string; reply?: string; edit?: string; text?: string; icon: any; refresh: any; view?: boolean; limit?: number } = $props();
 
 	const t = i18nit(locale);
 
+	let anchor_view: boolean = $state(false); // OAuth login view state
 	let content: string = $state(text ?? ""); // Comment content, initialize with existing text if editing
 	let preview: boolean = $state(false); // Toggle between edit and preview mode
+	let nomad: boolean = $state(!!turnstile && !drifter); // Check if unauthenticated comments are allowed
+	let nickname: string | null = $state(null);
+	let CAPTCHA: string | undefined = $state();
+	let turnstile_element: HTMLElement | undefined = $state();
+	let turnstile_ID: string | undefined = $state();
 
 	// Predefined emoji shortcuts for quick insertion
 	const emojis = [
@@ -86,11 +121,27 @@
 	 * Create or edit comment with validation and rate limiting
 	 */
 	async function submit_comment() {
-		// Validate content is not empty (only for new comments)
-		if (content.trim() === "") return push_tip("warning", t("comment.empty"));
+		// Validate content is not empty
+		if (!content.trim()) return push_tip("warning", t("comment.empty"));
 
-		// Call appropriate API action based on whether we're editing or creating
-		const { data, error } = edit ? await actions.comment.edit({ ID: edit, content }) : await actions.comment.create({ section, item, reply, content, link: location.href });
+		// If nomad mode is enabled, validate CAPTCHA and nickname
+		if (nomad) {
+			if (!CAPTCHA) return push_tip("error", t("comment.verify.failure"));
+			if (!nickname?.trim()) return push_tip("warning", t("comment.nickname.empty"));
+		}
+
+		// Call appropriate API action based on whether editing or creating
+		const { data, error } = edit ? await actions.comment.edit({ ID: edit, content }) : await actions.comment.create({ section, item, reply, content, link: location.href, nickname, CAPTCHA });
+
+		if (nomad) {
+			// Only reset turnstile for top-level comments (when reply is undefined) or if there was an error
+			if (!reply || error) {
+				window.turnstile.reset(turnstile_ID);
+				CAPTCHA = undefined;
+			}
+
+			localStorage.setItem("nickname", nickname!);
+		}
 
 		if (!error) {
 			// Refresh comment list to show updated comment
@@ -113,9 +164,44 @@
 				case "TOO_MANY_REQUESTS":
 					return push_tip("error", t("comment.limit"));
 
+				case "FORBIDDEN":
+					return push_tip("error", t("comment.verify.failure"));
+
 				default:
 					return push_tip("error", t("comment.failure"));
 			}
 		}
 	}
+
+	onMount(() => {
+		// If nomad is enabled and user is not authenticated, show nickname input and Turnstile widget
+		if (nomad) {
+			nickname = localStorage.getItem("nickname");
+
+			/**
+			 * Render Turnstile widget
+			 */
+			function init_turnstile() {
+				turnstile_ID = window.turnstile.render(turnstile_element, {
+					sitekey: turnstile,
+					callback: (token: string) => {
+						CAPTCHA = token;
+					},
+					"expired-callback": () => {
+						CAPTCHA = undefined;
+					},
+					"error-callback": () => {
+						CAPTCHA = undefined;
+					}
+				});
+			}
+
+			// Check if turnstile is available and render immediately
+			if (window.turnstile) {
+				init_turnstile();
+			} else {
+				window.onloadTurnstileCallback = init_turnstile;
+			}
+		}
+	});
 </script>

@@ -1,6 +1,5 @@
 declare namespace App {
 	interface Locals {
-		test: number;
 		runtime: {
 			env: any;
 			ctx: {

@@ -191,7 +191,8 @@ export default defineConfig({
         ],
         "svg-spinners": [
           "3-dots-move",
-          "pulse-3"
+          "pulse-3",
+          "pulse-rings-3"
         ]
       }
     })

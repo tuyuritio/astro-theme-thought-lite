@@ -18,6 +18,10 @@ comment:
     failure: Error loading comments
   history: History
   limit: Comments are too frequent
+  login: Login to share your thoughts
+  nickname:
+    empty: Nickname can't be empty
+    name: Nickname
   placeholder: Leave your thoughts here
   remove:
     failure: Comment deletion failed
@@ -31,6 +35,8 @@ comment:
   submit: Submit
   success: Your thousghts have been delivered
   time: Posted at
+  verify:
+    failure: Human verification failed
 confirm: Confirm
 delete: Delete
 drifter:
@@ -44,6 +50,7 @@ drifter:
       new: Re-authorization will create a new account
       notification: No longer receive any notifications
     description: 'If you confirm deactivation, your account will:'
+    done: Departed Voyager
     failure: Deactivation failed
     name: Cast off
     success: Account successfully deactivated
@@ -106,4 +113,5 @@ notification:
 oauth:
   github: Login with GitHub
   google: Login with Google
+  name: Login
   x: Login with X

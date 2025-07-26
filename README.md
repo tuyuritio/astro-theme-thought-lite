@@ -16,7 +16,7 @@
 🌏 **i18n Support** - Easy to extend and manage multilingual content.\
 📰 **Sitemap & Feed Subscription** - Automated generation of Sitemap and RSS, Atom, JSON Feed.\
 🔗 **OpenGraph Support** - Built-in Open Graph meta tags for optimized social media sharing.\
-📝 **Comment System** - Based on Cloudflare D1, easy deployment with privacy control; OAuth authentication.\
+📝 **Comment System** - Based on Cloudflare D1, easy deployment with privacy control; supports OAuth authentication and guest comments.\
 🔔 **Desktop Notifications** - Real-time notifications using Web Push API.
 
 ## 📋 Prerequisites
@@ -39,8 +39,9 @@ npm install
 ## 🔧 Configuration
 
 1. Create Cloudflare D1, refer to [Cloudflare D1 Configuration Guide](src/content/note/en/cloudflare-d1.md).
-2. Configure OAuth authentication, refer to [OAuth Configuration Guide](src/content/note/en/oauth.md).
-3. Basic site information configuration, refer to [Site Configuration Guide](src/content/note/en/configuration.md).
+2. Configure Cloudflare Turnstile, refer to [Turnstile Configuration Guide](src/content/note/en/turnstile.md).
+3. Configure OAuth authentication, refer to [OAuth Configuration Guide](src/content/note/en/oauth.md).
+4. Basic site information configuration, refer to [Site Configuration Guide](src/content/note/en/configuration.md).
 5. Create `.env` file and add variables:
 
     ```sh

@@ -16,7 +16,7 @@
 🌏 **i18n サポート** - 多言語コンテンツの簡単な拡張と管理。\
 📰 **サイトマップ & フィード購読** - サイトマップと RSS、Atom、JSON フィードの自動生成。\
 🔗 **OpenGraph サポート** - 組み込みの Open Graph メタタグでソーシャルメディア共有を最適化。\
-📝 **コメントシステム** - Cloudflare D1 ベース、デプロイが簡単でプライバシー制御可能；OAuth 認証。\
+📝 **コメントシステム** - Cloudflare D1 ベース、デプロイが簡単でプライバシー制御可能；OAuth 認証とゲストコメントをサポート。\
 🔔 **デスクトップ通知** - Web Push API を使用したリアルタイム通知。
 
 ## 📋 前提条件
@@ -39,8 +39,9 @@ npm install
 ## 🔧 設定
 
 1. Cloudflare D1 を作成、[Cloudflare D1 設定ガイド](src/content/note/ja/cloudflare-d1.md)を参照。
-2. OAuth 認証を設定、[OAuth 設定ガイド](src/content/note/ja/oauth.md)を参照。
-3. サイト基本情報設定、[サイト設定ガイド](src/content/note/ja/configuration.md)を参照。
+2. Cloudflare Turnstile を設定、[Turnstile 設定ガイド](src/content/note/ja/turnstile.md)を参照。
+3. OAuth 認証を設定、[OAuth 設定ガイド](src/content/note/ja/oauth.md)を参照。
+4. サイト基本情報設定、[サイト設定ガイド](src/content/note/ja/configuration.md)を参照。
 5. `.env` ファイルを作成し、変数を追加：
 
     ```sh

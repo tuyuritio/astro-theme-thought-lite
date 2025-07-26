@@ -1,5 +1,4 @@
 import { ActionError, defineAction } from "astro:actions";
-import { getCollection } from "astro:content";
 import { z } from "astro:schema";
 import { and, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
@@ -9,6 +8,9 @@ import notify from "$utils/notify";
 import i18nit from "$i18n";
 
 const env = import.meta.env;
+
+// If unauthenticated comments are allowed
+const nomad = env.CLOUDFLARE_TURNSTILE_SITE_KEY && env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
 
 /**
  * Define the Comment structure
@@ -33,15 +35,41 @@ export const comment = {
 			item: z.string(),					// The item ID this comment belongs to
 			reply: z.string().nullish(),		// ID of replied comment if this is a reply
 			content: z.string(),				// The comment content
-			link: z.string().url()				// URL link for notifications
+			link: z.string().url(),				// URL link for notifications
+			nickname: z.string().nullish(),		// Nickname for nomad users
+			CAPTCHA: z.string().nullish()		// CAPTCHA token for nomad users
 		}),
-		handler: async ({ section, item, reply, content, link }, { cookies, locals }) => {
+		handler: async ({ section, item, reply, content, link, nickname, CAPTCHA }, { cookies, request, locals }) => {
 			// Verify user authentication
-			const drifter = (await Token.check("passport", cookies)).visa;
-			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
+			const drifter = (await Token.check("passport", cookies))?.visa;
+
+			// Get the client IP address from Cloudflare headers
+			const IP = request.headers.get("CF-Connecting-IP");
+
+			if (!drifter) {
+				if (nomad && nickname?.trim() && CAPTCHA) {
+					// If nomad is enabled, verify captcha
+					const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							secret: env.CLOUDFLARE_TURNSTILE_SECRET_KEY,
+							response: CAPTCHA,
+							remoteip: IP
+						})
+					});
+
+					const result = await response.json()
+					if (!result.success) throw new ActionError({ code: "FORBIDDEN" });
+				} else {
+					// If unauthenticated and nomad is unavailable, throw unauthorized error
+					throw new ActionError({ code: "UNAUTHORIZED" });
+				}
+			}
 
 			// Apply rate limiting to prevent spam
-			const { success } = await locals.runtime.env.COMMENT_LIMIT.limit({ key: drifter });
+			// Use drifter ID for authenticated users, clientAddress for unauthenticated users
+			const { success } = await locals.runtime.env.COMMENT_LIMIT.limit({ key: drifter ?? IP ?? nickname });
 			if (!success) throw new ActionError({ code: "TOO_MANY_REQUESTS" });
 
 			// Generate unique comment ID and timestamp
@@ -60,6 +88,7 @@ export const comment = {
 					item,
 					reply,
 					drifter,
+					nickname,
 					timestamp: now.getTime(),
 					content
 				});
@@ -198,11 +227,12 @@ export const comment = {
 					content: Comment.content,
 					edit: Comment.edit,
 					// Use display name if available, otherwise use handle
-					name: sql`CASE WHEN ${Drifter.name} IS NULL OR ${Drifter.name} = '' THEN ${Drifter.handle} ELSE ${Drifter.name} END`,
+					name: sql`CASE WHEN ${Drifter.name} IS NULL THEN ${Drifter.handle} ELSE ${Drifter.name} END`,
+					// Use nickname for unauthenticated users
+					nickname: Comment.nickname,
 					description: Drifter.description,
 					image: Drifter.image,
 					homepage: Drifter.homepage,
-					notify: Drifter.notify,
 					// Mark if this user is the site author
 					author: sql`CASE WHEN ${Drifter.ID} = ${author} THEN 1 ELSE 0 END`
 				})
@@ -259,7 +289,10 @@ export const comment = {
 			const passport = await Token.check("passport", cookies);
 			const visa = passport?.visa;
 
-			return { treeification, visa };
+			// Get the Turnstile site key if unauthenticated comments are allowed
+			const turnstile = nomad && env.CLOUDFLARE_TURNSTILE_SITE_KEY;
+
+			return { treeification, visa, turnstile };
 		}
 	})
 }

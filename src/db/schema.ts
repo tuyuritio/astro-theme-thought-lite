@@ -26,7 +26,10 @@ export const Comment = sqliteTable("comment", {
 	reply: text(),
 	edit: text(),
 	timestamp: integer().notNull(),
+	// Store the drifter ID for authenticated users
 	drifter: text(),
+	// Optional nickname for unauthenticated users
+	nickname: text(),
 	content: text().notNull(),
 }, (table) => [
 	foreignKey({

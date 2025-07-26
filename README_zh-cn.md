@@ -16,7 +16,7 @@
 🌏 **i18n 支持** - 轻松扩展和管理多语言内容。\
 📰 **Sitemap 及 Feed 订阅** - 自动化生成 Sitemap 和 RSS、Atom、JSON Feed。\
 🔗 **OpenGraph 支持** - 内置 Open Graph 元标签，优化社交媒体分享效果。\
-📝 **评论系统** - 基于 Cloudflare D1，部署便捷，隐私可控；OAuth 身份认证。\
+📝 **评论系统** - 基于 Cloudflare D1，部署便捷，隐私可控；支持 OAuth 身份认证和免登录评论。\
 🔔 **桌面通知** - 使用 Web Push API 推送实时通知。
 
 ## 📋 前期准备
@@ -39,8 +39,9 @@ npm install
 ## 🔧 配置
 
 1. 创建 Cloudflare D1，参考[Cloudflare D1 配置指南](src/content/note/zh-cn/cloudflare-d1.md)。
-2. 配置 OAuth 认证，参考[OAuth 配置指南](src/content/note/zh-cn/oauth.md)。
-3. 站点基本信息配置，参考[站点配置指南](src/content/note/zh-cn/configuration.md)。
+2. 配置 Cloudflare Turnstile，参考[Cloudflare Turnstile 配置指南](src/content/note/zh-cn/cloudflare-turnstile.md)。
+3. 配置 OAuth 认证，参考[OAuth 配置指南](src/content/note/zh-cn/oauth.md)。
+4. 站点基本信息配置，参考[站点配置指南](src/content/note/zh-cn/configuration.md)。
 5. 创建 `.env` 文件，并添加变量：
 
     ```sh
