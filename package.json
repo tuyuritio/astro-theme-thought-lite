@@ -1,7 +1,7 @@
 {
 	"name": "astro-theme-thought-lite",
 	"type": "module",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "A modern Astro theme optimized for Cloudflare, focused on content creation",
 	"keywords": [
 		"astro",
