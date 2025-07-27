@@ -1,7 +1,7 @@
 ---
 title: Cloudflare D1 Configuration Guide
 timestamp: 2025-07-07 00:00:00+00:00
-tags: ["Guide", "Cloudflare", "Database"]
+tags: [Guide, Cloudflare, Database]
 ---
 
 > Official Documentation: [Cloudflare D1](https://developers.cloudflare.com/d1/get-started/)\

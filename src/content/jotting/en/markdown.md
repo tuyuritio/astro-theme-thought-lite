@@ -2,7 +2,7 @@
 title: Markdown Extension Manual
 timestamp: 2024-07-21 00:00:00+00:00
 series: Astro
-tags: ["Markup", "Demo"]
+tags: [Markup, Demo]
 contents: true
 ---
 

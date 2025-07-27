@@ -2,7 +2,7 @@
 title: 孔乙己
 timestamp: 1919-03-01 00:00:00+08:00
 series: 吶喊
-tags: ["Literature", "Demo"]
+tags: [Literature, Demo]
 ---
 
 > 魯迅　著\

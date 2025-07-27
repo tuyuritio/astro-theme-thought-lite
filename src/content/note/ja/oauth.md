@@ -1,7 +1,7 @@
 ---
 title: OAuth 設定ガイド
 timestamp: 2025-06-24 00:00:00+00:00
-tags: ["Guide", "OAuth"]
+tags: [Guide, OAuth]
 ---
 
 ## OAuth トークンの作成

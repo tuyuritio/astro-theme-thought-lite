@@ -2,7 +2,7 @@
 title: Kong Yiji
 timestamp: 1919-03-01 00:00:00+08:00
 series: Call to Arms
-tags: ["Literature", "Demo"]
+tags: [Literature, Demo]
 ---
 
 The wine shops in Luzhen are not like those in other parts of China. They all have right-angled counters facing the street, where hot water is kept ready for warming wine. When men come off work at midday and in the evening they buy a bowl of wine; it cost four coppers twenty years ago, but now it costs ten. Standing beside the counter, they drink it warm, and relax. Another copper will buy a plate of salted bamboo shoots or *huixiang* peas flavored with aniseed, to go with the wine, while for a dozen coppers you can buy a meat dish. But most of these customers belong to the short-coated class, few of whom can afford this. Only those in long gowns enter the adjacent room to order wine and dishes, and sit and drink at leisure.

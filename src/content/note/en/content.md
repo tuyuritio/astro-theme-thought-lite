@@ -2,7 +2,7 @@
 title: Content Creation Guide
 timestamp: 2025-04-04 00:00:00+00:00
 series: Astro
-tags: ["Content", "Demo"]
+tags: [Content, Demo]
 contents: true
 ---
 
@@ -44,17 +44,17 @@ It is recommended to use timestamps or serial numbers to name preface files. Alt
 
 You can describe the site's **creation background**, **core positioning**, **future vision**, and even display **personal resume**, as well as the emotions or viewpoints you hope to convey through this platform.
 
-### Claim
-
-"Claim" is important content for establishing site **compliance** and clarifying **responsibility relationships**.
-
-It explains the website's technical architecture, resource usage, copyright policy, privacy policy, and user agreement, ensuring the legality and transparency of website operations.
-
 ### Roll
 
 "Roll" is used to display related websites and resources. This is not only a recommendation for **quality content**, but also an important way to build **internet community** connections.
 
 Here you can elaborate on your recommendation criteria and management methods for external links, providing visitors with opportunities for extended reading, making it an important part of the site.
+
+### Policy
+
+"Policy" is important content for establishing site **compliance** and clarifying **responsibility relationships**.
+
+It explains the website's privacy policy, terms of service, disclaimers and other key information, ensuring the legality and transparency of website operations.
 
 ## Image Insertion
 

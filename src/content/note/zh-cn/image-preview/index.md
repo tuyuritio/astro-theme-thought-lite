@@ -2,7 +2,7 @@
 title: Markdown 图片预览
 timestamp: 2025-04-04 00:00:00+00:00
 series: Astro
-tags: ["Content", "Demo"]
+tags: [Content, Demo]
 ---
 
 本文演示 Markdown 中三种图片引用方式。

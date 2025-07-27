@@ -21,11 +21,9 @@ const information = await getCollection("information", information => {
 });
 
 let introduction = information.find(info => info.id == "introduction");
-let claim = information.find(info => info.id == "claim");
 let roll = information.find(info => info.id == "roll");
 
 const { Content: Introduction } = introduction ? await render(introduction) : ({} as any);
-const { Content: Claim } = claim ? await render(claim) : ({} as any);
 const { Content: Roll } = roll ? await render(roll) : ({} as any);
 
 let chronicle = information.find(info => info.id == "chronicle")?.data;
@@ -57,16 +55,6 @@ let chronicles = Object.entries<string[]>(chronicle ?? {})
 						<h1>{t("about.introduction")}</h1>
 						<samp class="markdown">
 							<Introduction />
-						</samp>
-					</div>
-				)
-			}
-			{
-				claim && (
-					<div>
-						<h1>{t("about.claim")}</h1>
-						<samp class="markdown">
-							<Claim />
 						</samp>
 					</div>
 				)

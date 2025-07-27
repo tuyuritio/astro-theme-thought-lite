@@ -1,7 +1,7 @@
 ---
 title: Cloudflare Turnstile 設定ガイド
 timestamp: 2025-07-26 00:00:00+00:00
-tags: ["Guide", "Cloudflare", "CAPTCHA"]
+tags: [Guide, Cloudflare, CAPTCHA]
 ---
 
 > 公式ドキュメント：[Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/get-started/)

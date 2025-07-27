@@ -2,7 +2,7 @@
 title: Markdown画像プレビュー
 timestamp: 2025-04-04 00:00:00+00:00
 series: Astro
-tags: ["Content", "Demo"]
+tags: [Content, Demo]
 ---
 
 この記事では、Markdownで画像を参照する3つの方法を紹介します。

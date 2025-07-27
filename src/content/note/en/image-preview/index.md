@@ -2,7 +2,7 @@
 title: Markdown Image Preview
 timestamp: 2025-04-04 00:00:00+00:00
 series: Astro
-tags: ["Content", "Demo"]
+tags: [Content, Demo]
 ---
 
 This article demonstrates three ways to reference images in Markdown.

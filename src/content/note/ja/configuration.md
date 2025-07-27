@@ -1,7 +1,7 @@
 ---
 title: サイト設定ガイド
 timestamp: 2025-07-07 00:00:00+00:00
-tags: ["Guide", "Astro"]
+tags: [Guide, Astro]
 ---
 
 ## `astro.config.ts`

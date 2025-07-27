@@ -1,7 +1,7 @@
 ---
 title: OAuth 配置指南
 timestamp: 2025-06-24 00:00:00+00:00
-tags: ["Guide", "OAuth"]
+tags: [Guide, OAuth]
 ---
 
 ## 创建 OAuth Token

@@ -1,7 +1,7 @@
 ---
 title: GitHub Actions 設定ガイド
 timestamp: 2025-07-21 00:00:00+00:00
-tags: ["Guide", "GitHub"]
+tags: [Guide, GitHub]
 ---
 
 > [!TIP]
