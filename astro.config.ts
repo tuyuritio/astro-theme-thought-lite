@@ -129,7 +129,8 @@ export default defineConfig({
         "fa6-solid": [
           "train-subway",
           "b",
-          "signature"
+          "signature",
+          "scale-balanced"
         ],
         "fa6-brands": [
           "creative-commons",

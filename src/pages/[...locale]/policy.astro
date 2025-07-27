@@ -1,0 +1,36 @@
+---
+import { i18n } from "astro:config/client";
+import { getCollection, render } from "astro:content";
+import Base from "$layouts/Base.astro";
+import i18nit from "$i18n";
+
+export async function getStaticPaths() {
+	return i18n?.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
+}
+
+const { locale = i18n!.defaultLocale } = Astro.params;
+
+const t = i18nit(locale);
+
+const information = await getCollection("information", information => {
+	const [language, id] = information.id.split("/");
+	information.id = id;
+	return language == locale;
+});
+
+let policy = information.find(info => info.id == "policy");
+
+const { Content } = policy ? await render(policy) : ({} as any);
+---
+
+<Base title={t("nav.policy")} {locale}>
+	<main class="flex flex-col gap-10 mb-10">
+		{
+			policy && (
+				<div class="markdown">
+					<Content />
+				</div>
+			)
+		}
+	</main>
+</Base>

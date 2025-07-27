@@ -1,7 +1,8 @@
 ---
+import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
 
-let { author, copyright } = Astro.props;
+let { locale, author, copyright } = Astro.props;
 
 let CC_URL: string;
 let CC_label: string;
@@ -85,6 +86,8 @@ if (copyright.type === "CC0 1.0") {
 		<a target="_blank" href={CC_URL} aria-label={CC_label} class="flex items-center gap-1">
 			{CC_icons.map(icon => <Icon name={icon} />)}
 		</a>
+		<span>|</span>
+		<a href={getRelativeLocaleUrl(locale, "/policy")} aria-label="Policy"><Icon name="fa6-solid:scale-balanced" /></a>
 	</div>
 	<code class="hidden sm:flex items-center gap-2.5">
 		<p>Powered by</p>
