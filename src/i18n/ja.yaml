@@ -1,7 +1,6 @@
 '404': 見つかりません
 '500': 内部エラー
 about:
-  claim: ○○声明
   introduction: ○○紹介
   roll: ○○連結
 back: 玄関へ戻る
@@ -115,8 +114,8 @@ oauth:
   benefit:
     captcha: 人間判定が不要
     comment: 自分のコメントを編集・削除
-    notification: コメント返信のデスクトップ通知を受信
     homepage: 自分の公式本頁を表示
+    notification: コメント返信のデスクトップ通知を受信
   github: GitHub 登録
   google: Google 登録
   name: ログイン

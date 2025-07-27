@@ -1,7 +1,6 @@
 '404': 页面未找到
 '500': 服务器错误
 about:
-  claim: ○○声明
   introduction: ○○自述
   roll: ○○连结
 back: 重返序章
@@ -115,8 +114,8 @@ oauth:
   benefit:
     captcha: 无需进行人机验证
     comment: 编辑和删除自己的评论
-    notification: 接收评论回复的桌面通知
     homepage: 展示自己的个人主页
+    notification: 接收评论回复的桌面通知
   github: GitHub 登录
   google: Google 登录
   name: 登录

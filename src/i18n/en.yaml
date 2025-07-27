@@ -1,7 +1,6 @@
 '404': Not Found
 '500': Internal Server Error
 about:
-  claim: Claim
   introduction: Introduction
   roll: Link Roll
 back: Go Home
@@ -115,8 +114,8 @@ oauth:
   benefit:
     captcha: No need to resolve CAPTCHA
     comment: Edit and delete your own comments
-    notification: Receive desktop notifications for comment replies
     homepage: Display your personal homepage
+    notification: Receive desktop notifications for comment replies
   github: Login with GitHub
   google: Login with Google
   name: Login
