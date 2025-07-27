@@ -8,7 +8,7 @@ import { Drifter } from "$db/schema";
 
 export const prerender = false;
 
-export const GET: APIRoute = async ({ site, cookies, params, url, locals, redirect, request }) => {
+export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, request }) => {
 	const { platform } = params;
 
 	const code = url.searchParams.get("code");
