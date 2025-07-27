@@ -11,27 +11,27 @@ comment:
   edit:
     history: 编辑历史
     name: 编辑
-  empty: 评论内容为空
+  empty: 想法内容为空
   failure: 抱歉，想法未能送达
   fetch:
-    failure: 获取评论出错
+    failure: 获取想法出错
   history: 历史
-  limit: 评论过于频繁
+  limit: 发表过于频繁
   login: 登录以传递想法
   nickname:
     empty: 昵称不能为空
     name: 昵称
   placeholder: 于此留下想法
   remove:
-    failure: 删除评论失败
-    name: 删除评论
-    success: 评论删除成功
-  removed: 评论删除
+    failure: 删除想法失败
+    name: 删除想法
+    success: 想法删除成功
+  removed: 想法被删除
   reply: 回复
   share:
     name: 分享
     success: 链接已复制
-  submit: 评论
+  submit: 发表
   success: 想法已送达
   time: 发送时间
   verify:
@@ -43,8 +43,8 @@ drifter:
     cancel: 继续驻足
     confirm: 确认注销
     consequences:
-      comment: 无法再使用当前账号发布评论
-      comments: 所有评论都将保留但匿名化处理
+      comment: 无法再使用当前账号发布想法
+      comments: 所有想法都将保留但匿名化处理
       data: 所有个人信息将被清除
       new: 重新授权登录将创建全新账号
       notification: 无法再接收任何通知
@@ -87,7 +87,7 @@ nav:
   preface: 序文
   subscription: 订阅
 note:
-  comment: 前往评论
+  comment: 前往想法
   contents: 目录
   fetch:
     failure: 获取文记出错
@@ -113,9 +113,9 @@ notification:
 oauth:
   benefit:
     captcha: 无需进行人机验证
-    comment: 编辑和删除自己的评论
+    comment: 编辑和删除自己的想法
     homepage: 展示自己的个人主页
-    notification: 接收评论回复的桌面通知
+    notification: 接收想法回复的桌面通知
   github: GitHub 登录
   google: Google 登录
   name: 登录

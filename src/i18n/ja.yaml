@@ -1,4 +1,4 @@
-'404': 見つかりません
+'404': 存在しない
 '500': 内部エラー
 about:
   introduction: ○○紹介
@@ -11,28 +11,28 @@ comment:
   edit:
     history: 編集歴史
     name: 編集
-  empty: 評論内容空欄
-  failure: 申し訳ありませんが、感想は送信されませんでした
+  empty: 感想内容が空です
+  failure: 申し訳ありませんが、感想を送信できませんでした
   fetch:
-    failure: 評論取得失敗
+    failure: 感想取得に失敗しました
   history: 履歴
-  limit: 過剰評論
-  login: ログインしてアイデアを共有しましょう
+  limit: 投稿が頻繁すぎます
+  login: 登録して感想を共有しましょう
   nickname:
     empty: 渾名は空にすることはできません
     name: 渾名
-  placeholder: 感想刻印此処
+  placeholder: 感想をここに刻印しましょう
   remove:
-    failure: 評論削除失敗
-    name: 評論削除
-    success: 評論削除成功
-  removed: 評論削除
+    failure: 感想削除に失敗しました
+    name: 感想削除
+    success: 感想を削除しました
+  removed: 感想が削除されました
   reply: 返信
   share:
     name: 共有
-    success: 連結複製完了
-  submit: 評論
-  success: アイデアが提供されました
+    success: 連結を複写しました
+  submit: 投稿
+  success: 感想を投稿しました
   time: 送信時間
   verify:
     failure: 人間判定に失敗しました
@@ -56,16 +56,16 @@ drifter:
     title: アカウントを無効化してもよろしいですか？
     warning: この操作は元に戻せません！
   homepage: 公式本頁
-  logout: 録出
+  logout: 退出
   sync:
-    failure: 同期失敗
+    failure: 同期に失敗しました
     fetch: 情報同期中
     name: 同期
-    success: 同期成功
+    success: 同期しました
   update:
-    failure: 更新失敗
+    failure: 更新に失敗しました
     name: 更新
-    success: 更新成功
+    success: 更新しました
 home:
   heatmap:
     empty: 無字
@@ -75,7 +75,7 @@ home:
   prefaces: 序文歴史
 jotting:
   fetch:
-    failure: 随筆取得失敗
+    failure: 随筆取得に失敗しました
   tag: 付札
 nav:
   about: 情報
@@ -87,36 +87,36 @@ nav:
   preface: 序文
   subscription: 購読
 note:
-  comment: 評論
+  comment: 感想
   contents: 目次
   fetch:
-    failure: 文記取得失敗
+    failure: 文記取得に失敗しました
   metadata: 属性
   series: 系列
   tag: 付札
   top: 至頂
 notification:
-  denied: デスクトップ通知の許可を拒否しました
+  denied: 机上通知の許可を拒否しました
   disable:
-    failure: デスクトップ通知の無効化に失敗しました
-    success: デスクトップ通知は無効になっています
+    failure: 机上通知の無効化に失敗しました
+    success: 机上通知を無効にしました
   enable:
-    failure: デスクトップ通知を有効にすることができませんでした
-    success: デスクトップ通知が有効になっています
+    failure: 机上通知の有効化に失敗した
+    success: 机上通知を有効にしました
   fresh:
-    body: クリックして、内容を観に移動します
+    body: 押して感想を確認しましょう
     title: 文の下に、そっと新しい声
-  name: デスクトップ通知
+  name: 机上通知
   reply:
-    body: クリックして、交流記録を辿ります
+    body: 押して交流記録を辿りましょう
     title: 片言が響きとなって返ってきました
 oauth:
   benefit:
     captcha: 人間判定が不要
-    comment: 自分のコメントを編集・削除
-    homepage: 自分の公式本頁を表示
-    notification: コメント返信のデスクトップ通知を受信
-  github: GitHub 登録
-  google: Google 登録
+    comment: 自分の感想を編集・削除できます
+    homepage: 自分の公式本頁を表示できます
+    notification: 感想返信の机上通知を受信できます
+  github: GitHub でログイン
+  google: Google でログイン
   name: ログイン
-  x: X 登録
+  x: X でログイン

@@ -11,28 +11,28 @@ comment:
   edit:
     history: Edit History
     name: Edit
-  empty: Comment is empty
+  empty: Thought is empty
   failure: Sorry, your thoughts couldn't be sent
   fetch:
-    failure: Error loading comments
+    failure: Error loading thoughts
   history: History
-  limit: Comments are too frequent
+  limit: Post too frequently
   login: Login to share your thoughts
   nickname:
     empty: Nickname can't be empty
     name: Nickname
   placeholder: Leave your thoughts here
   remove:
-    failure: Comment deletion failed
-    name: Delete Comment
-    success: Comment deleted
-  removed: Comment deleted
+    failure: Thought deletion failed
+    name: Delete Thought
+    success: Thought deleted
+  removed: Deleted thought
   reply: Reply
   share:
     name: Share
     success: Link copied
   submit: Submit
-  success: Your thousghts have been delivered
+  success: Your thoughts have been delivered
   time: Posted at
   verify:
     failure: Human verification failed
@@ -43,8 +43,8 @@ drifter:
     cancel: Linger on
     confirm: Confirm Deactivation
     consequences:
-      comment: No longer able to post comments with this account
-      comments: All comments will be retained but anonymized
+      comment: No longer able to post thoughts with this account
+      comments: All thoughts will be retained but anonymized
       data: All personal information will be deleted
       new: Re-authorization will create a new account
       notification: No longer receive any notifications
@@ -87,7 +87,7 @@ nav:
   preface: Preface
   subscription: Subscription
 note:
-  comment: Comments
+  comment: Thoughts
   contents: Contents
   fetch:
     failure: Error loading notes
@@ -104,18 +104,18 @@ notification:
     failure: Failed to enable desktop notifications
     success: Desktop notifications are enabled
   fresh:
-    body: Click to see the comment
-    title: A quiet new voice beneath your words.
+    body: Click to see the thought
+    title: A quiet new voice beneath your words
   name: Desktop Notification
   reply:
     body: Click to trace back the communication
-    title: A fragment speaks, and the echo has come.
+    title: A fragment speaks, and the echo has come
 oauth:
   benefit:
     captcha: No need to resolve CAPTCHA
-    comment: Edit and delete your own comments
+    comment: Edit and delete your own thoughts
     homepage: Display your personal homepage
-    notification: Receive desktop notifications for comment replies
+    notification: Receive desktop notifications for thought replies
   github: Login with GitHub
   google: Login with Google
   name: Login
