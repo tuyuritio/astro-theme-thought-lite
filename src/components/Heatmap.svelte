@@ -1,4 +1,4 @@
-<section class="grid grid-flow-col grid-rows-7 gap-1">
+<section class="grid grid-flow-col grid-rows-7 gap-1 contain-layout">
 	{#each heatmap.reverse() as day}
 		{@const number = day.notes.length + day.jottings.length}
 		<figure class="relative group">
