@@ -120,3 +120,6 @@ oauth:
   google: Google でログイン
   name: ログイン
   x: X でログイン
+read:
+  minutes: '{minutes} 分'
+  words: '{words} 字'

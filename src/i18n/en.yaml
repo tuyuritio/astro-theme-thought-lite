@@ -7,7 +7,7 @@ back: Go Home
 cancel: Cancel
 comment:
   author: Author
-  delay: '{seconds} second(s)'
+  delay: '{seconds} seconds'
   edit:
     history: Edit History
     name: Edit
@@ -69,8 +69,8 @@ drifter:
 home:
   heatmap:
     empty: No words
-    jotting: '{count} jotting(s)'
-    note: '{count} note(s)'
+    jotting: '{count} jottings'
+    note: '{count} notes'
   newest: Newest Note
   prefaces: Prefaces
 jotting:
@@ -120,3 +120,6 @@ oauth:
   google: Login with Google
   name: Login
   x: Login with X
+read:
+  minutes: '{minutes} minutes'
+  words: '{words} words'

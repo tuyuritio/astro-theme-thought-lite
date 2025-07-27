@@ -120,3 +120,6 @@ oauth:
   google: Google 登录
   name: 登录
   x: X 登录
+read:
+  minutes: '{minutes} 分钟'
+  words: '{words} 字'
