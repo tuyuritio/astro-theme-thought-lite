@@ -2,7 +2,7 @@
 	<div id="delete" class="flex flex-col items-center justify-center gap-5">
 		<h2>{t("comment.remove.name")}</h2>
 		<input type="hidden" name="ID" value={comment.ID} />
-		<time>{t("comment.time")}：{Time(comment.timestamp)}</time>
+		<time>{t("comment.time")}：{Time.full(comment.timestamp, Time.user_timezone)}</time>
 		<section class="flex gap-5">
 			<button class="form-button" onclick={() => (delete_view = false)}>{t("cancel")}</button>
 			<button class="form-button" onclick={remove}>{t("confirm")}</button>
@@ -36,7 +36,7 @@
 						{#if comment.author}{@render icon.signature()}{/if}
 						{#if comment.homepage}<a href={comment.homepage} target="_blank" class="inline-flex">{@render icon.home()}</a>{/if}
 						<span>·</span>
-						<time title={Time.full(comment.timestamp)} class="text-3">{Time(comment.timestamp).replace("-", " ")}</time>
+						<time class="text-3">{Time(comment.timestamp, Time.user_timezone).replace("-", " ")}</time>
 					</p>
 					{#if comment.description}<span title={comment.description} class="c-secondary text-3 line-height-normal whitespace-nowrap [text-overflow:ellipsis] overflow-hidden">{comment.description}</span>{/if}
 				</dt>
@@ -50,7 +50,7 @@
 							<b class="c-weak">{t("drifter.deactivate.done")}</b>
 						{/if}
 						<span>·</span>
-						<time title={Time.full(comment.timestamp)} class="text-3">{Time(comment.timestamp).replace("-", " ")}</time>
+						<time class="text-3">{Time(comment.timestamp, Time.user_timezone).replace("-", " ")}</time>
 					</p>
 				</dt>
 			{/if}

@@ -1,13 +1,12 @@
 ---
 import { i18n } from "astro:config/client";
-import { getCollection } from "astro:content";
+import { render, getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
 import Heatmap from "$components/Heatmap.svelte";
 import i18nit from "$i18n";
-import { render } from "astro:content";
 
 export async function getStaticPaths() {
 	// Create path for each locale, omitting default locale from URL
@@ -101,7 +100,7 @@ const { Content } = preface ? await render(preface) : ({} as any);
 								))}
 							</div>
 						</div>
-						<time title={Time.full(newest.data.timestamp, Time.user_timezone)} class="c-remark font-mono text-xs">
+						<time title={Time.full(newest.data.timestamp)} class="c-remark font-mono text-xs">
 							{Time(newest.data.timestamp)}
 						</time>
 					</blockquote>
