@@ -61,7 +61,7 @@ if (copyright.type === "CC0 1.0") {
 }
 ---
 
-<footer class="flex items-center justify-center sm:justify-between my-5 sm:my-2 text-size-sm font-mono">
+<footer class="flex flex-col sm:flex-row items-center justify-between gap-2 mt-8 mb-5 sm:my-2 text-size-sm font-mono">
 	<div class="flex items-center gap-1">
 		{
 			copyright.type != "CC0 1.0" && [
@@ -86,12 +86,14 @@ if (copyright.type === "CC0 1.0") {
 		<a target="_blank" href={CC_URL} aria-label={CC_label} class="flex items-center gap-1">
 			{CC_icons.map(icon => <Icon name={icon} />)}
 		</a>
-		<span>|</span>
+		<span>·</span>
 		<a href={getRelativeLocaleUrl(locale, "/policy")} aria-label="Policy"><Icon name="fa6-solid:scale-balanced" /></a>
 	</div>
-	<code class="hidden sm:flex items-center gap-2.5">
+	<code class="flex items-center gap-2.5">
 		<p>Powered by</p>
 		<a href="https://astro.build/" aria-label="Astro" target="_blank"><Icon name="simple-icons:astro" /></a>
 		<a href="https://svelte.dev/" aria-label="Svelte" target="_blank"><Icon name="simple-icons:svelte" /></a>
+		<span>·</span>
+		<a href="https://github.com/tuyuritio/astro-theme-thought-lite" aria-label="Theme" target="_blank"><Icon name="simple-icons:github" /></a>
 	</code>
 </footer>
