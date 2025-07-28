@@ -84,17 +84,17 @@ const { Content } = preface ? await render(preface) : ({} as any);
 
 		{
 			newest && (
-				<footer class="flex items-center flex-wrap-reverse gap-10">
+				<footer class="flex items-center justify-center flex-wrap-reverse gap-10">
 					<Heatmap {locale} {notes} {jottings} />
 
 					<blockquote class="flex-grow">
 						<h3>{t("home.newest")}</h3>
-						<div class="flex justify-between mt-2">
+						<div class="flex flex-col sm:flex-row justify-between gap-1 mt-2">
 							<a href={getRelativeLocaleUrl(locale, `/note/${newest.id.split("/").slice(1).join("/")}`)} class="hover:underline">
 								{newest.data.series ? `${newest.data.series} | ` : ""}
 								{newest.data.title}
 							</a>
-							<div class="hidden sm:flex gap-1">
+							<div class="flex gap-1">
 								{newest.data.tags?.map(tag => (
 									<span class="c-remark text-size-sm">#{tag}</span>
 								))}
