@@ -22,8 +22,6 @@ Authors are encouraged to invest time in polishing content, pursuing depth, brea
 
 Content form is free and flexible, **usually short and concise**, which can be a few sentences of insights, a scene sketch, a fragmented idea that hasn't formed a system, or immediate reading/life notes.
 
-Since it may contain more personal subjective speculation and unpolished thought fragments, no comment section is provided.
-
 ## Information
 
 Informational text contains four parts. If you delete the corresponding file, the corresponding area including the title will not be displayed on the site.

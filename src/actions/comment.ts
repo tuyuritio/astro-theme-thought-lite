@@ -215,7 +215,7 @@ export const comment = {
 			// Initialize database connection
 			let db = drizzle(locals.runtime.env.DB);
 
-			// Fetch all comments for the specified note with user information
+			// Fetch all comments with user information
 			let comments = await db
 				.select({
 					ID: Comment.ID,

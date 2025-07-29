@@ -6,9 +6,9 @@ import read from "reading-time";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
 import Icon from "$components/Icon.astro";
-import Comments from "$components/comment/Section.astro";
 import TOC from "$components/note/TOC.astro";
-import Action from "$components/note/Action.svelte";
+import Comments from "$components/comment/Section.astro";
+import Position from "$components/Position.astro";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
@@ -98,12 +98,7 @@ const t = i18nit(locale);
 				)
 			}
 		</div>
-		<blockquote id="comment-section" class="my-5">
-			<Comments {locale} section="note" item={note.id} />
-		</blockquote>
-		<Action client:load>
-			<Icon name="octicon:move-to-top-16" size={15} title={t("note.top")} slot="top" />
-			<Icon name="octicon:comment-16" size={15} title={t("note.comment")} slot="comment" />
-		</Action>
+		<blockquote id="comment-section" class="my-5"><Comments {locale} section="note" item={note.id} /></blockquote>
+		<Position {locale} />
 	</main>
 </Base>
