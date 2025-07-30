@@ -60,11 +60,11 @@
 	<article class="flex flex-col grow mb-3">
 		<header class="grid grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-5">
 			{#each list as jotting (jotting.id)}
-				<section animate:flip={{ duration: 150 }} class="flex flex-col gap-2 border-2 border-solid border-weak border-rd-2 p-4">
-					<a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} class="c-primary text-4.5 font-bold hover:underline">{jotting.data.title}</a>
+				<section animate:flip={{ duration: 150 }} class="flex flex-col justify-center gap-0.5 border-2 border-solid border-weak border-rd-2 py-2 px-3">
+					<a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} class="c-primary font-bold hover:underline">{jotting.data.title}</a>
 					<span class="flex gap-1">
 						{#each jotting.data.tags as tag}
-							<button onclick={() => switch_tag(tag, true)} class="text-3.5 c-remark">#{tag}</button>
+							<button onclick={() => switch_tag(tag, true)} class="text-3.3 c-remark">#{tag}</button>
 						{/each}
 					</span>
 				</section>

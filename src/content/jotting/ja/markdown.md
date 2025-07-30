@@ -3,7 +3,6 @@ title: Markdown 拡張マニュアル
 timestamp: 2024-07-21 00:00:00+00:00
 series: Astro
 tags: [Markup, Demo]
-contents: true
 ---
 
 本来は愛用している [markdown-it](https://github.com/markdown-it/markdown-it) を Markdown レンダリングエンジンとして使いたかったのですが、Astro に適応させ、予期しないエラーを防ぐため、妥協して [remark](https://github.com/remarkjs/remark) を使用しました。

@@ -3,7 +3,6 @@ title: Markdown Extension Manual
 timestamp: 2024-07-21 00:00:00+00:00
 series: Astro
 tags: [Markup, Demo]
-contents: true
 ---
 
 I originally wanted to use my favorite [markdown-it](https://github.com/markdown-it/markdown-it) as the Markdown rendering engine. But to adapt to Astro and prevent unexpected errors, I compromised and used [remark](https://github.com/remarkjs/remark).

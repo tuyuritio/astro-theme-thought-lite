@@ -3,7 +3,6 @@ title: Markdown 扩展手册
 timestamp: 2024-07-21 00:00:00+00:00
 series: Astro
 tags: [Markup, Demo]
-contents: true
 ---
 
 原本想使用我最喜欢的 [markdown-it](https://github.com/markdown-it/markdown-it) 作为 Markdown 渲染引擎。但为了适配 Astro，防止出现意外错误，还是妥协使用了 [remark](https://github.com/remarkjs/remark)。
