@@ -4,6 +4,7 @@ timestamp: 2025-04-04 00:00:00+00:00
 series: Astro
 tags: [Content, Demo]
 contents: true
+top: 1
 ---
 
 The theme's content can be divided into three sections: Notes, Jottings, and Information. Each section carries different content types and publishing purposes, designed to meet diverse expression and reading needs.

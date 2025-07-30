@@ -39,7 +39,7 @@ export const note = {
 
 					return match_series && match_tags;
 				})
-				.sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
+				.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
 
 			// Calculate pagination
 			let pages = Math.ceil(notes.length / size);

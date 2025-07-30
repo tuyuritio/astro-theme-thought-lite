@@ -130,7 +130,8 @@ export default defineConfig({
           "train-subway",
           "b",
           "signature",
-          "scale-balanced"
+          "scale-balanced",
+          "map-pin"
         ],
         "fa6-brands": [
           "creative-commons",

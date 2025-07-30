@@ -4,6 +4,7 @@ timestamp: 2025-04-04 00:00:00+00:00
 series: Astro
 tags: [Content, Demo]
 contents: true
+top: 1
 ---
 
 主题的内容可分为三个板块：文记、随笔、说明。每个板块承载不同的内容类型和发布目的，旨在满足多样化的表达与阅读需求。

@@ -62,10 +62,8 @@
 			<section animate:flip={{ duration: 150 }} class="flex flex-col sm:flex-row">
 				<div class="flex flex-col gap-1">
 					<div class="flex gap-1 items-center">
-						{#if note.data.series}
-							<button onclick={() => choose_series(note.data.series, true)}>{note.data.series}</button>
-							<b>|</b>
-						{/if}
+						{#if note.data.top > 0}{@render top()}{/if}
+						{#if note.data.series}<button onclick={() => choose_series(note.data.series, true)}>{note.data.series}</button><b>|</b>{/if}
 						<a href={getRelativeLocaleUrl(locale, `/note/${note.id.split("/").slice(1).join("/")}`)} class="hover:underline">{note.data.title}</a>
 					</div>
 					<time title={Time.full(note.data.timestamp)} class="font-mono text-2.6 c-remark">{Time(note.data.timestamp)}</time>
@@ -128,7 +126,7 @@
 	import i18nit from "$i18n";
 	import { push_tip } from "$components/Tip.svelte";
 
-	let { locale, notes, pages, page, size, series_list, tag_list, series, tags, left, right, dots }: { locale: string; notes: any[]; pages: number; page: number; size: number; series_list: string[]; tag_list: string[]; series?: string; tags: string[]; left: Snippet; right: Snippet; dots: Snippet } = $props();
+	let { locale, notes, pages, page, size, series_list, tag_list, series, tags, top, left, right, dots }: { locale: string; notes: any[]; pages: number; page: number; size: number; series_list: string[]; tag_list: string[]; series?: string; tags: string[]; top: Snippet; left: Snippet; right: Snippet; dots: Snippet } = $props();
 
 	const t = i18nit(locale);
 
