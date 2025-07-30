@@ -42,8 +42,8 @@ Fill in the `DATABASE_NAME` and `DATABASE_ID` generated in the previous step int
     - If you need automated deployment via GitHub Actions, add [**Account**] [**Workers Scripts**] [**Edit**] permission.
 5. For *Account Resources*, select the Cloudflare account used in the project.
 6. Optionally configure **TTL**.
-7. Click **Continue to Summary** and ensure the API token summary content is **<Account> - D1:Edit**.
-    - If Workers permission is added, it will be **<Account> - Workers Scripts:Edit, D1:Edit**.
+7. Click **Continue to Summary** and ensure the API token summary content is **<Account> - D1\:Edit**.
+    - If Workers permission is added, it will be **<Account> - Workers Scripts\:Edit, D1\:Edit**.
 8. Click **Create Token**.
 9. **Copy** and save the generated token, or test if the token works normally as prompted.
 
