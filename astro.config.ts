@@ -7,7 +7,7 @@ import svelte from "@astrojs/svelte";
 import UnoCSS from "unocss/astro";
 import swup from "@swup/astro";
 import icon from "astro-icon";
-import one_light from "shiki/themes/one-light.mjs"
+import github_light from "shiki/themes/github-light.mjs"
 
 import GFM from "remark-gfm";
 import ins from "remark-ins";
@@ -86,9 +86,9 @@ export default defineConfig({
     shikiConfig: {
       themes: {
         light: {
-          ...one_light,
+          ...github_light,
           colorReplacements: {
-            "#fafafa": "var(--block-color)"
+            "#fff": "var(--block-color)"
           }
         },
         dark: "dark-plus"
