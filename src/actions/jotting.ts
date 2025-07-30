@@ -30,7 +30,7 @@ export const jotting = {
 			// Apply tag filtering and sort by timestamp (newest first)
 			jottings = jottings
 				.filter(jotting => tags.every(tag => jotting.data.tags?.includes(tag)))
-				.sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
+				.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
 
 			// Calculate pagination
 			let pages = Math.ceil(jottings.length / size);

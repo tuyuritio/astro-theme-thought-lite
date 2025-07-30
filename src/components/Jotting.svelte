@@ -61,7 +61,10 @@
 		<header class="grid grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-5">
 			{#each list as jotting (jotting.id)}
 				<section animate:flip={{ duration: 150 }} class="flex flex-col justify-center gap-0.5 border-2 border-solid border-weak border-rd-2 py-2 px-3">
-					<a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} class="c-primary font-bold hover:underline">{jotting.data.title}</a>
+					<span>
+						{#if jotting.data.top > 0}{@render top()}{/if}
+						<a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} class="c-primary font-bold hover:underline">{jotting.data.title}</a>
+					</span>
 					<span class="flex gap-1">
 						{#each jotting.data.tags as tag}
 							<button onclick={() => switch_tag(tag, true)} class="text-3.3 c-remark">#{tag}</button>
@@ -110,7 +113,7 @@
 	import { push_tip } from "$components/Tip.svelte";
 	import i18nit from "$i18n";
 
-	let { locale, jottings, pages, page, size, tag_list, tags, left, right, dots }: { locale: string; jottings: any[]; pages: number; page: number; size: number; tag_list: string[]; tags: string[]; left: Snippet; right: Snippet; dots: Snippet } = $props();
+	let { locale, jottings, pages, page, size, tag_list, tags, top, left, right, dots }: { locale: string; jottings: any[]; pages: number; page: number; size: number; tag_list: string[]; tags: string[]; top: Snippet; left: Snippet; right: Snippet; dots: Snippet } = $props();
 
 	const t = i18nit(locale);
 

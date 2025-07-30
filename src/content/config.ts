@@ -28,11 +28,12 @@ const jotting = defineCollection({
 	// Load all markdown files except those starting with underscore
 	loader: glob({ pattern: ["**/*.md", "!**/_*.md", "!**/_*/*.md"], base: "./src/content/jotting" }),
 	schema: z.object({
-		title: z.string(),							// Jotting title (required)
-		timestamp: z.date(),						// Publication date (required)
-		tags: z.array(z.string()).optional(),		// Array of topic tags
-		description: z.string().optional(),			// Brief description
-		draft: z.boolean().default(false)			// Draft status
+		title: z.string(),								// Jotting title (required)
+		timestamp: z.date(),							// Publication date (required)
+		tags: z.array(z.string()).optional(),			// Array of topic tags
+		description: z.string().optional(),				// Brief description
+		top: z.number().int().nonnegative().default(0),	// Top priority for sorting (higher is more important)
+		draft: z.boolean().default(false)				// Draft status
 	})
 });
 

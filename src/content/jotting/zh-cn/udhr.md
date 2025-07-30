@@ -2,6 +2,7 @@
 title: 世界人权宣言
 timestamp: 1948-12-10 00:00:00+00:00
 tags: [UnitedNations, Demo]
+top: 1
 ---
 
 ## 序言
