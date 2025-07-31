@@ -39,7 +39,17 @@ export const jotting = {
 			// Apply pagination by slicing the array
 			jottings = jottings.slice((page - 1) * size, page * size);
 
-			return { jottings, pages, page, tag_list };
+			// Extract only necessary properties
+			const list = jottings.map(jotting => ({
+				id: jotting.id,
+				data: {
+					top: jotting.data.top,
+					title: jotting.data.title,
+					tags: jotting.data.tags
+				}
+			}));
+
+			return { jottings: list, pages, page, tag_list };
 		}
 	})
 }

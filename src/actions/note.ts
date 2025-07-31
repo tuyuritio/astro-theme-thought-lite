@@ -48,7 +48,19 @@ export const note = {
 			// Apply pagination by slicing the array
 			notes = notes.slice((page - 1) * size, page * size);
 
-			return { notes, pages, page, series_list, tag_list };
+			// Extract only necessary properties
+			const list = notes.map(note => ({
+				id: note.id,
+				data: {
+					top: note.data.top,
+					series: note.data.series,
+					title: note.data.title,
+					timestamp: note.data.timestamp,
+					tags: note.data.tags
+				}
+			}));
+
+			return { notes: list, pages, page, series_list, tag_list };
 		}
 	})
 }
