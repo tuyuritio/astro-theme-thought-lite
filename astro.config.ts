@@ -185,7 +185,6 @@ export default defineConfig({
           "person-16",
           "note-16",
           "number-16",
-          "clock-16",
         ],
         "simple-icons": [
           "astro",
