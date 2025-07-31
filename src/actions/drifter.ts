@@ -1,6 +1,6 @@
 import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { OAuth, type OAuthAccount } from "$utils/oauth";
 import { Token } from "$utils/token";
@@ -22,7 +22,7 @@ export const drifter = {
 				.select({
 					ID: Drifter.ID,
 					platform: Drifter.platform,
-					name: Drifter.name,
+					name: sql`CASE WHEN ${Drifter.name} IS NULL THEN ${Drifter.handle} ELSE ${Drifter.name} END`,
 					description: Drifter.description,
 					image: Drifter.image,
 					homepage: Drifter.homepage,
