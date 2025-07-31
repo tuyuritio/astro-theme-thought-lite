@@ -83,7 +83,7 @@ export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, re
 		const code_verifier = generateCodeVerifier();
 
 		// Store OAuth state and referrer in escort token
-		await Token.issue("escort", cookies, { state, code_verifier, referrer: request.headers.get("referer") ?? "/" });
+		await Token.issue("escort", cookies, { state, code_verifier, referrer: request.headers.get("referer") ?? "/" }, "5 minutes");
 
 		// Generate OAuth authorization URL and redirect user
 		let link: URL = new OAuth(platform).URL(state, code_verifier);
