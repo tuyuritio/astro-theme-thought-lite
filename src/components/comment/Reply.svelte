@@ -42,7 +42,7 @@
 			<section class="flex items-center gap-2">
 				<figure class="relative group">
 					<figcaption class="line-height-none">{@render icon.emoji()}</figcaption>
-					<ul class="absolute bottom-full left--3 flex items-center gap-2 mb-1 border-2 border-solid border-weak rounded-1 py-2 px-3 bg-background shadow-md pop">
+					<ul class="absolute bottom-full left--3 flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 mb-1 border-2 border-solid border-weak rounded-1 py-2 px-3 bg-background shadow-md pop">
 						{#each emojis as emoji}
 							<button onclick={() => insert_emoji(emoji.code)}>{emoji.icon}</button>
 						{/each}
