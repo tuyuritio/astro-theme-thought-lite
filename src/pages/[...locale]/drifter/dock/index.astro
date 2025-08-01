@@ -13,7 +13,7 @@ const { locale = i18n!.defaultLocale } = Astro.params;
 
 const t = i18nit(locale);
 
-const passport = await Token.check("passport", Astro.cookies);
+const passport = await Token.check(Astro.cookies, "passport");
 if (!passport?.visa) return Astro.redirect("/drifter/roam", 302);
 
 const { data, error } = await Astro.callAction(actions.drifter.profile, null);

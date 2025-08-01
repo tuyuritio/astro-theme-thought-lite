@@ -11,7 +11,7 @@ export const drifter = {
 	profile: defineAction({
 		handler: async (_, { cookies, locals }) => {
 			// Verify user authentication
-			const ID = (await Token.check("passport", cookies))?.visa;
+			const ID = (await Token.check(cookies, "passport"))?.visa;
 			if (!ID) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
@@ -40,7 +40,7 @@ export const drifter = {
 	synchronize: defineAction({
 		handler: async (_, { cookies, locals }) => {
 			// Verify user authentication
-			const ID = (await Token.check("passport", cookies))?.visa;
+			const ID = (await Token.check(cookies, "passport"))?.visa;
 			if (!ID) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
@@ -88,7 +88,7 @@ export const drifter = {
 		}),
 		handler: async ({ homepage }, { cookies, locals }) => {
 			// Verify user authentication
-			const ID = (await Token.check("passport", cookies))?.visa;
+			const ID = (await Token.check(cookies, "passport"))?.visa;
 			if (!ID) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
@@ -108,7 +108,7 @@ export const drifter = {
 	deactivate: defineAction({
 		handler: async (_, { cookies, locals }) => {
 			// Verify user authentication
-			const ID = (await Token.check("passport", cookies))?.visa;
+			const ID = (await Token.check(cookies, "passport"))?.visa;
 			if (!ID) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection

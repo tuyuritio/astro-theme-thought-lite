@@ -30,12 +30,12 @@ export function enhash(text: string): string {
 export namespace Token {
 	/**
 	 * Issue a new encrypted JWT token and set it as an HTTP-only cookie
-	 * @param name - Cookie name for the token
 	 * @param cookies - Astro cookies object for setting the cookie
+	 * @param name - Cookie name for the token
 	 * @param payload - JWT payload data to encrypt
 	 * @param expiration - Token expiration time (default: "60 days")
 	 */
-	export async function issue(name: string, cookies: AstroCookies, payload: JWTPayload, expiration: StringValue | number = "60 days"): Promise<void> {
+	export async function issue(cookies: AstroCookies, name: string, payload: JWTPayload, expiration: StringValue | number = "60 days"): Promise<void> {
 		// Create encrypted JWT using direct encryption (dir) algorithm with A128GCM
 		const token = await new EncryptJWT(payload)
 			.setProtectedHeader({ alg: "dir", enc: "A128GCM" })
@@ -55,12 +55,12 @@ export namespace Token {
 
 	/**
 	 * Verify and decrypt a JWT token from cookies with renewal
-	 * @param name - Cookie name containing the token
 	 * @param cookies - Astro cookies object for reading the cookie
+	 * @param name - Cookie name containing the token
 	 * @param renew - Whether to renew token (default: true)
 	 * @returns Decrypted JWT payload or null if invalid/missing
 	 */
-	export async function check(name: string, cookies: AstroCookies, renew: boolean = true): Promise<any> {
+	export async function check(cookies: AstroCookies, name: string, renew: boolean = true): Promise<any> {
 		try {
 			if (!cookies.has(name)) return null;
 
@@ -72,7 +72,7 @@ export namespace Token {
 			if (payload.exp && renew) {
 				// Create new payload without exp claim (will be set by issue method)
 				const { exp, iat, ...renewal } = payload;
-				await issue(name, cookies, renewal);
+				await issue(cookies, name, renewal);
 			}
 
 			return payload;

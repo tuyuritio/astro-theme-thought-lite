@@ -27,6 +27,7 @@
 	},
 	"scripts": {
 		"dev": "astro dev",
+		"check": "astro check",
 		"build": "astro build",
 		"preview": "wrangler dev",
 		"deploy": "wrangler deploy",
@@ -78,6 +79,7 @@
 		"typescript": "^5.8.3"
 	},
 	"devDependencies": {
+		"@astrojs/check": "^0.9.4",
 		"@rollup/plugin-yaml": "^4.1.2",
 		"@types/luxon": "^3.6.2",
 		"@unocss/reset": "^66.3.3",

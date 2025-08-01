@@ -1,5 +1,5 @@
 import { visit } from 'unist-util-visit';
-import type { Root, Table, Parent, Html } from 'mdast';
+import type { Root, Table, Html } from 'mdast';
 import type { Plugin } from 'unified';
 
 /**

@@ -12,7 +12,7 @@ export const notification = {
 	key: defineAction({
 		handler: async (_, { cookies }) => {
 			// Verify user authentication
-			const drifter = (await Token.check("passport", cookies))?.visa;
+			const drifter = (await Token.check(cookies, "passport"))?.visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Return the public key for web push notifications (VAPID key)
@@ -30,7 +30,7 @@ export const notification = {
 		}),
 		handler: async ({ locale, endpoint, p256dh, auth }, { cookies, locals }) => {
 			// Verify user authentication
-			const drifter = (await Token.check("passport", cookies))?.visa;
+			const drifter = (await Token.check(cookies, "passport"))?.visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
@@ -58,7 +58,7 @@ export const notification = {
 		}),
 		handler: async ({ endpoint }, { cookies, locals }) => {
 			// Verify user authentication
-			const drifter = (await Token.check("passport", cookies))?.visa;
+			const drifter = (await Token.check(cookies, "passport"))?.visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
@@ -79,7 +79,7 @@ export const notification = {
 		}),
 		handler: async ({ endpoint }, { cookies, locals }) => {
 			// Verify user authentication
-			const drifter = (await Token.check("passport", cookies))?.visa;
+			const drifter = (await Token.check(cookies, "passport"))?.visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection

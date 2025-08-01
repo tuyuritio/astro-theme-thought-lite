@@ -41,7 +41,7 @@ export const comment = {
 		}),
 		handler: async ({ section, item, reply, content, link, nickname, CAPTCHA }, { cookies, request, locals }) => {
 			// Verify user authentication
-			const drifter = (await Token.check("passport", cookies))?.visa;
+			const drifter = (await Token.check(cookies, "passport"))?.visa;
 
 			// Get the client IP address from Cloudflare headers
 			const IP = request.headers.get("CF-Connecting-IP");
@@ -144,7 +144,7 @@ export const comment = {
 		}),
 		handler: async ({ ID, content }, { cookies, locals }) => {
 			// Verify user authentication
-			const drifter = (await Token.check("passport", cookies)).visa;
+			const drifter = (await Token.check(cookies, "passport")).visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
@@ -187,7 +187,7 @@ export const comment = {
 		}),
 		handler: async ({ ID }, { cookies, locals }) => {
 			// Verify user authentication
-			const drifter = (await Token.check("passport", cookies)).visa;
+			const drifter = (await Token.check(cookies, "passport")).visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
@@ -286,7 +286,7 @@ export const comment = {
 			}
 
 			// Get user authentication
-			const passport = await Token.check("passport", cookies);
+			const passport = await Token.check(cookies, "passport");
 			const visa = passport?.visa;
 
 			// Get the Turnstile site key if unauthenticated comments are allowed

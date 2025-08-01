@@ -12,7 +12,7 @@ const { locale = i18n!.defaultLocale } = Astro.params;
 const t = i18nit(locale);
 
 // Check if user is already authenticated via passport token
-const passport = await Token.check("passport", Astro.cookies);
+const passport = await Token.check(Astro.cookies, "passport");
 // Redirect authenticated users to dashboard to prevent duplicate login
 if (passport?.visa) return Astro.redirect("/drifter/dock", 302);
 
