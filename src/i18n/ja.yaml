@@ -22,6 +22,7 @@ comment:
     empty: 渾名は空にすることはできません
     name: 渾名
   placeholder: 感想をここに刻印しましょう
+  preview: Markdown 試写
   remove:
     failure: 感想削除に失敗しました
     name: 感想削除

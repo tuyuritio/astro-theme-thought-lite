@@ -22,6 +22,7 @@ comment:
     empty: 昵称不能为空
     name: 昵称
   placeholder: 于此留下想法
+  preview: Markdown 预览
   remove:
     failure: 删除想法失败
     name: 删除想法

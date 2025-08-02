@@ -22,6 +22,7 @@ comment:
     empty: Nickname can't be empty
     name: Nickname
   placeholder: Leave your thoughts here
+  preview: Markdown Preview
   remove:
     failure: Thought deletion failed
     name: Delete Thought
