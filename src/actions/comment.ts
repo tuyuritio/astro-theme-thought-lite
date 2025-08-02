@@ -248,8 +248,13 @@ export const comment = {
 
 			// Build comment tree structure with replies and edit history
 			const treeification: Comment[] = [];
+
+			// Count the final comments
+			let count: number = 0;
+
 			while (list.size) {
 				let comment = list.values().next().value;
+				count++;
 
 				// Process edit history chain
 				let edit;
@@ -257,7 +262,6 @@ export const comment = {
 					if (edit.ID === comment.ID) {
 						// Self-reference indicates deletion
 						delete comment.content;
-						delete comment.html;
 					} else {
 						// Build edit history chain
 						comment.history.push(comment);
@@ -292,7 +296,7 @@ export const comment = {
 			// Get the Turnstile site key if unauthenticated comments are allowed
 			const turnstile = nomad && env.CLOUDFLARE_TURNSTILE_SITE_KEY;
 
-			return { treeification, visa, turnstile };
+			return { treeification, count, visa, turnstile };
 		}
 	})
 }

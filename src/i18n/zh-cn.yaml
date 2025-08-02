@@ -18,11 +18,16 @@ comment:
   history: 历史
   limit: 发表过于频繁
   login: 登录以传递想法
+  name: 想法
   nickname:
     empty: 昵称不能为空
     name: 昵称
   placeholder: 于此留下想法
   preview: Markdown 预览
+  reload:
+    increase: 获取到新的想法！
+    name: 刷新想法
+    same: 暂无新的想法
   remove:
     failure: 删除想法失败
     name: 删除想法
@@ -32,6 +37,9 @@ comment:
   share:
     name: 分享
     success: 链接已复制
+  sort:
+    asc: 时间升序
+    desc: 时间降序
   submit: 发表
   success: 想法已送达
   time: 发送时间

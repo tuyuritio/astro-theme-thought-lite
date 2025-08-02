@@ -1,7 +1,26 @@
 <main>
 	{#if loaded}
 		<Reply {locale} {OAuth} {turnstile} {section} {item} {drifter} {icon} {refresh} bind:limit />
-		{#each comments as comment}
+		{#if comments.length}
+			<div class="flex items-center justify-between mt-6">
+				<p class="flex items-center gap-2">
+					<b class="text-4.5">{t("comment.name")}</b>
+					<span>·</span>
+					<span>{count}</span>
+				</p>
+				<p class="flex gap-4 contain-layout">
+					<button onclick={() => refresh(false)}>{@render reload()}</button>
+					<button onclick={() => (ascending = !ascending)}>
+						{#if ascending}
+							{@render asc()}
+						{:else}
+							{@render desc()}
+						{/if}
+					</button>
+				</p>
+			</div>
+		{/if}
+		{#each list as comment}
 			<CommentBlock {locale} {OAuth} {turnstile} {icon} {drifter} {comment} {refresh} bind:limit />
 		{/each}
 	{:else}
@@ -18,7 +37,7 @@
 	import CommentBlock from "./Comment.svelte";
 	import Reply from "./Reply.svelte";
 
-	let { locale, section, item, OAuth, signature, home, mail, alert, reply, history, share, edit, remove, emoji, preview, loading, rendering, verifying, GitHub, Google, X }: { locale: string; nomad: boolean; section: string; item: string; OAuth: any; signature: Snippet; home: Snippet; mail: Snippet; alert: Snippet; reply: Snippet; history: Snippet; share: Snippet; edit: Snippet; remove: Snippet; emoji: Snippet; preview: Snippet; loading: Snippet; rendering: Snippet; verifying: Snippet; GitHub: Snippet; Google: Snippet; X: Snippet } = $props();
+	let { locale, section, item, OAuth, signature, home, mail, alert, reload, asc, desc, reply, history, share, edit, remove, emoji, preview, loading, rendering, verifying, GitHub, Google, X }: { locale: string; nomad: boolean; section: string; item: string; OAuth: any; signature: Snippet; home: Snippet; mail: Snippet; alert: Snippet; reload: Snippet; asc: Snippet; desc: Snippet; reply: Snippet; history: Snippet; share: Snippet; edit: Snippet; remove: Snippet; emoji: Snippet; preview: Snippet; loading: Snippet; rendering: Snippet; verifying: Snippet; GitHub: Snippet; Google: Snippet; X: Snippet } = $props();
 
 	// Group all icon snippets into a single object for easier prop passing
 	const icon = { signature, home, mail, alert, reply, history, share, edit, remove, emoji, preview, loading, rendering, verifying, GitHub, Google, X };
@@ -27,28 +46,43 @@
 
 	// Track rate limiting state across comment operations
 	let limit: number = $state(0);
+	let loaded: boolean = $state(false);
+	let drifter: string | undefined = $state();
+	let turnstile: string | undefined = $state();
+
+	let count: number = $state(0);
 	let comments: Comment[] = $state([]);
+	let ascending: boolean = $state(false);
+	let list: Comment[] = $derived(ascending ? comments : [...comments].reverse());
 
 	/**
-	 * Refresh comment list after operations
+	 * Refresh comment list
+	 * @param auto - Whether this is an automatic refresh (default true)
 	 */
-	async function refresh() {
+	async function refresh(auto: boolean = true) {
 		const { data, error } = await actions.comment.list({ section, item });
 		if (!error) {
+			if (!auto) {
+				if (data.count > count) {
+					push_tip("success", t("comment.reload.increase"));
+				} else {
+					push_tip("information", t("comment.reload.same"));
+				}
+			}
+
+			count = data.count;
 			comments = data.treeification;
 		} else {
 			push_tip("error", t("comment.fetch.failure"));
 		}
 	}
 
-	let loaded: boolean = $state(false);
-	let drifter: string | undefined = $state();
-	let turnstile: string | undefined = $state();
 	onMount(async () => {
 		// Initial load of comments and user authentication status
 		const { data, error } = await actions.comment.list({ section, item });
 		if (!error) {
 			// Set initial state with fetched comments
+			count = data.count;
 			comments = data.treeification;
 			drifter = data.visa;
 			turnstile = data.turnstile;

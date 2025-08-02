@@ -18,11 +18,16 @@ comment:
   history: History
   limit: Post too frequently
   login: Login to share your thoughts
+  name: Thoughts
   nickname:
     empty: Nickname can't be empty
     name: Nickname
   placeholder: Leave your thoughts here
   preview: Markdown Preview
+  reload:
+    increase: Get new thoughts!
+    name: Refresh comments
+    same: No new thoughts yet
   remove:
     failure: Thought deletion failed
     name: Delete Thought
@@ -32,6 +37,9 @@ comment:
   share:
     name: Share
     success: Link copied
+  sort:
+    asc: Time ascending
+    desc: Time descending
   submit: Submit
   success: Your thoughts have been delivered
   time: Posted at

@@ -18,11 +18,16 @@ comment:
   history: 履歴
   limit: 投稿が頻繁すぎます
   login: 登録して感想を共有しましょう
+  name: 感想
   nickname:
     empty: 渾名は空にすることはできません
     name: 渾名
   placeholder: 感想をここに刻印しましょう
   preview: Markdown 試写
+  reload:
+    increase: 新しい感想があります！
+    name: 感想を更新します
+    same: 新しい感想はまだありません
   remove:
     failure: 感想削除に失敗しました
     name: 感想削除
@@ -32,6 +37,9 @@ comment:
   share:
     name: 共有
     success: 連結を複写しました
+  sort:
+    asc: 時間昇順
+    desc: 時間降序
   submit: 投稿
   success: 感想を投稿しました
   time: 送信時間
