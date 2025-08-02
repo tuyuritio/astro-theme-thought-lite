@@ -32,7 +32,7 @@ const t = i18nit(locale);
 	<main class="flex flex-col">
 		<div class="flex flex-col gap-4">
 			<h1 class="text-3xl">{jotting.data.title}</h1>
-			<header class="flex gap-3 children:(flex items-center gap-1 text-3.5 c-secondary)">
+			<header class="flex flex-col gap-3 sm:flex-row children:(flex items-center gap-1 text-3.5 c-secondary)">
 				<time title={Time.full(jotting.data.timestamp)}><Icon name="octicon:calendar-16" />{Time(jotting.data.timestamp)}</time>
 				{
 					jotting.data.tags?.length && (
