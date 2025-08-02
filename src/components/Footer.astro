@@ -1,6 +1,6 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { Icon } from "astro-icon/components";
+import Icon from "$components/Icon.astro";
 
 let { locale, author, copyright } = Astro.props;
 
@@ -87,13 +87,13 @@ if (copyright.type === "CC0 1.0") {
 			{CC_icons.map(icon => <Icon name={icon} />)}
 		</a>
 		<span>·</span>
-		<a href={getRelativeLocaleUrl(locale, "/policy")} aria-label="Policy"><Icon name="fa6-solid:scale-balanced" /></a>
+		<a href={getRelativeLocaleUrl(locale, "/policy")} aria-label="Policy" class="inline-flex"><Icon name="fa6-solid:scale-balanced" /></a>
 	</div>
 	<code class="flex items-center gap-2.5">
 		<p>Powered by</p>
-		<a href="https://astro.build/" aria-label="Astro" target="_blank"><Icon name="simple-icons:astro" /></a>
-		<a href="https://svelte.dev/" aria-label="Svelte" target="_blank"><Icon name="simple-icons:svelte" /></a>
+		<a href="https://astro.build/" aria-label="Astro" target="_blank" class="inline-flex"><Icon name="simple-icons:astro" /></a>
+		<a href="https://svelte.dev/" aria-label="Svelte" target="_blank" class="inline-flex"><Icon name="simple-icons:svelte" /></a>
 		<span>·</span>
-		<a href="https://github.com/tuyuritio/astro-theme-thought-lite" aria-label="Theme" target="_blank"><Icon name="simple-icons:github" /></a>
+		<a href="https://github.com/tuyuritio/astro-theme-thought-lite" aria-label="Theme" target="_blank" class="inline-flex"><Icon name="simple-icons:github" /></a>
 	</code>
 </footer>
