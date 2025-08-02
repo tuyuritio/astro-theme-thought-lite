@@ -25,7 +25,7 @@
 	</div>
 </Modal>
 
-<main id={comment.ID} class:before:hidden={layer > MAX_LAYER - 1} class="relative before:(absolute content-empty top-12 left-4 h-[calc(100%-2rem)] w-0.2rem bg-[linear-gradient(var(--shadow-color)calc(100%-2rem),transparent)])">
+<main id={comment.ID} class:before:hidden={depth >= MIN_DEPTH} class:sm:before:block={depth < Math.max(MIN_DEPTH, MAX_DEPTH)} class="relative before:(absolute content-empty top-12 left-4 h-[calc(100%-2rem)] w-0.2rem bg-[linear-gradient(var(--shadow-color)calc(100%-2rem),transparent)])">
 	<dl class="flex flex-col gap-2 mt-6">
 		<div class="flex items-center gap-2">
 			{#if comment.name !== null}
@@ -72,7 +72,7 @@
 			{/if}
 		</blockquote>
 	</dl>
-	<div class:ml-7={layer < MAX_LAYER}>
+	<div class:ml-7={depth < MIN_DEPTH} class:sm:ml-7={depth < Math.max(MIN_DEPTH, MAX_DEPTH)}>
 		{#if reply_view && !edit_view}
 			<Reply {locale} {OAuth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.ID} {icon} {refresh} bind:view={reply_view} bind:limit />
 		{:else if edit_view && !reply_view}
@@ -80,7 +80,7 @@
 		{/if}
 
 		{#each comment.subcomments as subcomment}
-			<Self {locale} {OAuth} {turnstile} {drifter} comment={subcomment} {icon} {refresh} layer={layer + 1} bind:limit />
+			<Self {locale} {OAuth} {turnstile} {drifter} comment={subcomment} {icon} {refresh} depth={depth + 1} bind:limit />
 		{/each}
 	</div>
 </main>
@@ -95,12 +95,15 @@
 	import Self from "./Comment.svelte";
 	import Reply from "./Reply.svelte";
 
-	let { locale, OAuth, turnstile, drifter, comment, icon, refresh, layer = 1, limit = $bindable(0) }: { locale: string; OAuth: any; turnstile?: string; drifter?: string; comment: any; icon: any; refresh: any; layer?: number; limit?: number } = $props();
+	let { locale, OAuth, turnstile, drifter, comment, icon, refresh, depth = 0, limit = $bindable(0) }: { locale: string; OAuth: any; turnstile?: string; drifter?: string; comment: any; icon: any; refresh: any; depth?: number; limit?: number } = $props();
 
 	const t = i18nit(locale);
 
+	// Minimum nesting depth for comment threads to ensure proper display
+	const MIN_DEPTH = 1;
+
 	// Maximum nesting depth for comment threads to prevent infinite recursion
-	const MAX_LAYER = 5;
+	const MAX_DEPTH = 4;
 
 	// Control visibility of reply and edit forms (mutually exclusive)
 	let reply_view = $state(false);
