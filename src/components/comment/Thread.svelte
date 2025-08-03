@@ -20,8 +20,10 @@
 				</p>
 			</div>
 		{/if}
-		{#each list as comment}
-			<CommentBlock {locale} {OAuth} {turnstile} {icon} {drifter} {comment} {refresh} bind:limit />
+		{#each list as comment (comment.ID)}
+			<div animate:flip={{ duration: 150 }}>
+				<CommentBlock {locale} {OAuth} {turnstile} {icon} {drifter} {comment} {refresh} bind:limit />
+			</div>
 		{/each}
 	{:else}
 		<i class="block w-full text-center">{@render loading()}</i>
@@ -31,6 +33,7 @@
 <script lang="ts">
 	import { actions } from "astro:actions";
 	import { onMount, type Snippet } from "svelte";
+	import { flip } from "svelte/animate";
 	import type { Comment } from "$actions/comment";
 	import { push_tip } from "$components/Tip.svelte";
 	import i18nit from "$i18n";
