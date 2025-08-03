@@ -29,13 +29,13 @@ const t = i18nit(locale);
 </style>
 
 <figure class="fixed right-[calc(20px+max(calc((100%-800px)/2),0px))] bottom-5 sm:bottom-7 flex flex-col gap-2">
-	<button id="scroll-to-top" class="border-weak" onclick="document.scrollingElement?.scrollTo({top: 0, behavior: 'smooth'})">
+	<button aria-label="Scroll to Top" class="border-weak" onclick="document.scrollingElement?.scrollTo({top: 0, behavior: 'smooth'})">
 		<Icon name="octicon:move-to-top-16" size={15} title={t("note.top")} />
 		<svg class="absolute top--2px left--2px w-[calc(100%+4px)] h-[calc(100%+4px)] transform-origin-center pointer-events-none">
 			<circle id="progress-circle" cx="50%" cy="50%" r="calc(50% - 1px)" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="calc(100% * 3)" stroke-dashoffset="calc(100% * 3)"></circle>
 		</svg>
 	</button>
-	<button id="scroll-to-comment" onclick="document.querySelector('#comment-section')?.scrollIntoView({behavior: 'smooth'})">
+	<button aria-label="Scroll to Comments" onclick="document.querySelector('#comment-section')?.scrollIntoView({behavior: 'smooth'})">
 		<Icon name="octicon:comment-16" size={15} title={t("note.comment")} />
 	</button>
 </figure>
