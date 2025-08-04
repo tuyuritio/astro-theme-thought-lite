@@ -27,7 +27,7 @@ export default defineConfig({
 		},
 		fontFamily: {
 			mono: ["Maple Mono NF CN", "monospace"],
-			cursive: ["Playwrite MX", "serif"],
+			cursive: ["Playwrite MX", "The Peak Font Plus", "serif"],
 		}
 	},
 });
