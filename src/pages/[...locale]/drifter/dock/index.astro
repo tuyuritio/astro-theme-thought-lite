@@ -31,7 +31,7 @@ if (error) {
 
 <Base title={t("nav.drifter")} {locale}>
 	<main class="flex flex-col grow">
-		<Drifter client:load {locale} drifter={data.drifter}>
+		<Drifter client:load {locale} drifter={data}>
 			<Icon name="simple-icons:github" size={25} slot="GitHub" />
 			<Icon name="simple-icons:google" size={25} slot="Google" />
 			<Icon name="simple-icons:x" size={25} slot="X" />

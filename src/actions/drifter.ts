@@ -32,7 +32,7 @@ export const drifter = {
 				.where(eq(Drifter.ID, ID))
 			)[0];
 
-			return { drifter };
+			return drifter;
 		}
 	}),
 
