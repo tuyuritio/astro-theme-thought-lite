@@ -1,5 +1,6 @@
 import { unified } from "unified";
 import parse from "remark-parse";
+import breaks from "remark-breaks";
 import gfm from "remark-gfm";
 import ins from "remark-ins";
 import emoji from "remark-gemoji";
@@ -11,6 +12,7 @@ import stringify from "rehype-stringify";
 
 export default unified()
 	.use(parse)
+	.use(breaks)
 	.use(gfm, { singleTilde: false })
 	.use(ins)
 	.use(emoji)
