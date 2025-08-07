@@ -79,7 +79,7 @@
 	h4,
 	h5,
 	h6 {
-		a {
+		a[aria-hidden] {
 			padding: 0rem 0.3rem;
 
 			opacity: 0;
@@ -93,7 +93,7 @@
 			}
 		}
 
-		&:hover a {
+		&:hover a[aria-hidden] {
 			opacity: 1;
 			text-decoration: none;
 		}
@@ -348,14 +348,6 @@
 
 		&:hover {
 			filter: none;
-		}
-	}
-}
-
-@media screen and (max-width: 550px) {
-	.markdown {
-		a.header-anchor {
-			opacity: 1;
 		}
 	}
 }
