@@ -132,3 +132,4 @@ oauth:
 read:
   minutes: '{minutes} 分'
   words: '{words} 字'
+theme: 'テーマ: ThoughtLite'
