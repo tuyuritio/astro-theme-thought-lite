@@ -1,8 +1,7 @@
 # ThoughtLite
 
 <div align="center">
-    <img src=".github/assets/preview-light.webp">
-    <img src=".github/assets/preview-dark.webp">
+    <img src=".github/assets/preview.webp">
     <p></p>
     <p>コンテンツ作成に特化し、<a href="https://www.cloudflare.com/">Cloudflare</a> 向けに最適化されたモダンな <a href="https://astro.build/">Astro</a> テーマ 🌟</p>
     <small><a href="README.md">English</a></small> <small><a href="README_zh-cn.md">简体中文</a></small> <small><ins>日本語</ins></small>
@@ -111,7 +110,6 @@ npm run db:migrate:local
 - **アイコン** - [Iconify](https://iconify.design/)
 - **セリフフォント** - [Google Fonts](https://fonts.google.com/)
 - **等幅フォント** - [ZeoSeven Fonts](https://fonts.zeoseven.com/)
-- **目次** - [Tocbot](https://tscanlin.github.io/tocbot/)
 - **画像ビューア** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
 - **TypeScript ORM** - [Drizzle ORM](https://orm.drizzle.team/)
 - **データベース** - [Cloudflare D1](https://developers.cloudflare.com/d1/)

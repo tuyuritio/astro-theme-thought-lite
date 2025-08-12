@@ -1,8 +1,7 @@
 # ThoughtLite
 
 <div align="center">
-    <img src=".github/assets/preview-light.webp">
-    <img src=".github/assets/preview-dark.webp">
+    <img src=".github/assets/preview.webp">
     <p></p>
     <p>A modern <a href="https://astro.build/">Astro</a> theme optimized for <a href="https://www.cloudflare.com/">Cloudflare</a>, focused on content creation 🌟</p>
     <small><ins>English</ins></small> <small><a href="README_zh-cn.md">简体中文</a></small> <small><a href="README_ja.md">日本語</a></small>
@@ -111,7 +110,6 @@ All sections support multiple languages. Please create language subdirectories u
 - **Icons** - [Iconify](https://iconify.design/)
 - **Serif Fonts** - [Google Fonts](https://fonts.google.com/)
 - **Monospace Fonts** - [ZeoSeven Fonts](https://fonts.zeoseven.com/)
-- **Table of Contents** - [Tocbot](https://tscanlin.github.io/tocbot/)
 - **Image Viewer** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
 - **TypeScript ORM** - [Drizzle ORM](https://orm.drizzle.team/)
 - **Database** - [Cloudflare D1](https://developers.cloudflare.com/d1/)

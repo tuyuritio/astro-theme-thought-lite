@@ -1,8 +1,7 @@
 # ThoughtLite
 
 <div align="center">
-    <img src=".github/assets/preview-light.webp">
-    <img src=".github/assets/preview-dark.webp">
+    <img src=".github/assets/preview.webp">
     <p></p>
     <p>一款专注内容创作、针对 <a href="https://www.cloudflare.com/">Cloudflare</a> 优化的现代化 <a href="https://astro.build/">Astro</a> 主题 🌟</p>
     <small><a href="README.md">English</a></small> <small><ins>简体中文</ins></small> <small><a href="README_ja.md">日本語</a></small>
@@ -111,7 +110,6 @@ npm run db:migrate:local
 - **图标** - [Iconify](https://iconify.design/)
 - **衬线字体** - [Google Fonts](https://fonts.google.com/)
 - **等宽字体** - [ZeoSeven Fonts](https://fonts.zeoseven.com/)
-- **目录生成** - [Tocbot](https://tscanlin.github.io/tocbot/)
 - **图片查看器** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
 - **TypeScript ORM** - [Drizzle ORM](https://orm.drizzle.team/)
 - **数据库** - [Cloudflare D1](https://developers.cloudflare.com/d1/)
