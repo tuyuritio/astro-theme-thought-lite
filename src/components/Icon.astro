@@ -13,5 +13,5 @@ const { name, inline, size, title } = Astro.props;
 
 <figure class="relative inline-flex items-center font-normal group">
 	<I {name} {size} is:inline={inline} class="relative top-0.05em" />
-	{title && <figcaption class="absolute bottom-full left-50% transform-translate-x--50% mb-1 border-rd-1 py-1 px-1.25 w-max c-background bg-primary text-3.5 pointer-events-none opacity-0 invisible transition-[opacity,visibility] group-hover:(opacity-100 visible)">{title}</figcaption>}
+	{title && <figcaption class="absolute bottom-full left-50% transform-translate-x--50% mb-1 border-rd-1 py-1 px-1.25 w-max c-background bg-primary text-3.5 pointer-events-none opacity-0 invisible transition-[opacity,visibility,transform] translate-y-1 group-hover:(opacity-100 visible translate-y-0)">{title}</figcaption>}
 </figure>
