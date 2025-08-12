@@ -86,7 +86,7 @@ jotting:
   fetch:
     failure: Error loading jottings
   tag: Tag
-nav:
+navigation:
   about: About
   drifter: Drifter
   home: Home

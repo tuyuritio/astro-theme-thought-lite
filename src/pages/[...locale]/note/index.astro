@@ -28,7 +28,7 @@ if (error) {
 const { notes, pages, page: index, series_list, tag_list } = data;
 ---
 
-<Base title={t("nav.note")} {locale}>
+<Base title={t("navigation.note")} {locale}>
 	<main class="flex flex-col grow">
 		<Note client:load {locale} {notes} {pages} page={index} {size} {series_list} {tag_list} {series} {tags}>
 			<Icon name="fa6-solid:map-pin" slot="top" />

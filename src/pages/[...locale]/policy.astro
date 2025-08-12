@@ -23,7 +23,7 @@ let policy = information.find(info => info.id == "policy");
 const { Content } = policy ? await render(policy) : ({} as any);
 ---
 
-<Base title={t("nav.policy")} {locale}>
+<Base title={t("navigation.policy")} {locale}>
 	<main class="flex flex-col gap-10 mb-10">
 		{
 			policy && (

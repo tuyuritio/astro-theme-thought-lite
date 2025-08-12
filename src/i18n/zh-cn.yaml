@@ -86,7 +86,7 @@ jotting:
   fetch:
     failure: 获取随笔出错
   tag: 标签
-nav:
+navigation:
   about: 絮述
   drifter: 旅人
   home: 序章

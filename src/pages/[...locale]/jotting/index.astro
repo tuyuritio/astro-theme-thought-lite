@@ -27,7 +27,7 @@ if (error) {
 const { jottings, pages, page: index, tag_list } = data;
 ---
 
-<Base title={t("nav.jotting")} {locale}>
+<Base title={t("navigation.jotting")} {locale}>
 	<main class="flex flex-col grow">
 		<Jotting client:load {locale} {jottings} {pages} page={index} {size} {tag_list} {tags}>
 			<Icon name="fa6-solid:map-pin" slot="top" />

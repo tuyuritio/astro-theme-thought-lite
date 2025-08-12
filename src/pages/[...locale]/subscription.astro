@@ -23,7 +23,7 @@ const subscription = information.find(info => info.id == "subscription");
 const { Content } = subscription ? await render(subscription) : (null as any);
 ---
 
-<Base title={t("nav.subscription")} {locale}>
+<Base title={t("navigation.subscription")} {locale}>
 	{
 		Content && (
 			<main class="markdown">

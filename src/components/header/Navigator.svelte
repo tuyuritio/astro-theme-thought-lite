@@ -119,23 +119,23 @@
 
 		<a href={getRelativeLocaleUrl(locale)} class:location={route == getRelativeLocaleUrl(locale) || route.startsWith(getRelativeLocaleUrl(locale, "/preface"))}>
 			<span>{@render home()}</span>
-			<p>{t("nav.home")}</p>
+			<p>{t("navigation.home")}</p>
 		</a>
 		<a href={getRelativeLocaleUrl(locale, "/note")} class:location={route.startsWith(getRelativeLocaleUrl(locale, "/note"))}>
 			<span>{@render note()}</span>
-			<p>{t("nav.note")}</p>
+			<p>{t("navigation.note")}</p>
 		</a>
 		<a href={getRelativeLocaleUrl(locale, "/jotting")} class:location={route.startsWith(getRelativeLocaleUrl(locale, "/jotting"))}>
 			<span>{@render jotting()}</span>
-			<p>{t("nav.jotting")}</p>
+			<p>{t("navigation.jotting")}</p>
 		</a>
 		<a href={getRelativeLocaleUrl(locale, "/about")} class:location={route.startsWith(getRelativeLocaleUrl(locale, "/about"))}>
 			<span>{@render information()}</span>
-			<p>{t("nav.about")}</p>
+			<p>{t("navigation.about")}</p>
 		</a>
 		<a href={getRelativeLocaleUrl(locale, "/drifter")} class:location={route.startsWith(getRelativeLocaleUrl(locale, "/drifter"))}>
 			<span>{@render drifter()}</span>
-			<p>{t("nav.drifter")}</p>
+			<p>{t("navigation.drifter")}</p>
 		</a>
 	</header>
 

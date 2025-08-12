@@ -86,7 +86,7 @@ jotting:
   fetch:
     failure: 随筆取得に失敗しました
   tag: 付札
-nav:
+navigation:
   about: 情報
   drifter: 旅人
   home: 玄関
