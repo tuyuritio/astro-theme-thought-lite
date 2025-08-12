@@ -61,7 +61,7 @@
 		<header class="grid grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-5">
 			{#each list as jotting (jotting.id)}
 				<section animate:flip={{ duration: 150 }} class="flex flex-col justify-center gap-0.5 border-2 border-solid border-weak border-rd-2 py-2 px-3">
-					<span>
+					<span class="flex items-center gap-1">
 						{#if jotting.data.top > 0}{@render top()}{/if}
 						<a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} class="c-primary font-bold hover:underline">{jotting.data.title}</a>
 					</span>

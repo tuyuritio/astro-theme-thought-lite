@@ -130,7 +130,7 @@
 			<p>{t("navigation.jotting")}</p>
 		</a>
 		<a href={getRelativeLocaleUrl(locale, "/about")} class:location={route.startsWith(getRelativeLocaleUrl(locale, "/about"))}>
-			<span>{@render information()}</span>
+			<span>{@render about()}</span>
 			<p>{t("navigation.about")}</p>
 		</a>
 		<a href={getRelativeLocaleUrl(locale, "/drifter")} class:location={route.startsWith(getRelativeLocaleUrl(locale, "/drifter"))}>
@@ -165,7 +165,7 @@
 	import ThemeSwitcher from "./ThemeSwitcher.svelte";
 	import Menu from "./Menu.svelte";
 
-	let { locale, route, home, note, jotting, information, drifter, globe, rss, sun, moon, bars, close }: { locale: string; route: string; home: Snippet; note: Snippet; jotting: Snippet; information: Snippet; drifter: Snippet; globe: Snippet; rss: Snippet; sun: Snippet; moon: Snippet; bars: Snippet; close: Snippet } = $props();
+	let { locale, route, home, note, jotting, about, drifter, globe, rss, sun, moon, bars, close }: { locale: string; route: string; home: Snippet; note: Snippet; jotting: Snippet; about: Snippet; drifter: Snippet; globe: Snippet; rss: Snippet; sun: Snippet; moon: Snippet; bars: Snippet; close: Snippet } = $props();
 
 	const t = i18nit(locale);
 

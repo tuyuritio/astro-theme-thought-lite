@@ -62,11 +62,11 @@ const t = i18nit(locale);
 			<article class="flex flex-col gap-4 w-full">
 				<h1 class="text-3xl">{note.data.title}</h1>
 				<header class="flex flex-col gap-3 sm:flex-row children:(flex items-center gap-1 text-3.5 c-secondary)">
-					<time title={Time.full(note.data.timestamp)}><Icon name="octicon:calendar-16" />{Time(note.data.timestamp)}</time>
+					<time title={Time.full(note.data.timestamp)}><Icon name="lucide:calendar" />{Time(note.data.timestamp)}</time>
 					{
 						note.data.series && (
 							<span>
-								<Icon name="octicon:repo-16" />
+								<Icon name="lucide:library" />
 								{note.data.series}
 							</span>
 						)
@@ -74,12 +74,12 @@ const t = i18nit(locale);
 					{
 						note.data.tags?.length && (
 							<span>
-								<Icon name="octicon:tag-16" />
+								<Icon name="lucide:tag" />
 								{note.data.tags?.join("; ")}
 							</span>
 						)
 					}
-					<span><Icon name="octicon:number-16" />{t("read.words", { words: reading.words })}</span>
+					<span><Icon name="lucide:pilcrow" />{t("read.words", { words: reading.words })}</span>
 				</header>
 				<hr class="border-b border-b-solid border-weak" />
 				<section id="markdown-content" class="markdown"><Content /></section>

@@ -33,16 +33,16 @@ const t = i18nit(locale);
 		<div class="flex flex-col gap-4">
 			<h1 class="text-3xl">{jotting.data.title}</h1>
 			<header class="flex flex-col gap-3 sm:flex-row children:(flex items-center gap-1 text-3.5 c-secondary)">
-				<time title={Time.full(jotting.data.timestamp)}><Icon name="octicon:calendar-16" />{Time(jotting.data.timestamp)}</time>
+				<time title={Time.full(jotting.data.timestamp)}><Icon name="lucide:calendar" />{Time(jotting.data.timestamp)}</time>
 				{
 					jotting.data.tags?.length && (
 						<span>
-							<Icon name="octicon:tag-16" />
+							<Icon name="lucide:tag" />
 							{jotting.data.tags?.join("; ")}
 						</span>
 					)
 				}
-				<span><Icon name="octicon:number-16" />{t("read.words", { words: reading.words })}</span>
+				<span><Icon name="lucide:pilcrow" />{t("read.words", { words: reading.words })}</span>
 			</header>
 			<hr class="border-b border-b-solid border-weak" />
 			<section class="markdown mb-10"><Content /></section>

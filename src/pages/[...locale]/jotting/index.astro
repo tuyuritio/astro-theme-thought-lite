@@ -30,10 +30,10 @@ const { jottings, pages, page: index, tag_list } = data;
 <Base title={t("navigation.jotting")} {locale}>
 	<main class="flex flex-col grow">
 		<Jotting client:load {locale} {jottings} {pages} page={index} {size} {tag_list} {tags}>
-			<Icon name="fa6-solid:map-pin" slot="top" />
-			<Icon name="octicon:arrow-left-16" slot="left" />
-			<Icon name="octicon:arrow-right-16" slot="right" />
-			<Icon name="octicon:kebab-horizontal-16" slot="dots" />
+			<Icon name="lucide:flag-triangle-right" slot="top" />
+			<Icon name="lucide:arrow-left" slot="left" />
+			<Icon name="lucide:arrow-right" slot="right" />
+			<Icon name="lucide:ellipsis" slot="dots" />
 		</Jotting>
 	</main>
 </Base>

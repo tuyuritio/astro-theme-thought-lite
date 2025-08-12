@@ -33,7 +33,7 @@
 				<dt class="flex flex-col gap-0.5 min-w-0">
 					<p class="flex items-center gap-1">
 						<b>{comment.name}</b>
-						{#if comment.author}{@render icon.signature()}{/if}
+						{#if comment.author}{@render icon.author()}{/if}
 						{#if comment.homepage}<a href={comment.homepage} target="_blank" class="inline-flex">{@render icon.home()}</a>{/if}
 						<span>·</span>
 						<time class="text-3">{Time(comment.timestamp, Time.user_timezone).replace("-", " ")}</time>
@@ -58,7 +58,7 @@
 		<blockquote class="ml-11">
 			{#if comment.content}
 				<div class="markdown comment">{#await remark.process(comment.content) then html}{@html html}{/await}</div>
-				<dd class="flex gap-4 mt-2">
+				<dd class="flex items-center gap-4 mt-2">
 					<button onclick={() => ((reply_view = !reply_view), (edit_view = false))} disabled={!turnstile && !drifter}>{@render icon.reply()}</button>
 					{#if comment.history.length > 0}<button onclick={() => (history_view = true)}>{@render icon.history()}</button>{/if}
 					<button onclick={share}>{@render icon.share()}</button>
