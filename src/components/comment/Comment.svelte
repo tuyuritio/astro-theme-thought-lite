@@ -118,7 +118,7 @@
 	 */
 	async function share() {
 		await navigator.clipboard.writeText(`${location.origin}${location.pathname}#${comment.ID}`);
-		push_tip("information", t("comment.share.success"));
+		push_tip("success", t("comment.share.success"));
 	}
 
 	/**
