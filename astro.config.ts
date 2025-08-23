@@ -12,6 +12,8 @@ import github_light from "shiki/themes/github-light.mjs"
 import GFM from "remark-gfm";
 import ins from "remark-ins";
 import mark from "remark-flexible-markers";
+import CJK from "remark-cjk-friendly";
+import CJK_strikethrough from "remark-cjk-friendly-gfm-strikethrough";
 import math from "remark-math";
 import gemoji from "remark-gemoji";
 import footnote from "remark-footnotes-extra";
@@ -53,6 +55,8 @@ export default defineConfig({
       ins,
       mark,
       spoiler,
+      CJK,
+      [CJK_strikethrough, { singleTilde: false }],
       math,
       gemoji,
       footnote,
