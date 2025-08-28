@@ -9,7 +9,6 @@ You can also customize the pushed content by adding query parameters:
 | Parameter || Allowed Values |
 | - | - |:- |
 | **Format** | `format` | `atom` `rss` `json` |
-| **Language** | `language` | `en` `zh-cn` `ja` |
 | **Series** | `series` | *refer to series list* |
 | **Tag** | `tag` | *refer to tag list* |
 
