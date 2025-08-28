@@ -62,7 +62,8 @@
 			{#each list as jotting (jotting.id)}
 				<section animate:flip={{ duration: 150 }} class="flex flex-col justify-center gap-0.5 border-2 border-solid border-weak border-rd-2 py-2 px-3">
 					<span class="flex items-center gap-1">
-						{#if jotting.data.top > 0}{@render top()}{/if}
+						{#if jotting.data.top > 0}<span>{@render top()}</span>{/if}
+						{#if jotting.data.sensitive}<span>{@render sensitive()}</span>{/if}
 						<a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} class="c-primary font-bold hover:underline">{jotting.data.title}</a>
 					</span>
 					<span class="flex gap-1">
@@ -113,7 +114,7 @@
 	import { push_tip } from "$components/Tip.svelte";
 	import i18nit from "$i18n";
 
-	let { locale, jottings, pages, page, size, tag_list, tags, top, left, right, dots }: { locale: string; jottings: any[]; pages: number; page: number; size: number; tag_list: string[]; tags: string[]; top: Snippet; left: Snippet; right: Snippet; dots: Snippet } = $props();
+	let { locale, jottings, pages, page, size, tag_list, tags, top, sensitive, left, right, dots }: { locale: string; jottings: any[]; pages: number; page: number; size: number; tag_list: string[]; tags: string[]; top: Snippet; sensitive: Snippet; left: Snippet; right: Snippet; dots: Snippet } = $props();
 
 	const t = i18nit(locale);
 

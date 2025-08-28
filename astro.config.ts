@@ -178,6 +178,7 @@ export default defineConfig({
           "clock-arrow-down",
           "flag-triangle-right",
           "scale",
+          "siren",
         ],
         "simple-icons": [
           "astro",

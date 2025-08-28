@@ -32,6 +32,7 @@ const { notes, pages, page: index, series_list, tag_list } = data;
 	<main class="flex flex-col grow">
 		<Note client:load {locale} {notes} {pages} page={index} {size} {series_list} {tag_list} {series} {tags}>
 			<Icon name="lucide:flag-triangle-right" slot="top" />
+			<Icon name="lucide:siren" title={t("sensitive.icon")} slot="sensitive" />
 			<Icon name="lucide:arrow-left" slot="left" />
 			<Icon name="lucide:arrow-right" slot="right" />
 			<Icon name="lucide:ellipsis" slot="dots" />

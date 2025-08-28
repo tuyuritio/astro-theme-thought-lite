@@ -56,7 +56,8 @@ export const note = {
 					series: note.data.series,
 					title: note.data.title,
 					timestamp: note.data.timestamp,
-					tags: note.data.tags
+					tags: note.data.tags,
+					sensitive: note.data.sensitive
 				}
 			}));
 

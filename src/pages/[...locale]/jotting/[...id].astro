@@ -1,6 +1,7 @@
 ---
 import { i18n } from "astro:config/client";
 import { getCollection, render } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import read from "reading-time";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
@@ -29,10 +30,10 @@ const t = i18nit(locale);
 ---
 
 <Base title={jotting.data.title} {locale} description={jotting.data.description} article={{ timestamp: jotting.data.timestamp, tags: jotting.data.tags }}>
-	<main class="flex flex-col">
-		<div class="flex flex-col gap-4">
+	<main class="flex flex-col gap-6">
+		<header class="flex flex-col gap-4">
 			<h1 class="text-3xl">{jotting.data.title}</h1>
-			<header class="flex flex-col gap-3 sm:flex-row children:(flex items-center gap-1 text-3.5 c-secondary)">
+			<div class="flex flex-col gap-3 sm:flex-row children:(flex items-center gap-1 text-3.5 c-secondary)">
 				<time title={Time.full(jotting.data.timestamp)}><Icon name="lucide:calendar" />{Time(jotting.data.timestamp)}</time>
 				{
 					jotting.data.tags?.length && (
@@ -43,11 +44,35 @@ const t = i18nit(locale);
 					)
 				}
 				<span><Icon name="lucide:pilcrow" />{t("read.words", { words: reading.words })}</span>
-			</header>
+			</div>
 			<hr class="border-b border-b-solid border-weak" />
-			<section class="markdown mb-10"><Content /></section>
+		</header>
+
+		{
+			jotting.data.sensitive && (
+				<div id="sensitive-warning" class="flex flex-col items-center justify-end gap-6 h-20vh">
+					<h2>{t("sensitive.title")}</h2>
+					<div class="flex flex-col items-center justify-end gap-3">
+						<p>{t("sensitive.description")}</p>
+						<p>{t("sensitive.warning")}</p>
+					</div>
+					<div class="flex gap-3">
+						<button class="font-bold c-background bg-red-5 py-1 px-2 rounded-md" onclick="document.getElementById('sensitive-warning').style.display = 'none'; document.getElementById('article-section').classList.remove('hidden');">
+							{t("sensitive.continue")}
+						</button>
+						<a href={getRelativeLocaleUrl(locale, "/jotting")} class="flex items-center font-bold c-background bg-secondary py-1 px-2 rounded-md">
+							{t("sensitive.back")}
+						</a>
+					</div>
+				</div>
+			)
+		}
+
+		<div id="article-section" class={`contents ${jotting.data.sensitive && "hidden"}`}>
+			<section class="markdown"><Content /></section>
+			<blockquote id="comment-section" class="my-5"><Comments {locale} section="jotting" item={jotting.id} /></blockquote>
 		</div>
-		<blockquote id="comment-section" class="my-5"><Comments {locale} section="jotting" item={jotting.id} /></blockquote>
+
 		<Position {locale} />
 	</main>
 </Base>

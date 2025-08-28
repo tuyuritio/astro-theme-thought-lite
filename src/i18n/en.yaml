@@ -132,4 +132,13 @@ oauth:
 read:
   minutes: '{minutes} minutes'
   words: '{words} words'
+sensitive:
+  back: Return to list
+  continue: I understand, continue reading
+  description: >-
+    This content may contain explicit, violent, bloody, or emotionally
+    triggering material.
+  icon: Contains sensitive content
+  title: Content Warning
+  warning: If this content might affect your mental health, please leave immediately!
 theme: 'Theme: ThoughtLite'

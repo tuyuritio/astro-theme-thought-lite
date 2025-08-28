@@ -31,6 +31,7 @@ const { jottings, pages, page: index, tag_list } = data;
 	<main class="flex flex-col grow">
 		<Jotting client:load {locale} {jottings} {pages} page={index} {size} {tag_list} {tags}>
 			<Icon name="lucide:flag-triangle-right" slot="top" />
+			<Icon name="lucide:siren" title={t("sensitive.icon")} slot="sensitive" />
 			<Icon name="lucide:arrow-left" slot="left" />
 			<Icon name="lucide:arrow-right" slot="right" />
 			<Icon name="lucide:ellipsis" slot="dots" />

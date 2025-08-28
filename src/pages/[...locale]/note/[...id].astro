@@ -2,6 +2,7 @@
 import type { MarkdownHeading } from "astro";
 import { i18n } from "astro:config/client";
 import { getCollection, render } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import read from "reading-time";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
@@ -57,47 +58,73 @@ const t = i18nit(locale);
 ---
 
 <Base title={note.data.title} {locale} description={note.data.description} article={{ timestamp: note.data.timestamp, section: note.data.series, tags: note.data.tags }}>
-	<main class="flex flex-col">
-		<div class="flex flex-col-reverse flex-wrap gap-5 sm:(flex-row flex-nowrap)">
-			<article class="flex flex-col gap-4 w-full">
-				<h1 class="text-3xl">{note.data.title}</h1>
-				<header class="flex flex-col gap-3 sm:flex-row children:(flex items-center gap-1 text-3.5 c-secondary)">
-					<time title={Time.full(note.data.timestamp)}><Icon name="lucide:calendar" />{Time(note.data.timestamp)}</time>
-					{
-						note.data.series && (
-							<span>
-								<Icon name="lucide:library" />
-								{note.data.series}
-							</span>
-						)
-					}
-					{
-						note.data.tags?.length && (
-							<span>
-								<Icon name="lucide:tag" />
-								{note.data.tags?.join("; ")}
-							</span>
-						)
-					}
-					<span><Icon name="lucide:pilcrow" />{t("read.words", { words: reading.words })}</span>
-				</header>
-				<hr class="border-b border-b-solid border-weak" />
+	<main class="flex flex-col gap-6">
+		<header class="flex flex-col gap-4">
+			<h1 class="text-3xl">{note.data.title}</h1>
+			<div class="flex flex-col gap-3 sm:flex-row children:(flex items-center gap-1 text-3.5 c-secondary)">
+				<time title={Time.full(note.data.timestamp)}><Icon name="lucide:calendar" />{Time(note.data.timestamp)}</time>
+				{
+					note.data.series && (
+						<span>
+							<Icon name="lucide:library" />
+							{note.data.series}
+						</span>
+					)
+				}
+				{
+					note.data.tags?.length && (
+						<span>
+							<Icon name="lucide:tag" />
+							{note.data.tags?.join("; ")}
+						</span>
+					)
+				}
+				<span><Icon name="lucide:pilcrow" />{t("read.words", { words: reading.words })}</span>
+			</div>
+			<hr class="border-b border-b-solid border-weak" />
+		</header>
+
+		{
+			note.data.sensitive && (
+				<div id="sensitive-warning" class="flex flex-col items-center justify-end gap-6 h-20vh">
+					<h2>{t("sensitive.title")}</h2>
+					<div class="flex flex-col items-center justify-end gap-3">
+						<p>{t("sensitive.description")}</p>
+						<p>{t("sensitive.warning")}</p>
+					</div>
+					<div class="flex gap-3">
+						<button class="font-bold c-background bg-red-5 py-1 px-2 rounded-md" onclick="document.getElementById('sensitive-warning').style.display = 'none'; document.getElementById('article-section').classList.remove('hidden');">
+							{t("sensitive.continue")}
+						</button>
+						<a href={getRelativeLocaleUrl(locale, "/note")} class="flex items-center font-bold c-background bg-secondary py-1 px-2 rounded-md">
+							{t("sensitive.back")}
+						</a>
+					</div>
+				</div>
+			)
+		}
+
+		<div id="article-section" class={`contents ${note.data.sensitive && "hidden"}`}>
+			<div class="flex gap-5">
 				<section id="markdown-content" class="markdown"><Content /></section>
-			</article>
-			{
-				note.data.contents && (
-					<aside class="hidden sm:(block flex-shrink-0 w-200px)">
-						<div class="sticky top-3 flex flex-col gap-2">
-							<h3>{t("note.contents")}</h3>
-							<nav class="overflow-y-auto">
-								<TOC headings={table_of_contents} />
-							</nav>
-						</div>
-					</aside>
-				)
-			}
+				{
+					note.data.contents && (
+						<aside class="hidden sm:(block flex-shrink-0 w-200px)">
+							<div class="sticky top-3 flex flex-col gap-2">
+								<h3>{t("note.contents")}</h3>
+								<nav class="overflow-y-auto">
+									<TOC headings={table_of_contents} />
+								</nav>
+							</div>
+						</aside>
+					)
+				}
+			</div>
+			<blockquote id="comment-section" class="my-5">
+				<Comments {locale} section="note" item={note.id} />
+			</blockquote>
 		</div>
-		<blockquote id="comment-section" class="my-5"><Comments {locale} section="note" item={note.id} /></blockquote>
+
 		<Position {locale} />
 	</main>
 </Base>

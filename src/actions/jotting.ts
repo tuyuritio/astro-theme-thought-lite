@@ -45,7 +45,8 @@ export const jotting = {
 				data: {
 					top: jotting.data.top,
 					title: jotting.data.title,
-					tags: jotting.data.tags
+					tags: jotting.data.tags,
+					sensitive: jotting.data.sensitive
 				}
 			}));
 
