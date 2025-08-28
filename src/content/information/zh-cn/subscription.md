@@ -1,6 +1,6 @@
 欢迎订阅站点，并在第一时间获取最新内容。
 
-默认订阅链接为 [`/feed`](/feed)，将推送 **Atom** 格式的**所有文记**。
+默认订阅链接为 [`/zh-cn/feed`](/zh-cn/feed)，将推送 **Atom** 格式的**所有文记**。
 
 ---
 
@@ -9,7 +9,6 @@
 | 参数 || 可选值 |
 | - | - |:- |
 | **订阅格式** | `format` | `atom` `rss` `json` |
-| **内容语言** | `language` | `zh-cn` `en` `ja` |
 | **系列筛选** | `series` | *参考系列列表* |
 | **标签筛选** | `tag` | *参考标签列表* |
 
@@ -17,6 +16,6 @@
 
 **示例：**
 
-- 订阅 *RSS* 格式的所有内容：`/feed?format=rss`
-- 订阅 *简体中文* 的 *呐喊* 系列内容：`/feed?language=zh-cn&series=呐喊`
-- 订阅 *英语* 的 *Astro* 系列中，包含 *Demo*、*Markup* 任一标签的内容：`/feed?language=en&series=Astro&tag=Demo&tag=Markup`
+- 订阅 *RSS* 格式的所有内容：`/zh-cn/feed?format=rss`
+- 订阅 *呐喊* 系列内容：`/zh-cn/feed?series=呐喊`
+- 订阅 *Astro* 系列中，包含 *Demo*、*Markup* 任一标签的内容：`/zh-cn/feed?series=Astro&tag=Demo&tag=Markup`

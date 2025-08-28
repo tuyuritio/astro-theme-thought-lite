@@ -1,25 +1,23 @@
 import type { APIRoute } from "astro";
+import { i18n } from "astro:config/client";
 import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Feed } from "feed";
 import config from "$config";
+import i18nit from "$i18n";
 
 // Disable prerendering to allow dynamic feed generation with query parameters
 export const prerender = false;
 
 /**
- * GET endpoint for generating RSS/Atom/JSON feeds
- * Supports filtering by language, series, and tags through query parameters
- * 
- * Query parameters:
- * - format: Feed format (atom/rss/json)
- * - language: Filter by language(s) - can be specified multiple times
- * - series: Filter by series - can be specified multiple times  
- * - tag: Filter by tag(s) - can be specified multiple times
+ * GET endpoint for generating feeds
+ * Supports filtering by language, series, and tags
  */
-export const GET: APIRoute = async ({ site, url }) => {
+export const GET: APIRoute = async ({ site, url, params }) => {
+	const language = params.locale && (i18n?.locales as string[]).includes(params.locale) ? params.locale : i18n!.defaultLocale;
+	const t = i18nit(language);
+
 	const format = url.searchParams.get("format");			// Feed format preference
-	const languages = url.searchParams.getAll("language");	// Language filters (multi-value)
 	const series = url.searchParams.getAll("series");		// Series filters (multi-value)
 	const tags = url.searchParams.getAll("tag");			// Tag filters (multi-value)
 
@@ -46,7 +44,7 @@ export const GET: APIRoute = async ({ site, url }) => {
 
 		// Apply filtering criteria
 		let published = !note.data.draft;																// Exclude draft posts
-		let localed = !languages.length || languages.includes(locale);									// Language filter (if specified)
+		let localed = language == locale;																// Language filter
 		let match_series = !series.length || note.data.series && series.includes(note.data.series);		// Series filter (if specified)
 		let match_tags = !tags.length || tags.some(tag => note.data.tags?.includes(tag));				// Tag filter (if specified)
 
@@ -55,14 +53,18 @@ export const GET: APIRoute = async ({ site, url }) => {
 	})).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());		// Sort by newest first
 
 	// Add each filtered note as a feed item
-	notes.forEach((note) => feed.addItem({
-		id: note.id,																							// Unique item identifier
-		title: note.data.title,																					// Post title
-		link: new URL(getRelativeLocaleUrl((<any>note).locale, `/note/${note.id.split("/").slice(1).join("/")}`), site).toString(),		// URL to the post
-		date: new Date(note.data.timestamp),																	// Publication date
-		content: note.rendered?.html,																			// Rendered HTML content
-		category: note.data.tags?.map((tag: any) => ({ scheme: "tag", name: tag }))								// Tags as categories
-	}));
+	notes.forEach((note) => {
+		const link = new URL(getRelativeLocaleUrl((<any>note).locale, `/note/${note.id.split("/").slice(1).join("/")}`), site).toString();
+
+		return feed.addItem({
+			id: note.id,																			// Unique item identifier
+			title: note.data.title,																	// Post title
+			link,																					// URL to the post
+			date: new Date(note.data.timestamp),													// Publication date
+			content: note.data.sensitive ? t("sensitive.feed", { link }) : note.rendered?.html,		// Rendered content
+			category: note.data.tags?.map((tag: any) => ({ scheme: "tag", name: tag }))				// Tags as categories
+		});
+	});
 
 	// Return appropriate feed format based on request
 	switch (format?.toLowerCase()) {

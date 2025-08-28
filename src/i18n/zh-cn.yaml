@@ -136,6 +136,9 @@ sensitive:
   back: 返回列表
   continue: 我已知晓，继续阅读
   description: 本文可能包含色情、暴力、血腥或情绪触发内容。
+  feed: |
+    <p>本文可能包含色情、暴力、血腥或情绪触发内容。</p>
+    <p>如需阅读，请访问<a href="{link}">原文链接</a>。</p>
   icon: 包含敏感内容
   title: 内容警告
   warning: 若这些内容可能影响您的心理健康，请立即离开！

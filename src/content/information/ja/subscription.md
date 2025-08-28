@@ -1,6 +1,6 @@
 サイトを購読して最新コンテンツをいち早く入手しましょう。
 
-デフォルトの購読リンクは [`/feed`](/feed) で、**Atom**形式で**すべての文記**を配信します。
+デフォルトの購読リンクは [`/ja/feed`](/ja/feed) で、**Atom**形式で**すべての文記**を配信します。
 
 ---
 
@@ -9,7 +9,6 @@
 | パラメータ || 値 |
 | - | - |:- |
 | **形式** | `format` | `atom` `rss` `json` |
-| **言語** | `language` | `ja` `en` `zh-cn` |
 | **シリーズ** | `series` | *シリーズリスト参照* |
 | **タグ** | `tag` | *タグリスト参照* |
 
@@ -17,6 +16,6 @@
 
 **例：**
 
-- すべてのコンテンツを *RSS* 形式で購読：`/feed?format=rss`
-- *簡体字中国語* の *吶喊* シリーズのコンテンツを購読：`/feed?language=zh-cn&series=吶喊`
-- *英語* の *Astro* シリーズで、*Demo*、*Markup* のいずれかのタグを含むコンテンツを購読：`/feed?language=en&series=Astro&tag=Demo&tag=Markup`
+- すべてのコンテンツを *RSS* 形式で購読：`/ja/feed?format=rss`
+- *吶喊* シリーズのコンテンツを購読：`/ja/feed?series=吶喊`
+- *Astro* シリーズで、*Demo*、*Markup* のいずれかのタグを含むコンテンツを購読：`/ja/feed?series=Astro&tag=Demo&tag=Markup`
