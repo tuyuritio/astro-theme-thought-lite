@@ -138,6 +138,11 @@ sensitive:
   description: >-
     This content may contain explicit, violent, bloody, or emotionally
     triggering material.
+  feed: >
+    <p>This content may contain explicit, violent, bloody, or emotionally
+    triggering material.</p>
+
+    <p>To read, please visit the <a href="{link}">original link</a>.</p>
   icon: Contains sensitive content
   title: Content Warning
   warning: If this content might affect your mental health, please leave immediately!
