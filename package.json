@@ -1,7 +1,7 @@
 {
 	"name": "astro-theme-thought-lite",
 	"type": "module",
-	"version": "0.10.2",
+	"version": "0.10.3",
 	"description": "A modern Astro theme optimized for Cloudflare, focused on content creation",
 	"keywords": [
 		"astro",
@@ -39,24 +39,24 @@
 		"db:migrate:remote": "wrangler d1 migrations apply DB --remote"
 	},
 	"dependencies": {
-		"@astrojs/cloudflare": "^12.6.0",
-		"@astrojs/sitemap": "^3.4.1",
+		"@astrojs/cloudflare": "^12.6.7",
+		"@astrojs/sitemap": "^3.5.1",
 		"@astrojs/svelte": "^7.1.0",
 		"@block65/webcrypto-web-push": "^1.0.2",
 		"@hbsnow/rehype-sectionize": "^1.0.7",
 		"@iconify-json/fa6-brands": "^1.2.6",
-		"@iconify-json/lucide": "^1.2.62",
-		"@iconify-json/simple-icons": "^1.2.44",
-		"@iconify-json/svg-spinners": "^1.2.2",
+		"@iconify-json/lucide": "^1.2.65",
+		"@iconify-json/simple-icons": "^1.2.49",
+		"@iconify-json/svg-spinners": "^1.2.4",
 		"@swup/astro": "^1.7.0",
 		"arctic": "^3.7.0",
-		"astro": "^5.12.3",
+		"astro": "^5.13.5",
 		"astro-icon": "^1.1.5",
 		"dotenv": "^17.2.1",
-		"drizzle-orm": "^0.44.3",
+		"drizzle-orm": "^0.44.5",
 		"feed": "^5.1.0",
-		"jose": "^6.0.12",
-		"less": "^4.4.0",
+		"jose": "^6.1.0",
+		"less": "^4.4.1",
 		"luxon": "^3.7.1",
 		"medium-zoom": "^1.1.0",
 		"reading-time": "^1.5.0",
@@ -76,18 +76,18 @@
 		"remark-ins": "^1.2.0",
 		"remark-math": "^6.0.0",
 		"remark-ruby-directive": "^0.3.0",
-		"svelte": "^5.36.17",
-		"typescript": "^5.8.3"
+		"svelte": "^5.38.6",
+		"typescript": "^5.9.2"
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.4",
 		"@rollup/plugin-yaml": "^4.1.2",
-		"@types/luxon": "^3.6.2",
-		"@unocss/reset": "^66.3.3",
+		"@types/luxon": "^3.7.1",
+		"@unocss/reset": "^66.4.2",
 		"drizzle-kit": "^0.31.4",
 		"prettier": "3.6.2",
 		"prettier-plugin-astro": "0.14.1",
-		"unocss": "^66.3.3",
-		"wrangler": "^4.26.0"
+		"unocss": "^66.4.2",
+		"wrangler": "^4.33.1"
 	}
 }
