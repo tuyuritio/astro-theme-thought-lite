@@ -62,6 +62,7 @@ export const GET: APIRoute = async ({ site, url, params }) => {
 			link,																					// URL to the post
 			date: new Date(note.data.timestamp),													// Publication date
 			content: note.data.sensitive ? t("sensitive.feed", { link }) : note.rendered?.html,		// Rendered content
+			description: note.data.description,														// Summary of the post
 			category: note.data.tags?.map((tag: any) => ({ scheme: "tag", name: tag }))				// Tags as categories
 		});
 	});
