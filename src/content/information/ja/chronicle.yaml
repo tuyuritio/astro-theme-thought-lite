@@ -15,9 +15,9 @@
   - CloudFlare Workers
   - CloudFlare D1
 2025-01-04:
-  - RSS 購読
   - Atom 購読
-  - JSON Feed 購読
+  - ~RSS 購読
+  - ~JSON Feed 購読
 2025-01-03:
   - ヒートマップ
   - 動的フィルタリング

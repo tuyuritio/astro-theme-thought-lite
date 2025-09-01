@@ -27,6 +27,8 @@ tags: [Guide, Astro]
 - `copyright` - Copyright information
     - `type` - CC license type
     - `year` - Copyright year or year range
+- `feed` - Feed
+    - `limit` - Content quantity limit for feeds
 
 ## Icon Generation
 

@@ -13,7 +13,7 @@
 🌗 **Light / Dark Mode** - Auto-follows system preference with manual toggle support.\
 📃 **SSR Dynamic Content Filtering** - List filtering and pagination via History API.\
 🌏 **i18n Support** - Easy to extend and manage multilingual content.\
-📰 **Sitemap & Feed Subscription** - Automated generation of Sitemap and RSS, Atom, JSON Feed.\
+📰 **Sitemap & Feed Subscription** - Automated generation of Sitemap and Atom Feed.\
 🔗 **OpenGraph Support** - Built-in Open Graph meta tags for optimized social media sharing.\
 📝 **Comment System** - Based on Cloudflare D1, easy deployment with privacy control; supports OAuth authentication and guest comments.\
 🔔 **Desktop Notifications** - Real-time notifications using Web Push API.

@@ -140,7 +140,7 @@
 	</header>
 
 	<footer class="flex flex-col gap-2 sm:gap-5 sm:(flex-row gap-7)">
-		<a href={getRelativeLocaleUrl(locale, "/subscription")} aria-label="Subscription" class="inline-flex">{@render rss()}</a>
+		<a href={getRelativeLocaleUrl(locale, "/feed")} target="_blank" aria-label="Subscription" class="inline-flex">{@render rss()}</a>
 
 		<ThemeSwitcher {sun} {moon} />
 

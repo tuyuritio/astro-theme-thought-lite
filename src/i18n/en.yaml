@@ -75,6 +75,18 @@ drifter:
     failure: Update failed
     name: Update
     success: Update successful
+feed:
+  address: Subscription address
+  copy:
+    failure: Copy failed, please copy the subscription address manually.
+    name: Copy
+    success: Subscription address copied to clipboard!
+  description: This page is an Atom format content subscription source.
+  last: Last updated
+  usage: >-
+    You can add the current address in any supported reader to subscribe to this
+    content and get the latest content updates in time.
+  visit: This is the feed page. Visit {title} for the full website experience.
 home:
   heatmap:
     empty: No words

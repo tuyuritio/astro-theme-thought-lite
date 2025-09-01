@@ -13,7 +13,7 @@
 🌗 **亮色 / 深色模式** - 自动跟随系统，并支持手动切换。\
 📃 **SSR 动态内容筛选** - 通过 History API 实现的列表筛选和分页。\
 🌏 **i18n 支持** - 轻松扩展和管理多语言内容。\
-📰 **Sitemap 及 Feed 订阅** - 自动化生成 Sitemap 和 RSS、Atom、JSON Feed。\
+📰 **Sitemap 及 Feed 订阅** - 自动化生成 Sitemap 和 Atom Feed。\
 🔗 **OpenGraph 支持** - 内置 Open Graph 元标签，优化社交媒体分享效果。\
 📝 **评论系统** - 基于 Cloudflare D1，部署便捷，隐私可控；支持 OAuth 身份认证和免登录评论。\
 🔔 **桌面通知** - 使用 Web Push API 推送实时通知。

@@ -6,20 +6,37 @@ import { Feed } from "feed";
 import config from "$config";
 import i18nit from "$i18n";
 
-// Disable prerendering to allow dynamic feed generation with query parameters
-export const prerender = false;
+export async function getStaticPaths() {
+	return i18n!.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
+}
 
 /**
  * GET endpoint for generating feeds
  * Supports filtering by language, series, and tags
  */
-export const GET: APIRoute = async ({ site, url, params }) => {
-	const language = params.locale && (i18n?.locales as string[]).includes(params.locale) ? params.locale : i18n!.defaultLocale;
+export const GET: APIRoute = async ({ site, params }) => {
+	const { locale: language = i18n?.defaultLocale! } = params;
 	const t = i18nit(language);
 
-	const format = url.searchParams.get("format");			// Feed format preference
-	const series = url.searchParams.getAll("series");		// Series filters (multi-value)
-	const tags = url.searchParams.getAll("tag");			// Tag filters (multi-value)
+	// Fetch and filter notes based on query parameters
+	let notes = (await getCollection("note", note => {
+		// Extract language from the file path structure
+		const [locale, ...id] = note.id.split("/");
+
+		// Attach locale and link
+		(<any>note).link = new URL(getRelativeLocaleUrl(locale, `/note/${id.join("/")}`), site).toString();
+
+		// Apply filtering criteria
+		let published = !note.data.draft;		// Exclude draft posts
+		let localed = language == locale;		// Language filter
+
+		// Include note only if it passes all filters
+		return published && localed;
+	}));
+
+	notes = notes
+		.sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime())		// Sort by newest first
+		.slice(0, config.feed?.limit || notes.length);									// Limit to number of items
 
 	// Initialize feed with site metadata and configuration
 	const feed = new Feed({
@@ -36,53 +53,22 @@ export const GET: APIRoute = async ({ site, url, params }) => {
 		link: site!.toString(),										// Feed's associated website
 	});
 
-	// Fetch and filter notes based on query parameters
-	let notes = (await getCollection("note", note => {
-		// Extract language from the file path structure
-		const [locale] = note.id.split("/");
-		(<any>note).locale = locale;
-
-		// Apply filtering criteria
-		let published = !note.data.draft;																// Exclude draft posts
-		let localed = language == locale;																// Language filter
-		let match_series = !series.length || note.data.series && series.includes(note.data.series);		// Series filter (if specified)
-		let match_tags = !tags.length || tags.some(tag => note.data.tags?.includes(tag));				// Tag filter (if specified)
-
-		// Include note only if it passes all filters
-		return published && localed && match_series && match_tags;
-	})).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());		// Sort by newest first
-
 	// Add each filtered note as a feed item
-	notes.forEach((note) => {
-		const link = new URL(getRelativeLocaleUrl((<any>note).locale, `/note/${note.id.split("/").slice(1).join("/")}`), site).toString();
+	notes.forEach((note) => feed.addItem({
+		id: note.id,																								// Unique item identifier
+		title: note.data.title,																						// Post title
+		link: (<any>note).link,																						// URL to the post
+		date: note.data.timestamp,																		// Publication date
+		content: note.data.sensitive ? t("sensitive.feed", { link: (<any>note).link }) : note.rendered?.html,		// Rendered content
+		description: note.data.description,																			// Summary of the post
+		category: note.data.tags?.map((tag: any) => ({ term: tag }))												// Tags as categories
+	}));
 
-		return feed.addItem({
-			id: note.id,																			// Unique item identifier
-			title: note.data.title,																	// Post title
-			link,																					// URL to the post
-			date: new Date(note.data.timestamp),													// Publication date
-			content: note.data.sensitive ? t("sensitive.feed", { link }) : note.rendered?.html,		// Rendered content
-			description: note.data.description,														// Summary of the post
-			category: note.data.tags?.map((tag: any) => ({ scheme: "tag", name: tag }))				// Tags as categories
-		});
-	});
+	// Append stylesheet declaration to the feed
+	const XML = feed.atom1().replace(
+		/(<\?xml version="1\.0" encoding="utf-8".*\?>)/,
+		'$1\n<?xml-stylesheet type="text/xsl" href="feed.xsl"?>'
+	);
 
-	// Return appropriate feed format based on request
-	switch (format?.toLowerCase()) {
-		default:
-		case "atom":
-		case "atom1":
-			// Atom 1.0 format (default)
-			return new Response(feed.atom1(), { headers: { "Content-Type": "application/xml" } });
-
-		case "rss":
-		case "rss2":
-			// RSS 2.0 format
-			return new Response(feed.rss2(), { headers: { "Content-Type": "application/xml" } });
-
-		case "json":
-		case "json1":
-			// JSON Feed format
-			return new Response(feed.json1(), { headers: { "Content-Type": "application/json" } });
-	}
+	return new Response(XML, { headers: { "Content-Type": "application/xml" } });
 }

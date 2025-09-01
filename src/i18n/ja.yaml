@@ -75,6 +75,16 @@ drifter:
     failure: 更新に失敗しました
     name: 更新
     success: 更新しました
+feed:
+  address: 購読アドレス
+  copy:
+    failure: 複写に失敗しました。購読アドレスを手動で複写してください。
+    name: 複写
+    success: 購読アドレスをクリップボードに複写しました！
+  description: このページは Atom 形式のコンテンツ購読ソースです。
+  last: 最終更新
+  usage: 対応しているリーダーで現在のアドレスを追加して、このコンテンツを購読し、最新のコンテンツ更新を適時に取得できます。
+  visit: これはフィードページです。完全なウェブサイト体験のために {title} を訪問してください。
 home:
   heatmap:
     empty: 無字

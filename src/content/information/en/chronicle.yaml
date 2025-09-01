@@ -15,9 +15,9 @@
   - CloudFlare Workers
   - CloudFlare D1
 2025-01-04:
-  - RSS subscription
   - Atom subscription
-  - JSON Feed subscription
+  - ~RSS subscription
+  - ~JSON Feed subscription
 2025-01-03:
   - Heatmap
   - Dynamic filtering

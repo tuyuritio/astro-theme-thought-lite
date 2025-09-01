@@ -27,6 +27,8 @@ tags: [Guide, Astro]
 - `copyright` - 著作権情報
     - `type` - CC ライセンスタイプ
     - `year` - 著作権年または年範囲
+- `feed` - フィード
+    - `limit` - フィードの返すコンテンツ数量制限
 
 ## アイコン生成
 

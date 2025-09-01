@@ -15,9 +15,9 @@
   - CloudFlare Workers
   - CloudFlare D1
 2025-01-04:
-  - RSS 订阅
   - Atom 订阅
-  - JSON Feed 订阅
+  - ~RSS 订阅
+  - ~JSON Feed 订阅
 2025-01-03:
   - 热力图
   - 动态筛选

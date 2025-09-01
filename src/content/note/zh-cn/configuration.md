@@ -27,6 +27,8 @@ tags: [Guide, Astro]
 - `copyright` - 版权信息
     - `type` - CC 许可类型
     - `year` - 版权年份或年份范围
+- `feed` - 订阅源
+    - `limit` - 返回内容数量限制
 
 ## 图标生成
 

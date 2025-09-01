@@ -67,6 +67,17 @@
 				"type",
 				"year"
 			]
+		},
+		"feed": {
+			"title": "Feed Configuration",
+			"type": "object",
+			"properties": {
+				"limit": {
+					"title": "Feed Item Limit",
+					"type": "integer",
+					"minimum": 0
+				}
+			}
 		}
 	},
 	"required": [
