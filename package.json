@@ -1,7 +1,7 @@
 {
 	"name": "astro-theme-thought-lite",
 	"type": "module",
-	"version": "0.10.3",
+	"version": "0.11.0",
 	"description": "A modern Astro theme optimized for Cloudflare, focused on content creation",
 	"keywords": [
 		"astro",
@@ -45,8 +45,8 @@
 		"@block65/webcrypto-web-push": "^1.0.2",
 		"@hbsnow/rehype-sectionize": "^1.0.7",
 		"@iconify-json/fa6-brands": "^1.2.6",
-		"@iconify-json/lucide": "^1.2.65",
-		"@iconify-json/simple-icons": "^1.2.49",
+		"@iconify-json/lucide": "^1.2.66",
+		"@iconify-json/simple-icons": "^1.2.50",
 		"@iconify-json/svg-spinners": "^1.2.4",
 		"@swup/astro": "^1.7.0",
 		"arctic": "^3.7.0",
@@ -83,11 +83,11 @@
 		"@astrojs/check": "^0.9.4",
 		"@rollup/plugin-yaml": "^4.1.2",
 		"@types/luxon": "^3.7.1",
-		"@unocss/reset": "^66.4.2",
+		"@unocss/reset": "^66.5.0",
 		"drizzle-kit": "^0.31.4",
 		"prettier": "3.6.2",
 		"prettier-plugin-astro": "0.14.1",
-		"unocss": "^66.4.2",
+		"unocss": "^66.5.0",
 		"wrangler": "^4.33.1"
 	}
 }
