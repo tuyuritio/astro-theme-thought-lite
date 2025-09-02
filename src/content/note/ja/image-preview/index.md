@@ -3,6 +3,7 @@ title: Markdown画像プレビュー
 timestamp: 2025-04-04 00:00:00+00:00
 series: Astro
 tags: [Content, Demo]
+description: Markdownにおける3つの画像参照方法のデモンストレーション：相対パス、絶対パス、外部リンク、画像最適化と管理のベストプラクティスを紹介。
 ---
 
 この記事では、Markdownで画像を参照する3つの方法を紹介します。

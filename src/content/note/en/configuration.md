@@ -2,6 +2,7 @@
 title: Site Configuration Guide
 timestamp: 2025-07-07 00:00:00+00:00
 tags: [Guide, Astro]
+description: Essential configuration guide for Astro theme sites, covering site settings, internationalization, and Markdown processing options.
 ---
 
 ## `astro.config.ts`

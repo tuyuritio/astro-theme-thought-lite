@@ -2,6 +2,7 @@
 title: Cloudflare D1 設定ガイド
 timestamp: 2025-07-07 00:00:00+00:00
 tags: [Guide, Cloudflare, Database]
+description: Cloudflare D1 データベースのゼロからの設定手順、データベース作成、接続設定、データ移行まで完全ガイド。
 ---
 
 > 公式ドキュメント: [Cloudflare D1](https://developers.cloudflare.com/d1/get-started/)\

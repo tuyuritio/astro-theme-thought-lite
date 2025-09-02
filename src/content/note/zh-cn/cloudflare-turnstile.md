@@ -2,6 +2,7 @@
 title: Cloudflare Turnstile 配置指南
 timestamp: 2025-07-26 00:00:00+00:00
 tags: [Guide, Cloudflare, CAPTCHA]
+description: 快速配置 Cloudflare Turnstile 验证码服务，提供无感知的安全验证方案替代传统 CAPTCHA。
 ---
 
 > 官方文档：[Cloudflare Turnstile](https://developers.cloudflare.com/turnstile/get-started/)

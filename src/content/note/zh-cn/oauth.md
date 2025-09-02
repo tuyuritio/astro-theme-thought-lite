@@ -2,6 +2,7 @@
 title: OAuth 配置指南
 timestamp: 2025-06-24 00:00:00+00:00
 tags: [Guide, OAuth]
+description: 详细介绍如何配置 OAuth 2.0 认证，支持 GitHub、Google、Twitter 等多种提供商的集成设置指南。
 ---
 
 ## 创建 OAuth Token

@@ -3,6 +3,7 @@ title: コンテンツ作成ガイド
 timestamp: 2025-04-04 00:00:00+00:00
 series: Astro
 tags: [Content, Demo]
+description: テーマの3つのコンテンツセクション：文記、随筆、情報の包括的ガイド、ユーザーがコンテンツタイプと公開基準を理解するのに役立ちます。
 contents: true
 top: 1
 ---

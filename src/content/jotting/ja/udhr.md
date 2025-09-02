@@ -3,6 +3,7 @@ title: 世界人権宣言
 timestamp: 1948-12-10 00:00:00+00:00
 tags: [UnitedNations, Demo]
 top: 1
+description: 1948 年に国連総会で採択された重要文書、人類の基本的権利と自由の普遍的基準と原則を確立。
 ---
 
 ## 前文

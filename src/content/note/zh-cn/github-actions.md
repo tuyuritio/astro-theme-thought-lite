@@ -2,6 +2,7 @@
 title: GitHub Actions 配置指南
 timestamp: 2025-07-21 00:00:00+00:00
 tags: [Guide, GitHub]
+description: 配置 GitHub Actions 实现自动部署到 Cloudflare Workers，包括必要的环境变量和密钥设置。
 ---
 
 > [!TIP]

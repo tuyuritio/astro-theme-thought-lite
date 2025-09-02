@@ -3,6 +3,7 @@ title: 孔乙己
 timestamp: 1919-03-01 00:00:00+08:00
 series: 吶喊
 tags: [Literature, Demo]
+description: 魯迅先生の古典的短編小説、封建社会で教育を受けながらも社会に適応できない知識人孔乙己の悲劇的運命を描いた作品。
 ---
 
 > 魯迅　著\

@@ -2,6 +2,7 @@
 title: OAuth 設定ガイド
 timestamp: 2025-06-24 00:00:00+00:00
 tags: [Guide, OAuth]
+description: GitHub、Google、Twitter などの複数プロバイダーに対応した OAuth 2.0 認証の詳細設定ガイド。
 ---
 
 ## OAuth トークンの作成

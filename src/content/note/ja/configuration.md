@@ -2,6 +2,7 @@
 title: サイト設定ガイド
 timestamp: 2025-07-07 00:00:00+00:00
 tags: [Guide, Astro]
+description: Astro テーマサイトの基本設定説明、サイト設定、国際化、Markdown処理などのコア設定項目をカバー。
 ---
 
 ## `astro.config.ts`

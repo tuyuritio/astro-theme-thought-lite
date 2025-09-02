@@ -3,6 +3,7 @@ title: Markdown Image Preview
 timestamp: 2025-04-04 00:00:00+00:00
 series: Astro
 tags: [Content, Demo]
+description: "Demonstration of three image referencing methods in Markdown: relative paths, absolute paths, and external links, showcasing image optimization and management best practices."
 ---
 
 This article demonstrates three ways to reference images in Markdown.

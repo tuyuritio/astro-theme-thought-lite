@@ -2,6 +2,7 @@
 title: Cloudflare D1 Configuration Guide
 timestamp: 2025-07-07 00:00:00+00:00
 tags: [Guide, Cloudflare, Database]
+description: Complete walkthrough for setting up Cloudflare D1 database from scratch, including database creation, connection setup, and data migration.
 ---
 
 > Official Documentation: [Cloudflare D1](https://developers.cloudflare.com/d1/get-started/)\

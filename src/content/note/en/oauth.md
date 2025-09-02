@@ -2,6 +2,7 @@
 title: OAuth Configuration Guide
 timestamp: 2025-06-24 00:00:00+00:00
 tags: [Guide, OAuth]
+description: Comprehensive guide for setting up OAuth 2.0 authentication with support for GitHub, Google, Twitter and other providers.
 ---
 
 ## Create OAuth Token

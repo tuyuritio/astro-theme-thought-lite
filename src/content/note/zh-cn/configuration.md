@@ -2,6 +2,7 @@
 title: 站点配置指南
 timestamp: 2025-07-07 00:00:00+00:00
 tags: [Guide, Astro]
+description: Astro 主题站点的基础配置说明，涵盖站点设置、国际化、Markdown 处理等核心配置项。
 ---
 
 ## `astro.config.ts`
