@@ -180,6 +180,7 @@ export default defineConfig({
           "scale",
           "siren",
           "send",
+          "timer",
         ],
         "simple-icons": [
           "astro",

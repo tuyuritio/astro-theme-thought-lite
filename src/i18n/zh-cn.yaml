@@ -7,7 +7,6 @@ back: 重返序章
 cancel: 取消
 comment:
   author: 笔者
-  delay: '{seconds} 秒'
   edit:
     history: 编辑历史
     name: 编辑

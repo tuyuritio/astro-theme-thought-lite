@@ -52,13 +52,13 @@
 				<label class="flex items-center cursor-pointer">{@render icon.preview()}<input type="checkbox" class="switch" bind:checked={preview} /></label>
 				<div class="grow"></div>
 				{#if nomad}
-					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35" />
 					<div bind:this={turnstile_element}></div>
+					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35" />
 					<button onclick={() => (anchor_view = true)}>{@render icon.oauth()}</button>
 				{/if}
 				<button id="submit" disabled={limit > 0 || (nomad && !CAPTCHA)} onclick={submit_comment}>
 					{#if limit > 0}
-						{t("comment.delay", { seconds: Math.ceil(limit) })}
+						<span class="flex gap-0.5">{@render icon.delay()}<span class="font-mono pt-1">{Math.ceil(limit)}</span></span>
 					{:else if nomad && !CAPTCHA}
 						<span class="contents c-primary">{@render icon.verifying()}</span>
 					{:else}

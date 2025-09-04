@@ -7,7 +7,6 @@ back: Go Home
 cancel: Cancel
 comment:
   author: Author
-  delay: '{seconds} seconds'
   edit:
     history: Edit History
     name: Edit

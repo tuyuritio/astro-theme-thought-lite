@@ -7,7 +7,6 @@ back: 玄関へ戻る
 cancel: 取消
 comment:
   author: 筆者
-  delay: '{seconds} 秒'
   edit:
     history: 編集歴史
     name: 編集
