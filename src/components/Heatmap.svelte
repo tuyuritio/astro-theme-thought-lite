@@ -11,7 +11,7 @@
 						<p class="my-1">{t("home.heatmap.note", { count: day.notes.length })}：</p>
 						<ul class="flex flex-col gap-0.5">
 							{#each day.notes as note}
-								<a href={getRelativeLocaleUrl(locale, `/note/${note.id.split("/").slice(1).join("/")}`)} aria-label={note.data.title} class="ml-1 hover:underline">{note.data.title}</a>
+								<a href={getRelativeLocaleUrl(locale, `/note/${note.id.split("/").slice(1).join("/")}`)} aria-label={note.data.title} class="ml-1 link">{note.data.title}</a>
 							{/each}
 						</ul>
 					{/if}
@@ -19,7 +19,7 @@
 						<p class="my-1">{t("home.heatmap.jotting", { count: day.jottings.length })}：</p>
 						<ul class="flex flex-col gap-0.5">
 							{#each day.jottings as jotting}
-								<a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} aria-label={jotting.data.title} class="ml-1 hover:underline">{jotting.data.title}</a>
+								<a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} aria-label={jotting.data.title} class="ml-1 link">{jotting.data.title}</a>
 							{/each}
 						</ul>
 					{/if}

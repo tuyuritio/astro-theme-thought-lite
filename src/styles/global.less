@@ -86,28 +86,6 @@
 	}
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-	animation: none;
-	mix-blend-mode: normal;
-}
-
-::view-transition-old(root) {
-	z-index: 1;
-}
-
-::view-transition-new(root) {
-	z-index: 10;
-}
-
-[data-theme="dark"]::view-transition-old(root) {
-	z-index: 10;
-}
-
-[data-theme="dark"]::view-transition-new(root) {
-	z-index: 1;
-}
-
 html {
 	scroll-behavior: smooth;
 
@@ -222,4 +200,26 @@ svg {
 .swup-progress-bar {
 	height: 0.15rem;
 	background: linear-gradient(to right, var(--block-color), var(--secondary-color));
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation: none;
+	mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+	z-index: 1;
+}
+
+::view-transition-new(root) {
+	z-index: 10;
+}
+
+[data-theme="dark"]::view-transition-old(root) {
+	z-index: 10;
+}
+
+[data-theme="dark"]::view-transition-new(root) {
+	z-index: 1;
 }

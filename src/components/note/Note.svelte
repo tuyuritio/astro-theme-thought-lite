@@ -65,7 +65,7 @@
 						{#if note.data.top > 0}<span>{@render top()}</span>{/if}
 						{#if note.data.sensitive}<span>{@render sensitive()}</span>{/if}
 						{#if note.data.series}<button onclick={() => choose_series(note.data.series, true)}>{note.data.series}</button><b>|</b>{/if}
-						<a href={getRelativeLocaleUrl(locale, `/note/${note.id.split("/").slice(1).join("/")}`)} class="hover:underline">{note.data.title}</a>
+						<a href={getRelativeLocaleUrl(locale, `/note/${note.id.split("/").slice(1).join("/")}`)} class="link">{note.data.title}</a>
 					</div>
 					<time title={Time.full(note.data.timestamp)} class="font-mono text-2.6 c-remark">{Time(note.data.timestamp)}</time>
 				</div>
