@@ -179,6 +179,7 @@ export default defineConfig({
           "flag-triangle-right",
           "scale",
           "siren",
+          "send",
         ],
         "simple-icons": [
           "astro",

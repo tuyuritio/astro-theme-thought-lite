@@ -45,6 +45,7 @@ comment:
   time: Posted at
   verify:
     failure: Human verification failed
+    progress: Verifying automatically
 confirm: Confirm
 delete: Delete
 drifter:

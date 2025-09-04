@@ -50,7 +50,7 @@
 			<label class="flex items-center">{t("notification.name")}：<input type="checkbox" class="switch" bind:checked={notification} onchange={toggle_notification} /></label>
 		</section>
 		<section class="flex flex-col gap-2">
-			<label>{t("drifter.homepage")}：<input type="url" bind:value={drifter.homepage} /></label>
+			<label>{t("drifter.homepage")}：<input type="url" class="input" bind:value={drifter.homepage} /></label>
 		</section>
 		<button onclick={update} class="border-rd-1 py-1 px-2 c-background bg-primary">{t("drifter.update.name")}</button>
 	</div>

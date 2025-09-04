@@ -45,6 +45,7 @@ comment:
   time: 送信時間
   verify:
     failure: 人間判定に失敗しました
+    progress: 自動で人間判定を実行中
 confirm: 確認
 delete: 削除
 drifter:

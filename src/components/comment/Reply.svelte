@@ -52,17 +52,17 @@
 				<label class="flex items-center cursor-pointer">{@render icon.preview()}<input type="checkbox" class="switch" bind:checked={preview} /></label>
 				<div class="grow"></div>
 				{#if nomad}
-					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="border-weak! w-35 px-1" />
+					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35" />
 					<div bind:this={turnstile_element}></div>
-					<button class="border-2 border-solid c-secondary rounded-1 py-0.5 px-2" onclick={() => (anchor_view = true)}>{t("oauth.name")}</button>
+					<button onclick={() => (anchor_view = true)}>{@render icon.oauth()}</button>
 				{/if}
-				<button id="submit" class="rounded-1 py-1 px-2 c-background bg-secondary" disabled={limit > 0 || (nomad && !CAPTCHA)} onclick={submit_comment}>
+				<button id="submit" disabled={limit > 0 || (nomad && !CAPTCHA)} onclick={submit_comment}>
 					{#if limit > 0}
 						{t("comment.delay", { seconds: Math.ceil(limit) })}
 					{:else if nomad && !CAPTCHA}
-						{@render icon.verifying()}
+						<span class="contents c-primary">{@render icon.verifying()}</span>
 					{:else}
-						{edit ? t("comment.edit.name") : t("comment.submit")}
+						{@render (edit ? icon.edit : icon.submit)()}
 					{/if}
 				</button>
 			</section>

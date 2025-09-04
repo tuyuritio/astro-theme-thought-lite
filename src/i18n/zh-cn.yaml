@@ -45,6 +45,7 @@ comment:
   time: 发送时间
   verify:
     failure: 人机校验失败
+    progress: 正在自动进行人机校验
 confirm: 确认
 delete: 删除
 drifter:

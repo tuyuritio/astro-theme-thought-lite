@@ -25,7 +25,7 @@ const OAuth = {
 <Thread client:visible {locale} {section} {item} {OAuth}>
 	<Icon name="svg-spinners:3-dots-move" size={25} slot="loading" inline />
 	<Icon name="svg-spinners:pulse-3" size={30} slot="rendering" inline />
-	<Icon name="svg-spinners:pulse-rings-3" size="1.5rem" slot="verifying" inline />
+	<Icon name="svg-spinners:pulse-rings-3" title={t("comment.verify.progress")} slot="verifying" inline />
 	<Icon name="lucide:signature" title={t("comment.author")} slot="author" />
 	<Icon name="lucide:house" slot="home" inline />
 	<Icon name="lucide:triangle-alert" slot="alert" inline />
@@ -42,4 +42,6 @@ const OAuth = {
 	<Icon name="lucide:trash" title={t("delete")} slot="remove" />
 	<Icon name="lucide:smile" slot="emoji" />
 	<Icon name="lucide:file-search" title={t("comment.preview")} slot="preview" />
+	<Icon name="lucide:user-round" title={t("oauth.name")} slot="oauth" />
+	<Icon name="lucide:send" title={t("comment.submit")} slot="submit" />
 </Thread>

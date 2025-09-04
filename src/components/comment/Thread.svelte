@@ -40,10 +40,10 @@
 	import CommentBlock from "./Comment.svelte";
 	import Reply from "./Reply.svelte";
 
-	let { locale, section, item, OAuth, author, home, alert, reload, asc, desc, reply, history, share, edit, remove, emoji, preview, loading, rendering, verifying, GitHub, Google, X }: { locale: string; nomad: boolean; section: string; item: string; OAuth: any; author: Snippet; home: Snippet; alert: Snippet; reload: Snippet; asc: Snippet; desc: Snippet; reply: Snippet; history: Snippet; share: Snippet; edit: Snippet; remove: Snippet; emoji: Snippet; preview: Snippet; loading: Snippet; rendering: Snippet; verifying: Snippet; GitHub: Snippet; Google: Snippet; X: Snippet } = $props();
+	let { locale, section, item, OAuth, author, home, alert, reload, asc, desc, reply, history, share, edit, remove, emoji, preview, oauth, submit, loading, rendering, verifying, GitHub, Google, X }: { locale: string; nomad: boolean; section: string; item: string; OAuth: any } & { [key: string]: Snippet } = $props();
 
 	// Group all icon snippets into a single object for easier prop passing
-	const icon = { author, home, alert, reply, history, share, edit, remove, emoji, preview, loading, rendering, verifying, GitHub, Google, X };
+	const icon = { author, home, alert, reply, history, share, edit, remove, emoji, preview, oauth, submit, loading, rendering, verifying, GitHub, Google, X };
 
 	const t = i18nit(locale);
 
