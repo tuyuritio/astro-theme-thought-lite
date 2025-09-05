@@ -48,7 +48,7 @@ export default async function notify(subscription: { endpoint: string; auth: str
 	};
 
 	// Build encrypted payload using VAPID authentication
-	const payload = await buildPushPayload(message, push, VAPID);
+	const payload: any = await buildPushPayload(message, push, VAPID);
 
 	// Send push notification to the push service
 	const response = await fetch(push.endpoint, payload);
