@@ -208,7 +208,7 @@ export const comment = {
 			section: z.string(),	// The section this comment belongs to
 			item: z.string()		// The item ID to get comments for
 		}),
-		handler: async ({ section, item }, { cookies, locals }) => {
+		handler: async ({ section, item }, { locals }) => {
 			// Get the site author ID
 			const author = env.AUTHOR_ID ?? null;
 
@@ -289,14 +289,10 @@ export const comment = {
 				list.delete(comment.ID);
 			}
 
-			// Get user authentication
-			const passport = await Token.check(cookies, "passport");
-			const visa = passport?.visa;
-
 			// Get the Turnstile site key if unauthenticated comments are allowed
 			const turnstile = nomad && env.CLOUDFLARE_TURNSTILE_SITE_KEY;
 
-			return { treeification, count, visa, turnstile };
+			return { treeification, count, turnstile };
 		}
 	})
 }

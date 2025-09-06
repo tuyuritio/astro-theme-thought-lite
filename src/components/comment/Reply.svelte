@@ -1,6 +1,6 @@
 <Modal bind:open={anchor_view}>
 	<div class="flex flex-col items-center gap-5">
-		<h2>{t("oauth.name")}</h2>
+		<h2>{t("drifter.signin")}</h2>
 
 		<ul class="flex flex-col gap-1 list-inside mx-4">
 			<li>{t("oauth.benefit.captcha")}</li>
@@ -12,19 +12,21 @@
 		<hr class="border-b-1 border-b-dashed w-full" />
 
 		<div class="flex flex-col items-center gap-2 [&>a]:(flex items-center justify-center gap-2 w-200px border-2 border-solid border-secondary p-1 rounded-1 font-bold)">
-			{#if OAuth.GitHub}<a href="/drifter/roam/anchor/GitHub">{@render icon.GitHub()}<span>{t("oauth.github")}</span></a>{/if}
-			{#if OAuth.Google}<a href="/drifter/roam/anchor/Google">{@render icon.Google()}<span>{t("oauth.google")}</span></a>{/if}
-			{#if OAuth.X}<a href="/drifter/roam/anchor/X">{@render icon.X()}<span>{t("oauth.x")}</span></a>{/if}
+			{#if OAuth.GitHub}<a href="/drifter/anchor/GitHub">{@render icon.GitHub()}<span>{t("oauth.github")}</span></a>{/if}
+			{#if OAuth.Google}<a href="/drifter/anchor/Google">{@render icon.Google()}<span>{t("oauth.google")}</span></a>{/if}
+			{#if OAuth.X}<a href="/drifter/anchor/X">{@render icon.X()}<span>{t("oauth.x")}</span></a>{/if}
 		</div>
 
 		<button class="form-button" onclick={() => (anchor_view = false)}>{t("cancel")}</button>
 	</div>
 </Modal>
 
+<Drifter bind:open={docker_view} {locale} {drifter} {icon} />
+
 <main transition:slide={{ duration: 150 }} class="relative mt-5">
 	{#if !turnstile && !drifter}
 		<div class="absolute flex flex-col items-center justify-center gap-1 w-full h-full font-bold cursor-not-allowed">
-			<button onclick={() => (anchor_view = true)} class="border-2 border-solid py-1 px-2 rounded-1 font-bold">{t("comment.login")}</button>
+			<button onclick={() => (anchor_view = true)} class="border-2 border-solid py-1 px-2 rounded-1 font-bold">{t("comment.signin")}</button>
 		</div>
 	{/if}
 	<div class={!turnstile && !drifter ? "pointer-events-none filter-blur" : ""}>
@@ -54,7 +56,9 @@
 				{#if nomad}
 					<div bind:this={turnstile_element}></div>
 					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35" />
-					<button onclick={() => (anchor_view = true)}>{@render icon.oauth()}</button>
+					<button onclick={() => (anchor_view = true)}>{@render icon.signin()}</button>
+				{:else}
+					<button onclick={() => (docker_view = true)}>{@render icon.profile()}</button>
 				{/if}
 				<button id="submit" disabled={limit > 0 || (nomad && !CAPTCHA)} onclick={submit_comment}>
 					{#if limit > 0}
@@ -78,12 +82,14 @@
 	import Modal from "$components/Modal.svelte";
 	import { push_tip } from "$components/Tip.svelte";
 	import i18nit from "$i18n";
+	import Drifter from "./Drifter.svelte";
 
-	let { locale, OAuth, turnstile, drifter, section, item, reply, edit, text, icon, refresh, view = $bindable(), limit = $bindable(0) }: { locale: string; OAuth: any; turnstile?: string; drifter?: string; section: string; item: string; reply?: string; edit?: string; text?: string; icon: any; refresh: any; view?: boolean; limit?: number } = $props();
+	let { locale, OAuth, turnstile, drifter, section, item, reply, edit, text, icon, refresh, view = $bindable(), limit = $bindable(0) }: { locale: string; OAuth: any; turnstile?: string; drifter?: any; section: string; item: string; reply?: string; edit?: string; text?: string; icon: any; refresh: any; view?: boolean; limit?: number } = $props();
 
 	const t = i18nit(locale);
 
-	let anchor_view: boolean = $state(false); // OAuth login view state
+	let anchor_view: boolean = $state(false); // OAuth signin view state
+	let docker_view: boolean = $state(false); // User profile view state
 	let content: string = $state(text ?? ""); // Comment content, initialize with existing text if editing
 	let preview: boolean = $state(false); // Toggle between edit and preview mode
 	let nomad: boolean = $state(!!turnstile && !drifter); // Check if unauthenticated comments are allowed

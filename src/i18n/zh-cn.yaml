@@ -16,7 +16,6 @@ comment:
     failure: 获取想法出错
   history: 历史
   limit: 发表过于频繁
-  login: 登录以传递想法
   name: 想法
   nickname:
     empty: 昵称不能为空
@@ -36,6 +35,7 @@ comment:
   share:
     name: 分享
     success: 链接已复制
+  signin: 登录以传递想法
   sort:
     asc: 时间升序
     desc: 时间降序
@@ -60,12 +60,16 @@ drifter:
     description: 若确认注销，您的账号将会：
     done: 离港旅人
     failure: 注销失败
-    name: 解缆远航
+    name: 注销
     success: 账号已注销
     title: 您确定要注销账号吗？
     warning: 这是不可逆的操作！
+  fetch:
+    failure: 获取旅人配置出错
   homepage: 个人主页
-  logout: 登出
+  profile: 旅人配置
+  signin: 登录
+  signout: 登出
   sync:
     failure: 同步失败
     fetch: 信息同步中
@@ -98,7 +102,6 @@ jotting:
   tag: 标签
 navigation:
   about: 絮述
-  drifter: 旅人
   home: 序章
   jotting: 随笔
   note: 文记
@@ -110,7 +113,6 @@ note:
   contents: 目录
   fetch:
     failure: 获取文记出错
-  metadata: 属性
   series: 系列
   tag: 标签
   top: 回到顶部
@@ -137,10 +139,8 @@ oauth:
     notification: 接收想法回复的桌面通知
   github: GitHub 登录
   google: Google 登录
-  name: 登录
   x: X 登录
 read:
-  minutes: '{minutes} 分钟'
   words: '{words} 字'
 sensitive:
   back: 返回列表

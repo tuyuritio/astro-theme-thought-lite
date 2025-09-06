@@ -8,7 +8,7 @@
 	<div class="flex flex-col items-center justify-center gap-5">
 		<h2>{t("drifter.deactivate.title")}</h2>
 		<div class="flex flex-col gap-4">
-			<p class="self-center font-bold text-red">{t("drifter.deactivate.warning")}</p>
+			<p class="self-center font-bold text-red-5">{t("drifter.deactivate.warning")}</p>
 			<p>{t("drifter.deactivate.description")}</p>
 			<ul class="ml-5 space-y-1">
 				<li>{t("drifter.deactivate.consequences.data")}</li>
@@ -20,52 +20,56 @@
 		</div>
 		<section class="flex gap-5">
 			<button class="form-button" onclick={() => (deactivate_view = false)}>{t("drifter.deactivate.cancel")}</button>
-			<button class="form-button bg-red text-white" onclick={deactivate}>{t("drifter.deactivate.confirm")}</button>
+			<button class="form-button bg-red-5 text-white" onclick={deactivate}>{t("drifter.deactivate.confirm")}</button>
 		</section>
 	</div>
 </Modal>
 
-<main class="flex flex-col grow gap-8">
-	<header class="flex h-25">
-		<img src={drifter.image} alt={drifter.ID} loading="lazy" class="w-25 border-2 border-solid border-weak border-rd-full" />
-		<aside class="flex flex-col justify-around ml-6">
-			<menu class="flex items-center gap-3 text-5 font-bold">
-				{#if drifter.platform == "GitHub"}
-					{@render GitHub()}
-				{:else if drifter.platform == "Google"}
-					{@render Google()}
-				{:else if drifter.platform == "X"}
-					{@render X()}
-				{/if}
-				{drifter.name}
-				<button onclick={synchronize}>{@render sync()}</button>
-				<button onclick={() => (location.href = "/drifter/dock/sail")}>{@render signout()}</button>
-			</menu>
-			{#if drifter.description}<span id="description">{drifter.description}</span>{/if}
-		</aside>
-	</header>
-	<hr />
-	<div class="flex flex-col items-start gap-5">
-		<section>
-			<label class="flex items-center">{t("notification.name")}：<input type="checkbox" class="switch" bind:checked={notification} onchange={toggle_notification} /></label>
-		</section>
-		<section class="flex flex-col gap-2">
-			<label>{t("drifter.homepage")}：<input type="url" class="input" bind:value={drifter.homepage} /></label>
-		</section>
-		<button onclick={update} class="border-rd-1 py-1 px-2 c-background bg-primary">{t("drifter.update.name")}</button>
-	</div>
-	<hr class="mt-a" />
-	<button onclick={() => (deactivate_view = true)} class="self-start mb-5 border-2 border-solid c-red b-rd px-2 py-1 font-bold">{t("drifter.deactivate.name")}</button>
-</main>
+<Modal bind:open>
+	<main class="flex flex-col grow gap-5">
+		<header class="flex flex-col sm:flex-row gap-5">
+			<img src={drifter.image} alt={drifter.ID} class="self-center w-20 border-2 border-solid border-weak border-rd-full" />
+			<aside class="flex flex-col justify-around gap-2 sm:gap-0">
+				<menu class="flex items-center gap-2 font-bold">
+					{#if drifter.platform == "GitHub"}
+						{@render icon.GitHub()}
+					{:else if drifter.platform == "Google"}
+						{@render icon.Google()}
+					{:else if drifter.platform == "X"}
+						{@render icon.X()}
+					{/if}
+					{drifter.name}
+					<button onclick={synchronize}>{@render icon.sync()}</button>
+					<button onclick={() => (location.href = "/drifter/sail")}>{@render icon.signout()}</button>
+					<button onclick={() => (deactivate_view = true)} class="ml-a c-red-5">{@render icon.deactivate()}</button>
+				</menu>
+				{#if drifter.description}<span class="text-3.5">{drifter.description}</span>{/if}
+			</aside>
+		</header>
+		<hr />
+		<div class="flex flex-col items-start gap-5">
+			<section>
+				<label class="flex items-center">{t("notification.name")}：<input type="checkbox" class="switch" bind:checked={notification} onchange={toggle_notification} /></label>
+			</section>
+			<section class="flex flex-col gap-2">
+				<label>{t("drifter.homepage")}：<input type="url" class="input" bind:value={drifter.homepage} /></label>
+			</section>
+		</div>
+		<div class="self-center flex gap-5">
+			<button onclick={() => (open = false)} class="form-button">{t("cancel")}</button>
+			<button onclick={update} class="form-button">{t("drifter.update.name")}</button>
+		</div>
+	</main>
+</Modal>
 
 <script lang="ts">
 	import { actions } from "astro:actions";
 	import { onMount, type Snippet } from "svelte";
 	import Modal from "$components/Modal.svelte";
+	import { push_tip } from "$components/Tip.svelte";
 	import i18nit from "$i18n";
-	import { push_tip } from "./Tip.svelte";
 
-	let { locale, drifter, GitHub, Google, X, sync, signout }: { locale: string; drifter: any; GitHub: Snippet; Google: Snippet; X: Snippet; sync: Snippet; signout: Snippet } = $props();
+	let { open = $bindable(), locale, drifter, icon }: { open: boolean; locale: string; drifter: any; icon: { [key: string]: Snippet } } = $props();
 
 	const t = i18nit(locale);
 

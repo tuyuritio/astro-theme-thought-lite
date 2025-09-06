@@ -16,7 +16,6 @@ comment:
     failure: 感想取得に失敗しました
   history: 履歴
   limit: 投稿が頻繁すぎます
-  login: 登録して感想を共有しましょう
   name: 感想
   nickname:
     empty: 渾名は空にすることはできません
@@ -36,6 +35,7 @@ comment:
   share:
     name: 共有
     success: 連結を複写しました
+  signin: 登録して感想を共有しましょう
   sort:
     asc: 時間昇順
     desc: 時間降序
@@ -60,12 +60,16 @@ drifter:
     description: 無効化を確認すると、あなたのアカウントは：
     done: 旅立った人
     failure: 無効化に失敗しました
-    name: 揚帆出航
+    name: 退会
     success: アカウントが無効化されました
     title: アカウントを無効化してもよろしいですか？
     warning: この操作は元に戻せません！
+  fetch:
+    failure: 旅人情報取得に失敗しました
   homepage: 公式本頁
-  logout: 退出
+  profile: 旅人情報
+  signin: ログイン
+  signout: 退出
   sync:
     failure: 同期に失敗しました
     fetch: 情報同期中
@@ -98,7 +102,6 @@ jotting:
   tag: 付札
 navigation:
   about: 情報
-  drifter: 旅人
   home: 玄関
   jotting: 随筆
   note: 文記
@@ -110,7 +113,6 @@ note:
   contents: 目次
   fetch:
     failure: 文記取得に失敗しました
-  metadata: 属性
   series: 系列
   tag: 付札
   top: 至頂
@@ -137,10 +139,8 @@ oauth:
     notification: 感想返信の机上通知を受信できます
   github: GitHub でログイン
   google: Google でログイン
-  name: ログイン
   x: X でログイン
 read:
-  minutes: '{minutes} 分'
   words: '{words} 字'
 sensitive:
   back: リストに戻ります

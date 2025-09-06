@@ -1,5 +1,5 @@
 {#if open}
-	<dialog bind:this={dialog} onmousedown={event => (event.target == dialog ? (open = false) : null)} transition:fade={{ duration: 150 }} class="fixed m-a border-2 border-solid border-weak rounded-md c-primary bg-background backdrop:bg-transparent shadow-md">
+	<dialog bind:this={dialog} onmousedown={event => (event.target == dialog ? (open = false) : null)} transition:fade={{ duration: 150 }} class="fixed m-a border-2 border-solid border-weak rounded-md c-primary bg-background backdrop:bg-transparent shadow-md overflow-visible">
 		<div class="p-5">{@render children?.()}</div>
 	</dialog>
 {/if}

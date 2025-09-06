@@ -20,6 +20,8 @@ OAuth 2.0 認証を使用して訪問者のログインとコメントをサポ�
 | `TWITTER_CLIENT_ID` | X Developer APP を作成, https://developer.x.com/en/portal/dashboard |
 | `TWITTER_CLIENT_SECRET` | User authentication settings でシークレットを作成 |
 
+プロバイダー設定では、`Website URL` にサイト URL を、`Callback URI` に `<サイト URL>/drifter/anchor/<プロバイダー>` を記入してください。
+
 ## OAuth プロバイダーの拡張
 
 新しい OAuth プロバイダーを追加する必要がある場合は、以下の手順または [Arctic ドキュメント](https://arcticjs.dev/)を参照し、`src/utils/oauth.ts` で対応するロジックを補完してください。

@@ -12,7 +12,7 @@ export const drifter = {
 		handler: async (_, { cookies, locals }) => {
 			// Verify user authentication
 			const ID = (await Token.check(cookies, "passport"))?.visa;
-			if (!ID) throw new ActionError({ code: "UNAUTHORIZED" });
+			if (!ID) return;
 
 			// Initialize database connection
 			let db = drizzle(locals.runtime.env.DB);

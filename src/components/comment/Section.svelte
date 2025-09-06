@@ -40,17 +40,17 @@
 	import CommentBlock from "./Comment.svelte";
 	import Reply from "./Reply.svelte";
 
-	let { locale, section, item, OAuth, author, home, alert, reload, asc, desc, reply, history, share, edit, remove, emoji, preview, oauth, submit, delay, loading, rendering, verifying, GitHub, Google, X }: { locale: string; nomad: boolean; section: string; item: string; OAuth: any } & { [key: string]: Snippet } = $props();
+	let { locale, section, item, OAuth, author, home, alert, reload, asc, desc, reply, history, share, edit, remove, emoji, preview, signin, profile, submit, delay, loading, rendering, verifying, GitHub, Google, X, sync, signout, deactivate }: { locale: string; nomad: boolean; section: string; item: string; OAuth: any } & { [key: string]: Snippet } = $props();
 
 	// Group all icon snippets into a single object for easier prop passing
-	const icon = { author, home, alert, reply, history, share, edit, remove, emoji, preview, oauth, submit, delay, loading, rendering, verifying, GitHub, Google, X };
+	const icon = { author, home, alert, reply, history, share, edit, remove, emoji, preview, signin, profile, submit, delay, loading, rendering, verifying, GitHub, Google, X, sync, signout, deactivate };
 
 	const t = i18nit(locale);
 
 	// Track rate limiting state across comment operations
 	let limit: number = $state(0);
 	let loaded: boolean = $state(false);
-	let drifter: string | undefined = $state();
+	let drifter: any | undefined = $state();
 	let turnstile: string | undefined = $state();
 
 	let count: number = $state(0);
@@ -81,18 +81,31 @@
 	}
 
 	onMount(async () => {
-		// Initial load of comments and user authentication status
-		const { data, error } = await actions.comment.list({ section, item });
-		if (!error) {
-			// Set initial state with fetched comments
-			count = data.count;
-			comments = data.treeification;
-			drifter = data.visa;
-			turnstile = data.turnstile;
+		let load_comments = false;
+		let load_drifter = false;
 
-			loaded = true;
+		// Initial load of comments
+		const { data: comment_list, error: comment_error } = await actions.comment.list({ section, item });
+		if (!comment_error) {
+			count = comment_list.count;
+			comments = comment_list.treeification;
+			turnstile = comment_list.turnstile;
+
+			load_comments = true;
 		} else {
 			push_tip("error", t("comment.fetch.failure"));
 		}
+
+		// Initial load of user authentication status
+		const { data: drifter_profile, error: drifter_error } = await actions.drifter.profile();
+		if (!drifter_error) {
+			drifter = drifter_profile;
+
+			load_drifter = true;
+		} else {
+			push_tip("error", t("drifter.fetch.failure"));
+		}
+
+		loaded = load_comments && load_drifter;
 	});
 </script>

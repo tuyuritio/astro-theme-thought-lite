@@ -20,6 +20,8 @@ description: 详细介绍如何配置 OAuth 2.0 认证，支持 GitHub、Google�
 | `TWITTER_CLIENT_ID` | 创建 X Developer APP，https://developer.x.com/en/portal/dashboard |
 | `TWITTER_CLIENT_SECRET` | 在 User authentication settings 中创建密钥 |
 
+提供商配置中，`Website URL` 填写站点 URL，`Callback URI` 填写 `<站点 URL>/drifter/anchor/<提供商>`。
+
 ## 扩展 OAuth 提供商
 
 如果需要添加新的 OAuth 提供商，请参考以下步骤或 [Arctic 文档](https://arcticjs.dev/)，并在 `src/utils/oauth.ts` 中补充相应逻辑。

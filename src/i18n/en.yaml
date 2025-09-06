@@ -16,7 +16,6 @@ comment:
     failure: Error loading thoughts
   history: History
   limit: Post too frequently
-  login: Login to share your thoughts
   name: Thoughts
   nickname:
     empty: Nickname can't be empty
@@ -36,6 +35,7 @@ comment:
   share:
     name: Share
     success: Link copied
+  signin: Sign in to share your thoughts
   sort:
     asc: Time ascending
     desc: Time descending
@@ -60,12 +60,16 @@ drifter:
     description: 'If you confirm deactivation, your account will:'
     done: Departed Voyager
     failure: Deactivation failed
-    name: Cast off
+    name: Deactivate
     success: Account successfully deactivated
     title: Are you sure to deactivate your account?
     warning: This action is irreversible!
+  fetch:
+    failure: Error loading drifter's profile
   homepage: Homepage
-  logout: Logout
+  profile: Profile
+  signin: Sign in
+  signout: Sign out
   sync:
     failure: Synchronization failed
     fetch: Synchronizing information
@@ -100,7 +104,6 @@ jotting:
   tag: Tag
 navigation:
   about: About
-  drifter: Drifter
   home: Home
   jotting: Jotting
   note: Note
@@ -112,7 +115,6 @@ note:
   contents: Contents
   fetch:
     failure: Error loading notes
-  metadata: Metadata
   series: Series
   tag: Tag
   top: To Top
@@ -137,12 +139,10 @@ oauth:
     comment: Edit and delete your own thoughts
     homepage: Display your personal homepage
     notification: Receive desktop notifications for thought replies
-  github: Login with GitHub
-  google: Login with Google
-  name: Login
-  x: Login with X
+  github: Sign in with GitHub
+  google: Sign in with Google
+  x: Sign in with X
 read:
-  minutes: '{minutes} minutes'
   words: '{words} words'
 sensitive:
   back: Return to list

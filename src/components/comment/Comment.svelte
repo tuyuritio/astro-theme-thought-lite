@@ -95,7 +95,7 @@
 	import Self from "./Comment.svelte";
 	import Reply from "./Reply.svelte";
 
-	let { locale, OAuth, turnstile, drifter, comment, icon, refresh, depth = 0, limit = $bindable(0) }: { locale: string; OAuth: any; turnstile?: string; drifter?: string; comment: any; icon: any; refresh: any; depth?: number; limit?: number } = $props();
+	let { locale, OAuth, turnstile, drifter, comment, icon, refresh, depth = 0, limit = $bindable(0) }: { locale: string; OAuth: any; turnstile?: string; drifter?: any; comment: any; icon: any; refresh: any; depth?: number; limit?: number } = $props();
 
 	const t = i18nit(locale);
 

@@ -1,7 +1,7 @@
 ---
 import Icon from "$components/Icon.astro";
 import i18nit from "$i18n";
-import Thread from "./Thread.svelte";
+import Comments from "./Section.svelte";
 
 interface Props {
 	locale: string;
@@ -22,7 +22,7 @@ const OAuth = {
 };
 ---
 
-<Thread client:visible {locale} {section} {item} {OAuth}>
+<Comments client:visible {locale} {section} {item} {OAuth}>
 	<Icon name="svg-spinners:3-dots-move" size={25} slot="loading" inline />
 	<Icon name="svg-spinners:pulse-3" size={30} slot="rendering" inline />
 	<Icon name="svg-spinners:pulse-rings-3" title={t("comment.verify.progress")} slot="verifying" inline />
@@ -42,7 +42,11 @@ const OAuth = {
 	<Icon name="lucide:trash" title={t("delete")} slot="remove" />
 	<Icon name="lucide:smile" slot="emoji" />
 	<Icon name="lucide:file-search" title={t("comment.preview")} slot="preview" />
-	<Icon name="lucide:user-round" title={t("oauth.name")} slot="oauth" />
+	<Icon name="lucide:user-round" title={t("drifter.signin")} slot="signin" />
+	<Icon name="lucide:user-round-pen" title={t("drifter.profile")} slot="profile" />
 	<Icon name="lucide:send" title={t("comment.submit")} slot="submit" />
 	<Icon name="lucide:timer" slot="delay" />
-</Thread>
+	<Icon name="lucide:refresh-cw" title={t("drifter.sync.name")} slot="sync" inline />
+	<Icon name="lucide:log-out" title={t("drifter.signout")} slot="signout" />
+	<Icon name="lucide:user-round-x" title={t("drifter.deactivate.name")} slot="deactivate" />
+</Comments>

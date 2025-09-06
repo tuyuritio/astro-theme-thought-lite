@@ -20,6 +20,8 @@ Please add corresponding variables for the providers you need to add in the `.en
 | `TWITTER_CLIENT_ID` | Create X Developer APP, https://developer.x.com/en/portal/dashboard |
 | `TWITTER_CLIENT_SECRET` | Create secret in User authentication settings |
 
+In provider configuration, fill in the site URL for `Website URL`, and fill in `<SITE_URL>/drifter/anchor/<PROVIDER>` for `Callback URI`.
+
 ## Extend OAuth Providers
 
 If you need to add a new OAuth provider, please refer to the following steps or [Arctic documentation](https://arcticjs.dev/), and supplement the corresponding logic in `src/utils/oauth.ts`.
