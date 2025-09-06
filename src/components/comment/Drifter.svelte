@@ -1,9 +1,3 @@
-<style lang="less">
-	hr {
-		border-bottom: 1px solid var(--weak-color);
-	}
-</style>
-
 <Modal bind:open={deactivate_view}>
 	<div class="flex flex-col items-center justify-center gap-5">
 		<h2>{t("drifter.deactivate.title")}</h2>
@@ -46,7 +40,7 @@
 				{#if drifter.description}<span class="text-3.5">{drifter.description}</span>{/if}
 			</aside>
 		</header>
-		<hr />
+		<hr class="border-b-1 border-b-solid border-weak" />
 		<div class="flex flex-col items-start gap-5">
 			<section>
 				<label class="flex items-center">{t("notification.name")}：<input type="checkbox" class="switch" bind:checked={notification} onchange={toggle_notification} /></label>
