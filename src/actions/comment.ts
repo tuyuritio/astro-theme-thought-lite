@@ -289,10 +289,7 @@ export const comment = {
 				list.delete(comment.ID);
 			}
 
-			// Get the Turnstile site key if unauthenticated comments are allowed
-			const turnstile = nomad && env.CLOUDFLARE_TURNSTILE_SITE_KEY;
-
-			return { treeification, count, turnstile };
+			return { treeification, count };
 		}
 	})
 }

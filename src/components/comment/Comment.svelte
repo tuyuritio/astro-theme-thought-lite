@@ -62,7 +62,7 @@
 					<button onclick={() => ((reply_view = !reply_view), (edit_view = false))} disabled={!turnstile && !drifter}>{@render icon.reply()}</button>
 					{#if comment.history.length > 0}<button onclick={() => (history_view = true)}>{@render icon.history()}</button>{/if}
 					<button onclick={share}>{@render icon.share()}</button>
-					{#if comment.drifter === drifter.ID}
+					{#if comment.drifter === drifter?.ID}
 						<button onclick={() => ((edit_view = !edit_view), (reply_view = false))}>{@render icon.edit()}</button>
 						<button onclick={() => (delete_view = true)}>{@render icon.remove()}</button>
 					{/if}

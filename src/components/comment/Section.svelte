@@ -40,7 +40,7 @@
 	import CommentBlock from "./Comment.svelte";
 	import Reply from "./Reply.svelte";
 
-	let { locale, section, item, OAuth, author, home, alert, reload, asc, desc, reply, history, share, edit, remove, emoji, preview, signin, profile, submit, delay, loading, rendering, verifying, GitHub, Google, X, sync, signout, deactivate }: { locale: string; nomad: boolean; section: string; item: string; OAuth: any } & { [key: string]: Snippet } = $props();
+	let { locale, section, item, OAuth, turnstile, author, home, alert, reload, asc, desc, reply, history, share, edit, remove, emoji, preview, signin, profile, submit, delay, loading, rendering, verifying, GitHub, Google, X, sync, signout, deactivate }: { locale: string; nomad: boolean; section: string; item: string; OAuth: any; turnstile?: string } & { [key: string]: Snippet } = $props();
 
 	// Group all icon snippets into a single object for easier prop passing
 	const icon = { author, home, alert, reply, history, share, edit, remove, emoji, preview, signin, profile, submit, delay, loading, rendering, verifying, GitHub, Google, X, sync, signout, deactivate };
@@ -51,7 +51,6 @@
 	let limit: number = $state(0);
 	let loaded: boolean = $state(false);
 	let drifter: any | undefined = $state();
-	let turnstile: string | undefined = $state();
 
 	let count: number = $state(0);
 	let comments: Comment[] = $state([]);
@@ -89,7 +88,6 @@
 		if (!comment_error) {
 			count = comment_list.count;
 			comments = comment_list.treeification;
-			turnstile = comment_list.turnstile;
 
 			load_comments = true;
 		} else {
