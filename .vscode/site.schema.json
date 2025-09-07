@@ -72,6 +72,29 @@
 			"title": "Feed Configuration",
 			"type": "object",
 			"properties": {
+				"section": {
+					"title": "Feed Sections",
+					"oneOf": [
+						{
+							"type": "string",
+							"enum": [
+								"*"
+							]
+						},
+						{
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"note",
+									"jotting"
+								],
+								"uniqueItems": true
+							}
+						}
+					],
+					"default": "*"
+				},
 				"limit": {
 					"title": "Feed Item Limit",
 					"type": "integer",

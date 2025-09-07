@@ -29,6 +29,11 @@ description: Essential configuration guide for Astro theme sites, covering site 
     - `type` - CC license type
     - `year` - Copyright year or year range
 - `feed` - Feed
+    - `section` - Feed content sections
+        - **`*`** - All sections
+        - **array**
+            - `note` - Note section
+            - `jotting` - Jotting section
     - `limit` - Content quantity limit for feeds
 
 ## Icon Generation

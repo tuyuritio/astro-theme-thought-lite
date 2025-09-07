@@ -18,26 +18,6 @@ export const GET: APIRoute = async ({ site, params }) => {
 	const { locale: language = i18n?.defaultLocale! } = params;
 	const t = i18nit(language);
 
-	// Fetch and filter notes based on query parameters
-	let notes = (await getCollection("note", note => {
-		// Extract language from the file path structure
-		const [locale, ...id] = note.id.split("/");
-
-		// Attach locale and link
-		(<any>note).link = new URL(getRelativeLocaleUrl(locale, `/note/${id.join("/")}`), site).toString();
-
-		// Apply filtering criteria
-		let published = !note.data.draft;		// Exclude draft posts
-		let localed = language == locale;		// Language filter
-
-		// Include note only if it passes all filters
-		return published && localed;
-	}));
-
-	notes = notes
-		.sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime())		// Sort by newest first
-		.slice(0, config.feed?.limit || notes.length);									// Limit to number of items
-
 	// Initialize feed with site metadata and configuration
 	const feed = new Feed({
 		title: config.title,
@@ -53,15 +33,61 @@ export const GET: APIRoute = async ({ site, params }) => {
 		link: site!.toString(),										// Feed's associated website
 	});
 
+	// Aggregate items from specified sections
+	let items = [];
+
+	if (config.feed?.section?.includes("note") || config.feed?.section === "*" || config.feed?.section === undefined) {
+		let notes = (await getCollection("note", note => {
+			// Extract language from the file path structure
+			const [locale, ...id] = note.id.split("/");
+
+			// Attach locale and link
+			(<any>note).link = new URL(getRelativeLocaleUrl(locale, `/note/${id.join("/")}`), site).toString();
+
+			// Apply filtering criteria
+			let published = !note.data.draft;		// Exclude draft posts
+			let localed = language == locale;		// Language filter
+
+			// Include note only if it passes all filters
+			return published && localed;
+		}));
+
+		items.push(...notes);
+	}
+
+	if (config.feed?.section?.includes("jotting") || config.feed?.section === "*" || config.feed?.section === undefined) {
+		let jottings = (await getCollection("jotting", jotting => {
+			// Extract language from the file path structure
+			const [locale, ...id] = jotting.id.split("/");
+
+			// Attach locale and link
+			(<any>jotting).link = new URL(getRelativeLocaleUrl(locale, `/jotting/${id.join("/")}`), site).toString();
+
+			// Apply filtering criteria
+			let published = !jotting.data.draft;	// Exclude draft posts
+			let localed = language == locale;		// Language filter
+
+			// Include note only if it passes all filters
+			return published && localed;
+		}));
+
+		items.push(...jottings);
+	}
+
+	// Sort all items by timestamp and limit to configured number
+	items = items
+		.sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime())		// Sort by newest first
+		.slice(0, config.feed?.limit || items.length);									// Limit to number of items
+
 	// Add each filtered note as a feed item
-	notes.forEach((note) => feed.addItem({
-		id: note.id,																								// Unique item identifier
-		title: note.data.title,																						// Post title
-		link: (<any>note).link,																						// URL to the post
-		date: note.data.timestamp,																		// Publication date
-		content: note.data.sensitive ? t("sensitive.feed", { link: (<any>note).link }) : note.rendered?.html,		// Rendered content
-		description: note.data.description,																			// Summary of the post
-		category: note.data.tags?.map((tag: any) => ({ term: tag }))												// Tags as categories
+	items.forEach((item) => feed.addItem({
+		id: item.id,																								// Unique item identifier
+		title: item.data.title,																						// Post title
+		link: (<any>item).link,																						// URL to the post
+		date: item.data.timestamp,																					// Publication date
+		content: item.data.sensitive ? t("sensitive.feed", { link: (<any>item).link }) : item.rendered?.html,		// Rendered content
+		description: item.data.description,																			// Summary of the post
+		category: item.data.tags?.map((tag: any) => ({ term: tag }))												// Tags as categories
 	}));
 
 	// Append stylesheet declaration to the feed

@@ -29,6 +29,11 @@ description: Astro 主题站点的基础配置说明，涵盖站点设置、国�
     - `type` - CC 许可类型
     - `year` - 版权年份或年份范围
 - `feed` - 订阅源
+    - `section` - 订阅源内容板块
+        - **`*`** - 所有板块
+        - **array**
+            - `note` - 笔记板块
+            - `jotting` - 随笔板块
     - `limit` - 返回内容数量限制
 
 ## 图标生成

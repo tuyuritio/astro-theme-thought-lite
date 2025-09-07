@@ -11,6 +11,7 @@
 		"year": "2025"
 	},
 	"feed": {
+		"section": "*",
 		"limit": 20
 	}
 }
