@@ -30,15 +30,19 @@
 		</div>
 	{/if}
 	<div class={!turnstile && !drifter ? "pointer-events-none filter-blur" : ""}>
-		<fieldset class="flex flex-col gap-2 pt-2 px-2 pb-1 border-2 border-solid border-weak rounded-1">
+		<fieldset class="flex flex-col gap-2 p-2 border-2 border-solid border-weak rounded-1">
 			<article class="flex flex-col min-h-20 overflow-auto resize-y">
 				<textarea hidden={preview} placeholder="   {t('comment.placeholder')}" bind:this={textarea} bind:value={content} class="grow w-full bg-transparent text-4 outline-none resize-none"></textarea>
 				{#if preview}
-					{#await remark.process(content)}
-						{@render icon.rendering()}
-					{:then html}
-						<div class="markdown comment">{@html html}</div>
-					{/await}
+					{#if content.trim()}
+						{#await remark.process(content)}
+							{@render icon.rendering()}
+						{:then html}
+							<div class="markdown comment">{@html html}</div>
+						{/await}
+					{:else}
+						<span class="grow flex items-center justify-center font-bold c-weak">&lt;{t("comment.preview.empty")}&gt;</span>
+					{/if}
 				{/if}
 			</article>
 			<section class="flex items-center gap-2">

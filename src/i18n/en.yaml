@@ -21,7 +21,9 @@ comment:
     empty: Nickname can't be empty
     name: Nickname
   placeholder: Leave your thoughts here
-  preview: Markdown Preview
+  preview:
+    name: Markdown Preview
+    empty: Waiting for your Markdown inspiration
   reload:
     increase: Get new thoughts!
     name: Refresh comments

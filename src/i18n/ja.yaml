@@ -21,7 +21,9 @@ comment:
     empty: 渾名は空にすることはできません
     name: 渾名
   placeholder: 感想をここに刻印しましょう
-  preview: Markdown 試写
+  preview:
+    name: Markdown 試写
+    empty: Markdown のインスピレーションをお待ちしています
   reload:
     increase: 新しい感想があります！
     name: 感想を更新します
