@@ -1,7 +1,7 @@
-<section class="grid grid-flow-col grid-rows-7 gap-1 contain-layout">
+<section class="grid grid-flow-col grid-rows-7 gap-1">
 	{#each heatmap.reverse() as day}
 		{@const number = day.notes.length + day.jottings.length}
-		<figure class="relative group">
+		<figure class="relative contain-layout group">
 			<i class="block w-2.5 h-2.5 bg-primary {number > 2 ? 'opacity-100' : number > 1 ? 'opacity-70' : number > 0 ? 'opacity-40' : 'opacity-10'}"></i>
 
 			<div class="absolute left-0 bottom-full w-max -translate-x-1/2 flex flex-col mb-1 border-rd-1 px-2 py-2 text-size-xs c-background bg-primary pop">

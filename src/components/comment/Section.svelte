@@ -8,7 +8,7 @@
 					<span>·</span>
 					<span>{count}</span>
 				</p>
-				<p class="flex gap-4 contain-layout">
+				<p class="flex gap-4">
 					<button onclick={() => refresh(false)}>{@render reload()}</button>
 					<button onclick={() => (ascending = !ascending)}>
 						{#if ascending}
