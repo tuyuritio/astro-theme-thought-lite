@@ -47,7 +47,7 @@ let chronicles = Object.entries<string[]>(chronicle ?? {})
 </style>
 
 <Base title={t("navigation.about")} {locale}>
-	<main class="flex justify-between flex-wrap gap-2 sm:flex-nowrap">
+	<main class="flex flex-col sm:flex-row justify-between gap-2">
 		<article class="flex flex-col">
 			{
 				introduction && (
