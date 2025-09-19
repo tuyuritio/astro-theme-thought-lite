@@ -57,7 +57,7 @@
 </style>
 
 <main class="flex flex-col-reverse sm:flex-row gap-10 grow">
-	<article class="flex flex-col gap-4 grow mb-3">
+	<article class="flex flex-col gap-4 grow">
 		{#each list as note (note.id)}
 			<section animate:flip={{ duration: 150 }} class="flex flex-col sm:flex-row">
 				<div class="flex flex-col gap-1">

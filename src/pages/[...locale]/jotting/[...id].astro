@@ -70,7 +70,7 @@ const t = i18nit(locale);
 
 		<div id="article-section" class={`contents ${jotting.data.sensitive && "hidden"}`}>
 			<section class="markdown"><Content /></section>
-			<blockquote id="comment-section" class="my-5"><Comments {locale} section="jotting" item={jotting.id} /></blockquote>
+			<blockquote id="comment-section"><Comments {locale} section="jotting" item={jotting.id} /></blockquote>
 		</div>
 
 		<Position {locale} />
