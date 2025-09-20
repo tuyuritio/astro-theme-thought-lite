@@ -1,7 +1,8 @@
 # ThoughtLite
 
 <div align="center">
-    <img src=".github/assets/preview.webp">
+    <img src=".github/assets/preview-light.webp">
+    <img src=".github/assets/preview-dark.webp">
     <p></p>
     <p>A modern <a href="https://astro.build/">Astro</a> theme, focused on content creation 🌟</p>
     <small><ins>English</ins></small> <small><a href="README_zh-cn.md">简体中文</a></small> <small><a href="README_ja.md">日本語</a></small>
@@ -9,8 +10,10 @@
 
 <br />
 
-> - `main` branch (**current**): Suitable for platforms supporting **Node SSR** (Vercel, Netlify, traditional Node servers, etc.);
+> - `main` branch (**current**): Suitable for platforms supporting **Node SSR** (Vercel, Render, traditional Node servers, etc.);
 > - `cloudflare` branch: Enables built-in comment functionality, **only** deployable on Cloudflare.
+
+🎨 **Theme Preview**: [Vercel](https://thought-lite.vercel.app/)
 
 ## ✨ Features
 

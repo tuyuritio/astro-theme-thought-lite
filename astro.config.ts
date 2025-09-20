@@ -37,7 +37,7 @@ import copy from "./src/utils/code-copy";
 // https://astro.build/config
 export default defineConfig({
   adapter: vercel(),  // See https://docs.astro.build/en/guides/deploy/ for more information about deploying Astro apps.
-  site: "https://astro-theme-thought-lite.ttio.workers.dev",
+  site: "https://thought-lite.vercel.app",
   trailingSlash: "never",
   i18n: {
     locales: ["en", "zh-cn", "ja"],
