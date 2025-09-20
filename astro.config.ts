@@ -42,7 +42,7 @@ export default defineConfig({
     },
     imageService: "compile"
   }),
-  site: "https://astro-theme-thought-lite.ttio.workers.dev",
+  site: "https://thought-lite.ttio.workers.dev",
   trailingSlash: "never",
   i18n: {
     locales: ["en", "zh-cn", "ja"],
