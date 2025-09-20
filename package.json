@@ -34,6 +34,7 @@
 	"dependencies": {
 		"@astrojs/sitemap": "^3.5.1",
 		"@astrojs/svelte": "^7.1.1",
+		"@astrojs/vercel": "^8.2.7",
 		"@block65/webcrypto-web-push": "^1.0.2",
 		"@hbsnow/rehype-sectionize": "^1.0.7",
 		"@iconify-json/fa6-brands": "^1.2.6",

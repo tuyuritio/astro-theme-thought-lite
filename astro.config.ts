@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, passthroughImageService } from "astro/config";
+import vercel from "@astrojs/vercel";
 import yaml from "@rollup/plugin-yaml";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
@@ -35,6 +36,7 @@ import copy from "./src/utils/code-copy";
 
 // https://astro.build/config
 export default defineConfig({
+  adapter: vercel(),  // See https://docs.astro.build/en/guides/deploy/ for more information about deploying Astro apps.
   site: "https://astro-theme-thought-lite.ttio.workers.dev",
   trailingSlash: "never",
   i18n: {
