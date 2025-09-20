@@ -59,7 +59,7 @@ npm run dev
 git checkout main
 git pull origin main
 git fetch theme
-git merge theme/base
+git merge theme/main
 npm i
 ```
 
