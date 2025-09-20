@@ -4,83 +4,6 @@ about:
   introduction: Introduction
   roll: Link Roll
 back: Go Home
-cancel: Cancel
-comment:
-  author: Author
-  edit:
-    history: Edit History
-    name: Edit
-  empty: Thought is empty
-  failure: Sorry, your thoughts couldn't be sent
-  fetch:
-    failure: Error loading thoughts
-  history: History
-  limit: Post too frequently
-  name: Thoughts
-  nickname:
-    empty: Nickname can't be empty
-    name: Nickname
-  placeholder: Leave your thoughts here
-  preview:
-    name: Markdown Preview
-    empty: Waiting for your Markdown inspiration
-  reload:
-    increase: Get new thoughts!
-    name: Refresh comments
-    same: No new thoughts yet
-  remove:
-    failure: Thought deletion failed
-    name: Delete Thought
-    success: Thought deleted
-  removed: Deleted thought
-  reply: Reply
-  share:
-    name: Share
-    success: Link copied
-  signin: Sign in to share your thoughts
-  sort:
-    asc: Time ascending
-    desc: Time descending
-  submit: Submit
-  success: Your thoughts have been delivered
-  time: Posted at
-  verify:
-    failure: Human verification failed
-    progress: Verifying automatically
-confirm: Confirm
-delete: Delete
-drifter:
-  deactivate:
-    cancel: Linger on
-    confirm: Confirm Deactivation
-    consequences:
-      comment: No longer able to post thoughts with this account
-      comments: All thoughts will be retained but anonymized
-      data: All personal information will be deleted
-      new: Re-authorization will create a new account
-      notification: No longer receive any notifications
-    description: 'If you confirm deactivation, your account will:'
-    done: Departed Voyager
-    failure: Deactivation failed
-    name: Deactivate
-    success: Account successfully deactivated
-    title: Are you sure to deactivate your account?
-    warning: This action is irreversible!
-  fetch:
-    failure: Error loading drifter's profile
-  homepage: Homepage
-  profile: Profile
-  signin: Sign in
-  signout: Sign out
-  sync:
-    failure: Synchronization failed
-    fetch: Synchronizing information
-    name: Synchronize
-    success: Synchronization successful
-  update:
-    failure: Update failed
-    name: Update
-    success: Update successful
 feed:
   address: Subscription address
   copy:
@@ -113,37 +36,12 @@ navigation:
   preface: Preface
   subscription: Subscription
 note:
-  comment: Thoughts
   contents: Contents
   fetch:
     failure: Error loading notes
   series: Series
   tag: Tag
   top: To Top
-notification:
-  denied: You have denied desktop notification permission
-  disable:
-    failure: Failed to disable desktop notifications
-    success: Desktop notifications are disabled
-  enable:
-    failure: Failed to enable desktop notifications
-    success: Desktop notifications are enabled
-  fresh:
-    body: Click to see the thought
-    title: A quiet new voice beneath your words
-  name: Desktop Notification
-  reply:
-    body: Click to trace back the communication
-    title: A fragment speaks, and the echo has come
-oauth:
-  benefit:
-    captcha: No need to resolve CAPTCHA
-    comment: Edit and delete your own thoughts
-    homepage: Display your personal homepage
-    notification: Receive desktop notifications for thought replies
-  github: Sign in with GitHub
-  google: Sign in with Google
-  x: Sign in with X
 read:
   words: '{words} words'
 sensitive:

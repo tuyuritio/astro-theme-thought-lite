@@ -1,6 +1,5 @@
 // @ts-check
 import { defineConfig, passthroughImageService } from "astro/config";
-import cloudflare from "@astrojs/cloudflare";
 import yaml from "@rollup/plugin-yaml";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
@@ -104,12 +103,6 @@ export default defineConfig({
       ]
     }
   },
-  adapter: cloudflare({
-    platformProxy: {
-      enabled: true
-    },
-    imageService: "compile"
-  }),
   vite: {
     plugins: [yaml()]
   },

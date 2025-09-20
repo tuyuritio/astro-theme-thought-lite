@@ -1,1 +1,0 @@
-ALTER TABLE `comment` ADD `nickname` text;

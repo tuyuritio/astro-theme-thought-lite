@@ -4,83 +4,6 @@ about:
   introduction: ○○紹介
   roll: ○○連結
 back: 玄関へ戻る
-cancel: 取消
-comment:
-  author: 筆者
-  edit:
-    history: 編集歴史
-    name: 編集
-  empty: 感想内容が空です
-  failure: 申し訳ありませんが、感想を送信できませんでした
-  fetch:
-    failure: 感想取得に失敗しました
-  history: 履歴
-  limit: 投稿が頻繁すぎます
-  name: 感想
-  nickname:
-    empty: 渾名は空にすることはできません
-    name: 渾名
-  placeholder: 感想をここに刻印しましょう
-  preview:
-    name: Markdown 試写
-    empty: Markdown のインスピレーションをお待ちしています
-  reload:
-    increase: 新しい感想があります！
-    name: 感想を更新します
-    same: 新しい感想はまだありません
-  remove:
-    failure: 感想削除に失敗しました
-    name: 感想削除
-    success: 感想を削除しました
-  removed: 感想が削除されました
-  reply: 返信
-  share:
-    name: 共有
-    success: 連結を複写しました
-  signin: 登録して感想を共有しましょう
-  sort:
-    asc: 時間昇順
-    desc: 時間降序
-  submit: 投稿
-  success: 感想を投稿しました
-  time: 送信時間
-  verify:
-    failure: 人間判定に失敗しました
-    progress: 自動で人間判定を実行中
-confirm: 確認
-delete: 削除
-drifter:
-  deactivate:
-    cancel: 佇み続ける
-    confirm: 無効化を確認
-    consequences:
-      comment: このアカウントでコメントを投稿できなくなります
-      comments: すべてのコメントは保持されますが匿名化されます
-      data: すべての個人情報が削除されます
-      new: 再認証すると新しいアカウントが作成されます
-      notification: 通知を受け取れなくなります
-    description: 無効化を確認すると、あなたのアカウントは：
-    done: 旅立った人
-    failure: 無効化に失敗しました
-    name: 退会
-    success: アカウントが無効化されました
-    title: アカウントを無効化してもよろしいですか？
-    warning: この操作は元に戻せません！
-  fetch:
-    failure: 旅人情報取得に失敗しました
-  homepage: 公式本頁
-  profile: 旅人情報
-  signin: ログイン
-  signout: 退出
-  sync:
-    failure: 同期に失敗しました
-    fetch: 情報同期中
-    name: 同期
-    success: 同期しました
-  update:
-    failure: 更新に失敗しました
-    name: 更新
-    success: 更新しました
 feed:
   address: 購読アドレス
   copy:
@@ -111,37 +34,12 @@ navigation:
   preface: 序文
   subscription: 購読
 note:
-  comment: 感想
   contents: 目次
   fetch:
     failure: 文記取得に失敗しました
   series: 系列
   tag: 付札
   top: 至頂
-notification:
-  denied: 机上通知の許可を拒否しました
-  disable:
-    failure: 机上通知の無効化に失敗しました
-    success: 机上通知を無効にしました
-  enable:
-    failure: 机上通知の有効化に失敗した
-    success: 机上通知を有効にしました
-  fresh:
-    body: 押して感想を確認しましょう
-    title: 文の下に、そっと新しい声
-  name: 机上通知
-  reply:
-    body: 押して交流記録を辿りましょう
-    title: 片言が響きとなって返ってきました
-oauth:
-  benefit:
-    captcha: 人間判定が不要
-    comment: 自分の感想を編集・削除できます
-    homepage: 自分の公式本頁を表示できます
-    notification: 感想返信の机上通知を受信できます
-  github: GitHub でログイン
-  google: Google でログイン
-  x: X でログイン
 read:
   words: '{words} 字'
 sensitive:

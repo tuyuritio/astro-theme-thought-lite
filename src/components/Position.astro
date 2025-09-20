@@ -35,9 +35,6 @@ const t = i18nit(locale);
 			<circle id="progress-circle" cx="50%" cy="50%" r="calc(50% - 1px)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"></circle>
 		</svg>
 	</button>
-	<button aria-label="Scroll to Comments" onclick="document.querySelector('#comment-section')?.scrollIntoView({behavior: 'smooth'})">
-		<Icon name="lucide:message-square" size={15} title={t("note.comment")} />
-	</button>
 </figure>
 
 <script>

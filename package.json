@@ -2,12 +2,11 @@
 	"name": "astro-theme-thought-lite",
 	"type": "module",
 	"version": "0.13.3",
-	"description": "A modern Astro theme optimized for Cloudflare, focused on content creation",
+	"description": "A modern Astro theme focused on content creation",
 	"keywords": [
 		"astro",
 		"theme",
 		"blog",
-		"cloudflare",
 		"svelte",
 		"typescript",
 		"i18n"
@@ -29,17 +28,10 @@
 		"dev": "astro dev",
 		"check": "astro check",
 		"build": "astro build",
-		"preview": "wrangler dev",
-		"deploy": "wrangler deploy",
-		"deploy:dry": "wrangler deploy --dry-run",
 		"update": "npx npm-check-updates --interactive",
-		"count": "git log --pretty=tformat: --numstat | grep -v package | awk '{ A += $1; S += $2; T += $1 - $2 } END { printf \"+ %s\tLines\\n- %s\tLines\\n= %s\tLines\\n\", A, S, T }'",
-		"db:migration": "drizzle-kit generate",
-		"db:migrate:local": "wrangler d1 migrations apply DB --local",
-		"db:migrate:remote": "wrangler d1 migrations apply DB --remote"
+		"count": "git log --pretty=tformat: --numstat | grep -v package | awk '{ A += $1; S += $2; T += $1 - $2 } END { printf \"+ %s\tLines\\n- %s\tLines\\n= %s\tLines\\n\", A, S, T }'"
 	},
 	"dependencies": {
-		"@astrojs/cloudflare": "^12.6.8",
 		"@astrojs/sitemap": "^3.5.1",
 		"@astrojs/svelte": "^7.1.1",
 		"@block65/webcrypto-web-push": "^1.0.2",
@@ -87,7 +79,6 @@
 		"drizzle-kit": "^0.31.4",
 		"prettier": "3.6.2",
 		"prettier-plugin-astro": "0.14.1",
-		"unocss": "^66.5.1",
-		"wrangler": "^4.36.0"
+		"unocss": "^66.5.1"
 	}
 }

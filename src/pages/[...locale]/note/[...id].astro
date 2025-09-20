@@ -8,7 +8,6 @@ import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
 import Icon from "$components/Icon.astro";
 import TOC from "$components/note/TOC.astro";
-import Comments from "$components/comment/Section.astro";
 import Position from "$components/Position.astro";
 import i18nit from "$i18n";
 
@@ -120,7 +119,6 @@ const t = i18nit(locale);
 					)
 				}
 			</div>
-			<blockquote id="comment-section"><Comments {locale} section="note" item={note.id} /></blockquote>
 		</div>
 
 		<Position {locale} />
