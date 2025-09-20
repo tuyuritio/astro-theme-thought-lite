@@ -7,6 +7,11 @@
     <small><a href="README.md">English</a></small> <small><a href="README_zh-cn.md">简体中文</a></small> <small><ins>日本語</ins></small>
 </div>
 
+<br />
+
+> - `main` ブランチ：**Node SSR** をサポートするプラットフォーム（Vercel、Netlify、従来の Node サーバーなど）に適用；
+> - `cloudflare` ブランチ（**現在**）：テーマ内蔵のコメント機能を有効にし、Cloudflare **のみ**でデプロイ可能。
+
 ## ✨ 機能
 
 📱 **レスポンシブデザイン** - モバイル、タブレット、デスクトップに対応。\
@@ -82,7 +87,7 @@ GitHub Actions を使用した**自動デプロイ**の設定については、[
 git checkout main
 git pull origin main
 git fetch theme
-git merge theme/main
+git merge theme/cloudflare
 npm i
 npm run db:migrate:local
 ```

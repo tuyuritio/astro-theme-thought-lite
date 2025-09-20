@@ -7,6 +7,11 @@
     <small><ins>English</ins></small> <small><a href="README_zh-cn.md">简体中文</a></small> <small><a href="README_ja.md">日本語</a></small>
 </div>
 
+<br />
+
+> - `main` branch: Suitable for platforms supporting **Node SSR** (Vercel, Netlify, traditional Node servers, etc.);
+> - `cloudflare` branch (**current**): Enables built-in comment functionality, **only** deployable on Cloudflare.
+
 ## ✨ Features
 
 📱 **Responsive Design** - Adaptive for mobile, tablet, and desktop.\
@@ -82,7 +87,7 @@ For **automated deployment** using GitHub Actions, refer to [GitHub Actions Conf
 git checkout main
 git pull origin main
 git fetch theme
-git merge theme/main
+git merge theme/cloudflare
 npm i
 npm run db:migrate:local
 ```

@@ -7,6 +7,11 @@
     <small><a href="README.md">English</a></small> <small><ins>简体中文</ins></small> <small><a href="README_ja.md">日本語</a></small>
 </div>
 
+<br />
+
+> - `main` 分支：适用于支持 **Node SSR** 的平台（Vercel、Netlify、传统 Node 服务器等）；
+> - `cloudflare` 分支（**当前**）：启用主题内置的评论功能，**仅**可在 Cloudflare 部署。
+
 ## ✨ 特性
 
 📱 **响应式设计** - 移动端、平板、桌面自适应。\
@@ -82,7 +87,7 @@ npm run deploy
 git checkout main
 git pull origin main
 git fetch theme
-git merge theme/main
+git merge theme/cloudflare
 npm i
 npm run db:migrate:local
 ```
