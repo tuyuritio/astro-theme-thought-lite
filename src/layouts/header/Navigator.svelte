@@ -141,7 +141,7 @@
 	<footer class="flex flex-col gap-2 sm:gap-5 sm:(flex-row gap-7)">
 		<ThemeSwitcher {sun} {moon} />
 
-		<a href={getRelativeLocaleUrl(locale, "/feed")} target="_blank" aria-label="Subscription" class="inline-flex">{@render rss()}</a>
+		<a href={getRelativeLocaleUrl(locale, "/feed.xml")} target="_blank" aria-label="Subscription" class="inline-flex">{@render rss()}</a>
 
 		<Menu label="Language switcher">
 			{#snippet trigger()}{@render globe()}{/snippet}
