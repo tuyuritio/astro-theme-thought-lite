@@ -1,7 +1,7 @@
 {
 	"name": "astro-theme-thought-lite",
 	"type": "module",
-	"version": "0.14.2",
+	"version": "0.14.3",
 	"description": "A modern Astro theme focused on content creation",
 	"keywords": [
 		"astro",
@@ -40,17 +40,17 @@
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^12.6.8",
-		"@astrojs/sitemap": "^3.5.1",
+		"@astrojs/sitemap": "^3.6.0",
 		"@astrojs/svelte": "^7.1.1",
 		"@block65/webcrypto-web-push": "^1.0.2",
 		"@hbsnow/rehype-sectionize": "^1.0.7",
 		"@iconify-json/fa6-brands": "^1.2.6",
-		"@iconify-json/lucide": "^1.2.67",
-		"@iconify-json/simple-icons": "^1.2.51",
+		"@iconify-json/lucide": "^1.2.68",
+		"@iconify-json/simple-icons": "^1.2.52",
 		"@iconify-json/svg-spinners": "^1.2.4",
 		"@swup/astro": "^1.7.0",
 		"arctic": "^3.7.0",
-		"astro": "^5.13.7",
+		"astro": "^5.13.9",
 		"astro-icon": "^1.1.5",
 		"dotenv": "^17.2.2",
 		"drizzle-orm": "^0.44.5",
@@ -76,7 +76,7 @@
 		"remark-ins": "^1.2.1",
 		"remark-math": "^6.0.0",
 		"remark-ruby-directive": "^0.3.0",
-		"svelte": "^5.38.10",
+		"svelte": "^5.39.3",
 		"typescript": "^5.9.2"
 	},
 	"devDependencies": {
