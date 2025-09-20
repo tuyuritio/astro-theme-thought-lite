@@ -36,6 +36,12 @@ import copy from "./src/utils/code-copy";
 
 // https://astro.build/config
 export default defineConfig({
+  adapter: cloudflare({
+    platformProxy: {
+      enabled: true
+    },
+    imageService: "compile"
+  }),
   site: "https://astro-theme-thought-lite.ttio.workers.dev",
   trailingSlash: "never",
   i18n: {
@@ -104,12 +110,6 @@ export default defineConfig({
       ]
     }
   },
-  adapter: cloudflare({
-    platformProxy: {
-      enabled: true
-    },
-    imageService: "compile"
-  }),
   vite: {
     plugins: [yaml()]
   },
