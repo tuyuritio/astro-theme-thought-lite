@@ -198,5 +198,8 @@ export default defineConfig({
         ]
       }
     })
-  ]
+  ],
+  redirects: {
+    "/feed": "/feed.xml"
+  }
 });
