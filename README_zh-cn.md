@@ -1,7 +1,8 @@
 # ThoughtLite
 
 <div align="center">
-    <img src=".github/assets/preview.webp">
+    <img src=".github/assets/preview-light.webp">
+    <img src=".github/assets/preview-dark.webp">
     <p></p>
     <p>一款专注内容创作、针对 <a href="https://www.cloudflare.com/">Cloudflare</a> 优化的现代化 <a href="https://astro.build/">Astro</a> 主题 🌟</p>
     <small><a href="README.md">English</a></small> <small><ins>简体中文</ins></small> <small><a href="README_ja.md">日本語</a></small>
@@ -11,6 +12,8 @@
 
 > - `main` 分支：适用于支持 **Node SSR** 的平台（Vercel、Netlify、传统 Node 服务器等）；
 > - `cloudflare` 分支（**当前**）：启用主题内置的评论功能，**仅**可在 Cloudflare 部署。
+
+🎨 **预览主题**：[Vercel](https://thought-lite.vercel.app/zh-cn/)
 
 ## ✨ 特性
 

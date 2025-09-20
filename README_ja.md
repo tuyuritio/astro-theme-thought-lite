@@ -1,7 +1,8 @@
 # ThoughtLite
 
 <div align="center">
-    <img src=".github/assets/preview.webp">
+    <img src=".github/assets/preview-light.webp">
+    <img src=".github/assets/preview-dark.webp">
     <p></p>
     <p>コンテンツ作成に特化し、<a href="https://www.cloudflare.com/">Cloudflare</a> 向けに最適化されたモダンな <a href="https://astro.build/">Astro</a> テーマ 🌟</p>
     <small><a href="README.md">English</a></small> <small><a href="README_zh-cn.md">简体中文</a></small> <small><ins>日本語</ins></small>
@@ -11,6 +12,8 @@
 
 > - `main` ブランチ：**Node SSR** をサポートするプラットフォーム（Vercel、Netlify、従来の Node サーバーなど）に適用；
 > - `cloudflare` ブランチ（**現在**）：テーマ内蔵のコメント機能を有効にし、Cloudflare **のみ**でデプロイ可能。
+
+🎨 **テーマプレビュー**：[Vercel](https://thought-lite.vercel.app/ja/)
 
 ## ✨ 機能
 
