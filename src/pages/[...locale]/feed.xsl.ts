@@ -42,7 +42,7 @@ export const GET: APIRoute = ({ params }) => {
         <p>${t("feed.usage")}</p>
         <p>
           ${t("feed.address")}:
-          <code id="feed-url"><xsl:value-of select="concat(atom:feed/atom:link[@rel='alternate']/@href, '${getRelativeLocaleUrl(locale, "feed").slice(1)}')" /></code>
+          <code id="feed-url"><xsl:value-of select="concat(atom:feed/atom:link[@rel='alternate']/@href, '${getRelativeLocaleUrl(locale, "feed.xml").slice(1)}')" /></code>
           <button type="button" onclick="copy()" class="copy-btn">${t("feed.copy.name")}</button>
         </p>
       </blockquote>
