@@ -18,6 +18,7 @@ description: Astro テーマサイトの基本設定説明、サイト設定、�
 ## `site.config.json`
 
 - `title` - サイトタイトル
+- `prologue` - ホームページのタグライン、`\n` 改行をサポート
 - `author`
     - **string** - 著者名
     - **object**
@@ -53,6 +54,21 @@ description: Astro テーマサイトの基本設定説明、サイト設定、�
 `<head>` 内のコンテンツは RealFaviconGenerator のプロンプトに従って適応されており、必要に応じて変更することもできます。
 
 修正と展開が完了した後、[Favicon checker](https://realfavicongenerator.net/favicon-checker) を使用して検証できます。
+
+### ホームページロゴ
+
+参照位置は `src/pages/[...locale]/index.astro` にあり、デフォルトでは `astro-icon` ライブラリによってインポートされる SVG 形式のアイコンを使用します。
+
+```astro
+<Icon name="site-logo" size={100} is:inline />
+```
+
+以下の3つの方法で設定できます：
+
+1. SVG ファイルで `src/icons/site-logo.svg` を置き換えると、[自動的に読み取られ](https://www.astroicon.dev/guides/customization/#local-icons)適用されます。
+    - テーマカラーの変化に適応するため、`stroke="currentColor"` の使用をお勧めします。
+2. [Iconify アイコンセット](https://www.astroicon.dev/guides/customization/#open-source-icon-sets)を使用し、`<PREFIX>:<ICON>` 形式で参照します。
+3. 画像インポートに直接修正するか、この部分のコンテンツを削除します。
 
 ## 国際化（i18n）設定
 

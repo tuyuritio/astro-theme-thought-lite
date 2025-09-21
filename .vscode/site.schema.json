@@ -7,6 +7,10 @@
 			"title": "Site Title",
 			"type": "string"
 		},
+		"prologue": {
+			"title": "Site Prologue",
+			"type": "string"
+		},
 		"author": {
 			"oneOf": [
 				{
