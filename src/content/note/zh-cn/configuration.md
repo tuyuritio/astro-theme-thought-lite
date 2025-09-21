@@ -18,6 +18,7 @@ description: Astro 主题站点的基础配置说明，涵盖站点设置、国�
 ## `site.config.json`
 
 - `title` - 站点标题
+- `prologue` - 首页标语，支持 `\n` 换行
 - `author`
     - **string** - 作者名称
     - **object**
@@ -53,6 +54,21 @@ description: Astro 主题站点的基础配置说明，涵盖站点设置、国�
 `<head>` 中的内容已根据 RealFaviconGenerator 的提示完成适配，也可根据需求自行更改。
 
 修改完成并部署后，可使用 [Favicon checker](https://realfavicongenerator.net/favicon-checker) 校验。
+
+### 首页 Logo
+
+引用位置位于 `src/pages/[...locale]/index.astro`，默认使用由 `astro-icon` 库导入 SVG 格式图标。
+
+```astro
+<Icon name="site-logo" size={100} is:inline />
+```
+
+可通过如下三种方式配置：
+
+1. 使用 SVG 文件替换 `src/icons/site-logo.svg`，将[自动读取](https://www.astroicon.dev/guides/customization/#local-icons)并应用。
+    - 建议使用 `stroke="currentColor"` 以适应主题色彩变化。
+2. 使用 [Iconify 图标集](https://www.astroicon.dev/guides/customization/#open-source-icon-sets)，以 `<PREFIX>:<ICON>` 形式引用。
+3. 直接修改为图片导入或删除该部分内容。
 
 ## 国际化（i18n）配置
 
