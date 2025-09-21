@@ -23,7 +23,7 @@ Using an image file from the same directory[^boat]:
 
 Using an image file from the `/public` directory:
 
-![アッカリン～](/akkarin.webp)
+![ThoughtLite](/web-app-manifest-512x512.png)
 
 ## External Image Hosting
 

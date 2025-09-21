@@ -23,7 +23,7 @@ description: Markdownにおける3つの画像参照方法のデモンストレ�
 
 `/public`ディレクトリの画像ファイルを使用する場合：
 
-![アッカリン～](/akkarin.webp)
+![ThoughtLite](/web-app-manifest-512x512.png)
 
 ## 外部画像ホスティング
 

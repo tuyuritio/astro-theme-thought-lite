@@ -20,11 +20,11 @@ const title = config.title;
 <script>
 	import zoom from "medium-zoom/dist/pure";
 
-	const init_zoom = () => zoom(".markdown img", { background: "#00000044" });
-	init_zoom();
+	window.zoom = () => zoom(".markdown img", { background: "#00000044" });
+	window.zoom();
 
 	document.addEventListener("astro:page-load", () => {
-		init_zoom();
+		window.zoom();
 	});
 </script>
 

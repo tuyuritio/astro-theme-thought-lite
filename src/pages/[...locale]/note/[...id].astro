@@ -9,6 +9,7 @@ import Base from "$layouts/Base.astro";
 import Icon from "$components/Icon.astro";
 import TOC from "$components/note/TOC.astro";
 import Position from "$components/Position.astro";
+import Sensitive from "$components/Sensitive.svelte";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
@@ -83,27 +84,7 @@ const t = i18nit(locale);
 			<hr class="border-b border-b-solid border-weak" />
 		</header>
 
-		{
-			note.data.sensitive && (
-				<div id="sensitive-warning" class="flex flex-col items-center justify-end gap-6">
-					<h2>{t("sensitive.title")}</h2>
-					<div class="flex flex-col items-center justify-end gap-3">
-						<p>{t("sensitive.description")}</p>
-						<p>{t("sensitive.warning")}</p>
-					</div>
-					<div class="flex gap-3">
-						<button class="font-bold c-background bg-red-5 py-1 px-2 rounded-md" onclick="document.getElementById('sensitive-warning').style.display = 'none'; document.getElementById('article-section').classList.remove('hidden');">
-							{t("sensitive.continue")}
-						</button>
-						<a href={getRelativeLocaleUrl(locale, "/note")} class="flex items-center font-bold c-background bg-secondary py-1 px-2 rounded-md">
-							{t("sensitive.back")}
-						</a>
-					</div>
-				</div>
-			)
-		}
-
-		<div id="article-section" class={`contents ${note.data.sensitive && "hidden"}`}>
+		<Sensitive {locale} back="/note" sensitive={note.data.sensitive} client:load>
 			<div class="flex gap-5">
 				<section id="markdown-content" class="markdown"><Content /></section>
 				{
@@ -119,7 +100,7 @@ const t = i18nit(locale);
 					)
 				}
 			</div>
-		</div>
+		</Sensitive>
 
 		<Position {locale} />
 	</main>
