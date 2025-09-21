@@ -88,15 +88,8 @@ export namespace Token {
 	 * @param cookies - Astro cookies object for deleting the cookie
 	 */
 	export async function revoke(name: string, cookies: AstroCookies): Promise<void> {
-		if (cookies.has(name)) {
-			cookies.delete(name, {
-				path: "/",
-				domain: new URL(site!).hostname,
-				secure: true,
-				httpOnly: true,
-				sameSite: "lax"
-			});
-		}
+		if (!cookies.has(name)) return;
+		cookies.delete(name, { path: "/", domain: new URL(site!).hostname });
 	}
 }
 

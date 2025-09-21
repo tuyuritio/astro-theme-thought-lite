@@ -17,7 +17,7 @@ export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, re
 
 	// Retrieve and clean up escort token containing OAuth state
 	const escort = await Token.check(cookies, "escort");
-	cookies.delete("escort", { path: "/" });
+	await Token.revoke("escort", cookies);
 
 	if (code) {
 		// Validate state parameter to prevent CSRF attacks
