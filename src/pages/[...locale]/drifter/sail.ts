@@ -3,7 +3,7 @@ import type { APIRoute } from "astro";
 
 export const prerender = false;
 
-export const GET: APIRoute = async ({ cookies, redirect }) => {
+export const GET: APIRoute = async ({ request, cookies, redirect }) => {
 	// Verify user authentication before proceeding with signout
 	const passport = (await Token.check(cookies, "passport"));
 	if (!passport.visa) return new Response("Unauthorized", { status: 401 });
@@ -13,6 +13,6 @@ export const GET: APIRoute = async ({ cookies, redirect }) => {
 	// Reissue passport token without visa to maintain session but remove auth
 	await Token.issue(cookies, "passport", passport);
 
-	// Redirect to home page after successful signout
-	return redirect("/", 302);
+	// Redirect to referrer or home page after successful signout
+	return redirect(request.headers.get("referer") ?? "/", 302);
 };
