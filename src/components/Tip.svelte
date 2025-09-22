@@ -1,6 +1,6 @@
 <figure class="fixed top-0 left-0 w-full h-full flex flex-col pr-5 z-3 pointer-events-none overflow-hidden">
 	{#each $tips as tip (tip)}
-		<section animate:flip={{ duration: 200, easing: circInOut }} transition:fly={{ y: -100, opacity: 0, duration: 200, easing: circInOut }} class="relative flex items-center gap-2 ml-a mt-7 border-2 border-solid border-weak rounded-1 py-4 px-3 w-xs bg-background shadow-md pointer-events-initial">
+		<section animate:flip={{ duration: 200, easing: circInOut }} transition:fly={{ y: -100, opacity: 0, duration: 200, easing: circInOut }} class="relative flex items-center gap-2 ml-a mt-7 b-2 b-solid b-weak rd-1 py-4 px-3 w-xs bg-background shadow-md pointer-events-initial">
 			<span class="inline-flex">{@render icons[tip.type]()}</span>
 			<p>{tip.content}</p>
 			<span class="ml-a"><button onclick={() => Close(tip)}>{@render icons.x()}</button></span>
