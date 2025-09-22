@@ -6,10 +6,10 @@
 			<p>{t("sensitive.warning")}</p>
 		</div>
 		<div class="flex gap-3">
-			<button class="font-bold c-background bg-red-5 py-1 px-2 rounded-md" onclick={() => (sensitive = false)}>
+			<button class="font-bold c-background bg-red-5 py-1 px-2 rd-md" onclick={() => (sensitive = false)}>
 				{t("sensitive.continue")}
 			</button>
-			<a href={getRelativeLocaleUrl(locale, back)} class="flex items-center font-bold c-background bg-secondary py-1 px-2 rounded-md">
+			<a href={getRelativeLocaleUrl(locale, back)} class="flex items-center font-bold c-background bg-secondary py-1 px-2 rd-md">
 				{t("sensitive.back")}
 			</a>
 		</div>

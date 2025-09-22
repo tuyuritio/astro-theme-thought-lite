@@ -75,12 +75,12 @@ let chronicles = Object.entries<string[]>(chronicle ?? {})
 			<ul class="list-none">
 				{
 					chronicles.map(chronicle => (
-						<li class="relative mb-2 pb-2 before:(absolute content-empty top-3.4 left--3.8 h-full border-l-2 border-l-solid border-primary) last:after:(absolute content-empty left--5 bottom--4 w-2 h-2 border-2 border-solid border-primary rounded-full bg-primary)">
-							<span class="relative font-mono before:(absolute content-empty inline-block top-1 left--5 w-2 h-2 border-2 border-solid border-primary  rounded-full)">{Time.date(chronicle.date)}</span>
+						<li class="relative mb-2 pb-2 before:(absolute content-empty top-3.4 left--3.8 h-full b-l-2 b-l-solid b-primary) last:after:(absolute content-empty left--5 bottom--4 w-2 h-2 b-2 b-solid b-primary rd-full bg-primary)">
+							<span class="relative font-mono before:(absolute content-empty inline-block top-1 left--5 w-2 h-2 b-2 b-solid b-primary rd-full)">{Time.date(chronicle.date)}</span>
 							<ul class="my-2 pl-4 list-none">
 								{chronicle.events.map(event => {
 									const remove = event?.match(/^~(?!~)(.*)$/);
-									return <li class="relative my-1 before:(absolute content-empty inline-block top-2 left--4 w-1 h-1 border border-solid border-primary rounded-full)">{remove ? <del>{remove[1]}</del> : event}</li>;
+									return <li class="relative my-1 before:(absolute content-empty inline-block top-2 left--4 w-1 h-1 b b-solid b-primary rd-full)">{remove ? <del>{remove[1]}</del> : event}</li>;
 								})}
 							</ul>
 						</li>

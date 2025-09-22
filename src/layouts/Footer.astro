@@ -1,4 +1,5 @@
 ---
+import { getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Icon from "$components/Icon.astro";
 import i18nit from "$i18n";
@@ -62,6 +63,15 @@ if (copyright.type === "CC0 1.0") {
 	if (copyright.type.includes("SA")) CC_icons.push("fa6-brands:creative-commons-sa"); // Share-alike
 	if (copyright.type.includes("ND")) CC_icons.push("fa6-brands:creative-commons-nd"); // No derivatives
 }
+
+// Check if policy file exists for current locale
+const information = await getCollection("information", information => {
+	const [language, id] = information.id.split("/");
+	information.id = id;
+	return language == locale;
+});
+
+const policy = information.some(info => info.id == "policy");
 ---
 
 <footer class="flex flex-col sm:flex-row items-center justify-between gap-2 mt-8 mb-5 sm:mb-3 text-size-sm font-mono">
@@ -89,8 +99,14 @@ if (copyright.type === "CC0 1.0") {
 		<a target="_blank" href={CC_URL} aria-label={CC_label} class="flex items-center gap-1">
 			{CC_icons.map(icon => <Icon name={icon} />)}
 		</a>
-		<span>·</span>
-		<a href={getRelativeLocaleUrl(locale, "/policy")} aria-label="Policy" class="inline-flex"><Icon name="lucide:scale" title={t("navigation.policy")} /></a>
+		{
+			policy && [
+				<span>·</span>,
+				<a href={getRelativeLocaleUrl(locale, "/policy")} aria-label="Policy" class="inline-flex">
+					<Icon name="lucide:scale" title={t("navigation.policy")} />
+				</a>
+			]
+		}
 	</div>
 	<code class="flex items-center gap-2.5">
 		<p>Powered by</p>
