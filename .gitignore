@@ -1,5 +1,6 @@
 # build output
 .wrangler
+.vercel/
 dist/
 
 # generated types
