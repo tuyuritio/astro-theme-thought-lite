@@ -14,5 +14,8 @@
 	"feed": {
 		"section": "*",
 		"limit": 20
+	},
+	"comment": {
+		"max-length": 500
 	}
 }

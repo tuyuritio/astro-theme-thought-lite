@@ -5,6 +5,7 @@ import { drizzle } from "drizzle-orm/d1";
 import { Comment, Drifter, Notification } from "$db/schema";
 import { enhash, Token } from "$utils/token";
 import notify from "$utils/notify";
+import config from "$config";
 import i18nit from "$i18n";
 
 const env = import.meta.env;
@@ -71,6 +72,8 @@ export const comment = {
 			// Use drifter ID for authenticated users, clientAddress for unauthenticated users
 			const { success } = await locals.runtime.env.COMMENT_LIMIT.limit({ key: drifter ?? IP ?? nickname });
 			if (!success) throw new ActionError({ code: "TOO_MANY_REQUESTS" });
+
+			if (content.length > config.comment["max-length"]) throw new ActionError({ code: "CONTENT_TOO_LARGE" });
 
 			// Generate unique comment ID and timestamp
 			const now = new Date();

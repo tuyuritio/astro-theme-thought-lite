@@ -20,6 +20,7 @@ comment:
   nickname:
     empty: Nickname can't be empty
     name: Nickname
+  overlength: Content is too long
   placeholder: Leave your thoughts here
   preview:
     name: Markdown Preview

@@ -37,7 +37,8 @@
 					},
 					"required": [
 						"name"
-					]
+					],
+					"additionalProperties": false
 				}
 			]
 		},
@@ -70,7 +71,8 @@
 			"required": [
 				"type",
 				"year"
-			]
+			],
+			"additionalProperties": false
 		},
 		"feed": {
 			"title": "Feed Configuration",
@@ -104,7 +106,20 @@
 					"type": "integer",
 					"minimum": 0
 				}
-			}
+			},
+			"additionalProperties": false
+		},
+		"comment": {
+			"title": "Comment Configuration",
+			"type": "object",
+			"properties": {
+				"max-length": {
+					"title": "Maximum Comment Length",
+					"type": "integer",
+					"minimum": 1
+				}
+			},
+			"additionalProperties": false
 		}
 	},
 	"required": [

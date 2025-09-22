@@ -64,11 +64,13 @@
 				{:else}
 					<button onclick={() => (docker_view = true)}>{@render icon.profile()}</button>
 				{/if}
-				<button id="submit" disabled={limit > 0 || (nomad && !CAPTCHA)} onclick={submit_comment}>
+				<button id="submit" disabled={limit > 0 || (nomad && !CAPTCHA) || overlength} onclick={submit_comment}>
 					{#if limit > 0}
 						<span class="flex gap-0.5">{@render icon.delay()}<span class="font-mono pt-1">{Math.ceil(limit)}</span></span>
 					{:else if nomad && !CAPTCHA}
 						<span class="contents c-primary">{@render icon.verifying()}</span>
+					{:else if overlength}
+						<span class="contents c-orange-6">{@render icon.overlength()}</span>
 					{:else}
 						{@render (edit ? icon.edit : icon.submit)()}
 					{/if}
@@ -85,6 +87,7 @@
 	import remark from "$utils/remark";
 	import Modal from "$components/Modal.svelte";
 	import { push_tip } from "$components/Tip.svelte";
+	import config from "$config";
 	import i18nit from "$i18n";
 	import Drifter from "./Drifter.svelte";
 
@@ -101,6 +104,7 @@
 	let CAPTCHA: string | undefined = $state();
 	let turnstile_element: HTMLElement | undefined = $state();
 	let turnstile_ID: string | undefined = $state();
+	let overlength: boolean = $derived(content.length > config.comment["max-length"]);
 
 	// Predefined emoji shortcuts for quick insertion
 	const emojis = [
@@ -182,6 +186,9 @@
 			switch (error.code) {
 				case "TOO_MANY_REQUESTS":
 					return push_tip("error", t("comment.limit"));
+
+				case "CONTENT_TOO_LARGE":
+					return push_tip("error", t("comment.overlength"));
 
 				case "FORBIDDEN":
 					return push_tip("error", t("comment.verify.failure"));

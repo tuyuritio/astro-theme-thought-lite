@@ -164,6 +164,7 @@ export default defineConfig({
           "moon",
           "pencil",
           "pilcrow",
+          "rectangle-ellipsis",
           "refresh-cw",
           "reply",
           "rss",
