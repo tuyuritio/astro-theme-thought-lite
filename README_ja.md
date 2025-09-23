@@ -13,7 +13,7 @@
 > - `main` ブランチ（**現在**）：**Node SSR** をサポートするプラットフォーム（Vercel、Render、従来の Node サーバーなど）に適用；
 > - `cloudflare` ブランチ：テーマ内蔵のコメント機能を有効にし、Cloudflare **のみ**でデプロイ可能。
 
-🎨 **テーマプレビュー**：[Vercel](https://thought-lite.vercel.app/ja/)
+🎬 **ライブデモ**：[Vercel](https://thought-lite.vercel.app/ja/)
 
 ## ✨ 機能
 

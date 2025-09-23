@@ -13,7 +13,7 @@
 > - `main` 分支（**当前**）：适用于支持 **Node SSR** 的平台（Vercel、Render、传统 Node 服务器等）；
 > - `cloudflare` 分支：启用主题内置的评论功能，**仅**可在 Cloudflare 部署。
 
-🎨 **预览主题**：[Vercel](https://thought-lite.vercel.app/zh-cn/)
+🎬 **在线演示**：[Vercel](https://thought-lite.vercel.app/zh-cn/)
 
 ## ✨ 特性
 
