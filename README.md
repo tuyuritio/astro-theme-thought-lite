@@ -13,7 +13,7 @@
 > - `main` branch: Suitable for platforms supporting **Node SSR** (Vercel, Netlify, traditional Node servers, etc.);
 > - `cloudflare` branch (**current**): Enables built-in comment functionality, **only** deployable on Cloudflare.
 
-🎨 **Theme Preview**: [Vercel](https://thought-lite.vercel.app/)
+🎬 **Live Demo**: [Cloudflare Workers](https://thought-lite.ttio.workers.dev/)
 
 ## ✨ Features
 
