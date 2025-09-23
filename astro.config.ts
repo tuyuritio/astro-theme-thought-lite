@@ -33,6 +33,7 @@ import spoiler from "./src/utils/remark/spoiler";
 import abbr from "./src/utils/remark/abbr";
 import wrapper from "./src/utils/remark/table-wrapper";
 import copy from "./src/utils/code-copy";
+import reading from "./src/utils/remark/reading";
 
 // https://astro.build/config
 export default defineConfig({
@@ -67,7 +68,8 @@ export default defineConfig({
       wrapper,
       directive,
       ruby,
-      [alerts, { legacyTitle: true }]
+      [alerts, { legacyTitle: true }],
+      reading
     ],
     remarkRehype: {
       footnoteLabel: null,
