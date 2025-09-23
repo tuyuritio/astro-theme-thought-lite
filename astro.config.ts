@@ -201,6 +201,6 @@ export default defineConfig({
     })
   ],
   redirects: {
-    "/feed": "/feed.xml"
+    "/[...locale]/feed": "/[...locale]/feed.xml"
   }
 });
