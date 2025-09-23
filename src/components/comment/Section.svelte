@@ -26,7 +26,7 @@
 			</div>
 		{/each}
 	{:else}
-		<i class="block w-full text-center">{@render loading()}</i>
+		<i class="block w-full text-center mt-10">{@render loading()}</i>
 	{/if}
 </main>
 
