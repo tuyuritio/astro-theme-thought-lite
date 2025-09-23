@@ -47,6 +47,8 @@
 				{
 					duration: 400,
 					easing: "ease-in",
+					// Keep end state after animation completes to avoid flicker
+					fill: "forwards",
 					// Target different pseudo-elements for incoming/outgoing content
 					pseudoElement: dark ? "::view-transition-old(root)" : "::view-transition-new(root)"
 				}
