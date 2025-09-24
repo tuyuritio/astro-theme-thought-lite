@@ -74,6 +74,8 @@ description: Astro 主题站点的基础配置说明，涵盖站点设置、国�
 
 主题支持多语言切换，默认语言为**英文（`en`）**。
 
+如需变更默认语言请修改 `i18n.defaultLocale`，注意值须在 `i18n.locales` 中选择。
+
 如需添加新语言，请在 `src/i18n` 目录下创建相应的翻译文件，并在 `astro.config.ts` 中的 `i18n.locales` 中添加该语言。
 
 然后修改 `src/i18n/index.ts` 文件：
