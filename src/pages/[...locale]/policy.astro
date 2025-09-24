@@ -24,11 +24,13 @@ const { Content } = policy ? await render(policy) : ({} as any);
 ---
 
 <Base title={t("navigation.policy")} {locale}>
-	{
-		policy && (
-			<div class="markdown">
-				<Content />
-			</div>
-		)
-	}
+	<main>
+		{
+			policy && (
+				<div class="markdown">
+					<Content />
+				</div>
+			)
+		}
+	</main>
 </Base>
