@@ -35,6 +35,11 @@ const nomad = env.CLOUDFLARE_TURNSTILE_SITE_KEY && env.CLOUDFLARE_TURNSTILE_SECR
 		<link rel="preload" as="style" href="https://fontsapi.zeoseven.com/556/main/result.css" onload="this.onload=null;this.rel='stylesheet'" />
 		<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.4/katex.min.css" onload="this.onload=null;this.rel='stylesheet'" />
 
+		{(Astro.currentLocale === "zh-hk" || Astro.currentLocale === "zh-mo") && <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+HK:wght@200..900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />}
+		{Astro.currentLocale === "zh-tw" && <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />}
+		{Astro.currentLocale === "ja" && <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />}
+		{Astro.currentLocale === "ko" && <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />}
+
 		{nomad && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback" async defer is:inline />}
 
 		<script is:inline>

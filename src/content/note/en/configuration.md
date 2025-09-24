@@ -74,6 +74,8 @@ Configuration can be done through the following three methods:
 
 The theme supports multi-language switching, with the default language being **English (`en`)**.
 
+If you need to change the default language, please modify `i18n.defaultLocale`, noting that the value must be selected from `i18n.locales`.
+
 To add a new language, please create the corresponding translation file in the `src/i18n` directory and add that language to `i18n.locales` in `astro.config.ts`.
 
 Then modify the `src/i18n/index.ts` file:

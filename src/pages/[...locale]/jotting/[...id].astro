@@ -1,7 +1,6 @@
 ---
 import { i18n } from "astro:config/client";
 import { getCollection, render } from "astro:content";
-import read from "reading-time";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
 import Icon from "$components/Icon.astro";
@@ -22,9 +21,7 @@ export async function getStaticPaths() {
 
 const { locale = i18n!.defaultLocale } = Astro.params;
 const { jotting } = Astro.props;
-const { Content } = await render(jotting);
-
-const reading = read(jotting.body ?? "");
+const { Content, remarkPluginFrontmatter: frontmatter } = await render(jotting);
 
 const t = i18nit(locale);
 ---
@@ -38,12 +35,12 @@ const t = i18nit(locale);
 				{
 					jotting.data.tags?.length && (
 						<span>
-							<Icon name="lucide:tag" />
+							<Icon name="lucide:hash" />
 							{jotting.data.tags?.join("; ")}
 						</span>
 					)
 				}
-				<span><Icon name="lucide:pilcrow" />{t("read.words", { words: reading.words })}</span>
+				<span><Icon name="lucide:pilcrow" />{t("read.words", { words: frontmatter.words })}</span>
 			</div>
 			<hr class="b-b b-b-solid b-weak" />
 		</header>

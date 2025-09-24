@@ -2,8 +2,6 @@
 import type { MarkdownHeading } from "astro";
 import { i18n } from "astro:config/client";
 import { getCollection, render } from "astro:content";
-import { getRelativeLocaleUrl } from "astro:i18n";
-import read from "reading-time";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
 import Icon from "$components/Icon.astro";
@@ -30,9 +28,7 @@ const { locale = i18n!.defaultLocale } = Astro.params;
 const { note } = Astro.props;
 
 // Render markdown content and extract headings for TOC
-const { Content, headings } = await render(note);
-
-const reading = read(note.body ?? "");
+const { Content, headings, remarkPluginFrontmatter: frontmatter } = await render(note);
 
 // Build hierarchical table of contents from flat heading list
 type Heading = MarkdownHeading & { subheadings: Heading[] };
@@ -67,7 +63,7 @@ const t = i18nit(locale);
 				{
 					note.data.series && (
 						<span>
-							<Icon name="lucide:library" />
+							<Icon name="lucide:layers" />
 							{note.data.series}
 						</span>
 					)
@@ -75,12 +71,12 @@ const t = i18nit(locale);
 				{
 					note.data.tags?.length && (
 						<span>
-							<Icon name="lucide:tag" />
+							<Icon name="lucide:hash" />
 							{note.data.tags?.join("; ")}
 						</span>
 					)
 				}
-				<span><Icon name="lucide:pilcrow" />{t("read.words", { words: reading.words })}</span>
+				<span><Icon name="lucide:pilcrow" />{t("read.words", { words: frontmatter.words })}</span>
 			</div>
 			<hr class="b-b b-b-solid b-weak" />
 		</header>
