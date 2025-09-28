@@ -33,6 +33,7 @@
 		"count": "git log --pretty=tformat: --numstat | grep -v package | awk '{ A += $1; S += $2; T += $1 - $2 } END { printf \"+ %s\tLines\\n- %s\tLines\\n= %s\tLines\\n\", A, S, T }'"
 	},
 	"dependencies": {
+		"@astrojs/markdown-remark": "^6.3.7",
 		"@astrojs/sitemap": "^3.6.0",
 		"@astrojs/svelte": "^7.1.1",
 		"@astrojs/vercel": "^8.2.7",
@@ -47,7 +48,9 @@
 		"feed": "^5.1.0",
 		"less": "^4.4.1",
 		"luxon": "^3.7.2",
+		"mdast-util-to-string": "^4.0.0",
 		"medium-zoom": "^1.1.0",
+		"ms": "^2.1.3",
 		"reading-time": "^1.5.0",
 		"rehype-autolink-headings": "^7.1.0",
 		"rehype-external-links": "^3.0.0",
@@ -61,12 +64,20 @@
 		"remark-flexible-markers": "^1.3.1",
 		"remark-footnotes-extra": "^0.3.0",
 		"remark-gemoji": "^8.0.0",
+		"remark-gfm": "^4.0.1",
 		"remark-github-blockquote-alert": "^2.0.0",
 		"remark-ins": "^1.2.1",
 		"remark-math": "^6.0.0",
 		"remark-ruby-directive": "^0.3.0",
+		"shiki": "^3.13.0",
 		"svelte": "^5.39.3",
-		"typescript": "^5.9.2"
+		"typescript": "^5.9.2",
+		"unist-builder": "^4.0.0",
+		"unist-util-find-after": "^5.0.0",
+		"unist-util-find-all-after": "^5.0.0",
+		"unist-util-find-all-before": "^5.0.0",
+		"unist-util-find-between-all": "^1.1.0",
+		"unist-util-visit": "^5.0.0"
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.4",
