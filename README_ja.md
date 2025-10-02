@@ -126,9 +126,9 @@ npm run db:migrate:local
 ### インスピレーション
 
 - [Fuwari](https://github.com/saicaca/fuwari)
+- [Astro Sphere](https://github.com/markhorn-dev/astro-sphere)
 - [astro-vitesse](https://github.com/adrian-ub/astro-vitesse)
-- [Astro Blog](https://github.com/williamcachamwri/astro-blog)
-- [Astro Theme Pure](https://github.com/cworld1/astro-theme-pure)
+- [Miniblog](https://github.com/nicholasdly/miniblog)
 - [AstroPaper with I18n](https://github.com/yousef8/astro-paper-i18n)
 
 ## 📜 ライセンス

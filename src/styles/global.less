@@ -106,15 +106,15 @@
 html {
 	scroll-behavior: smooth;
 
-	&.gray {
-		filter: grayscale(1) contrast(1.1) brightness(0.9);
-	}
+	overflow-x: clip;
 }
 
 body {
 	font-family: var(--serif), var(--monospace);
 	color: var(--primary-color);
 	background-color: var(--background-color);
+
+	overflow-x: clip;
 }
 
 a {
