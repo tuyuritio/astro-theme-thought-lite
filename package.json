@@ -35,15 +35,15 @@
 	"dependencies": {
 		"@astrojs/markdown-remark": "^6.3.7",
 		"@astrojs/sitemap": "^3.6.0",
-		"@astrojs/svelte": "^7.1.1",
-		"@astrojs/vercel": "^8.2.7",
+		"@astrojs/svelte": "^7.2.0",
+		"@astrojs/vercel": "^8.2.8",
 		"@hbsnow/rehype-sectionize": "^1.0.7",
 		"@iconify-json/fa6-brands": "^1.2.6",
 		"@iconify-json/lucide": "^1.2.68",
-		"@iconify-json/simple-icons": "^1.2.52",
+		"@iconify-json/simple-icons": "^1.2.53",
 		"@iconify-json/svg-spinners": "^1.2.4",
 		"@swup/astro": "^1.7.0",
-		"astro": "^5.13.9",
+		"astro": "^5.14.1",
 		"astro-icon": "^1.1.5",
 		"feed": "^5.1.0",
 		"less": "^4.4.1",
@@ -70,8 +70,8 @@
 		"remark-math": "^6.0.0",
 		"remark-ruby-directive": "^0.3.0",
 		"shiki": "^3.13.0",
-		"svelte": "^5.39.3",
-		"typescript": "^5.9.2",
+		"svelte": "^5.39.8",
+		"typescript": "^5.9.3",
 		"unist-builder": "^4.0.0",
 		"unist-util-find-after": "^5.0.0",
 		"unist-util-find-all-after": "^5.0.0",
@@ -83,9 +83,9 @@
 		"@astrojs/check": "^0.9.4",
 		"@rollup/plugin-yaml": "^4.1.2",
 		"@types/luxon": "^3.7.1",
-		"@unocss/reset": "^66.5.1",
+		"@unocss/reset": "^66.5.2",
 		"prettier": "3.6.2",
 		"prettier-plugin-astro": "0.14.1",
-		"unocss": "^66.5.1"
+		"unocss": "^66.5.2"
 	}
 }
