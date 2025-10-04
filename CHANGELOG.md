@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.16.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.15.7...v0.16.0) (2025-10-04)
+
+
+### Features
+
+* replace SSR with CSR for list filtering ([3d374c8](https://github.com/tuyuritio/astro-theme-thought-lite/commit/3d374c89617a98caf609fe5d11a86b231925d8be))
+* staticize error pages ([778bd9e](https://github.com/tuyuritio/astro-theme-thought-lite/commit/778bd9e194d7afb58bb6db212a4e07f80e8481f3))
+
 ## [0.15.7](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.15.6...v0.15.7) (2025-10-02)
 
 

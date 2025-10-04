@@ -1,35 +1,50 @@
 ---
+import { getCollection } from "astro:content";
 import { i18n } from "astro:config/client";
-import { actions } from "astro:actions";
 import Base from "$layouts/Base.astro";
 import Jotting from "$components/Jotting.svelte";
 import Icon from "$components/Icon.astro";
 import i18nit from "$i18n";
 
-export const prerender = false;
+export async function getStaticPaths() {
+	// Create path for each locale, omitting default locale from URL
+	return i18n!.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
+}
 
 const { locale = i18n!.defaultLocale } = Astro.params;
 
 const t = i18nit(locale);
 
-const size = 20;
-const page = Number(Astro.url.searchParams.get("page")) || 1;
-const tags = Astro.url.searchParams.getAll("tag");
+const jottings = await getCollection("jotting", jotting => {
+	// Extract language from the file path structure
+	const [language] = jotting.id.split("/");
 
-const { data, error } = await Astro.callAction(actions.jotting.list, { locale, size, page, tags });
-if (error) {
-	switch (error.code) {
-		default:
-			return Astro.redirect("/500", 302);
+	// Filter criteria: must be published and match locale
+	let published = !jotting.data.draft;
+	let localed = language == locale;
+
+	return published && localed;
+});
+
+// Standardize note structure
+let list = jottings.map(jotting => ({
+	id: jotting.id,
+	data: {
+		title: jotting.data.title,
+		timestamp: jotting.data.timestamp,
+		tags: jotting.data.tags,
+		sensitive: jotting.data.sensitive,
+		top: jotting.data.top
 	}
-}
+}));
 
-const { jottings, pages, page: index, tag_list } = data;
+// Extract all unique tags from the filtered notes
+const tags = Array.from(new Set(jottings.flatMap(jotting => jotting.data.tags).filter(Boolean))).sort();
 ---
 
 <Base title={t("navigation.jotting")} {locale}>
 	<main class="flex flex-col grow">
-		<Jotting client:load {locale} {jottings} {pages} page={index} {size} {tag_list} {tags}>
+		<Jotting client:load {locale} jottings={list} {tags}>
 			<Icon name="lucide:flag-triangle-right" slot="top" />
 			<Icon name="lucide:siren" title={t("sensitive.icon")} slot="sensitive" />
 			<Icon name="lucide:arrow-left" slot="left" />

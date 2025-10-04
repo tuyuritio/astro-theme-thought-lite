@@ -1,9 +1,6 @@
-'404': 页面未找到
-'500': 服务器错误
 about:
   introduction: ○○自述
   roll: ○○连结
-back: 重返序章
 cancel: 取消
 comment:
   author: 笔者
@@ -100,8 +97,6 @@ home:
   newest: 最新文记
   prefaces: 序文一览
 jotting:
-  fetch:
-    failure: 获取随笔出错
   tag: 标签
 navigation:
   about: 絮述
@@ -114,8 +109,6 @@ navigation:
 note:
   comment: 前往想法
   contents: 目录
-  fetch:
-    failure: 获取文记出错
   series: 系列
   tag: 标签
   top: 回到顶部

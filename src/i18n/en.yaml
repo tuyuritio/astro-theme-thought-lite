@@ -1,9 +1,6 @@
-'404': Not Found
-'500': Internal Server Error
 about:
   introduction: Introduction
   roll: Link Roll
-back: Go Home
 cancel: Cancel
 comment:
   author: Author
@@ -102,8 +99,6 @@ home:
   newest: Newest Note
   prefaces: Prefaces
 jotting:
-  fetch:
-    failure: Error loading jottings
   tag: Tag
 navigation:
   about: About
@@ -116,8 +111,6 @@ navigation:
 note:
   comment: Thoughts
   contents: Contents
-  fetch:
-    failure: Error loading notes
   series: Series
   tag: Tag
   top: To Top

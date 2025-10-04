@@ -118,18 +118,60 @@
 </main>
 
 <script lang="ts">
-	import { actions } from "astro:actions";
 	import { getRelativeLocaleUrl } from "astro:i18n";
-	import { untrack, type Snippet } from "svelte";
+	import { onMount, type Snippet } from "svelte";
 	import { flip } from "svelte/animate";
 	import { fade } from "svelte/transition";
 	import Time from "$utils/time";
 	import i18nit from "$i18n";
-	import { push_tip } from "$components/Tip.svelte";
 
-	let { locale, notes, pages, page, size, series_list, tag_list, series, tags, top, sensitive, left, right, dots }: { locale: string; notes: any[]; pages: number; page: number; size: number; series_list: string[]; tag_list: string[]; series?: string; tags: string[]; top: Snippet; sensitive: Snippet; left: Snippet; right: Snippet; dots: Snippet } = $props();
+	let { locale, notes, series: series_list, tags: tag_list, top, sensitive, left, right, dots }: { locale: string; notes: any[]; series: string[]; tags: string[]; top: Snippet; sensitive: Snippet; left: Snippet; right: Snippet; dots: Snippet } = $props();
 
 	const t = i18nit(locale);
+
+	let initial = $state(false); // Track initial load to prevent unexpected effects
+	let series: string | null = $state(null);
+	let tags: string[] = $state([]);
+	let filtered: any[] = $derived.by(() => {
+		let list: any[] = [];
+
+		if (!initial) return list;
+
+		list = notes
+			// Apply series and tag filtering
+			.filter(note => {
+				// Check if note matches the specified series
+				let match_series = !series || note.data.series == series;
+
+				// Check if note contains all specified tags
+				let match_tags = tags.every(tag => note.data.tags?.includes(tag));
+
+				return match_series && match_tags;
+			})
+			// Sort by timestamp (newest first)
+			.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
+
+		// Build URL with current page, series, and tag filters
+		let url = getRelativeLocaleUrl(locale, `/note?page=${page}${series ? `&series=${series}` : ""}${tags.map(tag => `&tag=${tag}`).join("")}`);
+
+		// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
+		window.history.replaceState({ url, random: Math.random(), source: "swup" }, "", url);
+
+		return list;
+	});
+
+	// Calculate pagination
+	const size: number = 20;
+	let pages: number = $derived(Math.ceil(filtered.length / size));
+
+	// Ensure page is within valid range
+	let page: number = $state(1);
+	$effect(() => {
+		page = Math.max(1, Math.min(Math.floor(page), pages));
+	});
+
+	// Apply pagination by slicing the array
+	let list: any[] = $derived(filtered.slice((page - 1) * size, page * size));
 
 	/**
 	 * Toggle tag inclusion/exclusion in the filter list
@@ -152,35 +194,16 @@
 	function choose_series(series_choice: string, turn?: boolean) {
 		if (turn === undefined) turn = series !== series_choice;
 		// Set series if turning on, or clear if turning off
-		series = turn ? series_choice : undefined;
+		series = turn ? series_choice : null;
 	}
 
-	// Track initial load to prevent unnecessary API calls
-	let initial = $state(true);
-	let list: any[] = $state(notes);
-	$effect(() => {
-		// Build URL with current page, series, and tag filters
-		let url = getRelativeLocaleUrl(locale, `/note?page=${page}${series ? `&series=${series}` : ""}${tags.map(tag => `&tag=${tag}`).join("")}`);
+	onMount(() => {
+		const params = new URLSearchParams(window.location.search);
 
-		// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
-		window.history.replaceState({ url, random: Math.random(), source: "swup" }, "", url);
+		page = Number(params.get("page")) || 1;
+		series = params.get("series");
+		tags = params.getAll("tag");
 
-		// Prevent initial load from fetching data
-		if (untrack(() => initial)) {
-			untrack(() => (initial = false));
-			return;
-		}
-
-		// Fetch note list with current filters and pagination
-		actions.note.list({ locale, size, page, series, tags }).then(({ data, error }) => {
-			if (!error) {
-				// Update local state with fetched data
-				list = data.notes;
-				pages = data.pages;
-				page = data.page;
-			} else {
-				push_tip("error", t("note.fetch.failure"));
-			}
-		});
+		initial = true;
 	});
 </script>
