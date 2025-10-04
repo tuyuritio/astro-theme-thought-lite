@@ -1,9 +1,6 @@
-'404': 存在しない
-'500': 内部エラー
 about:
   introduction: ○○紹介
   roll: ○○連結
-back: 玄関へ戻る
 feed:
   address: 購読アドレス
   copy:
@@ -22,8 +19,6 @@ home:
   newest: 最新文記
   prefaces: 序文歴史
 jotting:
-  fetch:
-    failure: 随筆取得に失敗しました
   tag: 付札
 navigation:
   about: 情報
@@ -35,8 +30,6 @@ navigation:
   subscription: 購読
 note:
   contents: 目次
-  fetch:
-    failure: 文記取得に失敗しました
   series: 系列
   tag: 付札
   top: 至頂

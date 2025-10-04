@@ -1,19 +1,13 @@
 ---
-import { i18n } from "astro:config/client";
-import { getRelativeLocaleUrl } from "astro:i18n";
 import Base from "$layouts/Base.astro";
-import i18nit from "$i18n";
-
-const locale = Astro.currentLocale ?? i18n!.defaultLocale;
-const t = i18nit(locale);
 ---
 
-<Base title="500" {locale}>
+<Base title="500">
 	<main class="contents">
-		<div class="inline-flex flex-col items-center justify-center gap-2 text-center grow-0.5">
+		<div class="inline-flex flex-col items-center justify-center gap-2 text-center grow-0.5 animate-shaky">
 			<span class="text-6xl font-bold">500</span>
-			<span class="text-2xl">{t("500")}</span>
+			<span class="text-2xl">Internal Server Error</span>
 		</div>
-		<a href={getRelativeLocaleUrl(locale)} class="text-lg text-center link">&gt; <span>{t("back")}</span></a>
+		<a href="/" class="text-lg text-center link">&gt; Back</a>
 	</main>
 </Base>
