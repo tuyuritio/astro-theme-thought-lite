@@ -10,7 +10,7 @@
 
 <br />
 
-> - `main` branch (**current**): Suitable for platforms supporting **Node SSR** (Vercel, Render, traditional Node servers, etc.);
+> - `main` branch (**current**): Static build, can be deployed on any static hosting platform;
 > - `cloudflare` branch: Enables built-in comment functionality, **only** deployable on Cloudflare.
 
 🎬 **Live Demo**: [Vercel](https://thought-lite.vercel.app/)
@@ -19,7 +19,7 @@
 
 📱 **Responsive Design** - Adaptive for mobile, tablet, and desktop.\
 🌗 **Light / Dark Mode** - Auto-follows system preference with manual toggle support.\
-📃 **SSR Dynamic Content Filtering** - List filtering and pagination via History API.\
+📃 **CSR Dynamic Content Filtering** - List filtering and pagination via History API.\
 🌏 **i18n Support** - Easy to extend and manage multilingual content.\
 📰 **Sitemap & Feed Subscription** - Automated generation of Sitemap and Atom Feed.\
 🔗 **OpenGraph Support** - Built-in Open Graph meta tags for optimized social media sharing.

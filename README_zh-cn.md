@@ -10,7 +10,7 @@
 
 <br />
 
-> - `main` 分支（**当前**）：适用于支持 **Node SSR** 的平台（Vercel、Render、传统 Node 服务器等）；
+> - `main` 分支（**当前**）：静态化构建，可部署在任何静态托管平台；
 > - `cloudflare` 分支：启用主题内置的评论功能，**仅**可在 Cloudflare 部署。
 
 🎬 **在线演示**：[Vercel](https://thought-lite.vercel.app/zh-cn/)
@@ -19,7 +19,7 @@
 
 📱 **响应式设计** - 移动端、平板、桌面自适应。\
 🌗 **亮色 / 深色模式** - 自动跟随系统，并支持手动切换。\
-📃 **SSR 动态内容筛选** - 通过 History API 实现的列表筛选和分页。\
+📃 **CSR 动态内容筛选** - 通过 History API 实现的列表筛选和分页。\
 🌏 **i18n 支持** - 轻松扩展和管理多语言内容。\
 📰 **Sitemap 及 Feed 订阅** - 自动化生成 Sitemap 和 Atom Feed。\
 🔗 **OpenGraph 支持** - 内置 Open Graph 元标签，优化社交媒体分享效果。
