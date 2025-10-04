@@ -90,7 +90,6 @@ All sections support multiple languages. Please create language subdirectories u
 - **Serif Fonts** - [Google Fonts](https://fonts.google.com/)
 - **Monospace Fonts** - [ZeoSeven Fonts](https://fonts.zeoseven.com/)
 - **Image Viewer** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
-- **TypeScript ORM** - [Drizzle ORM](https://orm.drizzle.team/)
 
 ### Inspiration
 

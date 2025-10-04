@@ -90,7 +90,6 @@ npm i
 - **衬线字体** - [Google Fonts](https://fonts.google.com/)
 - **等宽字体** - [ZeoSeven Fonts](https://fonts.zeoseven.com/)
 - **图片查看器** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
-- **TypeScript ORM** - [Drizzle ORM](https://orm.drizzle.team/)
 
 ### 灵感来源
 

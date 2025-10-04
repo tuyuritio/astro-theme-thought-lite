@@ -90,7 +90,6 @@ npm i
 - **セリフフォント** - [Google Fonts](https://fonts.google.com/)
 - **等幅フォント** - [ZeoSeven Fonts](https://fonts.zeoseven.com/)
 - **画像ビューア** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
-- **TypeScript ORM** - [Drizzle ORM](https://orm.drizzle.team/)
 
 ### インスピレーション
 
