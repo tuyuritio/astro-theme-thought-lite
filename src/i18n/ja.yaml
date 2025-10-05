@@ -45,4 +45,5 @@ sensitive:
   icon: 敏感コンテンツを含む
   title: コンテンツ警告
   warning: このコンテンツがあなたの精神的健康に影響を与える可能性がある場合は、すぐに離れてください！
+statistics: '{words} 文字を書いた'
 theme: 'テーマ: ThoughtLite'
