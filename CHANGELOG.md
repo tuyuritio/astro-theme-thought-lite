@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.17.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.16.0...v0.17.0) (2025-10-05)
+
+
+### Features
+
+* add total word count in footer ([9b3ca20](https://github.com/tuyuritio/astro-theme-thought-lite/commit/9b3ca20436222cd80aed49f1d7fb83e06718be7d))
+
+
+### Bug Fixes
+
+* **style:** add hover effect for items in jotting and note list ([e2fbc48](https://github.com/tuyuritio/astro-theme-thought-lite/commit/e2fbc48dc4f701fda0811871aab737018c309a6b))
+
 ## [0.16.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.15.7...v0.16.0) (2025-10-04)
 
 

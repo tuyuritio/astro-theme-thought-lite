@@ -46,6 +46,7 @@
 						color 0.1s ease-in-out,
 						background-color 0.1s ease-in-out;
 
+					&:hover,
 					&.selected {
 						color: var(--background-color);
 						background-color: var(--primary-color);

@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Icon from "$components/Icon.astro";
 import i18nit from "$i18n";
@@ -64,6 +64,40 @@ if (copyright.type === "CC0 1.0") {
 	if (copyright.type.includes("ND")) CC_icons.push("fa6-brands:creative-commons-nd"); // No derivatives
 }
 
+// Fetch notes and jottings collections to calculate total word count
+// Filter by publication status and locale
+
+const notes = await getCollection("note", note => {
+	// Extract language from the file path structure
+	const [language] = note.id.split("/");
+
+	// Filter criteria: must be published and match locale
+	let published = !note.data.draft;
+	let localed = language == locale;
+
+	return published && localed;
+});
+
+// Calculate total word count across all notes
+const note_words = (await Promise.all(notes.map(async note => (await render(note)).remarkPluginFrontmatter.words))).reduce((summary, words) => summary + words, 0);
+
+const jottings = await getCollection("jotting", jotting => {
+	// Extract language from the file path structure
+	const [language] = jotting.id.split("/");
+
+	// Filter criteria: must be published and match locale
+	let published = !jotting.data.draft;
+	let localed = language == locale;
+
+	return published && localed;
+});
+
+// Calculate total word count across all jottings
+const jotting_words = (await Promise.all(jottings.map(async jotting => (await render(jotting)).remarkPluginFrontmatter.words))).reduce((summary, words) => summary + words, 0);
+
+// Aggregate total word count
+const total_words = note_words + jotting_words;
+
 // Check if policy file exists for current locale
 const information = await getCollection("information", information => {
 	const [language, id] = information.id.split("/");
@@ -99,6 +133,8 @@ const policy = information.some(info => info.id == "policy");
 		<a target="_blank" href={CC_URL} aria-label={CC_label} class="flex items-center gap-1">
 			{CC_icons.map(icon => <Icon name={icon} />)}
 		</a>
+		<span>·</span>
+		<span class="contents"><Icon name="lucide:activity" title={t("statistics", { words: total_words })} /></span>
 		{
 			policy && [
 				<span>·</span>,

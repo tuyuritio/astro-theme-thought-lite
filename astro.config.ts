@@ -138,6 +138,7 @@ export default defineConfig({
           "creative-commons-zero"
         ],
         lucide: [
+          "activity",
           "align-justify",
           "arrow-left",
           "arrow-right",

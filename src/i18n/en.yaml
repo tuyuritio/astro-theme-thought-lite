@@ -154,4 +154,5 @@ sensitive:
   icon: Contains sensitive content
   title: Content Warning
   warning: If this content might affect your mental health, please leave immediately!
+statistics: Wrote {words} words
 theme: 'Theme: ThoughtLite'
