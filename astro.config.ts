@@ -30,6 +30,7 @@ import sectionize from "@hbsnow/rehype-sectionize";
 
 import spoiler from "./src/utils/remark/spoiler";
 import abbr from "./src/utils/remark/abbr";
+import attrs from "./src/utils/remark/attrs";
 import wrapper from "./src/utils/remark/table-wrapper";
 import copy from "./src/utils/code-copy";
 import reading from "./src/utils/remark/reading";
@@ -61,6 +62,7 @@ export default defineConfig({
       gemoji,
       footnote,
       abbr,
+      attrs,
       wrapper,
       [table, { colspanWithEmpty: true }],
       wrapper,
