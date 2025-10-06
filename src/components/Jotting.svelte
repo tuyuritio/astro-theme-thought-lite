@@ -83,7 +83,7 @@
 		</header>
 
 		{#if pages > 1}
-			<footer>
+			<footer class="sticky bottom-0 flex items-center justify-center gap-3 mt-a pb-1 c-weak bg-background font-mono">
 				<button onclick={() => (page = Math.max(1, page - 1))}>{@render left()}</button>
 				<button class:location={1 == page} onclick={() => (page = 1)}>{1}</button>
 
