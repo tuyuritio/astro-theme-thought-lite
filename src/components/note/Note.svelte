@@ -140,11 +140,7 @@
 	let series: string | null = $state(null);
 	let tags: string[] = $state([]);
 	let filtered: any[] = $derived.by(() => {
-		let list: any[] = [];
-
-		if (!initial) return list;
-
-		list = notes
+		let list: any[] = notes
 			// Apply series and tag filtering
 			.filter(note => {
 				// Check if note matches the specified series
@@ -157,6 +153,8 @@
 			})
 			// Sort by timestamp (newest first)
 			.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
+
+		if (!initial) return list;
 
 		// Build URL with current page, series, and tag filters
 		let url = getRelativeLocaleUrl(locale, `/note?page=${page}${series ? `&series=${series}` : ""}${tags.map(tag => `&tag=${tag}`).join("")}`);

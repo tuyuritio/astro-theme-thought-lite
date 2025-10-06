@@ -126,15 +126,13 @@
 	let initial = $state(false); // Track initial load to prevent unexpected effects
 	let tags: string[] = $state([]);
 	let filtered: any[] = $derived.by(() => {
-		let list: any[] = [];
-
-		if (!initial) return list;
-
-		list = jottings
+		let list: any[] = jottings
 			// Apply tag filtering
 			.filter(jotting => tags.every(tag => jotting.data.tags?.includes(tag)))
 			// Sort by timestamp (newest first)
 			.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
+
+		if (!initial) return list;
 
 		// Build URL with current page and tag filters
 		let url = getRelativeLocaleUrl(locale, `/jotting?page=${page}${tags.map(tag => `&tag=${tag}`).join("")}`);
