@@ -46,10 +46,16 @@
 						color 0.1s ease-in-out,
 						background-color 0.1s ease-in-out;
 
-					&:hover,
 					&.selected {
 						color: var(--background-color);
 						background-color: var(--primary-color);
+					}
+
+					@media (min-width: 640px) {
+						&:hover {
+							color: var(--background-color);
+							background-color: var(--primary-color);
+						}
 					}
 				}
 			}
@@ -77,7 +83,7 @@
 		</header>
 
 		{#if pages > 1}
-			<footer>
+			<footer class="sticky bottom-0 flex items-center justify-center gap-3 mt-a pb-1 c-weak bg-background font-mono">
 				<button onclick={() => (page = Math.max(1, page - 1))}>{@render left()}</button>
 				<button class:location={1 == page} onclick={() => (page = 1)}>{1}</button>
 
@@ -120,15 +126,13 @@
 	let initial = $state(false); // Track initial load to prevent unexpected effects
 	let tags: string[] = $state([]);
 	let filtered: any[] = $derived.by(() => {
-		let list: any[] = [];
-
-		if (!initial) return list;
-
-		list = jottings
+		let list: any[] = jottings
 			// Apply tag filtering
 			.filter(jotting => tags.every(tag => jotting.data.tags?.includes(tag)))
 			// Sort by timestamp (newest first)
 			.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
+
+		if (!initial) return list;
 
 		// Build URL with current page and tag filters
 		let url = getRelativeLocaleUrl(locale, `/jotting?page=${page}${tags.map(tag => `&tag=${tag}`).join("")}`);
