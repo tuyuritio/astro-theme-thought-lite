@@ -46,10 +46,16 @@
 						color 0.1s ease-in-out,
 						background-color 0.1s ease-in-out;
 
-					&:hover,
 					&.selected {
 						color: var(--background-color);
 						background-color: var(--primary-color);
+					}
+
+					@media (min-width: 640px) {
+						&:hover {
+							color: var(--background-color);
+							background-color: var(--primary-color);
+						}
 					}
 				}
 			}
