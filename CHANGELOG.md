@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.17.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.17.0...v0.17.1) (2025-10-06)
+
+
+### Bug Fixes
+
+* add missing paginator styles ([249d39b](https://github.com/tuyuritio/astro-theme-thought-lite/commit/249d39b0fadedd7f56fcd9ddb0cef191cc201b27))
+* set initial values for list rendering ([6300997](https://github.com/tuyuritio/astro-theme-thought-lite/commit/630099735ec515347916d050b6424086dafd738c))
+* **style:** make hover effect responsively ([8f334d0](https://github.com/tuyuritio/astro-theme-thought-lite/commit/8f334d03bd19c1473824ec22b66ac61085633387))
+
 ## [0.17.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.16.0...v0.17.0) (2025-10-05)
 
 
