@@ -61,7 +61,6 @@ export default defineConfig({
       gemoji,
       footnote,
       abbr,
-      wrapper,
       [table, { colspanWithEmpty: true }],
       wrapper,
       directive,
@@ -81,7 +80,7 @@ export default defineConfig({
     },
     rehypePlugins: [
       ids,
-      [anchor, { behavior: "append", content: { type: "text", value: "󰌷" } }],
+      [anchor, { behavior: "wrap" }],
       [links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
       katex,
       figure,

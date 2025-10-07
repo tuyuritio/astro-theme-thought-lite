@@ -84,23 +84,25 @@
 	h4,
 	h5,
 	h6 {
-		a[aria-hidden] {
-			padding: 0rem 0.3rem;
+		&[id] {
+			a {
+				text-decoration: none;
 
-			opacity: 0;
-			transition: opacity 0.15s ease-in-out;
+				&::after {
+					content: "󰌷";
+					margin: 0rem 0.3rem;
 
-			font-weight: 100;
-			white-space: pre;
+					font-size: 0.8em;
+					font-weight: normal;
 
-			&::after {
-				display: none;
+					opacity: 0;
+					transition: opacity 0.15s ease-in-out;
+				}
+
+				&:hover::after {
+					opacity: 1;
+				}
 			}
-		}
-
-		&:hover a[aria-hidden] {
-			opacity: 1;
-			text-decoration: none;
 		}
 	}
 
