@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.17.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.17.1...v0.17.2) (2025-10-08)
+
+
+### Bug Fixes
+
+* **style:** adjust font style ([a9fee39](https://github.com/tuyuritio/astro-theme-thought-lite/commit/a9fee39367d4827976a2e70ea815f7ea4e60c888))
+* **style:** wrap headings with link instead of appending ([08ab988](https://github.com/tuyuritio/astro-theme-thought-lite/commit/08ab988f3890423b9d5f22b879b12be34246e42a))
+
 ## [0.17.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.17.0...v0.17.1) (2025-10-06)
 
 
