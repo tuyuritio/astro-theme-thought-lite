@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.17.2...v0.17.3) (2025-10-08)
+
+
+### Bug Fixes
+
+* **style:** revert font style ([94445e9](https://github.com/tuyuritio/astro-theme-thought-lite/commit/94445e9b6c075151366d2fd4d50aa86006697c31))
+
 ## [0.17.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.17.1...v0.17.2) (2025-10-08)
 
 
