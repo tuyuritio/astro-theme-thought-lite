@@ -4,14 +4,14 @@
     <img src=".github/assets/preview-light.webp">
     <img src=".github/assets/preview-dark.webp">
     <p></p>
-    <p>一款专注内容创作、针对 <a href="https://www.cloudflare.com/">Cloudflare</a> 优化的现代化 <a href="https://astro.build/">Astro</a> 主题 🌟</p>
-    <small><a href="README.md">English</a></small> <small><ins>简体中文</ins></small> <small><a href="README_ja.md">日本語</a></small>
+    <p>一款专注内容创作的现代化 <a href="https://astro.build/">Astro</a> 主题 🌟</p>
+    <small><a href="README.md">English</a></small> <small><ins>简体中文</ins></small> <small><a href="README.ja.md">日本語</a></small>
 </div>
 
 <br />
 
 > - `main` 分支：静态化构建，可部署在任何静态托管平台；
-> - `cloudflare` 分支（**当前**）：启用主题内置的评论功能，**仅**可在 Cloudflare 部署。
+> - `cloudflare` 分支✅：启用内置评论系统，仅支持在 Cloudflare 部署。
 
 🎬 **在线演示**：[Cloudflare Workers](https://thought-lite.ttio.workers.dev/zh-cn/)
 
@@ -33,47 +33,46 @@
 - [Cloudflare 账户](https://dash.cloudflare.com/sign-up) - 用于部署和数据库托管
 - [GitHub 账户](https://github.com/signup) - 用于代码托管和自动部署
 
-## 📦 安装
+## ⚡️ 快速上手
+
+### 使用 Astro 命令
+
+运行如下命令：
 
 ```sh
-git clone https://github.com/tuyuritio/astro-theme-thought-lite.git
-cd astro-theme-thought-lite
-git remote rename origin theme
-git remote add origin <your-git-repo>
+# 末尾的 `cloudflare` 是分支名称，请勿省略！
+npx create-astro@latest --template tuyuritio/astro-theme-thought-lite#cloudflare
+
+# 根据交互提示创建项目
+
+cd <your-project-name>
+npm run db:migrate:local    # 生成本地测试数据库
+npm run dev                 # 默认将启动本地开发服务：http://localhost:4321
+```
+
+### 使用模板
+
+1. [Fork](https://github.com/tuyuritio/astro-theme-thought-lite/fork) 此仓库（取消勾选 `Copy the main branch only`）或使用模板[创建新的仓库](https://github.com/new?template_name=astro-theme-thought-lite&template_owner=tuyuritio)（启用 `Include all branches`）。
+2. 运行如下命令：
+
+```sh
+git clone <your-repo-url>
+cd <your-repo-name>
 npm install
+npm run db:migrate:local    # 生成本地测试数据库
+npm run dev                 # 默认将启动本地开发服务：http://localhost:4321
 ```
 
 ## 🔧 配置
 
 1. 创建 Cloudflare D1，参考[Cloudflare D1 配置指南](src/content/note/zh-cn/cloudflare-d1.md)。
 2. 配置 Cloudflare Turnstile，参考[Cloudflare Turnstile 配置指南](src/content/note/zh-cn/cloudflare-turnstile.md)。
+    - 如果不启用匿名评论，可跳过这一步。
 3. 配置 OAuth 认证，参考[OAuth 配置指南](src/content/note/zh-cn/oauth.md)。
-4. 站点基本信息配置，参考[站点配置指南](src/content/note/zh-cn/configuration.md)。
-5. 创建 `.env` 文件，并添加变量：
-
-    ```sh
-    cp .env.example .env
-    ```
-
-    | 变量 | 描述 |
-    | - | - |
-    | `PUBLIC_TIMEZONE`* | 默认显示时区，参考[时区列表](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) |
-    | `PASS_KEY`* | 用于生成 Token，16 字节 Base64 格式密钥，使用命令 `openssl rand -base64 16` 生成 |
-    | `NOTIFY_PUBLIC_KEY`* | 桌面推送通知使用的 VAPID 公钥，使用命令 `npx web-push generate-vapid-keys` 生成 |
-    | `NOTIFY_PRIVATE_KEY`* | 桌面推送通知使用的 VAPID 私钥，在生成公钥时同时生成 |
-    | `AUTHOR_ID` | 作者 ID，用于在评论区中标识站点作者；需在 [Cloudflare D1 面板](https://dash.cloudflare.com/?to=/:account/workers/d1)中查询 |
-
-    `*` 表示必要选项。
-
-## 💻 启动开发
-
-```sh
-# 生成本地测试数据库
-npm run db:migrate:local
-
-# 启动开发服务器
-npm run dev
-```
+4. 自定义站点配置及国际化（i18n）配置，请修改以下文件，参考[站点配置指南](src/content/note/zh-cn/configuration.md)：
+    - `.env`
+    - `astro.config.ts`
+    - `site.config.json`
 
 ## 🚀 部署
 
@@ -86,12 +85,13 @@ npm run deploy
 
 ## 🔄 更新
 
+运行以下命令以同步上游更新：
+
 ```sh
-git checkout main
-git pull origin main
+git remote add theme https://github.com/tuyuritio/astro-theme-thought-lite.git
 git fetch theme
-git merge theme/cloudflare
-npm i
+git merge theme/cloudflare  # 首次更新需添加 `--allow-unrelated-histories` 参数
+npm install
 npm run db:migrate:local
 ```
 
@@ -104,7 +104,7 @@ npm run db:migrate:local
 - `preface` - 前言
 - `information` - 信息
 
-各部分均支持多语言，请在对应部分目录下创建语言子目录后开始编写内容，详情请参考[内容创作指南](src/content/note/zh-cn/content.md)。
+所有内容区块均支持多语言，创建对应语言目录后即可开始创作，详情请参考[内容创作指南](src/content/note/zh-cn/content.md)。
 
 ## 🙏 鸣谢
 
@@ -133,4 +133,4 @@ npm run db:migrate:local
 
 ## 📜 许可证
 
-本项目采用 [GPLv3](LICENSE) 进行授权。
+本项目采用 [GPLv3](LICENSE) 进行授权，可自由修改与分发，但须保留原版权声明。

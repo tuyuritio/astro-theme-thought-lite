@@ -4,14 +4,14 @@
     <img src=".github/assets/preview-light.webp">
     <img src=".github/assets/preview-dark.webp">
     <p></p>
-    <p>A modern <a href="https://astro.build/">Astro</a> theme optimized for <a href="https://www.cloudflare.com/">Cloudflare</a>, focused on content creation 🌟</p>
-    <small><ins>English</ins></small> <small><a href="README_zh-cn.md">简体中文</a></small> <small><a href="README_ja.md">日本語</a></small>
+    <p>A modern <a href="https://astro.build/">Astro</a> theme, focused on content creation 🌟</p>
+    <small><ins>English</ins></small> <small><a href="README.zh-cn.md">简体中文</a></small> <small><a href="README.ja.md">日本語</a></small>
 </div>
 
 <br />
 
 > - `main` branch: Static build, can be deployed on any static hosting platform;
-> - `cloudflare` branch (**current**): Enables built-in comment functionality, **only** deployable on Cloudflare.
+> - `cloudflare` branch✅: Enables built-in comment system, only deployable on Cloudflare.
 
 🎬 **Live Demo**: [Cloudflare Workers](https://thought-lite.ttio.workers.dev/)
 
@@ -33,47 +33,46 @@ Before you begin, make sure you have the following accounts:
 - [Cloudflare Account](https://dash.cloudflare.com/sign-up) - For deployment and database hosting
 - [GitHub Account](https://github.com/signup) - For code hosting and automated deployment
 
-## 📦 Installation
+## ⚡️ Quick Start
+
+### Using Astro Command
+
+Run the following command:
 
 ```sh
-git clone https://github.com/tuyuritio/astro-theme-thought-lite.git
-cd astro-theme-thought-lite
-git remote rename origin theme
-git remote add origin <your-git-repo>
+# `cloudflare` at the end is the branch name, do not omit it!
+npx create-astro@latest --template tuyuritio/astro-theme-thought-lite#cloudflare
+
+# Follow the interactive prompts to create the project
+
+cd <your-project-name>
+npm run db:migrate:local    # Generate local test database
+npm run dev                 # Will start the local development server at http://localhost:4321 by default
+```
+
+### Using Template
+
+1. [Fork](https://github.com/tuyuritio/astro-theme-thought-lite/fork) this repository (uncheck `Copy the main branch only`) or use the template to [create a new repository](https://github.com/new?template_name=astro-theme-thought-lite&template_owner=tuyuritio) (enable `Include all branches`).
+2. Run the following commands:
+
+```sh
+git clone <your-repo-url>
+cd <your-repo-name>
 npm install
+npm run db:migrate:local    # Generate local test database
+npm run dev                 # Will start the local development server at http://localhost:4321 by default
 ```
 
 ## 🔧 Configuration
 
 1. Create Cloudflare D1, refer to [Cloudflare D1 Configuration Guide](src/content/note/en/cloudflare-d1.md).
-2. Configure Cloudflare Turnstile, refer to [Turnstile Configuration Guide](src/content/note/en/turnstile.md).
+2. Configure Cloudflare Turnstile, refer to [Cloudflare Turnstile Configuration Guide](src/content/note/en/cloudflare-turnstile.md).
+    - You can skip this step if you don't enable anonymous comments.
 3. Configure OAuth authentication, refer to [OAuth Configuration Guide](src/content/note/en/oauth.md).
-4. Basic site information configuration, refer to [Site Configuration Guide](src/content/note/en/configuration.md).
-5. Create `.env` file and add variables:
-
-    ```sh
-    cp .env.example .env
-    ```
-
-    | Variable | Description |
-    | - | - |
-    | `PUBLIC_TIMEZONE`* | Default display timezone, refer to [Timezone List](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) |
-    | `PASS_KEY`* | Used for generating tokens, 16-byte Base64 format key, generate with `openssl rand -base64 16` |
-    | `NOTIFY_PUBLIC_KEY`* | VAPID public key for desktop push notifications, generate with `npx web-push generate-vapid-keys` |
-    | `NOTIFY_PRIVATE_KEY`* | VAPID private key for desktop push notifications, generated along with public key |
-    | `AUTHOR_ID` | Author ID for identifying site author in comment section; check in [Cloudflare D1 Panel](https://dash.cloudflare.com/?to=/:account/workers/d1) |
-
-    `*` indicates required options.
-
-## 💻 Start Development
-
-```sh
-# Generate local test database
-npm run db:migrate:local
-
-# Start development server
-npm run dev
-```
+4. Customize site configuration and internationalization (i18n) by modifying the following files, refer to [Site Configuration Guide](src/content/note/en/configuration.md):
+    - `.env`
+    - `astro.config.ts`
+    - `site.config.json`
 
 ## 🚀 Deployment
 
@@ -86,12 +85,13 @@ For **automated deployment** using GitHub Actions, refer to [GitHub Actions Conf
 
 ## 🔄 Updates
 
+Run the following commands to sync upstream updates:
+
 ```sh
-git checkout main
-git pull origin main
+git remote add theme https://github.com/tuyuritio/astro-theme-thought-lite.git
 git fetch theme
-git merge theme/cloudflare
-npm i
+git merge theme/cloudflare  # Add `--allow-unrelated-histories` flag for first update
+npm install
 npm run db:migrate:local
 ```
 
@@ -104,7 +104,7 @@ Content creation is centralized in the `src/content` directory, mainly including
 - `preface` - Preface
 - `information` - Information
 
-All sections support multiple languages. Please create language subdirectories under the corresponding section directory before writing content. For details, refer to [Content Creation Guide](src/content/note/en/content.md).
+All content sections support multiple languages. Create the corresponding language directory to start creating content. For details, refer to the [Content Creation Guide](src/content/note/en/content.md).
 
 ## 🙏 Acknowledgments
 
@@ -133,4 +133,4 @@ All sections support multiple languages. Please create language subdirectories u
 
 ## 📜 License
 
-This project is licensed under [GPLv3](LICENSE).
+This project is licensed under [GPLv3](LICENSE), allowing free modification and distribution, but the original copyright notice must be retained.
