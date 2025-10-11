@@ -8,7 +8,8 @@ import { EncryptJWT, jwtDecrypt, type JWTPayload } from "jose";
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 // Master encryption key from environment variables
-const PASS_KEY = import.meta.env.PASS_KEY;
+// The fallback value is the base64-encoded string of "DEFAULT_PASS_KEY"
+const PASS_KEY = import.meta.env.PASS_KEY || "REVGQVVMVF9QQVNTX0tFWQo=";
 
 /**
  * Generate a random string of specified length
