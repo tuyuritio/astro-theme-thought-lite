@@ -1,8 +1,8 @@
 # ThoughtLite
 
 <div align="center">
-    <img src=".github/assets/preview-light.webp">
-    <img src=".github/assets/preview-dark.webp">
+    <img alt="ThoughtLite Light Mode Preview" src=".github/assets/preview-light.webp">
+    <img alt="ThoughtLite Dark Mode Preview" src=".github/assets/preview-dark.webp">
     <p></p>
     <p>A modern <a href="https://astro.build/">Astro</a> theme, focused on content creation 🌟</p>
     <small><ins>English</ins></small> <small><a href="README.zh-cn.md">简体中文</a></small> <small><a href="README.ja.md">日本語</a></small>
@@ -10,21 +10,30 @@
 
 <br />
 
-> - `main` branch: Static build, can be deployed on any static hosting platform;
+<div align="center">
+    <img alt="Version" src="https://img.shields.io/github/package-json/v/tuyuritio/astro-theme-thought-lite">
+    <img alt="License" src="https://img.shields.io/github/license/tuyuritio/astro-theme-thought-lite">
+    <img alt="Stars" src="https://img.shields.io/github/stars/tuyuritio/astro-theme-thought-lite">
+</div>
+
+<br />
+
+> [!NOTE]
+> - `main` branch: Static build, can be deployed on any static hosting platform.
 > - `cloudflare` branch✅: Enables built-in comment system, only deployable on Cloudflare.
 
 🎬 **Live Demo**: [Cloudflare Workers](https://thought-lite.ttio.workers.dev/)
 
 ## ✨ Features
 
-📱 **Responsive Design** - Adaptive for mobile, tablet, and desktop.\
-🌗 **Light / Dark Mode** - Auto-follows system preference with manual toggle support.\
-📃 **CSR Dynamic Content Filtering** - List filtering and pagination via History API.\
-🌏 **i18n Support** - Easy to extend and manage multilingual content.\
-📰 **Sitemap & Feed Subscription** - Automated generation of Sitemap and Atom Feed.\
-🔗 **OpenGraph Support** - Built-in Open Graph meta tags for optimized social media sharing.\
-📝 **Comment System** - Based on Cloudflare D1, easy deployment with privacy control; supports OAuth authentication and guest comments.\
-🔔 **Desktop Notifications** - Real-time notifications using Web Push API.
+- [x] **Responsive Design** - Adaptive for mobile, tablet, and desktop.\
+- [x] **Light / Dark Mode** - Auto-follows system preference with manual toggle support.\
+- [x] **CSR Dynamic Content Filtering** - List filtering and pagination via History API.\
+- [x] **i18n Support** - Easy to extend and manage multilingual content.\
+- [x] **Sitemap & Feed Subscription** - Automated generation of Sitemap and Atom Feed.\
+- [x] **OpenGraph Support** - Built-in Open Graph meta tags for optimized social media sharing.\
+- [x] **Comment System** - Based on Cloudflare D1, easy deployment with privacy control; supports OAuth authentication and guest comments.\
+- [x] **Desktop Notifications** - Real-time notifications using Web Push API.
 
 ## 📋 Prerequisites
 
@@ -52,7 +61,7 @@ npm run dev                 # Will start the local development server at http://
 
 ### Using Template
 
-1. [Fork](https://github.com/tuyuritio/astro-theme-thought-lite/fork) this repository (uncheck `Copy the main branch only`) or use the template to [create a new repository](https://github.com/new?template_name=astro-theme-thought-lite&template_owner=tuyuritio) (enable `Include all branches`).
+1. [Use this template](https://github.com/new?template_name=astro-theme-thought-lite&template_owner=tuyuritio) to create a new repository (enable `Include all branches`) or [fork](https://github.com/tuyuritio/astro-theme-thought-lite/fork) this repository (uncheck `Copy the main branch only`).
 2. Run the following commands:
 
 ```sh
@@ -99,12 +108,21 @@ npm run db:migrate:local
 
 Content creation is centralized in the `src/content` directory, mainly including:
 
-- `note` - Notes
-- `jotting` - Jottings
-- `preface` - Preface
-- `information` - Information
+- `note` - Notes, focused on carefully crafted and detailed long-form works
+- `jotting` - Jottings, lightweight and immediate content recording
+- `preface` - Preface, displayed on the homepage as the first impression
+- `information` - Information, containing various descriptive content
 
 All content sections support multiple languages. Create the corresponding language directory to start creating content. For details, refer to the [Content Creation Guide](src/content/note/en/content.md).
+
+## 🤝 Contributing
+
+All kinds of contributions are welcome and appreciated!
+
+- Help promote the project or assist other users
+- Report [issues](https://github.com/tuyuritio/astro-theme-thought-lite/issues) or suggest new features
+- Improve documentation or help with internationalization (i18n)
+- Submit code contributions - see the [Code Contribution Guide](CONTRIBUTING.md) for more details
 
 ## 🙏 Acknowledgments
 
