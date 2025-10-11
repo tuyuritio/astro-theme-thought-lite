@@ -5,13 +5,13 @@
     <img src=".github/assets/preview-dark.webp">
     <p></p>
     <p>A modern <a href="https://astro.build/">Astro</a> theme, focused on content creation 🌟</p>
-    <small><ins>English</ins></small> <small><a href="README_zh-cn.md">简体中文</a></small> <small><a href="README_ja.md">日本語</a></small>
+    <small><ins>English</ins></small> <small><a href="README.zh-cn.md">简体中文</a></small> <small><a href="README.ja.md">日本語</a></small>
 </div>
 
 <br />
 
-> - `main` branch (**current**): Static build, can be deployed on any static hosting platform;
-> - `cloudflare` branch: Enables built-in comment functionality, **only** deployable on Cloudflare.
+> - `main` branch✅: Static build, can be deployed on any static hosting platform;
+> - `cloudflare` branch: Enables built-in comment system, only deployable on Cloudflare.
 
 🎬 **Live Demo**: [Vercel](https://thought-lite.vercel.app/)
 
@@ -24,46 +24,58 @@
 📰 **Sitemap & Feed Subscription** - Automated generation of Sitemap and Atom Feed.\
 🔗 **OpenGraph Support** - Built-in Open Graph meta tags for optimized social media sharing.
 
-## 📦 Installation
+## ⚡️ Quick Start
+
+### Using Astro Command
+
+Run the following command:
 
 ```sh
-git clone https://github.com/tuyuritio/astro-theme-thought-lite.git
-cd astro-theme-thought-lite
-git remote rename origin theme
-git remote add origin <your-git-repo>
+npx create-astro@latest --template tuyuritio/astro-theme-thought-lite
+
+# Follow the interactive prompts to create the project
+
+cd <your-project-name>
+npm run dev     # Will start the local development server at http://localhost:4321 by default
+```
+
+### Using Template
+
+1. [Fork](https://github.com/tuyuritio/astro-theme-thought-lite/fork) this repository or use the template to [create a new repository](https://github.com/new?template_name=astro-theme-thought-lite&template_owner=tuyuritio).
+2. Run the following commands:
+
+```sh
+git clone <your-repo-url>
+cd <your-repo-name>
 npm install
+npm run dev     # Will start the local development server at http://localhost:4321 by default
 ```
 
 ## 🔧 Configuration
 
-1. Basic site information configuration, refer to [Site Configuration Guide](src/content/note/en/configuration.md).
-2. Create `.env` file and add variables:
+Customize site configuration and internationalization (i18n) by modifying the following files:
 
-    ```sh
-    cp .env.example .env
-    ```
+- `.env`
+- `astro.config.ts`
+- `site.config.json`
 
-    | Variable | Description |
-    | - | - |
-    | `PUBLIC_TIMEZONE`* | Default display timezone, refer to [Timezone List](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) |
+For details, refer to the [Configuration Guide](src/content/note/en/configuration.md).
 
-    `*` indicates required options.
+## 🚀 Deployment
 
-## 💻 Start Development
+The current branch can be fully static built and deployed on any static hosting platform.
 
-```sh
-# Start development server
-npm run dev
-```
+For deployment methods on various platforms, refer to the [Astro Official Deployment Guide](https://docs.astro.build/en/guides/deploy/).
 
 ## 🔄 Updates
 
+Run the following commands to sync upstream updates:
+
 ```sh
-git checkout main
-git pull origin main
+git remote add theme https://github.com/tuyuritio/astro-theme-thought-lite.git
 git fetch theme
-git merge theme/main
-npm i
+git merge theme/main    # Add `--allow-unrelated-histories` flag for first update
+npm install
 ```
 
 ## ✍️ Content Creation
@@ -75,7 +87,7 @@ Content creation is centralized in the `src/content` directory, mainly including
 - `preface` - Preface
 - `information` - Information
 
-All sections support multiple languages. Please create language subdirectories under the corresponding section directory before writing content. For details, refer to [Content Creation Guide](src/content/note/en/content.md).
+All content sections support multiple languages. Create the corresponding language directory to start creating content. For details, refer to the [Content Creation Guide](src/content/note/en/content.md).
 
 ## 🙏 Acknowledgments
 
@@ -101,4 +113,4 @@ All sections support multiple languages. Please create language subdirectories u
 
 ## 📜 License
 
-This project is licensed under [GPLv3](LICENSE).
+This project is licensed under [GPLv3](LICENSE), allowing free modification and distribution, but the original copyright notice must be retained.

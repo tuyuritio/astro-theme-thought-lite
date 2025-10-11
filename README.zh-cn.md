@@ -5,13 +5,13 @@
     <img src=".github/assets/preview-dark.webp">
     <p></p>
     <p>一款专注内容创作的现代化 <a href="https://astro.build/">Astro</a> 主题 🌟</p>
-    <small><a href="README.md">English</a></small> <small><ins>简体中文</ins></small> <small><a href="README_ja.md">日本語</a></small>
+    <small><a href="README.md">English</a></small> <small><ins>简体中文</ins></small> <small><a href="README.ja.md">日本語</a></small>
 </div>
 
 <br />
 
-> - `main` 分支（**当前**）：静态化构建，可部署在任何静态托管平台；
-> - `cloudflare` 分支：启用主题内置的评论功能，**仅**可在 Cloudflare 部署。
+> - `main` 分支✅：静态化构建，可部署在任何静态托管平台；
+> - `cloudflare` 分支：启用内置评论系统，仅支持在 Cloudflare 部署。
 
 🎬 **在线演示**：[Vercel](https://thought-lite.vercel.app/zh-cn/)
 
@@ -24,46 +24,58 @@
 📰 **Sitemap 及 Feed 订阅** - 自动化生成 Sitemap 和 Atom Feed。\
 🔗 **OpenGraph 支持** - 内置 Open Graph 元标签，优化社交媒体分享效果。
 
-## 📦 安装
+## ⚡️ 快速上手
+
+### 使用 Astro 命令
+
+运行如下命令：
 
 ```sh
-git clone https://github.com/tuyuritio/astro-theme-thought-lite.git
-cd astro-theme-thought-lite
-git remote rename origin theme
-git remote add origin <your-git-repo>
+npx create-astro@latest --template tuyuritio/astro-theme-thought-lite
+
+# 根据交互提示创建项目
+
+cd <your-project-name>
+npm run dev     # 默认将启动本地开发服务：http://localhost:4321
+```
+
+### 使用模板
+
+1. [Fork](https://github.com/tuyuritio/astro-theme-thought-lite/fork) 此仓库或使用模板[创建新的仓库](https://github.com/new?template_name=astro-theme-thought-lite&template_owner=tuyuritio)。
+2. 运行如下命令：
+
+```sh
+git clone <your-repo-url>
+cd <your-repo-name>
 npm install
+npm run dev     # 默认将启动本地开发服务：http://localhost:4321
 ```
 
 ## 🔧 配置
 
-1. 站点基本信息配置，参考[站点配置指南](src/content/note/zh-cn/configuration.md)。
-2. 创建 `.env` 文件，并添加变量：
+自定义站点配置及国际化（i18n）配置，请修改以下文件：
 
-    ```sh
-    cp .env.example .env
-    ```
+- `.env`
+- `astro.config.ts`
+- `site.config.json`
 
-    | 变量 | 描述 |
-    | - | - |
-    | `PUBLIC_TIMEZONE`* | 默认显示时区，参考[时区列表](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) |
+详情请参考[配置指南](src/content/note/zh-cn/configuration.md)。
 
-    `*` 表示必要选项。
+## 🚀 部署
 
-## 💻 启动开发
+当前分支可完全静态化构建，部署在任何静态托管平台。
 
-```sh
-# 启动开发服务器
-npm run dev
-```
+各平台部署方法请参考 [Astro 官方部署指南](https://docs.astro.build/zh-cn/guides/deploy/)。
 
 ## 🔄 更新
 
+运行以下命令以同步上游更新：
+
 ```sh
-git checkout main
-git pull origin main
+git remote add theme https://github.com/tuyuritio/astro-theme-thought-lite.git
 git fetch theme
-git merge theme/main
-npm i
+git merge theme/main    # 首次更新需添加 `--allow-unrelated-histories` 参数
+npm install
 ```
 
 ## ✍️ 创作
@@ -75,7 +87,7 @@ npm i
 - `preface` - 前言
 - `information` - 信息
 
-各部分均支持多语言，请在对应部分目录下创建语言子目录后开始编写内容，详情请参考[内容创作指南](src/content/note/zh-cn/content.md)。
+所有内容区块均支持多语言，创建对应语言目录后即可开始创作，详情请参考[内容创作指南](src/content/note/zh-cn/content.md)。
 
 ## 🙏 鸣谢
 
@@ -101,4 +113,4 @@ npm i
 
 ## 📜 许可证
 
-本项目采用 [GPLv3](LICENSE) 进行授权。
+本项目采用 [GPLv3](LICENSE) 进行授权，可自由修改与分发，但须保留原版权声明。

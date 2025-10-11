@@ -5,6 +5,19 @@ tags: [Guide, Astro]
 description: Essential configuration guide for Astro theme sites, covering site settings, internationalization, and Markdown processing options.
 ---
 
+## `.env`
+
+1. Run the command to create `.env` file:
+    ```sh
+    cp .env.example .env
+    ```
+2. Modify or add variables:
+    | Variable | Description |
+    | - | - |
+    | `PUBLIC_TIMEZONE`* | Default display timezone, refer to [Timezone List](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) |
+
+    `*` indicates required options.
+
 ## `astro.config.ts`
 
 - `site` - Site URL
