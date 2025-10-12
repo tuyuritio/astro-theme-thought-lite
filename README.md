@@ -1,21 +1,21 @@
 # ThoughtLite
 
 <div align="center">
-    <img alt="ThoughtLite Light Mode Preview" src=".github/assets/preview-light.webp">
-    <img alt="ThoughtLite Dark Mode Preview" src=".github/assets/preview-dark.webp">
-    <p></p>
+    <p>
+        <img alt="ThoughtLite Light Mode Preview" src=".github/assets/preview-light.webp">
+        <img alt="ThoughtLite Dark Mode Preview" src=".github/assets/preview-dark.webp">
+    </p>
+    <p>
+        <a href="https://github.com/tuyuritio/astro-theme-thought-lite/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/tuyuritio/astro-theme-thought-lite"></a>
+        <a href="https://raw.githubusercontent.com/tuyuritio/astro-theme-thought-lite/refs/heads/main/LICENSE"><img alt="GitHub License" src="https://img.shields.io/github/license/tuyuritio/astro-theme-thought-lite"></a>
+    </p>
     <p>A modern <a href="https://astro.build/">Astro</a> theme, focused on content creation 🌟</p>
-    <small><ins>English</ins></small> <small><a href="README.zh-cn.md">简体中文</a></small> <small><a href="README.ja.md">日本語</a></small>
+    <p>
+        <small><ins>English</ins></small>
+        <small><a href="README.zh-cn.md">简体中文</a></small>
+        <small><a href="README.ja.md">日本語</a></small>
+    </p>
 </div>
-
-<br />
-
-<div align="center">
-    <a href="https://github.com/tuyuritio/astro-theme-thought-lite/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/tuyuritio/astro-theme-thought-lite"></a>
-    <a href="https://raw.githubusercontent.com/tuyuritio/astro-theme-thought-lite/refs/heads/main/LICENSE"><img alt="GitHub License" src="https://img.shields.io/github/license/tuyuritio/astro-theme-thought-lite"></a>
-</div>
-
-<br />
 
 > [!NOTE]
 > - `main` branch: Static build, can be deployed on any static hosting platform.
