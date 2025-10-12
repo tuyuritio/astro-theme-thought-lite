@@ -11,9 +11,8 @@
 <br />
 
 <div align="center">
-    <img alt="Version" src="https://img.shields.io/github/package-json/v/tuyuritio/astro-theme-thought-lite">
-    <img alt="License" src="https://img.shields.io/github/license/tuyuritio/astro-theme-thought-lite">
-    <img alt="Stars" src="https://img.shields.io/github/stars/tuyuritio/astro-theme-thought-lite">
+    <a href="https://github.com/tuyuritio/astro-theme-thought-lite/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/tuyuritio/astro-theme-thought-lite"></a>
+    <a href="https://raw.githubusercontent.com/tuyuritio/astro-theme-thought-lite/refs/heads/main/LICENSE"><img alt="GitHub License" src="https://img.shields.io/github/license/tuyuritio/astro-theme-thought-lite"></a>
 </div>
 
 <br />
