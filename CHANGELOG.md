@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.17.3...v1.0.0) (2025-10-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* **note:** `contents` is no longer supported in frontmatter, use `toc` instead.
+
+### Code Refactoring
+
+* **note:** rename frontmatter `contents` field to `toc` ([6a3673a](https://github.com/tuyuritio/astro-theme-thought-lite/commit/6a3673a2202dab4f7f545516806b0a4f734a1f5a))
+
 ## [0.17.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.17.2...v0.17.3) (2025-10-08)
 
 
