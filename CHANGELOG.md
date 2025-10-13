@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.17.3...v1.0.0) (2025-10-13)
+## [0.18.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.17.3...v1.0.0) (2025-10-13)
 
 
 ### ⚠ BREAKING CHANGES
