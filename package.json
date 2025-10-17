@@ -25,6 +25,7 @@
 		"url": "https://github.com/tuyuritio"
 	},
 	"scripts": {
+		"new": "tsx scripts/new.ts",
 		"dev": "astro dev",
 		"check": "astro check",
 		"build": "astro build",
@@ -80,11 +81,13 @@
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.4",
+		"@clack/prompts": "^0.11.0",
 		"@rollup/plugin-yaml": "^4.1.2",
 		"@types/luxon": "^3.7.1",
 		"@unocss/reset": "^66.5.4",
 		"prettier": "3.6.2",
 		"prettier-plugin-astro": "0.14.1",
+		"tsx": "^4.20.6",
 		"unocss": "^66.5.4"
 	}
 }
