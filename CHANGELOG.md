@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.19.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.18.0...v0.19.0) (2025-10-17)
+
+
+### Features
+
+* add interactive CLI script for creating new content ([dadd562](https://github.com/tuyuritio/astro-theme-thought-lite/commit/dadd562ca76001e898323a39de03d1f76f3a74cf))
+
+
+### Bug Fixes
+
+* **jotting:** adjust border thickness ([25ffb7e](https://github.com/tuyuritio/astro-theme-thought-lite/commit/25ffb7edd21a80349d0791a7ff68da978087decb))
+
 ## [0.18.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.17.3...v1.0.0) (2025-10-13)
 
 
