@@ -1,7 +1,7 @@
 {
 	"name": "astro-theme-thought-lite",
 	"type": "module",
-	"version": "0.18.0",
+	"version": "0.19.0",
 	"description": "A modern Astro theme focused on content creation",
 	"keywords": [
 		"astro",
@@ -26,6 +26,7 @@
 		"url": "https://github.com/tuyuritio"
 	},
 	"scripts": {
+		"new": "tsx scripts/new.ts",
 		"dev": "astro dev",
 		"check": "astro check",
 		"build": "astro build",
@@ -39,25 +40,25 @@
 		"db:migrate:remote": "wrangler d1 migrations apply DB --remote"
 	},
 	"dependencies": {
-		"@astrojs/cloudflare": "^12.6.9",
-		"@astrojs/markdown-remark": "^6.3.7",
+		"@astrojs/cloudflare": "^12.6.10",
+		"@astrojs/markdown-remark": "^6.3.8",
 		"@astrojs/sitemap": "^3.6.0",
 		"@astrojs/svelte": "^7.2.0",
 		"@block65/webcrypto-web-push": "^1.0.2",
 		"@hbsnow/rehype-sectionize": "^1.0.7",
 		"@iconify-json/fa6-brands": "^1.2.6",
-		"@iconify-json/lucide": "^1.2.68",
-		"@iconify-json/simple-icons": "^1.2.53",
+		"@iconify-json/lucide": "^1.2.69",
+		"@iconify-json/simple-icons": "^1.2.54",
 		"@iconify-json/svg-spinners": "^1.2.4",
 		"@swup/astro": "^1.7.0",
 		"arctic": "^3.7.0",
-		"astro": "^5.14.1",
+		"astro": "^5.14.5",
 		"astro-icon": "^1.1.5",
 		"dotenv": "^17.2.3",
 		"drizzle-orm": "^0.44.6",
 		"feed": "^5.1.0",
 		"jose": "^6.1.0",
-		"less": "^4.4.1",
+		"less": "^4.4.2",
 		"luxon": "^3.7.2",
 		"mdast-util-to-string": "^4.0.0",
 		"medium-zoom": "^1.1.0",
@@ -81,7 +82,7 @@
 		"remark-math": "^6.0.0",
 		"remark-ruby-directive": "^0.3.0",
 		"shiki": "^3.13.0",
-		"svelte": "^5.39.8",
+		"svelte": "^5.40.2",
 		"typescript": "^5.9.3",
 		"unist-builder": "^4.0.0",
 		"unist-util-find-after": "^5.0.0",
@@ -92,13 +93,15 @@
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.4",
+		"@clack/prompts": "^0.11.0",
 		"@rollup/plugin-yaml": "^4.1.2",
 		"@types/luxon": "^3.7.1",
-		"@unocss/reset": "^66.5.2",
+		"@unocss/reset": "^66.5.4",
 		"drizzle-kit": "^0.31.5",
 		"prettier": "3.6.2",
 		"prettier-plugin-astro": "0.14.1",
-		"unocss": "^66.5.2",
-		"wrangler": "^4.41.0"
+		"tsx": "^4.20.6",
+		"unocss": "^66.5.4",
+		"wrangler": "^4.43.0"
 	}
 }
