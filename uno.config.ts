@@ -12,8 +12,8 @@ export default defineConfig({
 	],
 	shortcuts: [
 		["link", "underline decoration-transparent decoration-0.05em underline-offset-0.15em transition-text-decoration-color hover:decoration-current"],
-		["input", "border-b-2 border-b-solid border-b-primary py-0.5 bg-transparent outline-none"],
-		["form-button", "m-a border-rd py-1 px-2 c-background bg-secondary"],
+		["input", "b-b-2 b-b-solid b-b-primary py-0.5 bg-transparent outline-none"],
+		["form-button", "m-a rd py-1 px-2 c-background bg-secondary"],
 		["pop", "opacity-0 invisible z-1 transition-[opacity,visibility] group-hover:(opacity-100 visible)"] // Needs to be used with parent owns (group & relative)
 	],
 	theme: {

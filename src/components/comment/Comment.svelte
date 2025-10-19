@@ -29,7 +29,7 @@
 	<dl class="flex flex-col gap-2 mt-6">
 		<div class="flex items-center gap-2">
 			{#if comment.name !== null}
-				<img src={comment.image} alt="image-{comment.name}" class="w-9 h-9 border border-solid border-weak rounded-full" />
+				<img src={comment.image} alt="image-{comment.name}" class="w-9 h-9 border b-solid b-weak rd-full" />
 				<dt class="flex flex-col gap-0.5 min-w-0">
 					<p class="flex items-center gap-1">
 						<b>{comment.name}</b>
@@ -41,7 +41,7 @@
 					{#if comment.description}<span title={comment.description} class="c-secondary text-3 line-height-normal whitespace-nowrap [text-overflow:ellipsis] overflow-hidden">{comment.description}</span>{/if}
 				</dt>
 			{:else}
-				<img src={comment.nickname ? "/nomad.webp" : "/akkarin.webp"} alt="Default avatar" class="w-9 h-9 border border-solid border-weak rounded-full" />
+				<img src={comment.nickname ? "/nomad.webp" : "/akkarin.webp"} alt="Default avatar" class="w-9 h-9 b b-solid b-weak rd-full" />
 				<dt class="flex flex-col gap-0.5 min-w-0">
 					<p class="flex items-center gap-1">
 						{#if comment.nickname}

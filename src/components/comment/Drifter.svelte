@@ -22,7 +22,7 @@
 <Modal bind:open>
 	<main class="flex flex-col grow gap-5">
 		<header class="flex flex-col sm:flex-row gap-5">
-			<img src={drifter.image} alt={drifter.ID} class="self-center w-20 border-2 border-solid border-weak border-rd-full" />
+			<img src={drifter.image} alt={drifter.ID} class="self-center w-20 b-2 b-solid b-weak rd-full" />
 			<aside class="flex flex-col justify-around gap-2 sm:gap-0">
 				<menu class="flex items-center gap-2 font-bold">
 					{#if drifter.platform == "GitHub"}
@@ -40,7 +40,7 @@
 				{#if drifter.description}<span class="text-3.5">{drifter.description}</span>{/if}
 			</aside>
 		</header>
-		<hr class="border-b-1 border-b-solid border-weak" />
+		<hr class="b-b-1 b-b-solid b-weak" />
 		<div class="flex flex-col items-start gap-5">
 			<section>
 				<label class="flex items-center">{t("notification.name")}：<input type="checkbox" class="switch" bind:checked={notification} onchange={toggle_notification} /></label>

@@ -9,9 +9,9 @@
 			<li>{t("oauth.benefit.homepage")}</li>
 		</ul>
 
-		<hr class="border-b-1 border-b-dashed w-full" />
+		<hr class="b-b-1 b-b-dashed w-full" />
 
-		<div class="flex flex-col items-center gap-2 [&>a]:(flex items-center justify-center gap-2 w-200px border-2 border-solid border-secondary p-1 rounded-1 font-bold)">
+		<div class="flex flex-col items-center gap-2 [&>a]:(flex items-center justify-center gap-2 w-200px b-2 b-solid b-secondary p-1 rd-1 font-bold)">
 			{#if OAuth.GitHub}<a href="/drifter/anchor/GitHub">{@render icon.GitHub()}<span>{t("oauth.github")}</span></a>{/if}
 			{#if OAuth.Google}<a href="/drifter/anchor/Google">{@render icon.Google()}<span>{t("oauth.google")}</span></a>{/if}
 			{#if OAuth.X}<a href="/drifter/anchor/X">{@render icon.X()}<span>{t("oauth.x")}</span></a>{/if}
@@ -26,11 +26,11 @@
 <main transition:slide={{ duration: 150 }} class="relative mt-5">
 	{#if !turnstile && !drifter}
 		<div class="absolute flex flex-col items-center justify-center gap-1 w-full h-full font-bold cursor-not-allowed">
-			<button onclick={() => (anchor_view = true)} class="border-2 border-solid py-1 px-2 rounded-1 font-bold">{t("comment.signin")}</button>
+			<button onclick={() => (anchor_view = true)} class="b-2 b-solid py-1 px-2 rd-1 font-bold">{t("comment.signin")}</button>
 		</div>
 	{/if}
 	<div class={!turnstile && !drifter ? "pointer-events-none filter-blur" : ""}>
-		<fieldset class="flex flex-col gap-2 p-2 border-2 border-solid border-weak rounded-1">
+		<fieldset class="flex flex-col gap-2 p-2 b-2 b-solid b-weak rd-1">
 			<article class="flex flex-col min-h-20 overflow-auto resize-y">
 				<textarea hidden={preview} placeholder="   {t('comment.placeholder')}" bind:this={textarea} bind:value={content} class="grow w-full bg-transparent text-4 outline-none resize-none"></textarea>
 				{#if preview}
@@ -48,7 +48,7 @@
 			<section class="flex items-center gap-2">
 				<figure class="relative group">
 					<figcaption class="line-height-none">{@render icon.emoji()}</figcaption>
-					<ul class="absolute bottom-full left--3 flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 mb-1 border-2 border-solid border-weak rounded-1 py-2 px-3 bg-background shadow-md pop">
+					<ul class="absolute bottom-full left--3 flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 mb-1 b-2 b-solid b-weak rd-1 py-2 px-3 bg-background shadow-md pop">
 						{#each emojis as emoji}
 							<button onclick={() => insert_emoji(emoji.code)}>{emoji.icon}</button>
 						{/each}
@@ -59,7 +59,7 @@
 				<div class="grow"></div>
 				{#if nomad}
 					<div bind:this={turnstile_element}></div>
-					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35" />
+					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input b-weak w-35" />
 					<button onclick={() => (anchor_view = true)}>{@render icon.signin()}</button>
 				{:else}
 					<button onclick={() => (docker_view = true)}>{@render icon.profile()}</button>
