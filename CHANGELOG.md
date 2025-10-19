@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.19.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.19.0...v0.19.1) (2025-10-19)
+
+
+### Bug Fixes
+
+* add aria-label to Icon ([9d484e4](https://github.com/tuyuritio/astro-theme-thought-lite/commit/9d484e4a50c6cb44f3b83e5d6bb0c6e4b8cfc26f))
+* **style:** update dark theme background ([46b7d42](https://github.com/tuyuritio/astro-theme-thought-lite/commit/46b7d4253e0952e8b039daa81c0433adc386d328))
+* **style:** update jotting border color ([bffc75d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/bffc75d1a8809f914c8caa87dfb6c373183ae429))
+
 ## [0.19.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.18.0...v0.19.0) (2025-10-17)
 
 
