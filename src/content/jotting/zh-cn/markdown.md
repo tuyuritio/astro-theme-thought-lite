@@ -6,6 +6,37 @@ tags: [Markup, Demo]
 description: 详细介绍主题中扩展的 Markdown 语法功能，包括 Ruby 注音、缩写、剧透文本等特殊标记语法。
 ---
 
+<style>
+.red {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.big {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.colorful {
+  font-weight: bold;
+  background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 3s linear infinite;
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+</style>
+
 原本想使用我最喜欢的 [markdown-it](https://github.com/markdown-it/markdown-it) 作为 Markdown 渲染引擎。但为了适配 Astro，防止出现意外错误，还是妥协使用了 [remark](https://github.com/remarkjs/remark)。
 
 出于个人的使用习惯，添加了部分插件以实现语法扩展。
@@ -169,3 +200,35 @@ ABBR abbr xABBRx
 | 普通单元格 | 合并单元格 || 合并列 |
 | 普通单元格 | 2×2 单元格 ||^|
 | 普通单元格 | ^ || 普通单元格 |
+
+## 内联元素属性扩展 {#custom-id}
+
+> 自行实现
+
+```
+## 内联元素属性扩展 {#custom-id}
+```
+
+```
+![](https://picsum.photos/1600/900?random=1){width=300}
+```
+
+![](https://picsum.photos/1600/900?random=1){width=300}
+
+```
+**重要**{.colorful}内容
+```
+
+**重要**{.colorful}内容
+
+```
+*多个*{.red .big}类名
+```
+
+*多个*{.red .big}类名
+
+```
+**自定义属性**{key="This is a value"}
+```
+
+**自定义属性**{key="This is a value"}

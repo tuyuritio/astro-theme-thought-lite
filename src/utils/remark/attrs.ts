@@ -1,46 +1,208 @@
+import type { Plugin } from "unified";
 import { visit } from "unist-util-visit";
+import type { Parent } from "unist";
+import type { Root, Text } from "mdast";
 
-/*
- * Remark plugin: parse custom attributes on heading text and attach id to heading
- * Supports ASCII word-like ids: letters, digits, hyphen and underscore inside quotes.
- * 
- * Syntax:
- * ## Heading text {id: "some-id"}
- * or
- * ## Heading text {id: 'some-id'}
- * Example:
- * ## Heading text {id: "custom-id"}
- * 
- * This will convert the heading to have id="custom-id" in the resulting HTML.
- * 
- * Note: This plugin only processes headings. It can be extended to handle other elements if needed.
+/**
+ * Regex pattern to match attribute blocks like `{...}` at the end or start of text.
  */
-export default function remarkAttrs() {
-  return (tree: any) => {
-    visit(tree, "heading", (node: any) => {
-      const children = node.children;
-      if (!children || children.length === 0) return;
-      const last = children[children.length - 1];
-      if (last && last.type === "text" && typeof last.value === "string") {
-        // match {id: "some-id"} or {id: 'some-id'} with optional spaces
-        const m = last.value.match(/\s*\{\s*id\s*:\s*["']([A-Za-z0-9\-_]+)["']\s*\}\s*$/);
-        if (m) {
-          const id = m[1];
-          // remove the {id: "..."} from the text node
-          last.value = last.value.replace(/\s*\{\s*id\s*:\s*["']([A-Za-z0-9\-_]+)["']\s*\}\s*$/, "");
-          // if text node became empty, remove it
-          if (last.value === "") {
-            children.pop();
-          }
+const ATTR_BLOCK_END_REGEX = /\s*(\{(?:[^"'}]+|"[^"]*"|'[^']*')*\})\s*$/;
+const ATTR_BLOCK_START_REGEX = /^\s*(\{(?:[^"'}]+|"[^"]*"|'[^']*')*\})/;
 
-          node.data = node.data || {};
-          // rehype-friendly properties
-          node.data.hProperties = node.data.hProperties || {};
-          node.data.hProperties.id = id;
-          // some plugins read data.id
-          node.data.id = id;
+/**
+ * Parse attributes string like markdown-it-attrs
+ * 
+ * Syntax examples:
+ * - {#id} → id="id"
+ * - {.className} → class="className"
+ * - {key=value} → key="value"
+ * - {key="value with spaces"} → key="value with spaces"
+ * - {#id .class1 .class2 attr=value} → id="id" class="class1 class2" attr="value"
+ */
+function parseAttributes(attrStr: string): Record<string, string> {
+  const attrs: Record<string, string> = {};
+  const classes: string[] = [];
+
+  // Remove leading/trailing spaces and braces
+  const content = attrStr.trim().replace(/^\{|\}$/g, "").trim();
+
+  // Match patterns: #id, .class, key=value, key="value", key='value'
+  const patterns = [
+    // ID: #id
+    /#([A-Za-z0-9\-_]+)/g,
+
+    // Class: .className
+    /\.([A-Za-z0-9\-_]+)/g,
+
+    // Attribute with quoted value: key="value" or key='value'
+    /([A-Za-z0-9\-_]+)=["']([^"']*)["']/g,
+
+    // Attribute without quotes: key=value
+    /([A-Za-z0-9\-_]+)=([A-Za-z0-9\-_]+)/g,
+  ];
+
+  let match;
+
+  // Extract ID (only the last one if multiple)
+  patterns[0].lastIndex = 0; // Reset regex
+  while ((match = patterns[0].exec(content)) !== null) attrs.id = match[1];
+
+  // Extract classes
+  while ((match = patterns[1].exec(content)) !== null) classes.push(match[1]);
+
+  // Extract quoted attributes
+  patterns[2].lastIndex = 0;
+  while ((match = patterns[2].exec(content)) !== null) {
+    const key = match[1];
+    const value = match[2];
+    if (key !== "id" && key !== "class") {
+      attrs[key] = value;
+    }
+  }
+
+  // Extract unquoted attributes (avoid duplicates with quoted ones)
+  patterns[3].lastIndex = 0;
+  const existingKeys = new Set(Object.keys(attrs).filter(k => k !== "id" && k !== "class"));
+  while ((match = patterns[3].exec(content)) !== null) {
+    const key = match[1];
+    const value = match[2];
+    if (key !== "id" && key !== "class" && !existingKeys.has(key)) {
+      attrs[key] = value;
+    }
+  }
+
+  // Add classes if any
+  if (classes.length > 0) attrs.class = classes.join(" ");
+
+  return attrs;
+}
+
+/**
+ * Apply attributes to a node
+ */
+function applyAttributes(node: any, attrs: Record<string, string>) {
+  node.data = node.data || {};
+  node.data.hProperties = node.data.hProperties || {};
+
+  // Merge attributes
+  Object.assign(node.data.hProperties, attrs);
+
+  // Also set id in data.id for compatibility
+  if (attrs.id) node.data.id = attrs.id;
+}
+
+/**
+ * Remark plugin to parse custom attributes on inline elements and headings
+ * 
+ * Syntax examples:
+ * - Headings: ## Heading {#custom-id .class}
+ * - Links: [text](url){target=_blank .external}
+ * - Images: ![alt](img.png){.responsive width=500}
+ * - Inline elements: **bold**{.red} or `code`{.language-js}
+ */
+const remarkAttrs: Plugin<[], Root> = () => {
+  return (tree: Root) => {
+    visit(tree, (node, index, parent: Parent | undefined) => {
+      const elements = [
+        "heading",
+        "image",
+        "link",
+        "strong",
+        "emphasis",
+        "inlineCode",
+      ];
+
+      // Process nodes that have text children or value property
+      if (!elements.includes(node.type)) return;
+
+      // Handle nodes with children (heading, link, strong, emphasis, inlineCode)
+      if ("children" in node && node.children && Array.isArray(node.children) && node.children.length > 0) {
+        const lastChild = node.children[node.children.length - 1];
+
+        if (lastChild.type === "text" && typeof lastChild.value === "string") {
+          // Extract attributes from the end of text: {...}
+          const match = lastChild.value.match(ATTR_BLOCK_END_REGEX);
+
+          if (match) {
+            const attrs = parseAttributes(match[1]);
+
+            // Check if we actually parsed any attributes
+            if (Object.keys(attrs).length > 0) {
+              // Remove the attribute string from text
+              const remainingText = lastChild.value.substring(0, match.index);
+
+              // Update or remove the text node
+              if (remainingText.trim() === "") {
+                node.children.pop();
+              } else {
+                lastChild.value = remainingText;
+              }
+
+              // Apply attributes to the parent node
+              applyAttributes(node, attrs);
+            }
+          }
+        }
+      }
+
+      // Handle inline elements (link, strong, emphasis, inlineCode) followed by attribute text
+      if (parent && typeof index === "number" && elements.includes(node.type)) {
+        const nextSibling = parent.children[index + 1];
+        if (nextSibling && nextSibling.type === "text") {
+          const textNode = nextSibling as Text;
+          // Check if the text starts with attributes
+          const match = textNode.value.match(ATTR_BLOCK_START_REGEX);
+          if (match) {
+            const attrs = parseAttributes(match[1]);
+
+            if (Object.keys(attrs).length > 0) {
+              // Remove the attribute string from the text node
+              const remainingText = textNode.value.substring(match[0].length);
+
+              if (remainingText.trim() === "") {
+                // Remove the text node if it's empty
+                parent.children.splice(index + 1, 1);
+              } else {
+                textNode.value = remainingText;
+              }
+
+              // Apply attributes to the inline element
+              applyAttributes(node, attrs);
+            }
+          }
+        }
+      }
+
+      // Handle image nodes (they have properties but not children)
+      if (node.type === "image" && parent && typeof index === "number") {
+        // Check if there's a text node after the image in the parent
+        const nextSibling = parent.children[index + 1];
+        if (nextSibling && nextSibling.type === "text") {
+          const textNode = nextSibling as Text;
+          // Check if the text starts with attributes
+          const match = textNode.value.match(ATTR_BLOCK_START_REGEX);
+          if (match) {
+            const attrs = parseAttributes(match[1]);
+
+            if (Object.keys(attrs).length > 0) {
+              // Remove the attribute string from the text node
+              const remainingText = textNode.value.substring(match[0].length);
+
+              if (remainingText.trim() === "") {
+                // Remove the text node if it's empty
+                parent.children.splice(index + 1, 1);
+              } else {
+                textNode.value = remainingText;
+              }
+
+              // Apply attributes to the image
+              applyAttributes(node, attrs);
+            }
+          }
         }
       }
     });
   };
 }
+
+export default remarkAttrs;

@@ -169,3 +169,35 @@ ABBR abbr xABBRx
 | 通常セル | マージセル || マージ列 |
 | 通常セル | 2×2 セル ||^|
 | 通常セル | ^ || 通常セル |
+
+## インライン要素の属性拡張 {#custom-id}
+
+> 自作実装
+
+```
+## インライン要素の属性拡張 {#custom-id}
+```
+
+```
+![](https://picsum.photos/1600/900?random=1){width=300}
+```
+
+![](https://picsum.photos/1600/900?random=1){width=300}
+
+```
+**重要**{.colorful}コンテンツ
+```
+
+**重要**{.colorful}コンテンツ
+
+```
+*複数の*{.red .big}クラス名
+```
+
+*複数の*{.red .big}クラス名
+
+```
+**カスタム属性**{key="This is a value"}
+```
+
+**カスタム属性**{key="This is a value"}
