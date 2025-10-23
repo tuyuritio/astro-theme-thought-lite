@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import Icon from "$components/Icon.astro";
 import i18nit from "$i18n";
@@ -99,13 +99,7 @@ const jotting_words = (await Promise.all(jottings.map(async jotting => (await re
 const total_words = note_words + jotting_words;
 
 // Check if policy file exists for current locale
-const information = await getCollection("information", information => {
-	const [language, id] = information.id.split("/");
-	information.id = id;
-	return language == locale;
-});
-
-const policy = information.some(info => info.id == "policy");
+const policy = await getEntry("information", `${locale}/policy`);
 ---
 
 <footer class="flex flex-col sm:flex-row items-center justify-between gap-2 mt-8 mb-5 sm:mb-3 text-size-sm font-mono">
