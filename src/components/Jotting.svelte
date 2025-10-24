@@ -46,10 +46,16 @@
 						color 0.1s ease-in-out,
 						background-color 0.1s ease-in-out;
 
-					&:hover,
 					&.selected {
 						color: var(--background-color);
 						background-color: var(--primary-color);
+					}
+
+					@media (min-width: 640px) {
+						&:hover {
+							color: var(--background-color);
+							background-color: var(--primary-color);
+						}
 					}
 				}
 			}
@@ -61,11 +67,11 @@
 	<article class="flex flex-col grow">
 		<header class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-5">
 			{#each list as jotting (jotting.id)}
-				<section animate:flip={{ duration: 150 }} class="flex flex-col justify-center gap-0.5 b-2 b-solid b-weak rd-2 py-2 px-3">
+				<section animate:flip={{ duration: 150 }} class="flex flex-col justify-center gap-0.5 b-1 b-solid b-secondary rd-2 py-2 px-3">
 					<span class="flex items-center gap-1">
 						{#if jotting.data.top > 0}<span>{@render top()}</span>{/if}
 						{#if jotting.data.sensitive}<span>{@render sensitive()}</span>{/if}
-						<a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} class="c-primary font-bold link">{jotting.data.title}</a>
+						<a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} class="c-primary font-600 link">{jotting.data.title}</a>
 					</span>
 					<span class="flex gap-1">
 						{#each jotting.data.tags as tag}
@@ -77,7 +83,7 @@
 		</header>
 
 		{#if pages > 1}
-			<footer>
+			<footer class="sticky bottom-0 flex items-center justify-center gap-3 mt-a pb-1 c-weak bg-background font-mono">
 				<button onclick={() => (page = Math.max(1, page - 1))}>{@render left()}</button>
 				<button class:location={1 == page} onclick={() => (page = 1)}>{1}</button>
 
@@ -120,15 +126,13 @@
 	let initial = $state(false); // Track initial load to prevent unexpected effects
 	let tags: string[] = $state([]);
 	let filtered: any[] = $derived.by(() => {
-		let list: any[] = [];
-
-		if (!initial) return list;
-
-		list = jottings
+		let list: any[] = jottings
 			// Apply tag filtering
 			.filter(jotting => tags.every(tag => jotting.data.tags?.includes(tag)))
 			// Sort by timestamp (newest first)
 			.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
+
+		if (!initial) return list;
 
 		// Build URL with current page and tag filters
 		let url = getRelativeLocaleUrl(locale, `/jotting?page=${page}${tags.map(tag => `&tag=${tag}`).join("")}`);

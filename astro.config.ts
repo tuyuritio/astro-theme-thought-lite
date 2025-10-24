@@ -63,7 +63,6 @@ export default defineConfig({
       footnote,
       abbr,
       attrs,
-      wrapper,
       [table, { colspanWithEmpty: true }],
       wrapper,
       directive,
@@ -83,7 +82,7 @@ export default defineConfig({
     },
     rehypePlugins: [
       ids,
-      [anchor, { behavior: "append", content: { type: "text", value: "󰌷" } }],
+      [anchor, { behavior: "wrap" }],
       [links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
       katex,
       figure,

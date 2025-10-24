@@ -5,6 +5,19 @@ tags: [Guide, Astro]
 description: Astro 主题站点的基础配置说明，涵盖站点设置、国际化、Markdown 处理等核心配置项。
 ---
 
+## `.env`
+
+1. 运行命令创建 `.env` 文件：
+    ```sh
+    cp .env.example .env
+    ```
+2. 修改或添加变量：
+    | 变量 | 描述 |
+    | - | - |
+    | `PUBLIC_TIMEZONE`* | 默认显示时区，参考[时区列表](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) |
+
+    `*` 表示必要选项。
+
 ## `astro.config.ts`
 
 - `site` - 站点 URL

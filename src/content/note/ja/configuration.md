@@ -5,6 +5,19 @@ tags: [Guide, Astro]
 description: Astro テーマサイトの基本設定説明、サイト設定、国際化、Markdown処理などのコア設定項目をカバー。
 ---
 
+## `.env`
+
+1. コマンドを実行して `.env` ファイルを作成します：
+    ```sh
+    cp .env.example .env
+    ```
+2. 変数を修正または追加します：
+    | 変数 | 説明 |
+    | - | - |
+    | `PUBLIC_TIMEZONE`* | デフォルト表示タイムゾーン、[タイムゾーンリスト](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List)を参照 |
+
+    `*` は必須オプションを示します。
+
 ## `astro.config.ts`
 
 - `site` - サイト URL
