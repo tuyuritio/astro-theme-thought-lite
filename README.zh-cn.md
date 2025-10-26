@@ -44,7 +44,7 @@ npx create-astro@latest --template tuyuritio/astro-theme-thought-lite
 # 根据交互提示创建项目
 
 cd <your-project-name>
-npm run dev     # 默认将启动本地开发服务：http://localhost:4321
+npm run dev
 ```
 
 ### 使用模板
@@ -56,7 +56,7 @@ npm run dev     # 默认将启动本地开发服务：http://localhost:4321
 git clone <your-repo-url>
 cd <your-repo-name>
 npm install
-npm run dev     # 默认将启动本地开发服务：http://localhost:4321
+npm run dev
 ```
 
 ## 🔧 配置
@@ -68,6 +68,20 @@ npm run dev     # 默认将启动本地开发服务：http://localhost:4321
 - `site.config.json`
 
 详情请参阅[配置指南](src/content/note/zh-cn/configuration.md)。
+
+## 💻 命令
+
+主题提供了以下常用命令：
+
+| 命令 | 行为 |
+| --- | --- |
+| `npm install` | 安装项目依赖 |
+| `npm run new` | 创建新的内容文件 |
+| `npm run dev` | 启动本地开发服务器（默认：`http://localhost:4321`） |
+| `npm run check` | 运行 Astro 类型检查 |
+| `npm run build` | 构建生产版本 |
+| `npm run preview` | 预览构建后的站点 |
+| `npm run update` | 更新项目依赖 |
 
 ## 🚀 部署
 

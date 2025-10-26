@@ -44,7 +44,7 @@ npx create-astro@latest --template tuyuritio/astro-theme-thought-lite
 # Follow the interactive prompts to create the project
 
 cd <your-project-name>
-npm run dev     # Will start the local development server at http://localhost:4321 by default
+npm run dev
 ```
 
 ### Using Template
@@ -56,7 +56,7 @@ npm run dev     # Will start the local development server at http://localhost:43
 git clone <your-repo-url>
 cd <your-repo-name>
 npm install
-npm run dev     # Will start the local development server at http://localhost:4321 by default
+npm run dev
 ```
 
 ## 🔧 Configuration
@@ -68,6 +68,20 @@ Customize site configuration and internationalization (i18n) by modifying the fo
 - `site.config.json`
 
 For details, refer to the [Configuration Guide](src/content/note/en/configuration.md).
+
+## 💻 Commands
+
+The theme provides the following commonly used commands:
+
+| Command | Action |
+| --- | --- |
+| `npm install` | Install project dependencies |
+| `npm run new` | Create a new content file |
+| `npm run dev` | Start the local development server (default: `http://localhost:4321`) |
+| `npm run check` | Run Astro type checking |
+| `npm run build` | Build the production version |
+| `npm run preview` | Preview the built site |
+| `npm run update` | Update project dependencies |
 
 ## 🚀 Deployment
 
