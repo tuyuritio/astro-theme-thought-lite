@@ -55,7 +55,7 @@ npx create-astro@latest --template tuyuritio/astro-theme-thought-lite#cloudflare
 
 cd <your-project-name>
 npm run db:migrate:local    # Generate local test database
-npm run dev                 # Will start the local development server at http://localhost:4321 by default
+npm run dev
 ```
 
 ### Using Template
@@ -68,7 +68,7 @@ git clone <your-repo-url>
 cd <your-repo-name>
 npm install
 npm run db:migrate:local    # Generate local test database
-npm run dev                 # Will start the local development server at http://localhost:4321 by default
+npm run dev
 ```
 
 ## 🔧 Configuration
@@ -81,6 +81,25 @@ npm run dev                 # Will start the local development server at http://
     - `.env`
     - `astro.config.ts`
     - `site.config.json`
+
+## 💻 Commands
+
+The theme provides the following commonly used commands:
+
+| Command | Action |
+| --- | --- |
+| `npm install` | Install project dependencies |
+| `npm run new` | Create a new content file |
+| `npm run dev` | Start the local development server (default: `http://localhost:4321`) |
+| `npm run check` | Run Astro type checking |
+| `npm run build` | Build the production version |
+| `npm run preview` | Preview the built site |
+| `npm run deploy` | Deploy to Cloudflare |
+| `npm run deploy:dry` | Simulate deployment |
+| `npm run update` | Update project dependencies |
+| `npm run db:migration` | Generate database migration files |
+| `npm run db:migrate:local` | Apply database migrations locally |
+| `npm run db:migrate:remote` | Apply database migrations remotely |
 
 ## 🚀 Deployment
 

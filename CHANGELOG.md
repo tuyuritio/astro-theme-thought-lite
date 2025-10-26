@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.19.1...v0.19.2) (2025-10-26)
+
+
+### Bug Fixes
+
+* use `getEntry` to retrieve information content more efficiently ([84b272d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/84b272dd47de877bbebb84465cd4beb4ab259a2f))
+
 ## [0.19.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.19.0...v0.19.1) (2025-10-19)
 
 

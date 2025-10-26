@@ -1,6 +1,6 @@
 ---
 import { i18n } from "astro:config/client";
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
 import i18nit from "$i18n";
@@ -14,20 +14,14 @@ const { locale = i18n!.defaultLocale } = Astro.params;
 
 const t = i18nit(locale);
 
-const information = await getCollection("information", information => {
-	const [language, id] = information.id.split("/");
-	information.id = id;
-	return language == locale;
-});
-
-let introduction = information.find(info => info.id == "introduction");
-let roll = information.find(info => info.id == "roll");
+const introduction = await getEntry("information", `${locale}/introduction`);
+const roll = await getEntry("information", `${locale}/roll`);
+const chronicle = (await getEntry("information", `${locale}/chronicle`))?.data;
 
 const { Content: Introduction } = introduction ? await render(introduction) : ({} as any);
 const { Content: Roll } = roll ? await render(roll) : ({} as any);
 
-let chronicle = information.find(info => info.id == "chronicle")?.data;
-let chronicles = Object.entries<string[]>(chronicle ?? {})
+const chronicles = Object.entries<string[]>(chronicle ?? {})
 	.map(([date, events]) => ({ date: new Date(date), events: events ?? [] }))
 	.sort((a, b) => b.date.getTime() - a.date.getTime());
 ---
