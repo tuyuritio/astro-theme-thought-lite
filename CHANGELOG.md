@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.19.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.19.2...v0.19.3) (2025-10-27)
+
+
+### Bug Fixes
+
+* no longer specify specific icons due to global staticization ([ccfd2c5](https://github.com/tuyuritio/astro-theme-thought-lite/commit/ccfd2c580344f3f925351cf512b458fc152e5898))
+* remove unused import of `getCollection` ([4c9c059](https://github.com/tuyuritio/astro-theme-thought-lite/commit/4c9c059247f0a2891a561f57bef50de53d6b11a8))
+
 ## [0.19.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.19.1...v0.19.2) (2025-10-26)
 
 
