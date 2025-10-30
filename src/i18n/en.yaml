@@ -19,6 +19,8 @@ home:
     jotting: '{count} jottings'
     note: '{count} notes'
   newest: Newest Note
+  newestJotting: Newest Jotting
+  currentlyReading: Currently Reading
   prefaces: Prefaces
 jotting:
   noMatches: No jottings match the selected filters

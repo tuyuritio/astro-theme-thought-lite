@@ -17,6 +17,11 @@
 	},
 	"library": {
 		"progressRingTheme": "minimal",
-		"excerptLength": 160
+		"excerptLength": 160,
+		"showInNavigation": true
+	},
+	"home": {
+		"showNewestJotting": false,
+		"showReadingBooks": true
 	}
 }

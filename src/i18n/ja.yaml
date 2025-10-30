@@ -17,6 +17,8 @@ home:
     jotting: 随筆 {count} 件
     note: 文記 {count} 件
   newest: 最新文記
+  newestJotting: 最新随筆
+  currentlyReading: 読書中
   prefaces: 序文歴史
 jotting:
   noMatches: 選択したフィルターに一致する随筆はありません
