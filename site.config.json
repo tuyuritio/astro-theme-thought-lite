@@ -23,5 +23,12 @@
 	"home": {
 		"showNewestJotting": false,
 		"showReadingBooks": true
+	},
+	"style": {
+		"sansSerif": false,
+		"backgroundColors": {
+			"light": "#e5e6df",
+			"dark": "#1c1c1c"
+		}
 	}
 }
