@@ -43,7 +43,7 @@ library:
   status:
     done: 已读完
     in_progress: 阅读中
-    todo: 待读
+    todo: 待阅读
   title: 阅读
   type:
     book: 书籍

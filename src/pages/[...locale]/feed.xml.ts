@@ -74,6 +74,33 @@ export const GET: APIRoute = async ({ site, params }) => {
     items.push(...jottings);
   }
 
+  if (config.feed?.section?.includes("knowledge") || config.feed?.section === "*" || config.feed?.section === undefined) {
+    let knowledge = (await getCollection("knowledge", item => {
+      // Extract language from the file path structure
+      const [locale, ...id] = item.id.split("/");
+
+      // Determine latest date for sorting (lastEdited > finish > start)
+      const latestDate = item.data.dates?.lastEdited
+        || item.data.dates?.finish
+        || item.data.dates?.start;
+
+      // Attach locale, link, and timestamp
+      (<any>item).link = new URL(getRelativeLocaleUrl(locale, `/library/${id.join("/")}`), site).toString();
+      (<any>item).data.timestamp = latestDate;
+
+      // Apply filtering criteria
+      let published = !item.data.draft;    // Exclude draft items
+      let localed = language == locale;    // Language filter
+      let showAsNote = item.data.showAsNote;  // Must have showAsNote enabled
+      let hasDate = !!latestDate;       // Must have a valid date
+
+      // Include knowledge only if it passes all filters
+      return published && localed && showAsNote && hasDate;
+    }));
+
+    items.push(...knowledge);
+  }
+
   // Sort all items by timestamp and limit to configured number
   items = items
     .sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime())    // Sort by newest first

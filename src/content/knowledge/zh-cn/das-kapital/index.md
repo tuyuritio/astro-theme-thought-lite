@@ -9,7 +9,7 @@ cover: cover.jpg
 tags: [政治经济学, 经典]
 description: 马克思主义政治经济学的经典著作，深入分析资本主义生产方式。
 toc: true
-showInFeed: true
+showAsNote: true
 dates:
   start: 2025-01-10
   lastEdited: 2025-09-22

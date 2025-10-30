@@ -7,9 +7,10 @@ currentPage: 96
 author: Antoine de Saint-Exupéry
 cover: https://upload.wikimedia.org/wikipedia/en/0/05/Littleprince.JPG
 tags:
-  - fiction
-  - philosophy
+  - Fiction
+  - Philosophy
 description: A poetic tale about love, friendship, and the meaning of life.
+showAsNote: true
 dates:
   start: 2025-01-15
   finish: 2025-01-20

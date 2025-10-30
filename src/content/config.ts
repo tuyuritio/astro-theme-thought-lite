@@ -80,7 +80,7 @@ const knowledge = defineCollection({
       finish: z.date().optional(),          // Completion date
       lastEdited: z.date().optional()         // Last edited date for activity tracking
     }).optional(),
-    showInFeed: z.boolean().default(false),       // Whether to show in main blog timeline
+    showAsNote: z.boolean().default(false),       // Whether to show in main blog notes
     tags: z.array(z.string()).optional(),       // Tags for categorization
     description: z.string().optional(),         // Brief description or notes
     author: z.string().optional(),            // Author/creator of the material

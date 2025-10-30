@@ -26,9 +26,23 @@ const notes = await getCollection("note", note => {
   return published && localed;
 });
 
+// Fetch knowledge items that should appear in note feed
+const knowledge = await getCollection("knowledge", item => {
+  // Extract language from the file path structure
+  const [language] = item.id.split("/");
+
+  // Filter criteria: must be published, match locale, and have showAsNote enabled
+  let published = !item.data.draft;
+  let localed = language == locale;
+  let showAsNote = item.data.showAsNote;
+
+  return published && localed && showAsNote;
+});
+
 // Standardize note structure
 let list = notes.map(note => ({
   id: note.id,
+  type: "note",
   data: {
     title: note.data.title,
     timestamp: note.data.timestamp,
@@ -39,9 +53,38 @@ let list = notes.map(note => ({
   }
 }));
 
-// Extract all unique series and tags from the filtered notes
+// Transform knowledge items to note-compatible structure
+const knowledgeItems = knowledge.map(item => {
+  // Determine latest date for sorting (lastEdited > finish > start)
+  const latestDate = item.data.dates?.lastEdited
+    || item.data.dates?.finish
+    || item.data.dates?.start;
+
+  return {
+    id: item.id,
+    type: "knowledge",
+    data: {
+      title: item.data.title,
+      timestamp: latestDate,
+      series: undefined, // Knowledge items don't have series
+      tags: item.data.tags,
+      sensitive: item.data.sensitive,
+      top: 0, // Knowledge items are not pinned
+      status: item.data.status, // Include status for badge display
+      knowledgeType: item.data.type // Include type (book/video_series/course)
+    }
+  };
+}).filter(item => item.data.timestamp); // Only include items with a valid date
+
+// Merge notes and knowledge items
+list = [...list, ...knowledgeItems];
+
+// Extract all unique series and tags from the filtered notes and knowledge items
 const series = Array.from(new Set(notes.map(note => note.data.series).filter(Boolean))).sort();
-const tags = Array.from(new Set(notes.flatMap(note => note.data.tags).filter(Boolean))).sort();
+const tags = Array.from(new Set([
+  ...notes.flatMap(note => note.data.tags).filter(Boolean),
+  ...knowledge.flatMap(item => item.data.tags).filter(Boolean)
+])).sort();
 ---
 
 <Base title={t("navigation.note")} {locale}>
