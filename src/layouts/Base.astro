@@ -18,48 +18,48 @@ const title = config.title;
 ---
 
 <script>
-	import zoom from "medium-zoom/dist/pure";
+  import zoom from "medium-zoom/dist/pure";
 
-	window.zoom = () => zoom(".markdown img", { background: "#00000044" });
-	window.zoom();
+  window.zoom = () => zoom(".markdown img", { background: "#00000044" });
+  window.zoom();
 
-	document.addEventListener("astro:page-load", () => {
-		window.zoom();
-	});
+  document.addEventListener("astro:page-load", () => {
+    window.zoom();
+  });
 </script>
 
 <App {title} {subtitle} {description} {article} author={typeof config.author == "string" ? config.author : config.author.name}>
-	<Tip client:load>
-		<Icon name="lucide:info" slot="information" is:inline />
-		<Icon name="lucide:circle-check" slot="success" is:inline />
-		<Icon name="lucide:circle-question-mark" slot="question" is:inline />
-		<Icon name="lucide:circle-alert" slot="warning" is:inline />
-		<Icon name="lucide:circle-x" slot="error" is:inline />
-		<Icon name="lucide:x" slot="x" is:inline />
-	</Tip>
-	<div class="flex flex-col mx-a px-3 w-[min(100%,1000px)]">
-		<div id="body" class="flex flex-col min-h-screen">
-			<header class="sticky top-0 flex items-center justify-between pt-3 pb-1 mb-4 bg-background z-2 sm:(static pb-12)">
-				<a href={getRelativeLocaleUrl(locale)} class="text-size-lg sm:text-size-2xl font-bold">{title}</a>
+  <Tip client:load>
+    <Icon name="lucide:info" slot="information" is:inline />
+    <Icon name="lucide:circle-check" slot="success" is:inline />
+    <Icon name="lucide:circle-question-mark" slot="question" is:inline />
+    <Icon name="lucide:circle-alert" slot="warning" is:inline />
+    <Icon name="lucide:circle-x" slot="error" is:inline />
+    <Icon name="lucide:x" slot="x" is:inline />
+  </Tip>
+  <div class="flex flex-col mx-a px-3 w-[min(100%,1000px)]">
+    <div id="body" class="flex flex-col min-h-screen">
+      <header class="sticky top-0 flex items-center justify-between pt-3 pb-1 mb-4 bg-background z-2 sm:(static pb-12)">
+        <a href={getRelativeLocaleUrl(locale)} class="text-size-lg sm:text-size-2xl font-bold">{title}</a>
 
-				<Navigator {locale} {route} client:load>
-					<Icon name="lucide:tent" slot="home" is:inline />
-					<Icon name="lucide:list" slot="note" is:inline />
-					<Icon name="lucide:feather" slot="jotting" is:inline />
-					<Icon name="lucide:book-open" slot="library" is:inline />
-					<Icon name="lucide:at-sign" slot="about" is:inline />
-					<Icon name="lucide:earth" slot="globe" is:inline />
-					<Icon name="lucide:rss" slot="rss" is:inline />
-					<Icon name="lucide:sun" slot="sun" is:inline />
-					<Icon name="lucide:moon" slot="moon" is:inline />
-					<Icon name="lucide:align-justify" slot="bars" is:inline />
-					<Icon name="lucide:x" slot="close" is:inline />
-				</Navigator>
-			</header>
+        <Navigator {locale} {route} client:load>
+          <Icon name="lucide:tent" slot="home" is:inline />
+          <Icon name="lucide:list" slot="note" is:inline />
+          <Icon name="lucide:feather" slot="jotting" is:inline />
+          <Icon name="lucide:book-open" slot="library" is:inline />
+          <Icon name="lucide:at-sign" slot="about" is:inline />
+          <Icon name="lucide:earth" slot="globe" is:inline />
+          <Icon name="lucide:rss" slot="rss" is:inline />
+          <Icon name="lucide:sun" slot="sun" is:inline />
+          <Icon name="lucide:moon" slot="moon" is:inline />
+          <Icon name="lucide:align-justify" slot="bars" is:inline />
+          <Icon name="lucide:x" slot="close" is:inline />
+        </Navigator>
+      </header>
 
-			<slot />
-		</div>
+      <slot />
+    </div>
 
-		<Footer {locale} author={config.author} copyright={config.copyright} />
-	</div>
+    <Footer {locale} author={config.author} copyright={config.copyright} />
+  </div>
 </App>

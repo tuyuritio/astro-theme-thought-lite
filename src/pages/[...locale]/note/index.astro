@@ -7,8 +7,8 @@ import Icon from "$components/Icon.astro";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
-	// Create path for each locale, omitting default locale from URL
-	return i18n!.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
+  // Create path for each locale, omitting default locale from URL
+  return i18n!.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
 }
 
 const { locale = i18n!.defaultLocale } = Astro.params;
@@ -16,27 +16,27 @@ const { locale = i18n!.defaultLocale } = Astro.params;
 const t = i18nit(locale);
 
 const notes = await getCollection("note", note => {
-	// Extract language from the file path structure
-	const [language] = note.id.split("/");
+  // Extract language from the file path structure
+  const [language] = note.id.split("/");
 
-	// Filter criteria: must be published and match locale
-	let published = !note.data.draft;
-	let localed = language == locale;
+  // Filter criteria: must be published and match locale
+  let published = !note.data.draft;
+  let localed = language == locale;
 
-	return published && localed;
+  return published && localed;
 });
 
 // Standardize note structure
 let list = notes.map(note => ({
-	id: note.id,
-	data: {
-		title: note.data.title,
-		timestamp: note.data.timestamp,
-		series: note.data.series,
-		tags: note.data.tags,
-		sensitive: note.data.sensitive,
-		top: note.data.top
-	}
+  id: note.id,
+  data: {
+    title: note.data.title,
+    timestamp: note.data.timestamp,
+    series: note.data.series,
+    tags: note.data.tags,
+    sensitive: note.data.sensitive,
+    top: note.data.top
+  }
 }));
 
 // Extract all unique series and tags from the filtered notes
@@ -45,13 +45,13 @@ const tags = Array.from(new Set(notes.flatMap(note => note.data.tags).filter(Boo
 ---
 
 <Base title={t("navigation.note")} {locale}>
-	<main class="flex flex-col grow">
-		<Note client:load {locale} notes={list} {series} {tags}>
-			<Icon name="lucide:flag-triangle-right" slot="top" />
-			<Icon name="lucide:siren" title={t("sensitive.icon")} slot="sensitive" />
-			<Icon name="lucide:arrow-left" slot="left" />
-			<Icon name="lucide:arrow-right" slot="right" />
-			<Icon name="lucide:ellipsis" slot="dots" />
-		</Note>
-	</main>
+  <main class="flex flex-col grow">
+    <Note client:load {locale} notes={list} {series} {tags}>
+      <Icon name="lucide:flag-triangle-right" slot="top" />
+      <Icon name="lucide:siren" title={t("sensitive.icon")} slot="sensitive" />
+      <Icon name="lucide:arrow-left" slot="left" />
+      <Icon name="lucide:arrow-right" slot="right" />
+      <Icon name="lucide:ellipsis" slot="dots" />
+    </Note>
+  </main>
 </Base>

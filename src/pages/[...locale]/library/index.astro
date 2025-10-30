@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import { i18n } from "astro:config/client";
 import Base from "$layouts/Base.astro";
-import Library from "$components/library/Library.svelte";
+import Library from "$components/Library.svelte";
 import i18nit from "$i18n";
 import { extractExcerpt } from "$utils/excerpt";
 import siteConfig from "site.config.json";
@@ -10,8 +10,8 @@ import { Icon } from "astro-icon/components";
 import { getImage } from "astro:assets";
 
 export async function getStaticPaths() {
-	// Create path for each locale, omitting default locale from URL
-	return i18n!.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
+  // Create path for each locale, omitting default locale from URL
+  return i18n!.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
 }
 
 const { locale = i18n!.defaultLocale } = Astro.params;
@@ -19,67 +19,67 @@ const { locale = i18n!.defaultLocale } = Astro.params;
 const t = i18nit(locale);
 
 const knowledge = await getCollection("knowledge", item => {
-	// Extract language from the file path structure
-	const [language] = item.id.split("/");
+  // Extract language from the file path structure
+  const [language] = item.id.split("/");
 
-	// Filter criteria: must be published and match locale
-	let published = !item.data.draft;
-	let localed = language == locale;
+  // Filter criteria: must be published and match locale
+  let published = !item.data.draft;
+  let localed = language == locale;
 
-	return published && localed;
+  return published && localed;
 });
 
 // Process knowledge items: calculate progress, extract excerpts, determine latest date, resolve cover images
 const processedKnowledge = await Promise.all(knowledge.map(async item => {
-	// Calculate progress percentage from totalPages and currentPage
-	const progress = item.data.totalPages && item.data.totalPages > 0
-		? Math.round((item.data.currentPage / item.data.totalPages) * 100)
-		: 0;
+  // Calculate progress percentage from totalPages and currentPage
+  const progress = item.data.totalPages && item.data.totalPages > 0
+    ? Math.round((item.data.currentPage / item.data.totalPages) * 100)
+    : 0;
 
-	// Extract excerpt from markdown content
-	const excerptLength = siteConfig.library?.excerptLength || 150;
-	const excerpt = extractExcerpt(item.body, excerptLength);
+  // Extract excerpt from markdown content
+  const excerptLength = siteConfig.library?.excerptLength || 150;
+  const excerpt = extractExcerpt(item.body, excerptLength);
 
-	// Determine latest date (dates.lastEdited > dates.finish > dates.start)
-	const latestDate = item.data.dates?.lastEdited
-		|| item.data.dates?.finish
-		|| item.data.dates?.start
-		|| null;
+  // Determine latest date (dates.lastEdited > dates.finish > dates.start)
+  const latestDate = item.data.dates?.lastEdited
+    || item.data.dates?.finish
+    || item.data.dates?.start
+    || null;
 
-	// Resolve cover image path
-	let coverSrc = item.data.cover;
-	if (coverSrc && !coverSrc.startsWith('http://') && !coverSrc.startsWith('https://') && !coverSrc.startsWith('/')) {
-		// Local relative path - need to import it
-		try {
-			const images = import.meta.glob('/src/content/knowledge/**/*.{jpg,jpeg,png,webp,gif}', { eager: true, import: 'default' });
-			// For folder/index.md structure, the ID is just "folder", so append trailing slash
-			const imagePath = `/src/content/knowledge/${item.id}/${coverSrc}`;
-			const imageModule = images[imagePath];
-			if (imageModule) {
-				// Use getImage() to optimize the image
-				const optimizedImage = await getImage({ src: imageModule });
-				coverSrc = optimizedImage.src;
-			}
-		} catch (error) {
-			console.warn(`Failed to resolve cover image for ${item.id}:`, error);
-		}
-	}
+  // Resolve cover image path
+  let coverSrc = item.data.cover;
+  if (coverSrc && !coverSrc.startsWith('http://') && !coverSrc.startsWith('https://') && !coverSrc.startsWith('/')) {
+    // Local relative path - need to import it
+    try {
+      const images = import.meta.glob('/src/content/knowledge/**/*.{jpg,jpeg,png,webp,gif}', { eager: true, import: 'default' });
+      // For folder/index.md structure, the ID is just "folder", so append trailing slash
+      const imagePath = `/src/content/knowledge/${item.id}/${coverSrc}`;
+      const imageModule = images[imagePath];
+      if (imageModule) {
+        // Use getImage() to optimize the image
+        const optimizedImage = await getImage({ src: imageModule });
+        coverSrc = optimizedImage.src;
+      }
+    } catch (error) {
+      console.warn(`Failed to resolve cover image for ${item.id}:`, error);
+    }
+  }
 
-	return {
-		...item,
-		data: {
-			...item.data,
-			cover: coverSrc
-		},
-		progress,
-		excerpt,
-		latestDate
-	};
+  return {
+    ...item,
+    data: {
+      ...item.data,
+      cover: coverSrc
+    },
+    progress,
+    excerpt,
+    latestDate
+  };
 }));
 
 // Extract all unique tags from the filtered knowledge items
 const allTags = Array.from(
-	new Set(knowledge.flatMap(item => item.data.tags).filter(Boolean))
+  new Set(knowledge.flatMap(item => item.data.tags).filter(Boolean))
 ).sort();
 
 // Get theme from site config
@@ -87,28 +87,28 @@ const theme = siteConfig.library?.progressRingTheme || 'plain';
 
 // Icon mapping for types
 const iconMap = {
-	book: "lucide:book-open",
-	video_series: "lucide:video",
-	course: "lucide:graduation-cap"
+  book: "lucide:book-open",
+  video_series: "lucide:video",
+  course: "lucide:graduation-cap"
 };
 ---
 
 <Base title={t("navigation.library")} {locale}>
-	<main class="flex flex-col grow">
-		<Library
-			client:load
-			{locale}
-			books={processedKnowledge}
-			{allTags}
-			{theme}
-		>
-			<Icon name={iconMap.book} slot="icon-book" width={48} height={48} />
-			<Icon name={iconMap.video_series} slot="icon-video_series" width={48} height={48} />
-			<Icon name={iconMap.course} slot="icon-course" width={48} height={48} />
-			<Icon name={iconMap.book} slot="icon-book-large" width={64} height={64} />
-			<Icon name={iconMap.video_series} slot="icon-video_series-large" width={64} height={64} />
-			<Icon name={iconMap.course} slot="icon-course-large" width={64} height={64} />
-			<Icon name="lucide:book-open" slot="icon-empty" width={64} height={64} />
-		</Library>
-	</main>
+  <main class="flex flex-col grow">
+    <Library
+      client:load
+      {locale}
+      books={processedKnowledge}
+      {allTags}
+      {theme}
+    >
+      <Icon name={iconMap.book} slot="icon-book" width={48} height={48} />
+      <Icon name={iconMap.video_series} slot="icon-video_series" width={48} height={48} />
+      <Icon name={iconMap.course} slot="icon-course" width={48} height={48} />
+      <Icon name={iconMap.book} slot="icon-book-large" width={64} height={64} />
+      <Icon name={iconMap.video_series} slot="icon-video_series-large" width={64} height={64} />
+      <Icon name={iconMap.course} slot="icon-course-large" width={64} height={64} />
+      <Icon name="lucide:book-open" slot="icon-empty" width={64} height={64} />
+    </Library>
+  </main>
 </Base>

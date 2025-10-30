@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 
 export const GET: APIRoute = ({ site }) => {
-	const text = `
+  const text = `
 User-agent: Googlebot
 User-agent: Bingbot
 User-agent: DuckDuckBot
@@ -15,5 +15,5 @@ Disallow: /
 Sitemap: ${new URL("sitemap-index.xml", site)}
 `;
 
-	return new Response(text);
+  return new Response(text);
 };

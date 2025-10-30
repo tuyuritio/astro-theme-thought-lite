@@ -2,149 +2,149 @@
 
 // CSS Variables for minimal theme
 :root {
-	// Light theme todo colors (higher opacity for visibility on white background)
-	--ring-opacity: 0.45;
-	--icon-brightness: brightness(1);
-	--todo-icon-brightness-min: brightness(0.85);
-	--todo-icon-brightness-max: brightness(1.15);
+  // Light theme todo colors (higher opacity for visibility on white background)
+  --ring-opacity: 0.45;
+  --icon-brightness: brightness(1);
+  --todo-icon-brightness-min: brightness(0.85);
+  --todo-icon-brightness-max: brightness(1.15);
 
-	// Light theme done colors (darker, more saturated for contrast)
-	--done-color-1: #b8a800; // darker yellow
-	--done-color-2: #d84670; // darker pink
-	--done-color-3: #3d7379; // darker teal-blue
-	--done-color-4: #6b6b6b; // dark gray
+  // Light theme done colors (darker, more saturated for contrast)
+  --done-color-1: #b8a800; // darker yellow
+  --done-color-2: #d84670; // darker pink
+  --done-color-3: #3d7379; // darker teal-blue
+  --done-color-4: #6b6b6b; // dark gray
 }
 
 @media (prefers-color-scheme: dark) {
-	:root {
-		// Dark theme todo colors
-		--ring-opacity: 0.9;
-		--icon-brightness: brightness(0.85);
-		--todo-icon-brightness-min: brightness(0.5);
-		--todo-icon-brightness-max: brightness(0.8);
+  :root {
+    // Dark theme todo colors
+    --ring-opacity: 0.9;
+    --icon-brightness: brightness(0.85);
+    --todo-icon-brightness-min: brightness(0.5);
+    --todo-icon-brightness-max: brightness(0.8);
 
-		// Dark theme done colors
-		--done-color-1: #e8e358; // bright yellow
-		--done-color-2: #f9a9b6; // bright pink
-		--done-color-3: #42f5ec; // bright blue
-		--done-color-4: #83f27c; // bright green
-	}
+    // Dark theme done colors
+    --done-color-1: #e8e358; // bright yellow
+    --done-color-2: #f9a9b6; // bright pink
+    --done-color-3: #42f5ec; // bright blue
+    --done-color-4: #83f27c; // bright green
+  }
 }
 
 [data-theme="light"] {
-	// Light theme todo colors
-	--ring-opacity: 0.9;
-	--icon-brightness: brightness(1);
-	--todo-icon-brightness-min: brightness(0.85);
-	--todo-icon-brightness-max: brightness(1.15);
+  // Light theme todo colors
+  --ring-opacity: 0.9;
+  --icon-brightness: brightness(1);
+  --todo-icon-brightness-min: brightness(0.85);
+  --todo-icon-brightness-max: brightness(1.15);
 
-	// Light theme done colors
-	--done-color-1: #b8a800; // darker yellow
-	--done-color-2: #d84670; // darker pink
-	--done-color-3: #3d7379; // darker teal-blue
-	--done-color-4: #6b6b6b; // dark gray
+  // Light theme done colors
+  --done-color-1: #b8a800; // darker yellow
+  --done-color-2: #d84670; // darker pink
+  --done-color-3: #3d7379; // darker teal-blue
+  --done-color-4: #6b6b6b; // dark gray
 }
 
 [data-theme="dark"] {
-	// Dark theme todo colors
-	--ring-opacity: 0.9;
-	--icon-brightness: brightness(0.85);
-	--todo-icon-brightness-min: brightness(0.5);
-	--todo-icon-brightness-max: brightness(0.8);
+  // Dark theme todo colors
+  --ring-opacity: 0.9;
+  --icon-brightness: brightness(0.85);
+  --todo-icon-brightness-min: brightness(0.5);
+  --todo-icon-brightness-max: brightness(0.8);
 
-	// Dark theme done colors
-	--done-color-1: #e8e358; // bright yellow
-	--done-color-2: #f9a9b6; // bright pink
-	--done-color-3: #42f5ec; // bright blue
-	--done-color-4: #83f27c; // bright green
+  // Dark theme done colors
+  --done-color-1: #e8e358; // bright yellow
+  --done-color-2: #f9a9b6; // bright pink
+  --done-color-3: #42f5ec; // bright blue
+  --done-color-4: #83f27c; // bright green
 }
 
 @keyframes breathe-icon-todo {
-	0%,
-	100% {
-		filter: var(--todo-icon-brightness-min);
-	}
-	50% {
-		filter: var(--todo-icon-brightness-max);
-	}
+  0%,
+  100% {
+    filter: var(--todo-icon-brightness-min);
+  }
+  50% {
+    filter: var(--todo-icon-brightness-max);
+  }
 }
 
 @keyframes ripple-expand {
-	0% {
-		opacity: 0.28;
-	}
-	100% {
-		transform: scale(1.3);
-		opacity: 0;
-	}
+  0% {
+    opacity: 0.28;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+  }
 }
 
 @keyframes cycle-colors {
-	0% {
-		stroke: var(--done-color-1);
-	}
-	25% {
-		stroke: var(--done-color-2);
-	}
-	50% {
-		stroke: var(--done-color-3);
-	}
-	75% {
-		stroke: var(--done-color-4);
-	}
-	100% {
-		stroke: var(--done-color-1);
-	}
+  0% {
+    stroke: var(--done-color-1);
+  }
+  25% {
+    stroke: var(--done-color-2);
+  }
+  50% {
+    stroke: var(--done-color-3);
+  }
+  75% {
+    stroke: var(--done-color-4);
+  }
+  100% {
+    stroke: var(--done-color-1);
+  }
 }
 
 // Theme-specific styles
 .ring-container[data-theme='minimal'] {
-	.progress-ring {
-		opacity: var(--ring-opacity);
+  .progress-ring {
+    opacity: var(--ring-opacity);
 
-		// Todo: Breathing light effect
-		&.status-todo {
-			stroke: var(--primary-color);
-		}
+    // Todo: Breathing light effect
+    &.status-todo {
+      stroke: var(--primary-color);
+    }
 
-		// In Progress: Ripple effect with expanding circles
-		&.status-in-progress {
-			stroke: var(--primary-color);
-		}
+    // In Progress: Ripple effect with expanding circles
+    &.status-in-progress {
+      stroke: var(--primary-color);
+    }
 
-		// Done: Color cycling with bright colors
-		&.status-done {
-			animation: cycle-colors 20s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-		}
-	}
+    // Done: Color cycling with bright colors
+    &.status-done {
+      animation: cycle-colors 20s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    }
+  }
 
-	// Ripple circles for in_progress status
-	.ripple-circle {
-		fill: none;
-		stroke: var(--primary-color);
-		opacity: 0;
-		transform-origin: center;
-		animation: ripple-expand 5s cubic-bezier(0.1, 0, 0.3, 1) infinite;
+  // Ripple circles for in_progress status
+  .ripple-circle {
+    fill: none;
+    stroke: var(--primary-color);
+    opacity: 0;
+    transform-origin: center;
+    animation: ripple-expand 5s cubic-bezier(0.1, 0, 0.3, 1) infinite;
 
-		&:nth-child(2) {
-			animation-delay: 1.67s;
-		}
+    &:nth-child(2) {
+      animation-delay: 1.67s;
+    }
 
-		&:nth-child(3) {
-			animation-delay: 3.33s;
-		}
-	}
+    &:nth-child(3) {
+      animation-delay: 3.33s;
+    }
+  }
 
-	.center-content {
-		filter: var(--icon-brightness);
+  .center-content {
+    filter: var(--icon-brightness);
 
-		// Icon brightness adjustments
-		&.status-todo {
-			animation: breathe-icon-todo 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-		}
+    // Icon brightness adjustments
+    &.status-todo {
+      animation: breathe-icon-todo 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
 
-		&.status-done {
-			filter: brightness(1.3);
-		}
-	}
+    &.status-done {
+      filter: brightness(1.3);
+    }
+  }
 }

@@ -14,16 +14,16 @@ import siteConfig from "site.config.json";
 import { getImage } from "astro:assets";
 
 export async function getStaticPaths() {
-	// Get all knowledge items excluding drafts
-	const knowledge = await getCollection("knowledge", item => !item.data.draft);
+  // Get all knowledge items excluding drafts
+  const knowledge = await getCollection("knowledge", item => !item.data.draft);
 
-	return knowledge.map(item => {
-		// Extract language and item ID from file path structure
-		const [language, ...id] = item.id.split("/");
+  return knowledge.map(item => {
+    // Extract language and item ID from file path structure
+    const [language, ...id] = item.id.split("/");
 
-		// Generate path params with optional locale (omit for default locale)
-		return { params: { locale: language == i18n?.defaultLocale ? undefined : language, id: id.join("/") }, props: { item } };
-	});
+    // Generate path params with optional locale (omit for default locale)
+    return { params: { locale: language == i18n?.defaultLocale ? undefined : language, id: id.join("/") }, props: { item } };
+  });
 }
 
 const { locale = i18n!.defaultLocale } = Astro.params;
@@ -37,46 +37,46 @@ type Heading = MarkdownHeading & { subheadings: Heading[] };
 const table_of_contents: Heading[] = [];
 const stack: Heading[] = [];
 for (const headingItem of headings) {
-	// Pop headings from stack that are at same or deeper level
-	while (stack[stack.length - 1]?.depth >= headingItem.depth) stack.pop();
-	const heading: Heading = { ...headingItem, subheadings: [] };
+  // Pop headings from stack that are at same or deeper level
+  while (stack[stack.length - 1]?.depth >= headingItem.depth) stack.pop();
+  const heading: Heading = { ...headingItem, subheadings: [] };
 
-	if (stack.length > 0) {
-		// Add as subheading to current parent
-		const parent = stack[stack.length - 1];
-		parent.subheadings.push(heading);
-	} else {
-		// Add as top-level heading
-		table_of_contents.push(heading);
-	}
+  if (stack.length > 0) {
+    // Add as subheading to current parent
+    const parent = stack[stack.length - 1];
+    parent.subheadings.push(heading);
+  } else {
+    // Add as top-level heading
+    table_of_contents.push(heading);
+  }
 
-	stack.push(heading);
+  stack.push(heading);
 }
 
 const t = i18nit(locale);
 
 // Calculate progress percentage from totalPages and currentPage
 const progress = item.data.totalPages && item.data.totalPages > 0
-	? Math.round((item.data.currentPage / item.data.totalPages) * 100)
-	: 0;
+  ? Math.round((item.data.currentPage / item.data.totalPages) * 100)
+  : 0;
 
 // Resolve cover image path
 let coverSrc = item.data.cover;
 if (coverSrc && !coverSrc.startsWith('http://') && !coverSrc.startsWith('https://') && !coverSrc.startsWith('/')) {
-	// Local relative path - need to import it
-	try {
-		const images = import.meta.glob('/src/content/knowledge/**/*.{jpg,jpeg,png,webp,gif}', { eager: true, import: 'default' });
-		// For folder/index.md structure, the ID is just "folder", so append trailing slash
-		const imagePath = `/src/content/knowledge/${item.id}/${coverSrc}`;
-		const imageModule = images[imagePath];
-		if (imageModule) {
-			// Use getImage() to optimize the image
-			const optimizedImage = await getImage({ src: imageModule });
-			coverSrc = optimizedImage.src;
-		}
-	} catch (error) {
-		console.warn(`Failed to resolve cover image for ${item.id}:`, error);
-	}
+  // Local relative path - need to import it
+  try {
+    const images = import.meta.glob('/src/content/knowledge/**/*.{jpg,jpeg,png,webp,gif}', { eager: true, import: 'default' });
+    // For folder/index.md structure, the ID is just "folder", so append trailing slash
+    const imagePath = `/src/content/knowledge/${item.id}/${coverSrc}`;
+    const imageModule = images[imagePath];
+    if (imageModule) {
+      // Use getImage() to optimize the image
+      const optimizedImage = await getImage({ src: imageModule });
+      coverSrc = optimizedImage.src;
+    }
+  } catch (error) {
+    console.warn(`Failed to resolve cover image for ${item.id}:`, error);
+  }
 }
 
 // Get theme from site config
@@ -84,135 +84,135 @@ const theme = siteConfig.library?.progressRingTheme || 'plain';
 
 // Determine type icon and label
 const typeConfig = {
-	book: { icon: "lucide:book-open", label: t("library.type.book") },
-	video_series: { icon: "lucide:video", label: t("library.type.video_series") },
-	course: { icon: "lucide:graduation-cap", label: t("library.type.course") }
+  book: { icon: "lucide:book-open", label: t("library.type.book") },
+  video_series: { icon: "lucide:video", label: t("library.type.video_series") },
+  course: { icon: "lucide:graduation-cap", label: t("library.type.course") }
 };
 
 const typeInfo = typeConfig[item.data.type];
 
 // Status label
 const statusLabel = {
-	todo: t("library.status.todo"),
-	in_progress: t("library.status.in_progress"),
-	done: t("library.status.done")
+  todo: t("library.status.todo"),
+  in_progress: t("library.status.in_progress"),
+  done: t("library.status.done")
 };
 ---
 
 <Base title={item.data.title} {locale} description={item.data.description} article={item.data.dates?.start ? { timestamp: item.data.dates.start, tags: item.data.tags } : undefined}>
-	<main class="flex flex-col gap-6">
-		<header class="flex flex-col gap-4">
-			<!-- Title section with progress ring -->
-			<div class="flex items-start gap-4">
-				<div class="flex-shrink-0">
-					<ProgressRing client:load status={item.data.status} progress={progress} size={100} theme={theme}>
-						<div class="w-full h-full flex items-center justify-center c-weak">
-							<Icon name={typeInfo.icon} size={40} />
-						</div>
-					</ProgressRing>
-				</div>
+  <main class="flex flex-col gap-6">
+    <header class="flex flex-col gap-4">
+      <!-- Title section with progress ring -->
+      <div class="flex items-start gap-4">
+        <div class="flex-shrink-0">
+          <ProgressRing client:load status={item.data.status} progress={progress} size={100} theme={theme}>
+            <div class="w-full h-full flex items-center justify-center c-weak">
+              <Icon name={typeInfo.icon} size={40} />
+            </div>
+          </ProgressRing>
+        </div>
 
-				<div class="flex flex-col gap-2 flex-grow">
-					<h1 class="text-3xl">{item.data.title}</h1>
-					{item.data.author && <p class="text-lg c-remark">{item.data.author}</p>}
-				</div>
+        <div class="flex flex-col gap-2 flex-grow">
+          <h1 class="text-3xl">{item.data.title}</h1>
+          {item.data.author && <p class="text-lg c-remark">{item.data.author}</p>}
+        </div>
 
-				{coverSrc && (
-					<div class="flex-shrink-0 hidden sm:block">
-						<div
-							class="h-25 w-auto aspect-[3/4] rounded-lg shadow-md"
-							style={`background-image: url('${coverSrc}'); background-size: cover; background-position: center; background-repeat: no-repeat;`}
-							role="img"
-							aria-label={item.data.title}
-						></div>
-					</div>
-				)}
-			</div>
+        {coverSrc && (
+          <div class="flex-shrink-0 hidden sm:block">
+            <div
+              class="h-25 w-auto aspect-[3/4] rounded-lg shadow-md"
+              style={`background-image: url('${coverSrc}'); background-size: cover; background-position: center; background-repeat: no-repeat;`}
+              role="img"
+              aria-label={item.data.title}
+            ></div>
+          </div>
+        )}
+      </div>
 
-			<!-- Metadata section -->
-			<div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap children:(flex items-center gap-1 text-3.5 c-secondary)">
-				<span>
-					<Icon name={typeInfo.icon} />
-					{typeInfo.label}
-				</span>
-				<span>
-					<Icon name="lucide:activity" />
-					{statusLabel[item.data.status]}
-					{progress > 0 && `(${progress}%)`}
-				</span>
-				{
-					item.data.dates?.start && (
-						<time title={Time.date(item.data.dates.start)}>
-							<Icon name="lucide:calendar-arrow-down" />
-							{t("library.dates.startedOn")} {Time.date(item.data.dates.start)}
-						</time>
-					)
-				}
-				{
-					item.data.dates?.finish && (
-						<time title={Time.date(item.data.dates.finish)}>
-							<Icon name="lucide:calendar-check" />
-							{t("library.dates.finishedOn")} {Time.date(item.data.dates.finish)}
-						</time>
-					)
-				}
-				{
-					item.data.dates?.lastEdited && (() => {
-						const agoData = Time.ago(item.data.dates.lastEdited);
-						// Use plural form when count > 1
-						let unit = agoData.unit;
-						if (unit !== 'today' && agoData.count > 1) {
-							unit = `${agoData.unit}s`;
-						}
-						return (
-							<time title={Time.date(item.data.dates.lastEdited)}>
-								<Icon name="lucide:clock" />
-								{t("library.dates.lastEdited")} {t(`library.dates.ago.${unit}`, { count: agoData.count })}
-							</time>
-						);
-					})()
-				}
-				{
-					item.data.tags?.length && (
-						<span>
-							<Icon name="lucide:hash" />
-							{item.data.tags?.join("; ")}
-						</span>
-					)
-				}
-				{
-					frontmatter.words && (
-						<span>
-							<Icon name="lucide:pilcrow" />
-							{t("read.words", { words: frontmatter.words })}
-						</span>
-					)
-				}
-			</div>
+      <!-- Metadata section -->
+      <div class="flex flex-col gap-3 sm:flex-row sm:flex-wrap children:(flex items-center gap-1 text-3.5 c-secondary)">
+        <span>
+          <Icon name={typeInfo.icon} />
+          {typeInfo.label}
+        </span>
+        <span>
+          <Icon name="lucide:activity" />
+          {statusLabel[item.data.status]}
+          {progress > 0 && `(${progress}%)`}
+        </span>
+        {
+          item.data.dates?.start && (
+            <time title={Time.date(item.data.dates.start)}>
+              <Icon name="lucide:calendar-arrow-down" />
+              {t("library.dates.startedOn")} {Time.date(item.data.dates.start)}
+            </time>
+          )
+        }
+        {
+          item.data.dates?.finish && (
+            <time title={Time.date(item.data.dates.finish)}>
+              <Icon name="lucide:calendar-check" />
+              {t("library.dates.finishedOn")} {Time.date(item.data.dates.finish)}
+            </time>
+          )
+        }
+        {
+          item.data.dates?.lastEdited && (() => {
+            const agoData = Time.ago(item.data.dates.lastEdited);
+            // Use plural form when count > 1
+            let unit = agoData.unit;
+            if (unit !== 'today' && agoData.count > 1) {
+              unit = `${agoData.unit}s`;
+            }
+            return (
+              <time title={Time.date(item.data.dates.lastEdited)}>
+                <Icon name="lucide:clock" />
+                {t("library.dates.lastEdited")} {t(`library.dates.ago.${unit}`, { count: agoData.count })}
+              </time>
+            );
+          })()
+        }
+        {
+          item.data.tags?.length && (
+            <span>
+              <Icon name="lucide:hash" />
+              {item.data.tags?.join("; ")}
+            </span>
+          )
+        }
+        {
+          frontmatter.words && (
+            <span>
+              <Icon name="lucide:pilcrow" />
+              {t("read.words", { words: frontmatter.words })}
+            </span>
+          )
+        }
+      </div>
 
-			{item.data.description && <p class="text-base c-remark border-l-2 border-l-solid border-l-primary pl-3">{item.data.description}</p>}
+      {item.data.description && <p class="text-base c-remark border-l-2 border-l-solid border-l-primary pl-3">{item.data.description}</p>}
 
-			<hr class="b-b b-b-solid b-weak" />
-		</header>
+      <hr class="b-b b-b-solid b-weak" />
+    </header>
 
-		<Sensitive {locale} back="/library" sensitive={item.data.sensitive} client:load>
-			<div class="flex gap-5">
-				<section id="markdown-content" class="markdown"><Content /></section>
-				{
-					item.data.toc && (
-						<aside class="hidden sm:(block flex-shrink-0 w-200px)">
-							<div class="sticky top-3 flex flex-col gap-2">
-								<h3>{t("note.contents")}</h3>
-								<nav class="overflow-y-auto">
-									<TOC headings={table_of_contents} />
-								</nav>
-							</div>
-						</aside>
-					)
-				}
-			</div>
-		</Sensitive>
+    <Sensitive {locale} back="/library" sensitive={item.data.sensitive} client:load>
+      <div class="flex gap-5">
+        <section id="markdown-content" class="markdown"><Content /></section>
+        {
+          item.data.toc && (
+            <aside class="hidden sm:(block flex-shrink-0 w-200px)">
+              <div class="sticky top-3 flex flex-col gap-2">
+                <h3>{t("note.contents")}</h3>
+                <nav class="overflow-y-auto">
+                  <TOC headings={table_of_contents} />
+                </nav>
+              </div>
+            </aside>
+          )
+        }
+      </div>
+    </Sensitive>
 
-		<Position {locale} />
-	</main>
+    <Position {locale} />
+  </main>
 </Base>

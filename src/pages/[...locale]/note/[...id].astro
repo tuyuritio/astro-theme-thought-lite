@@ -11,16 +11,16 @@ import Sensitive from "$components/Sensitive.svelte";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
-	// Get all notes excluding drafts
-	const notes = await getCollection("note", note => !note.data.draft);
+  // Get all notes excluding drafts
+  const notes = await getCollection("note", note => !note.data.draft);
 
-	return notes.map(note => {
-		// Extract language and note ID from file path structure
-		const [language, ...id] = note.id.split("/");
+  return notes.map(note => {
+    // Extract language and note ID from file path structure
+    const [language, ...id] = note.id.split("/");
 
-		// Generate path params with optional locale (omit for default locale)
-		return { params: { locale: language == i18n?.defaultLocale ? undefined : language, id: id.join("/") }, props: { note } };
-	});
+    // Generate path params with optional locale (omit for default locale)
+    return { params: { locale: language == i18n?.defaultLocale ? undefined : language, id: id.join("/") }, props: { note } };
+  });
 }
 
 const { locale = i18n!.defaultLocale } = Astro.params;
@@ -34,70 +34,70 @@ type Heading = MarkdownHeading & { subheadings: Heading[] };
 const table_of_contents: Heading[] = [];
 const stack: Heading[] = [];
 for (const item of headings) {
-	// Pop headings from stack that are at same or deeper level
-	while (stack[stack.length - 1]?.depth >= item.depth) stack.pop();
-	const heading: Heading = { ...item, subheadings: [] };
+  // Pop headings from stack that are at same or deeper level
+  while (stack[stack.length - 1]?.depth >= item.depth) stack.pop();
+  const heading: Heading = { ...item, subheadings: [] };
 
-	if (stack.length > 0) {
-		// Add as subheading to current parent
-		const parent = stack[stack.length - 1];
-		parent.subheadings.push(heading);
-	} else {
-		// Add as top-level heading
-		table_of_contents.push(heading);
-	}
+  if (stack.length > 0) {
+    // Add as subheading to current parent
+    const parent = stack[stack.length - 1];
+    parent.subheadings.push(heading);
+  } else {
+    // Add as top-level heading
+    table_of_contents.push(heading);
+  }
 
-	stack.push(heading);
+  stack.push(heading);
 }
 
 const t = i18nit(locale);
 ---
 
 <Base title={note.data.title} {locale} description={note.data.description} article={{ timestamp: note.data.timestamp, section: note.data.series, tags: note.data.tags }}>
-	<main class="flex flex-col gap-6">
-		<header class="flex flex-col gap-4">
-			<h1 class="text-3xl">{note.data.title}</h1>
-			<div class="flex flex-col gap-3 sm:flex-row children:(flex items-center gap-1 text-3.5 c-secondary)">
-				<time title={Time.full(note.data.timestamp)}><Icon name="lucide:calendar" />{Time(note.data.timestamp)}</time>
-				{
-					note.data.series && (
-						<span>
-							<Icon name="lucide:layers" />
-							{note.data.series}
-						</span>
-					)
-				}
-				{
-					note.data.tags?.length && (
-						<span>
-							<Icon name="lucide:hash" />
-							{note.data.tags?.join("; ")}
-						</span>
-					)
-				}
-				<span><Icon name="lucide:pilcrow" />{t("read.words", { words: frontmatter.words })}</span>
-			</div>
-			<hr class="b-b b-b-solid b-weak" />
-		</header>
+  <main class="flex flex-col gap-6">
+    <header class="flex flex-col gap-4">
+      <h1 class="text-3xl">{note.data.title}</h1>
+      <div class="flex flex-col gap-3 sm:flex-row children:(flex items-center gap-1 text-3.5 c-secondary)">
+        <time title={Time.full(note.data.timestamp)}><Icon name="lucide:calendar" />{Time(note.data.timestamp)}</time>
+        {
+          note.data.series && (
+            <span>
+              <Icon name="lucide:layers" />
+              {note.data.series}
+            </span>
+          )
+        }
+        {
+          note.data.tags?.length && (
+            <span>
+              <Icon name="lucide:hash" />
+              {note.data.tags?.join("; ")}
+            </span>
+          )
+        }
+        <span><Icon name="lucide:pilcrow" />{t("read.words", { words: frontmatter.words })}</span>
+      </div>
+      <hr class="b-b b-b-solid b-weak" />
+    </header>
 
-		<Sensitive {locale} back="/note" sensitive={note.data.sensitive} client:load>
-			<div class="flex gap-5">
-				<section id="markdown-content" class="markdown"><Content /></section>
-				{
-					note.data.toc && (
-						<aside class="hidden sm:(block flex-shrink-0 w-200px)">
-							<div class="sticky top-3 flex flex-col gap-2">
-								<h3>{t("note.contents")}</h3>
-								<nav class="overflow-y-auto">
-									<TOC headings={table_of_contents} />
-								</nav>
-							</div>
-						</aside>
-					)
-				}
-			</div>
-		</Sensitive>
+    <Sensitive {locale} back="/note" sensitive={note.data.sensitive} client:load>
+      <div class="flex gap-5">
+        <section id="markdown-content" class="markdown"><Content /></section>
+        {
+          note.data.toc && (
+            <aside class="hidden sm:(block flex-shrink-0 w-200px)">
+              <div class="sticky top-3 flex flex-col gap-2">
+                <h3>{t("note.contents")}</h3>
+                <nav class="overflow-y-auto">
+                  <TOC headings={table_of_contents} />
+                </nav>
+              </div>
+            </aside>
+          )
+        }
+      </div>
+    </Sensitive>
 
-		<Position {locale} />
-	</main>
+    <Position {locale} />
+  </main>
 </Base>

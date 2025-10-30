@@ -7,7 +7,7 @@ import i18nit from "$i18n";
 import { render } from "astro:content";
 
 export async function getStaticPaths() {
-	return i18n?.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
+  return i18n?.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
 }
 
 const { locale = i18n!.defaultLocale } = Astro.params;
@@ -22,65 +22,65 @@ const { Content: Introduction } = introduction ? await render(introduction) : ({
 const { Content: Roll } = roll ? await render(roll) : ({} as any);
 
 const chronicles = Object.entries<string[]>(chronicle ?? {})
-	.map(([date, events]) => ({ date: new Date(date), events: events ?? [] }))
-	.sort((a, b) => b.date.getTime() - a.date.getTime());
+  .map(([date, events]) => ({ date: new Date(date), events: events ?? [] }))
+  .sort((a, b) => b.date.getTime() - a.date.getTime());
 ---
 
 <style lang="less">
-	article {
-		div {
-			margin-bottom: 2rem;
+  article {
+    div {
+      margin-bottom: 2rem;
 
-			h1 {
-				margin-bottom: 1rem;
+      h1 {
+        margin-bottom: 1rem;
 
-				font-size: 1.8rem;
-			}
-		}
-	}
+        font-size: 1.8rem;
+      }
+    }
+  }
 </style>
 
 <Base title={t("navigation.about")} {locale}>
-	<main class="flex flex-col sm:flex-row justify-between gap-2">
-		<article class="flex flex-col">
-			{
-				introduction && (
-					<div>
-						<h1>{t("about.introduction")}</h1>
-						<samp class="markdown">
-							<Introduction />
-						</samp>
-					</div>
-				)
-			}
-			{
-				roll && (
-					<div>
-						<h1>{t("about.roll")}</h1>
-						<samp class="markdown">
-							<Roll />
-						</samp>
-					</div>
-				)
-			}
-		</article>
+  <main class="flex flex-col sm:flex-row justify-between gap-2">
+    <article class="flex flex-col">
+      {
+        introduction && (
+          <div>
+            <h1>{t("about.introduction")}</h1>
+            <samp class="markdown">
+              <Introduction />
+            </samp>
+          </div>
+        )
+      }
+      {
+        roll && (
+          <div>
+            <h1>{t("about.roll")}</h1>
+            <samp class="markdown">
+              <Roll />
+            </samp>
+          </div>
+        )
+      }
+    </article>
 
-		<aside class="flex flex-col justify-between flex-basis-300px flex-shrink-0 mb-3 pl-5">
-			<ul class="list-none">
-				{
-					chronicles.map(chronicle => (
-						<li class="relative mb-2 pb-2 before:(absolute content-empty top-3.4 left--3.8 h-full b-l-2 b-l-solid b-primary) last:after:(absolute content-empty left--5 bottom--4 w-2 h-2 b-2 b-solid b-primary rd-full bg-primary)">
-							<span class="relative font-mono before:(absolute content-empty inline-block top-1 left--5 w-2 h-2 b-2 b-solid b-primary rd-full)">{Time.date(chronicle.date)}</span>
-							<ul class="my-2 pl-4 list-none">
-								{chronicle.events.map(event => {
-									const remove = event?.match(/^~(?!~)(.*)$/);
-									return <li class="relative my-1 before:(absolute content-empty inline-block top-2 left--4 w-1 h-1 b b-solid b-primary rd-full)">{remove ? <del>{remove[1]}</del> : event}</li>;
-								})}
-							</ul>
-						</li>
-					))
-				}
-			</ul>
-		</aside>
-	</main>
+    <aside class="flex flex-col justify-between flex-basis-300px flex-shrink-0 mb-3 pl-5">
+      <ul class="list-none">
+        {
+          chronicles.map(chronicle => (
+            <li class="relative mb-2 pb-2 before:(absolute content-empty top-3.4 left--3.8 h-full b-l-2 b-l-solid b-primary) last:after:(absolute content-empty left--5 bottom--4 w-2 h-2 b-2 b-solid b-primary rd-full bg-primary)">
+              <span class="relative font-mono before:(absolute content-empty inline-block top-1 left--5 w-2 h-2 b-2 b-solid b-primary rd-full)">{Time.date(chronicle.date)}</span>
+              <ul class="my-2 pl-4 list-none">
+                {chronicle.events.map(event => {
+                  const remove = event?.match(/^~(?!~)(.*)$/);
+                  return <li class="relative my-1 before:(absolute content-empty inline-block top-2 left--4 w-1 h-1 b b-solid b-primary rd-full)">{remove ? <del>{remove[1]}</del> : event}</li>;
+                })}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
+  </main>
 </Base>
