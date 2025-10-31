@@ -11,13 +11,13 @@ import katex from "rehype-katex";
 import stringify from "rehype-stringify";
 
 export default unified()
-	.use(parse)
-	.use(breaks)
-	.use(gfm, { singleTilde: false })
-	.use(ins)
-	.use(emoji)
-	.use(math)
-	.use(rehype)
-	.use(links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] })
-	.use(katex)
-	.use(stringify);
+  .use(parse)
+  .use(breaks)
+  .use(gfm, { singleTilde: false })
+  .use(ins)
+  .use(emoji)
+  .use(math)
+  .use(rehype)
+  .use(links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] })
+  .use(katex)
+  .use(stringify);

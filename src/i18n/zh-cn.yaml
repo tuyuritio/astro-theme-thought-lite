@@ -17,19 +17,52 @@ home:
     jotting: 随笔 {count} 则
     note: 文记 {count} 篇
   newest: 最新文记
+  newestJotting: 最新随笔
+  currentlyReading: 正在阅读
   prefaces: 序文一览
 jotting:
+  noMatches: 没有符合筛选条件的随笔
   tag: 标签
+library:
+  empty: 还没有读书记录
+  filterByTag: 标签
+  noMatches: 没有符合所选标签的项目
+  latestActivity: 最新动态
+  thisReadingSession: 当前阅读
+  noExcerpt: 暂无笔记
+  dates:
+    lastEdited: 更新于
+    startedOn: 开始于
+    finishedOn: 完结于
+    ago:
+      year: '{count} 年前'
+      years: '{count} 年前'
+      month: '{count} 个月前'
+      months: '{count} 个月前'
+      day: '{count} 天前'
+      days: '{count} 天前'
+      today: 今天
+  status:
+    done: 已读完
+    in_progress: 阅读中
+    todo: 待阅读
+  title: 阅读
+  type:
+    book: 书籍
+    course: 课程
+    video_series: 视频系列
 navigation:
   about: 絮述
   home: 序章
   jotting: 随笔
+  library: 阅读
   note: 文记
-  policy: 政策
+  policy: 使用政策
   preface: 序文
   subscription: 订阅
 note:
   contents: 目录
+  noMatches: 没有符合筛选条件的文记
   series: 系列
   tag: 标签
   top: 回到顶部

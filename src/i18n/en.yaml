@@ -19,19 +19,52 @@ home:
     jotting: '{count} jottings'
     note: '{count} notes'
   newest: Newest Note
+  newestJotting: Newest Jotting
+  currentlyReading: Currently Reading
   prefaces: Prefaces
 jotting:
+  noMatches: No jottings match the selected filters
   tag: Tag
+library:
+  empty: No reading records yet
+  filterByTag: Tag
+  noMatches: No items match the selected tags
+  latestActivity: Latest
+  thisReadingSession: Current
+  noExcerpt: No notes available yet
+  dates:
+    lastEdited: Last edited
+    startedOn: Started on
+    finishedOn: Finished on
+    ago:
+      year: '{count} year ago'
+      years: '{count} years ago'
+      month: '{count} month ago'
+      months: '{count} months ago'
+      day: '{count} day ago'
+      days: '{count} days ago'
+      today: today
+  status:
+    done: Completed
+    in_progress: Reading
+    todo: To Read
+  title: Reading
+  type:
+    book: Book
+    course: Course
+    video_series: Video Series
 navigation:
   about: About
   home: Home
   jotting: Jotting
+  library: Reading
   note: Note
   policy: Policy
   preface: Preface
   subscription: Subscription
 note:
   contents: Contents
+  noMatches: No notes match the selected filters
   series: Series
   tag: Tag
   top: To Top

@@ -34,12 +34,18 @@ export default defineConfig({
 		animation: {
 			keyframes: {
 				shaky: "{0%{transform:translate(0,0)rotate(0deg)}10%{transform:translate(-1px,-2px)rotate(-1deg)}20%{transform:translate(-3px,1px)rotate(1deg)}30%{transform:translate(2px,-1px)rotate(0deg)}40%{transform:translate(1px,2px)rotate(1deg)}50%{transform:translate(-1px,-1px)rotate(-1deg)}60%{transform:translate(-3px,1px)rotate(0deg)}70%{transform:translate(2px,1px)rotate(-1deg)}80%{transform:translate(-1px,-2px)rotate(1deg)}90%{transform:translate(2px,2px)rotate(0deg)}100%{transform:translate(0,0)rotate(-1deg)}}",
+				"spin-slow": "{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}",
+				"pulse-glow": "{0%,100%{opacity:0.6}50%{opacity:1}}",
 			},
 			durations: {
 				shaky: "0.6s",
+				"spin-slow": "8s",
+				"pulse-glow": "3s",
 			},
 			counts: {
 				shaky: "infinite",
+				"spin-slow": "infinite",
+				"pulse-glow": "infinite",
 			}
 		}
 	}

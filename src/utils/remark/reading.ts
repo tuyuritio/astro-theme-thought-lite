@@ -9,13 +9,13 @@ import type { Plugin } from "unified";
  * The word count can be accessed in Astro components via frontmatter.words
  */
 const remarkReading: Plugin<[], Root> = () => {
-	return (tree, { data }) => {
-		// Extract text content from the markdown AST
-		const reading = read(toString(tree));
-		
-		// Add word count to Astro frontmatter if available
-		data.astro?.frontmatter && (data.astro.frontmatter.words = reading.words);
-	};
+  return (tree, { data }) => {
+    // Extract text content from the markdown AST
+    const reading = read(toString(tree));
+    
+    // Add word count to Astro frontmatter if available
+    data.astro?.frontmatter && (data.astro.frontmatter.words = reading.words);
+  };
 }
 
 export default remarkReading;

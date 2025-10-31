@@ -1,6 +1,6 @@
 ---
 title: Markdown Extension Manual
-timestamp: 2024-07-21 00:00:00+00:00
+timestamp: 2025-08-07 00:00:00+00:00
 series: Astro
 tags: [Markup, Demo]
 description: Detailed guide to extended Markdown syntax features in the theme, including Ruby annotations, abbreviations, spoiler text, and other special markup syntax.

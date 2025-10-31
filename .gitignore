@@ -27,3 +27,11 @@ wrangler.toml
 
 # jetbrains setting folder
 .idea/
+
+# pnpm lock file
+pnpm-lock.yaml
+
+# AI files
+.claude/
+CLAUDE.md
+NEW_FEAT.md

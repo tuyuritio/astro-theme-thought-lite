@@ -68,6 +68,7 @@
 		"remark-ins": "^1.2.1",
 		"remark-math": "^6.0.0",
 		"remark-ruby-directive": "^0.3.0",
+    "sharp": "^0.34.4",
 		"shiki": "^3.14.0",
 		"svelte": "^5.42.2",
 		"typescript": "^5.9.3",

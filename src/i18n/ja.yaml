@@ -17,19 +17,52 @@ home:
     jotting: 随筆 {count} 件
     note: 文記 {count} 件
   newest: 最新文記
+  newestJotting: 最新随筆
+  currentlyReading: 読書中
   prefaces: 序文歴史
 jotting:
+  noMatches: 選択したフィルターに一致する随筆はありません
   tag: 付札
+library:
+  empty: まだ読書記録がありません
+  filterByTag: 付札
+  noMatches: 選択したタグに一致する項目はありません
+  latestActivity: 最新読書記録
+  thisReadingSession: 今回の読書記録
+  noExcerpt: まだノートがありません
+  dates:
+    lastEdited: 最終編集
+    startedOn: 開始日
+    finishedOn: 完了日
+    ago:
+      year: '{count} 年前'
+      years: '{count} 年前'
+      month: '{count} ヶ月前'
+      months: '{count} ヶ月前'
+      day: '{count} 日前'
+      days: '{count} 日前'
+      today: 今日
+  status:
+    done: 読了
+    in_progress: 読書中
+    todo: 未読
+  title: 書庫
+  type:
+    book: 書籍
+    course: 講座
+    video_series: 動画シリーズ
 navigation:
   about: 情報
   home: 玄関
   jotting: 随筆
+  library: 書庫
   note: 文記
   policy: 規約
   preface: 序文
   subscription: 購読
 note:
   contents: 目次
+  noMatches: 選択したフィルターに一致する文記はありません
   series: 系列
   tag: 付札
   top: 至頂

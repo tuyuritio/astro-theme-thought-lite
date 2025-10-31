@@ -6,7 +6,7 @@ import svelte from "@astrojs/svelte";
 import UnoCSS from "unocss/astro";
 import swup from "@swup/astro";
 import icon from "astro-icon";
-import github_light from "shiki/themes/github-light.mjs"
+import github_light from "shiki/themes/github-light.mjs";
 
 import GFM from "remark-gfm";
 import ins from "remark-ins";
@@ -16,7 +16,10 @@ import CJK_strikethrough from "remark-cjk-friendly-gfm-strikethrough";
 import math from "remark-math";
 import gemoji from "remark-gemoji";
 import footnote from "remark-footnotes-extra";
-import { remarkExtendedTable as table, extendedTableHandlers as table_handler } from "remark-extended-table";
+import {
+  remarkExtendedTable as table,
+  extendedTableHandlers as table_handler,
+} from "remark-extended-table";
 import directive from "remark-directive";
 import ruby from "remark-ruby-directive";
 import alerts from "remark-github-blockquote-alert";
@@ -44,10 +47,7 @@ export default defineConfig({
     routing: {
       redirectToDefaultLocale: false,
       prefixDefaultLocale: false,
-    }
-  },
-  image: {
-    service: passthroughImageService(),
+    },
   },
   markdown: {
     remarkPlugins: [
@@ -66,25 +66,28 @@ export default defineConfig({
       directive,
       ruby,
       [alerts, { legacyTitle: true }],
-      reading
+      reading,
     ],
     remarkRehype: {
       footnoteLabel: null,
       footnoteLabelTagName: "p",
       footnoteLabelProperties: {
-        className: ["hidden"]
+        className: ["hidden"],
       },
       handlers: {
-        ...table_handler
-      }
+        ...table_handler,
+      },
     },
     rehypePlugins: [
       ids,
       [anchor, { behavior: "wrap" }],
-      [links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
+      [
+        links,
+        { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] },
+      ],
       katex,
       figure,
-      sectionize
+      sectionize,
     ],
     smartypants: false,
     shikiConfig: {
@@ -92,20 +95,20 @@ export default defineConfig({
         light: {
           ...github_light,
           colorReplacements: {
-            "#fff": "var(--block-color)"
-          }
+            "#fff": "var(--block-color)",
+          },
         },
-        dark: "dark-plus"
+        dark: "dark-plus",
       },
       transformers: [
         copy({
-          duration: 1500
+          duration: 1500,
         }),
-      ]
-    }
+      ],
+    },
   },
   vite: {
-    plugins: [yaml()]
+    plugins: [yaml()],
   },
   integrations: [
     svelte(),
@@ -114,10 +117,10 @@ export default defineConfig({
       globalInstance: true,
       preload: false,
       smoothScrolling: false,
-      progress: true
+      progress: true,
     }),
     UnoCSS({
-      injectReset: "@unocss/reset/normalize.css"
+      injectReset: "@unocss/reset/normalize.css",
     }),
     icon()
   ]

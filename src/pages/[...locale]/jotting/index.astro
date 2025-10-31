@@ -7,8 +7,8 @@ import Icon from "$components/Icon.astro";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
-	// Create path for each locale, omitting default locale from URL
-	return i18n!.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
+  // Create path for each locale, omitting default locale from URL
+  return i18n!.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
 }
 
 const { locale = i18n!.defaultLocale } = Astro.params;
@@ -16,26 +16,26 @@ const { locale = i18n!.defaultLocale } = Astro.params;
 const t = i18nit(locale);
 
 const jottings = await getCollection("jotting", jotting => {
-	// Extract language from the file path structure
-	const [language] = jotting.id.split("/");
+  // Extract language from the file path structure
+  const [language] = jotting.id.split("/");
 
-	// Filter criteria: must be published and match locale
-	let published = !jotting.data.draft;
-	let localed = language == locale;
+  // Filter criteria: must be published and match locale
+  let published = !jotting.data.draft;
+  let localed = language == locale;
 
-	return published && localed;
+  return published && localed;
 });
 
 // Standardize note structure
 let list = jottings.map(jotting => ({
-	id: jotting.id,
-	data: {
-		title: jotting.data.title,
-		timestamp: jotting.data.timestamp,
-		tags: jotting.data.tags,
-		sensitive: jotting.data.sensitive,
-		top: jotting.data.top
-	}
+  id: jotting.id,
+  data: {
+    title: jotting.data.title,
+    timestamp: jotting.data.timestamp,
+    tags: jotting.data.tags,
+    sensitive: jotting.data.sensitive,
+    top: jotting.data.top
+  }
 }));
 
 // Extract all unique tags from the filtered notes
@@ -43,13 +43,13 @@ const tags = Array.from(new Set(jottings.flatMap(jotting => jotting.data.tags).f
 ---
 
 <Base title={t("navigation.jotting")} {locale}>
-	<main class="flex flex-col grow">
-		<Jotting client:load {locale} jottings={list} {tags}>
-			<Icon name="lucide:flag-triangle-right" slot="top" />
-			<Icon name="lucide:siren" title={t("sensitive.icon")} slot="sensitive" />
-			<Icon name="lucide:arrow-left" slot="left" />
-			<Icon name="lucide:arrow-right" slot="right" />
-			<Icon name="lucide:ellipsis" slot="dots" />
-		</Jotting>
-	</main>
+  <main class="flex flex-col grow">
+    <Jotting client:load {locale} jottings={list} {tags}>
+      <Icon name="lucide:flag-triangle-right" slot="top" />
+      <Icon name="lucide:siren" title={t("sensitive.icon")} slot="sensitive" />
+      <Icon name="lucide:arrow-left" slot="left" />
+      <Icon name="lucide:arrow-right" slot="right" />
+      <Icon name="lucide:ellipsis" slot="dots" />
+    </Jotting>
+  </main>
 </Base>
