@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
+import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import { i18n } from "astro:config/client";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Feed } from "feed";
 import config from "$config";
@@ -79,8 +80,20 @@ export const GET: APIRoute = async ({ site, params }) => {
 		.sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime())		// Sort by newest first
 		.slice(0, config.feed?.limit || items.length);									// Limit to number of items
 
+	// Create an Astro container for rendering content
+	const container = await AstroContainer.create();
+	await Promise.all(items.map(async item => {
+		if (item.rendered) {
+			// Render content for each item
+			const content = (await container.renderToString((await render(item)).Content));
+
+			// Rewrite relative paths to absolute URLs for media assets
+			item.rendered.html = content.replace(/(?<=src=")\/(?!\/)([^"]+)/g, `${site?.origin}/$1`)
+		}
+	}));
+
 	// Add each filtered note as a feed item
-	items.forEach((item) => feed.addItem({
+	items.forEach(item => feed.addItem({
 		id: item.id,																								// Unique item identifier
 		title: item.data.title,																						// Post title
 		link: (<any>item).link,																						// URL to the post
@@ -91,10 +104,7 @@ export const GET: APIRoute = async ({ site, params }) => {
 	}));
 
 	// Append stylesheet declaration to the feed
-	const XML = feed.atom1().replace(
-		/(<\?xml version="1\.0" encoding="utf-8".*\?>)/,
-		'$1\n<?xml-stylesheet type="text/xsl" href="feed.xsl"?>'
-	);
+	const XML = feed.atom1().replace(/(<\?xml version="1\.0" encoding="utf-8".*\?>)/, '$1\n<?xml-stylesheet type="text/xsl" href="feed.xsl"?>');
 
 	return new Response(XML, { headers: { "Content-Type": "application/xml" } });
 }
