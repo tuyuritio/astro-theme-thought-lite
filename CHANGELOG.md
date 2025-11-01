@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.19.4](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.19.3...v0.19.4) (2025-11-01)
+
+
+### Bug Fixes
+
+* **feed:** adopt Astro container (experimental) for rendering markdown images ([874db37](https://github.com/tuyuritio/astro-theme-thought-lite/commit/874db3741c0c4b872638ffd3ee8eaadec29ec779))
+
 ## [0.19.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.19.2...v0.19.3) (2025-10-27)
 
 
