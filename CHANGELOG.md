@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.19.5](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.19.4...v0.19.5) (2025-11-02)
+
+
+### Bug Fixes
+
+* **style:** enhance footnote styling with hover effects ([b07b836](https://github.com/tuyuritio/astro-theme-thought-lite/commit/b07b836b251d56a6a77662ac9ba68a8f930ac8eb))
+* **style:** inherit text color for mark elements to fix color errors in dark mode ([63cde8f](https://github.com/tuyuritio/astro-theme-thought-lite/commit/63cde8f0804a471d1dad42ba8d2f4b80e4fb143b))
+
 ## [0.19.4](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.19.3...v0.19.4) (2025-11-01)
 
 
