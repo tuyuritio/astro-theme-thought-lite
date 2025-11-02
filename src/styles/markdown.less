@@ -218,6 +218,7 @@
 	}
 
 	mark {
+		color: inherit;
 		background-color: initial;
 
 		text-decoration: underline wavy 0.05em;
@@ -269,15 +270,27 @@
 	}
 
 	sup:has(a[data-footnote-ref]) {
+		padding: 0 0.05em;
 		vertical-align: baseline;
-		font-size: 1rem;
+		font-size: 1em;
 
-		&::before {
-			content: "[";
+		transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+
+		&:hover {
+			color: var(--background-color);
+			background-color: var(--secondary-color);
 		}
 
-		&::after {
-			content: "]";
+		a {
+			text-decoration: none;
+
+			&::before {
+				content: "[";
+			}
+
+			&::after {
+				content: "]";
+			}
 		}
 	}
 
@@ -306,8 +319,14 @@
 				}
 
 				a[data-footnote-backref] {
-					sup {
-						display: none;
+					padding: 0 0.25em;
+
+					text-decoration: none;
+					transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+
+					&:hover {
+						color: var(--background-color);
+						background-color: var(--secondary-color);
 					}
 				}
 			}
