@@ -19,6 +19,7 @@ home:
   latest: 最新创作
   prefaces: 序文一览
 jotting:
+  noEntries: 暂没有随笔
   tag: 标签
 navigation:
   about: 絮述
@@ -30,6 +31,7 @@ navigation:
   subscription: 订阅
 note:
   contents: 目录
+  noEntries: 暂没有文记
   series: 系列
   tag: 标签
   top: 回到顶部

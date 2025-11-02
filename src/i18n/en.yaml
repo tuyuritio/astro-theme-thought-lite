@@ -21,6 +21,7 @@ home:
   latest: Latest
   prefaces: Prefaces
 jotting:
+  noEntries: No jottings available
   tag: Tag
 navigation:
   about: About
@@ -32,6 +33,7 @@ navigation:
   subscription: Subscription
 note:
   contents: Contents
+  noEntries: No notes available
   series: Series
   tag: Tag
   top: To Top
