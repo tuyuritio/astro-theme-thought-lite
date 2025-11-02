@@ -10,7 +10,11 @@ Before you dive in, to keep things running smoothly for everyone and make sure y
 - A Pull Request should **solve only one problem** or **add one feature**. Please avoid bundling multiple, unrelated changes into a single PR.
 - If you need to **refactor existing code** to support your new feature, please submit the refactoring as a separate PR *before* submitting the feature PR.
 - If your PR introduces a **new user-facing feature** or **configuration option**, you **must** update relevant documentation to explain how to use it.
-- Please make sure your changes pass **basic tests** and follow the project’s existing **code style**.
+- Please make sure your changes pass **basic tests** ~~and follow the project's existing **code style**~~.
+
+> [!Note]
+> Waiting for [Biome](https://biomejs.dev/) to mature before fully configuring formatters and linters...\
+> In the meantime, please try to avoid reformatting the entire project.🙏
 
 ## How to Contribute
 

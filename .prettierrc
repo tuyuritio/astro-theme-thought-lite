@@ -5,6 +5,7 @@
 	"semi": true,
 	"singleQuote": false,
 	"quoteProps": "as-needed",
+	"endOfLine": "auto",
 	"trailingComma": "none",
 	"bracketSpacing": true,
 	"bracketSameLine": true,
