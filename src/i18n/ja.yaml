@@ -16,7 +16,7 @@ home:
     empty: 無字
     jotting: 随筆 {count} 件
     note: 文記 {count} 件
-  newest: 最新文記
+  latest: 最新記事
   prefaces: 序文歴史
 jotting:
   tag: 付札

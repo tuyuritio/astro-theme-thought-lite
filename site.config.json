@@ -14,5 +14,11 @@
 	"feed": {
 		"section": "*",
 		"limit": 20
+	},
+	"home": {
+		"showLatest": {
+			"note": true,
+			"jotting": true
+		}
 	}
 }

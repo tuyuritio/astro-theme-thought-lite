@@ -18,7 +18,7 @@ home:
     empty: No words
     jotting: '{count} jottings'
     note: '{count} notes'
-  newest: Newest Note
+  latest: Latest
   prefaces: Prefaces
 jotting:
   tag: Tag
