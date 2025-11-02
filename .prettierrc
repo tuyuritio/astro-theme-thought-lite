@@ -11,7 +11,8 @@
 	"bracketSameLine": true,
 	"arrowParens": "avoid",
 	"plugins": [
-		"prettier-plugin-astro"
+		"prettier-plugin-astro",
+		"prettier-plugin-svelte"
 	],
 	"pluginSearchDirs": [
 		"."
