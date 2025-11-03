@@ -19,13 +19,25 @@ const title = config.title;
 
 <script>
 	import zoom from "medium-zoom/dist/pure";
+	import Time from "$utils/time";
 
+	// Set the `title` attribute of all `<time>` elements to localized date-time strings
+	const localize_times = () => document.querySelectorAll("time").forEach(time => time.dateTime && (time.title = Time.locale(time.dateTime, navigator.language, Time.user_timezone)));
+
+	// Add zoom effect to images within markdown content
 	window.zoom = () => zoom(".markdown img", { background: "#00000044" });
-	window.zoom();
 
-	document.addEventListener("astro:page-load", () => {
+	// Page initialization function
+	function initialize() {
+		localize_times();
 		window.zoom();
-	});
+	}
+
+	// Execute initialization on first load
+	initialize();
+
+	// Listen for page load event and re-initialize on page transitions
+	document.addEventListener("astro:page-load", initialize);
 </script>
 
 <App {title} {subtitle} {description} {article} author={typeof config.author == "string" ? config.author : config.author.name}>
