@@ -95,7 +95,7 @@ const { Content } = preface ? await render(preface) : ({} as any);
 								))}
 							</div>
 						</div>
-						<time title={Time.full(newest.data.timestamp)} class="c-remark font-mono text-xs">
+						<time datetime={newest.data.timestamp.toISOString()} class="c-remark font-mono text-xs">
 							{Time(newest.data.timestamp)}
 						</time>
 					</blockquote>

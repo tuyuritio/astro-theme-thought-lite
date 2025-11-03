@@ -1,4 +1,5 @@
 {
+	"$schema": "./.site.schema.json",
 	"title": "ThoughtLite",
 	"prologue": "If you need a website\nthat loads fast and has great SEO, then Astro is for you.",
 	"author": {

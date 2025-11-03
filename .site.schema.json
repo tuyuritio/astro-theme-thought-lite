@@ -3,6 +3,10 @@
 	"title": "Astro Theme ThoughtLite Site Configuration",
 	"type": "object",
 	"properties": {
+		"$schema": {
+			"type": "string",
+			"format": "uri-reference"
+		},
 		"title": {
 			"title": "Site Title",
 			"type": "string"
