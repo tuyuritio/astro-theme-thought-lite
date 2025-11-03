@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.19.6](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.19.5...v0.19.6) (2025-11-03)
+
+
+### Bug Fixes
+
+* render `<time>` tooltip according to client language and timezone ([3a43906](https://github.com/tuyuritio/astro-theme-thought-lite/commit/3a43906700b698ff3d1729b29ece979f4899cce8))
+* **style:** adjust link icon padding for better alignment ([782af88](https://github.com/tuyuritio/astro-theme-thought-lite/commit/782af88db9344293ecd3853e7389d95a96c431d2))
+
 ## [0.19.5](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.19.4...v0.19.5) (2025-11-02)
 
 
