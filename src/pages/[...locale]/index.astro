@@ -60,8 +60,8 @@ const newestJotting = jottings[0];
 let latestItem: typeof newestNote | typeof newestJotting | null = null;
 let latestType: "note" | "jotting" | null = null;
 
-const showNote = config.home?.showLatest?.note ?? true;
-const showJotting = config.home?.showLatest?.jotting ?? false;
+const showNote = config.home?.latest?.note ?? true;
+const showJotting = config.home?.latest?.jotting ?? false;
 
 if (showNote && showJotting) {
 	// Both enabled: compare timestamps and show the most recent

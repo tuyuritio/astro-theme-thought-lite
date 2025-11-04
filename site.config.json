@@ -17,7 +17,7 @@
 		"limit": 20
 	},
 	"home": {
-		"showLatest": {
+		"latest": {
 			"note": true,
 			"jotting": true
 		}

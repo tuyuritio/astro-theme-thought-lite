@@ -74,7 +74,7 @@
 						<a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} class="c-primary font-600 link">{jotting.data.title}</a>
 					</span>
 					<span class="flex gap-1">
-						{#each jotting.data.tags || [] as tag}
+						{#each jotting.data.tags ?? [] as tag}
 							<button onclick={() => switch_tag(tag, true)} class="text-3.3 c-remark">#{tag}</button>
 						{/each}
 					</span>
@@ -82,9 +82,9 @@
 			{/each}
 		</header>
 
-		{#if jottings.length === 0 || filtered.length === 0}
+		{#if filtered.length === 0}
 			<div class="flex flex-col items-center justify-center py-20 c-weak">
-				<p class="text-lg">{t("jotting.noEntries")}</p>
+				<p class="text-lg">{t("jotting.empty")}</p>
 			</div>
 		{/if}
 

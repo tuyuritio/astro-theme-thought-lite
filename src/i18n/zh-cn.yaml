@@ -16,10 +16,10 @@ home:
     empty: 无字
     jotting: 随笔 {count} 则
     note: 文记 {count} 篇
-  latest: 最新创作
+  latest: 最新内容
   prefaces: 序文一览
 jotting:
-  noEntries: 暂没有随笔
+  empty: 暂无随笔
   tag: 标签
 navigation:
   about: 絮述
@@ -31,7 +31,7 @@ navigation:
   subscription: 订阅
 note:
   contents: 目录
-  noEntries: 暂没有文记
+  empty: 暂无文记
   series: 系列
   tag: 标签
   top: 回到顶部

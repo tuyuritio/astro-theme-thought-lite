@@ -19,7 +19,7 @@ home:
   latest: 最新記事
   prefaces: 序文歴史
 jotting:
-  noEntries: まだ随筆はありません
+  empty: 随筆がありません
   tag: 付札
 navigation:
   about: 情報
@@ -31,7 +31,7 @@ navigation:
   subscription: 購読
 note:
   contents: 目次
-  noEntries: まだ文記はありません
+  empty: 文記がありません
   series: 系列
   tag: 付札
   top: 至頂
