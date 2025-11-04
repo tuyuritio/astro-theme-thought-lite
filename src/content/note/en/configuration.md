@@ -1,6 +1,6 @@
 ---
 title: Site Configuration Guide
-timestamp: 2025-07-07 00:00:00+00:00
+timestamp: 2025-11-04 00:00:00+00:00
 tags: [Guide, Astro]
 description: Essential configuration guide for Astro theme sites, covering site settings, internationalization, and Markdown processing options.
 ---
@@ -49,6 +49,9 @@ description: Essential configuration guide for Astro theme sites, covering site 
             - `note` - Note section
             - `jotting` - Jotting section
     - `limit` - Content quantity limit for feeds
+- `latest` - Latest content display
+    - `note` - Whether to show latest note
+    - `jotting` - Whether to show latest jotting
 
 ## Icon Generation
 
