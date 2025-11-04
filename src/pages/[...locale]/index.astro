@@ -58,8 +58,8 @@ const jottings = await getCollection("jotting", jotting => {
 let items: { id: string; type?: string; data: { timestamp: Date; tags?: string[]; [key: string]: any } }[] = [];
 
 // Add contents based on config
-if (config.home?.latest?.note) items = items.concat(notes);
-if (config.home?.latest?.jotting) items = items.concat(jottings);
+if (config.latest?.note) items = items.concat(notes);
+if (config.latest?.jotting) items = items.concat(jottings);
 
 // Get the latest content for display
 const latest = items.sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime())[0];

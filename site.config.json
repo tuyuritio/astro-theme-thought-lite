@@ -16,10 +16,8 @@
 		"section": "*",
 		"limit": 20
 	},
-	"home": {
-		"latest": {
-			"note": true,
-			"jotting": true
-		}
+	"latest": {
+		"note": true,
+		"jotting": true
 	}
 }
