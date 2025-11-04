@@ -1,13 +1,5 @@
 {
 	"i18n-ally.localesPaths": [
 		"src/i18n"
-	],
-	"json.schemas": [
-		{
-			"fileMatch": [
-				"site.config.json"
-			],
-			"url": ".vscode/site.schema.json"
-		}
 	]
 }

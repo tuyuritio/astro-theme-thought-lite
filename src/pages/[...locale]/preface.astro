@@ -31,9 +31,9 @@ const prefaces = (
 				prefaces.map(preface => [
 					<hr class="my-5 b-b b-b-solid b-primary" />,
 					<li>
-						<h4 title={Time.full(preface.data.timestamp)} class="mb-5 text-5">
+						<time datetime={preface.data.timestamp.toISOString()} class="block mb-5 font-bold text-5">
 							{Time.locale(preface.data.timestamp, locale)}
-						</h4>
+						</time>
 						<article class="markdown" set:html={preface.rendered?.html} />
 					</li>
 				])

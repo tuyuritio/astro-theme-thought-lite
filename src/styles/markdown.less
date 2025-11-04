@@ -56,9 +56,7 @@
 		.link-icon(@icon, @size, @offset) {
 			&::after {
 				content: @icon;
-
-				padding-right: 6px;
-				padding-left: 2px;
+				white-space: pre;
 
 				font-size: @size;
 				vertical-align: @offset;
@@ -66,14 +64,14 @@
 		}
 
 		&[target="_blank"] {
-			.link-icon("", 0.8em, 1px);
+			.link-icon("  \202F", 0.8em, 1px);
 		}
 
 		&:not([target="_blank"], [data-footnote-ref], [data-footnote-backref]) {
-			.link-icon("", 0.85em, 0.5px);
+			.link-icon("  \202F", 0.85em, 0.5px);
 
 			&[href^="mailto:"] {
-				.link-icon("󱃝", 0.9em, 0px);
+				.link-icon(" 󱃝 \202F", 0.9em, 0px);
 			}
 		}
 	}
