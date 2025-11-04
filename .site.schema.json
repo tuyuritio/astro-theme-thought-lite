@@ -124,6 +124,22 @@
 				}
 			},
 			"additionalProperties": false
+		},
+		"latest": {
+			"title": "Latest Content Display",
+			"type": "object",
+			"properties": {
+				"note": {
+					"title": "Show Latest Note",
+					"type": "boolean",
+					"default": true
+				},
+				"jotting": {
+					"title": "Show Latest Jotting",
+					"type": "boolean",
+					"default": true
+				}
+			}
 		}
 	},
 	"required": [

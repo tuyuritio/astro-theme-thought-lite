@@ -79,6 +79,8 @@
 						{/each}
 					</span>
 				</section>
+			{:else}
+				<div class="col-span-2 pt-10vh text-center c-secondary font-bold text-xl">{t("jotting.empty")}</div>
 			{/each}
 		</header>
 

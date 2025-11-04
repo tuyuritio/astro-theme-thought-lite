@@ -18,5 +18,9 @@
 	},
 	"comment": {
 		"max-length": 500
+	},
+	"latest": {
+		"note": true,
+		"jotting": true
 	}
 }

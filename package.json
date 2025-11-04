@@ -1,7 +1,7 @@
 {
 	"name": "astro-theme-thought-lite",
 	"type": "module",
-	"version": "0.19.6",
+	"version": "0.20.0",
 	"description": "A modern Astro theme focused on content creation",
 	"keywords": [
 		"astro",
@@ -100,6 +100,7 @@
 		"less": "^4.4.2",
 		"prettier": "3.6.2",
 		"prettier-plugin-astro": "0.14.1",
+		"prettier-plugin-svelte": "^3.4.0",
 		"tsx": "^4.20.6",
 		"unocss": "^66.5.4",
 		"wrangler": "^4.45.3"

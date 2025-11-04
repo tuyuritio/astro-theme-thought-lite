@@ -94,9 +94,10 @@ home:
     empty: 无字
     jotting: 随笔 {count} 则
     note: 文记 {count} 篇
-  newest: 最新文记
+  latest: 最新内容
   prefaces: 序文一览
 jotting:
+  empty: 暂无随笔
   tag: 标签
 navigation:
   about: 絮述
@@ -109,6 +110,7 @@ navigation:
 note:
   comment: 前往想法
   contents: 目录
+  empty: 暂无文记
   series: 系列
   tag: 标签
   top: 回到顶部

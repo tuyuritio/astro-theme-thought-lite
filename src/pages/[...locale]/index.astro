@@ -18,7 +18,7 @@ const { locale = i18n!.defaultLocale } = Astro.params;
 
 const t = i18nit(locale);
 
-// Get preface content for current locale, sorted by timestamp (newest first)
+// Get preface content for current locale, sorted by timestamp (latest first)
 const prefaces = (
 	await getCollection("preface", preface => {
 		// Extract language and ID from file path structure
@@ -30,28 +30,41 @@ const prefaces = (
 	})
 ).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
 
-// Get published notes for current locale, sorted by timestamp (newest first)
-const notes = (
-	await getCollection("note", note => {
-		// Extract language and note ID from file path structure
-		const [language] = note.id.split("/");
+// Get published notes for current locale
+const notes = await getCollection("note", note => {
+	// Extract language and note ID from file path structure
+	const [language] = note.id.split("/");
 
-		// Filter published notes by current locale
-		return !note.data.draft && language == locale;
-	})
-).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
+	// Assign type property
+	Reflect.set(note, "type", "note");
+
+	// Filter published notes by current locale
+	return !note.data.draft && language == locale;
+});
 
 // Get published jottings for current locale
 const jottings = await getCollection("jotting", jotting => {
 	// Extract language and jotting ID from file path structure
 	const [language] = jotting.id.split("/");
 
+	// Assign type property
+	Reflect.set(jotting, "type", "jotting");
+
 	// Filter published jottings by current locale
 	return !jotting.data.draft && language == locale;
 });
 
-// Get the most recent note and preface for display
-const newest = notes[0];
+// Combine contents
+let items: { id: string; type?: string; data: { timestamp: Date; tags?: string[]; [key: string]: any } }[] = [];
+
+// Add contents based on config
+if (config.latest?.note) items = items.concat(notes);
+if (config.latest?.jotting) items = items.concat(jottings);
+
+// Get the latest content for display
+const latest = items.sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime())[0];
+
+// Get the latest preface for display
 const preface = prefaces[0];
 // Render preface content if available, otherwise use empty object
 const { Content } = preface ? await render(preface) : ({} as any);
@@ -78,25 +91,25 @@ const { Content } = preface ? await render(preface) : ({} as any);
 		}
 
 		{
-			newest && (
+			latest && (
 				<footer class="flex items-center justify-center flex-wrap-reverse gap-10">
 					<Heatmap {locale} {notes} {jottings} />
 
 					<blockquote class="flex-grow">
-						<h3>{t("home.newest")}</h3>
+						<h3>{t("home.latest")}</h3>
 						<div class="flex flex-col sm:flex-row justify-between gap-1 mt-2">
-							<a href={getRelativeLocaleUrl(locale, `/note/${newest.id.split("/").slice(1).join("/")}`)} class="link">
-								{newest.data.series ? `${newest.data.series} | ` : ""}
-								{newest.data.title}
+							<a href={getRelativeLocaleUrl(locale, `/${latest.type}/${latest.id.split("/").slice(1).join("/")}`)} class="link">
+								{latest.data.series && `${latest.data.series} | `}
+								{latest.data.title}
 							</a>
 							<div class="flex gap-1">
-								{newest.data.tags?.map(tag => (
+								{latest.data.tags?.map(tag => (
 									<span class="c-remark text-size-sm">#{tag}</span>
 								))}
 							</div>
 						</div>
-						<time datetime={newest.data.timestamp.toISOString()} class="c-remark font-mono text-xs">
-							{Time(newest.data.timestamp)}
+						<time datetime={latest.data.timestamp.toISOString()} class="c-remark font-mono text-xs">
+							{Time(latest.data.timestamp)}
 						</time>
 					</blockquote>
 				</footer>
