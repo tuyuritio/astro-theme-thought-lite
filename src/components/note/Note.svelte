@@ -77,18 +77,14 @@
 					<time datetime={note.data.timestamp.toISOString()} class="font-mono text-2.6 c-remark">{Time(note.data.timestamp)}</time>
 				</div>
 				<span class="flex items-center gap-1 sm:ml-a c-remark">
-					{#each note.data.tags ?? [] as tag}
+					{#each note.data.tags as tag}
 						<button onclick={() => switch_tag(tag, true)} class="text-3.5 sm:text-sm">#{tag}</button>
 					{/each}
 				</span>
 			</section>
+		{:else}
+			<div class="pt-10vh text-center c-secondary font-bold text-xl">{t("note.empty")}</div>
 		{/each}
-
-		{#if filtered.length === 0}
-			<div class="flex flex-col items-center justify-center py-20 c-weak">
-				<p class="text-lg">{t("note.empty")}</p>
-			</div>
-		{/if}
 
 		{#if pages > 1}
 			<footer class="sticky bottom-0 flex items-center justify-center gap-3 mt-a pb-1 c-weak bg-background font-mono">
