@@ -18,7 +18,7 @@ const { locale = i18n!.defaultLocale } = Astro.params;
 
 const t = i18nit(locale);
 
-// Get preface content for current locale, sorted by timestamp (newest first)
+// Get preface content for current locale, sorted by timestamp (latest first)
 const prefaces = (
 	await getCollection("preface", preface => {
 		// Extract language and ID from file path structure
@@ -30,67 +30,41 @@ const prefaces = (
 	})
 ).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
 
-// Get published notes for current locale, sorted by timestamp (newest first)
-const notes = (
-	await getCollection("note", note => {
-		// Extract language and note ID from file path structure
-		const [language] = note.id.split("/");
+// Get published notes for current locale
+const notes = await getCollection("note", note => {
+	// Extract language and note ID from file path structure
+	const [language] = note.id.split("/");
 
-		// Filter published notes by current locale
-		return !note.data.draft && language == locale;
-	})
-).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
+	// Assign type property
+	Reflect.set(note, "type", "note");
+
+	// Filter published notes by current locale
+	return !note.data.draft && language == locale;
+});
 
 // Get published jottings for current locale
-const jottings = (
-	await getCollection("jotting", jotting => {
-		// Extract language and jotting ID from file path structure
-		const [language] = jotting.id.split("/");
+const jottings = await getCollection("jotting", jotting => {
+	// Extract language and jotting ID from file path structure
+	const [language] = jotting.id.split("/");
 
-		// Filter published jottings by current locale
-		return !jotting.data.draft && language == locale;
-	})
-).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
+	// Assign type property
+	Reflect.set(jotting, "type", "jotting");
 
-// Get the most recent note and jotting
-const newestNote = notes[0];
-const newestJotting = jottings[0];
+	// Filter published jottings by current locale
+	return !jotting.data.draft && language == locale;
+});
 
-// Determine which item to show based on config
-let latestItem: typeof newestNote | typeof newestJotting | null = null;
-let latestType: "note" | "jotting" | null = null;
+// Combine contents
+let items: { id: string; type?: string; data: { timestamp: Date; tags?: string[]; [key: string]: any } }[] = [];
 
-const showNote = config.home?.latest?.note ?? true;
-const showJotting = config.home?.latest?.jotting ?? false;
+// Add contents based on config
+if (config.home?.latest?.note) items = items.concat(notes);
+if (config.home?.latest?.jotting) items = items.concat(jottings);
 
-if (showNote && showJotting) {
-	// Both enabled: compare timestamps and show the most recent
-	if (newestNote && newestJotting) {
-		if (newestNote.data.timestamp >= newestJotting.data.timestamp) {
-			latestItem = newestNote;
-			latestType = "note";
-		} else {
-			latestItem = newestJotting;
-			latestType = "jotting";
-		}
-	} else if (newestNote) {
-		latestItem = newestNote;
-		latestType = "note";
-	} else if (newestJotting) {
-		latestItem = newestJotting;
-		latestType = "jotting";
-	}
-} else if (showNote && newestNote) {
-	// Only notes enabled
-	latestItem = newestNote;
-	latestType = "note";
-} else if (showJotting && newestJotting) {
-	// Only jottings enabled
-	latestItem = newestJotting;
-	latestType = "jotting";
-}
+// Get the latest content for display
+const latest = items.sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime())[0];
 
-// Get preface for display
+// Get the latest preface for display
 const preface = prefaces[0];
 // Render preface content if available, otherwise use empty object
 const { Content } = preface ? await render(preface) : ({} as any);
@@ -117,25 +91,25 @@ const { Content } = preface ? await render(preface) : ({} as any);
 		}
 
 		{
-			latestItem && (
+			latest && (
 				<footer class="flex items-center justify-center flex-wrap-reverse gap-10">
 					<Heatmap {locale} {notes} {jottings} />
 
 					<blockquote class="flex-grow">
 						<h3>{t("home.latest")}</h3>
 						<div class="flex flex-col sm:flex-row justify-between gap-1 mt-2">
-							<a href={getRelativeLocaleUrl(locale, `/${latestType}/${latestItem.id.split("/").slice(1).join("/")}`)} class="link">
-								{latestType === "note" && latestItem.data.series ? `${latestItem.data.series} | ` : ""}
-								{latestItem.data.title}
+							<a href={getRelativeLocaleUrl(locale, `/${latest.type}/${latest.id.split("/").slice(1).join("/")}`)} class="link">
+								{latest.data.series && `${latest.data.series} | `}
+								{latest.data.title}
 							</a>
 							<div class="flex gap-1">
-								{latestItem.data.tags?.map(tag => (
+								{latest.data.tags?.map(tag => (
 									<span class="c-remark text-size-sm">#{tag}</span>
 								))}
 							</div>
 						</div>
-						<time datetime={latestItem.data.timestamp.toISOString()} class="c-remark font-mono text-xs">
-							{Time(latestItem.data.timestamp)}
+						<time datetime={latest.data.timestamp.toISOString()} class="c-remark font-mono text-xs">
+							{Time(latest.data.timestamp)}
 						</time>
 					</blockquote>
 				</footer>
