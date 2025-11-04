@@ -82,6 +82,8 @@
 					{/each}
 				</span>
 			</section>
+		{:else}
+			<div class="pt-10vh text-center c-secondary font-bold text-xl">{t("note.empty")}</div>
 		{/each}
 
 		{#if pages > 1}

@@ -18,9 +18,10 @@ home:
     empty: No words
     jotting: '{count} jottings'
     note: '{count} notes'
-  newest: Newest Note
+  latest: Latest
   prefaces: Prefaces
 jotting:
+  empty: No jottings available
   tag: Tag
 navigation:
   about: About
@@ -32,6 +33,7 @@ navigation:
   subscription: Subscription
 note:
   contents: Contents
+  empty: No notes available
   series: Series
   tag: Tag
   top: To Top

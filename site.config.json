@@ -15,5 +15,9 @@
 	"feed": {
 		"section": "*",
 		"limit": 20
+	},
+	"latest": {
+		"note": true,
+		"jotting": true
 	}
 }
