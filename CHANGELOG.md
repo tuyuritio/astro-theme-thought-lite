@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.20.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.19.6...v0.20.0) (2025-11-04)
+
+
+### Features
+
+* optionally show newest jotting and note on homepage ([1867264](https://github.com/tuyuritio/astro-theme-thought-lite/commit/1867264e43db1dd77520cc6949fafe4abe58001a))
+
+
+### Bug Fixes
+
+* **config:** change latest content display configuration ([fabb973](https://github.com/tuyuritio/astro-theme-thought-lite/commit/fabb973743622f99a01cc96e2e44f0fa23d407cf))
+* improve empty state handling ([eea4fc9](https://github.com/tuyuritio/astro-theme-thought-lite/commit/eea4fc9a0dea80d4f1683a0c125c28e5dfb56641))
+* refactor latest content retrieval and fix type error ([e6aa8b6](https://github.com/tuyuritio/astro-theme-thought-lite/commit/e6aa8b61f9c3a14e499609ba23f5ead645f75c7e))
+* rename and minor fixes ([6e6b4cf](https://github.com/tuyuritio/astro-theme-thought-lite/commit/6e6b4cffd52de8d208273ddd130c63df2091b734))
+* show a message when note or jotting is empty ([8c9736b](https://github.com/tuyuritio/astro-theme-thought-lite/commit/8c9736ba9c3ec84e4640ff8eba53bb806c3d014d))
+
 ## [0.19.6](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.19.5...v0.19.6) (2025-11-03)
 
 
