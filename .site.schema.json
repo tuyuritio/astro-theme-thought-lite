@@ -39,7 +39,8 @@
 							"format": "uri"
 						}
 					},
-					"required": ["name"]
+					"required": ["name"],
+					"additionalProperties": false
 				}
 			]
 		},
@@ -61,7 +62,8 @@
 					"pattern": "^\\d{4}(-\\d{4})?$"
 				}
 			},
-			"required": ["type", "year"]
+			"required": ["type", "year"],
+			"additionalProperties": false
 		},
 		"feed": {
 			"title": "Feed Configuration",
@@ -90,7 +92,8 @@
 					"type": "integer",
 					"minimum": 0
 				}
-			}
+			},
+			"additionalProperties": false
 		},
 		"latest": {
 			"title": "Latest Content Display",
@@ -106,7 +109,8 @@
 					"type": "boolean",
 					"default": true
 				}
-			}
+			},
+			"additionalProperties": false
 		}
 	},
 	"required": ["title", "author", "description", "copyright"],
