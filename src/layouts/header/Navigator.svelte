@@ -146,9 +146,9 @@
 		<Menu label="Language switcher">
 			{#snippet trigger()}{@render globe()}{/snippet}
 			<div data-no-swup class="contents">
-				<a href={getRelativeLocaleUrl("en", path)} aria-label="English">English</a>
-				<a href={getRelativeLocaleUrl("zh-cn", path)} aria-label="简体中文">简体中文</a>
-				<a href={getRelativeLocaleUrl("ja", path)} aria-label="日本語">日本語</a>
+				{#each i18n!.locales as locale}
+					<a href={getRelativeLocaleUrl(locale as string, path)} aria-label={i18nit(locale as string)("language")}>{i18nit(locale as string)("language")}</a>
+				{/each}
 			</div>
 		</Menu>
 	</footer>
