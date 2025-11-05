@@ -1,3 +1,144 @@
+<script lang="ts">
+import { actions } from "astro:actions";
+import { onMount, type Snippet } from "svelte";
+import Modal from "$components/Modal.svelte";
+import { push_tip } from "$components/Tip.svelte";
+import i18nit from "$i18n";
+
+let { open = $bindable(), locale, drifter, icon }: { open: boolean; locale: string; drifter: any; icon: { [key: string]: Snippet } } = $props();
+
+const t = i18nit(locale);
+
+/**
+ * Fetch and update user profile data from OAuth provider
+ */
+async function synchronize() {
+	push_tip("information", t("drifter.sync.fetch"));
+
+	const { data, error } = await actions.drifter.synchronize();
+	if (!error) {
+		// Update local drifter object with fresh data from OAuth provider
+		drifter.name = data.name;
+		drifter.description = data.description;
+		push_tip("success", t("drifter.sync.success"));
+	} else {
+		push_tip("error", t("drifter.sync.failure"));
+	}
+}
+
+/**
+ * Toggle push notification subscription on/off
+ */
+async function toggle_notification() {
+	const registration = await navigator.serviceWorker.ready;
+
+	// Check for existing subscription to determine current state
+	let subscription = await registration.pushManager.getSubscription();
+	if (subscription) {
+		// Unsubscribe from push notifications
+		await subscription.unsubscribe();
+		const { data, error } = await actions.notification.unsubscribe({ endpoint: subscription.endpoint });
+		if (!error) {
+			notification = false;
+			push_tip("success", t("notification.disable.success"));
+		} else {
+			push_tip("error", t("notification.disable.failure"));
+		}
+	} else {
+		// Request notification permission before subscribing
+		const permission = await Notification.requestPermission();
+		if (permission !== "granted") {
+			notification = false;
+			return push_tip("information", t("notification.denied"));
+		}
+
+		// Get VAPID public key for push subscription
+		const { data: public_key, error: key_error } = await actions.notification.key();
+		if (key_error) {
+			notification = false;
+			return push_tip("error", t("notification.enable.failure"));
+		}
+
+		// Create push subscription with VAPID key
+		const subscription = (
+			await registration.pushManager.subscribe({
+				userVisibleOnly: true,
+				applicationServerKey: public_key
+			})
+		).toJSON();
+
+		// Register subscription with server
+		const { data, error } = await actions.notification.subscribe({
+			locale,
+			endpoint: subscription.endpoint!,
+			p256dh: subscription.keys!.p256dh,
+			auth: subscription.keys!.auth
+		});
+		if (!error) {
+			notification = true;
+			push_tip("success", t("notification.enable.success"));
+		} else {
+			notification = false;
+			push_tip("error", t("notification.enable.failure"));
+		}
+	}
+}
+
+// Update user homepage URL
+async function update() {
+	const { data, error } = await actions.drifter.update({ homepage: drifter.homepage });
+	if (!error) {
+		push_tip("success", t("drifter.update.success"));
+	} else {
+		push_tip("error", t("drifter.update.failure"));
+	}
+}
+
+// Control deactivation confirmation modal
+let deactivate_view = $state(false);
+
+/**
+ * Permanently deactivate user account and clean up data
+ */
+async function deactivate() {
+	const { data, error } = await actions.drifter.deactivate();
+	if (!error) {
+		// Clean up push notification subscription before account deletion
+		const registration = await navigator.serviceWorker.ready;
+		let subscription = await registration.pushManager.getSubscription();
+		if (subscription) await subscription.unsubscribe();
+
+		push_tip("success", t("drifter.deactivate.success"));
+		// Redirect to home page after account deactivation
+		setTimeout(() => (location.href = "/"), 2000);
+	} else {
+		push_tip("error", t("drifter.deactivate.failure"));
+	}
+
+	deactivate_view = false;
+}
+
+// Track push notification subscription state
+let notification: boolean = $state(false);
+onMount(async () => {
+	// Register service worker for push notifications
+	const registration = await navigator.serviceWorker.register("/sw.js");
+	const subscription = await registration.pushManager.getSubscription();
+	// Set initial notification state based on existing subscription
+	notification = !!subscription;
+
+	if (subscription) {
+		// Verify subscription is still valid on server
+		const { data, error } = await actions.notification.check({ endpoint: subscription.endpoint });
+		if (error || !data) {
+			// Clean up invalid subscription
+			await subscription.unsubscribe();
+			notification = false;
+		}
+	}
+});
+</script>
+
 <Modal bind:open={deactivate_view}>
 	<div class="flex flex-col items-center justify-center gap-5">
 		<h2>{t("drifter.deactivate.title")}</h2>
@@ -55,139 +196,3 @@
 		</div>
 	</main>
 </Modal>
-
-<script lang="ts">
-	import { actions } from "astro:actions";
-	import { onMount, type Snippet } from "svelte";
-	import Modal from "$components/Modal.svelte";
-	import { push_tip } from "$components/Tip.svelte";
-	import i18nit from "$i18n";
-
-	let { open = $bindable(), locale, drifter, icon }: { open: boolean; locale: string; drifter: any; icon: { [key: string]: Snippet } } = $props();
-
-	const t = i18nit(locale);
-
-	/**
-	 * Fetch and update user profile data from OAuth provider
-	 */
-	async function synchronize() {
-		push_tip("information", t("drifter.sync.fetch"));
-
-		const { data, error } = await actions.drifter.synchronize();
-		if (!error) {
-			// Update local drifter object with fresh data from OAuth provider
-			drifter.name = data.name;
-			drifter.description = data.description;
-			push_tip("success", t("drifter.sync.success"));
-		} else {
-			push_tip("error", t("drifter.sync.failure"));
-		}
-	}
-
-	/**
-	 * Toggle push notification subscription on/off
-	 */
-	async function toggle_notification() {
-		const registration = await navigator.serviceWorker.ready;
-
-		// Check for existing subscription to determine current state
-		let subscription = await registration.pushManager.getSubscription();
-		if (subscription) {
-			// Unsubscribe from push notifications
-			await subscription.unsubscribe();
-			const { data, error } = await actions.notification.unsubscribe({ endpoint: subscription.endpoint });
-			if (!error) {
-				notification = false;
-				push_tip("success", t("notification.disable.success"));
-			} else {
-				push_tip("error", t("notification.disable.failure"));
-			}
-		} else {
-			// Request notification permission before subscribing
-			const permission = await Notification.requestPermission();
-			if (permission !== "granted") {
-				notification = false;
-				return push_tip("information", t("notification.denied"));
-			}
-
-			// Get VAPID public key for push subscription
-			const { data: public_key, error: key_error } = await actions.notification.key();
-			if (key_error) {
-				notification = false;
-				return push_tip("error", t("notification.enable.failure"));
-			}
-
-			// Create push subscription with VAPID key
-			const subscription = (
-				await registration.pushManager.subscribe({
-					userVisibleOnly: true,
-					applicationServerKey: public_key
-				})
-			).toJSON();
-
-			// Register subscription with server
-			const { data, error } = await actions.notification.subscribe({ locale, endpoint: subscription.endpoint!, p256dh: subscription.keys!.p256dh, auth: subscription.keys!.auth });
-			if (!error) {
-				notification = true;
-				push_tip("success", t("notification.enable.success"));
-			} else {
-				notification = false;
-				push_tip("error", t("notification.enable.failure"));
-			}
-		}
-	}
-
-	// Update user homepage URL
-	async function update() {
-		const { data, error } = await actions.drifter.update({ homepage: drifter.homepage });
-		if (!error) {
-			push_tip("success", t("drifter.update.success"));
-		} else {
-			push_tip("error", t("drifter.update.failure"));
-		}
-	}
-
-	// Control deactivation confirmation modal
-	let deactivate_view = $state(false);
-
-	/**
-	 * Permanently deactivate user account and clean up data
-	 */
-	async function deactivate() {
-		const { data, error } = await actions.drifter.deactivate();
-		if (!error) {
-			// Clean up push notification subscription before account deletion
-			const registration = await navigator.serviceWorker.ready;
-			let subscription = await registration.pushManager.getSubscription();
-			if (subscription) await subscription.unsubscribe();
-
-			push_tip("success", t("drifter.deactivate.success"));
-			// Redirect to home page after account deactivation
-			setTimeout(() => (location.href = "/"), 2000);
-		} else {
-			push_tip("error", t("drifter.deactivate.failure"));
-		}
-
-		deactivate_view = false;
-	}
-
-	// Track push notification subscription state
-	let notification: boolean = $state(false);
-	onMount(async () => {
-		// Register service worker for push notifications
-		const registration = await navigator.serviceWorker.register("/sw.js");
-		const subscription = await registration.pushManager.getSubscription();
-		// Set initial notification state based on existing subscription
-		notification = !!subscription;
-
-		if (subscription) {
-			// Verify subscription is still valid on server
-			const { data, error } = await actions.notification.check({ endpoint: subscription.endpoint });
-			if (error || !data) {
-				// Clean up invalid subscription
-				await subscription.unsubscribe();
-				notification = false;
-			}
-		}
-	});
-</script>

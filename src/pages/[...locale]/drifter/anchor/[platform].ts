@@ -24,37 +24,39 @@ export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, re
 		if (escort?.state !== state) return new Response("Unauthorized", { status: 401 });
 
 		// Exchange authorization code for user account information
-		let user: OAuthAccount = await new OAuth(platform).validate(code, escort.code_verifier);
+		const user: OAuthAccount = await new OAuth(platform).validate(code, escort.code_verifier);
 
-		let db = drizzle(locals.runtime.env.DB);
+		const db = drizzle(locals.runtime.env.DB);
 		// Insert or update user account in database with conflict resolution
-		let drifter = (await db
-			.insert(Drifter)
-			.values({
-				ID: random(16),
-				platform: user.platform,
-				account: user.account,
-				refresh: user.refresh,
-				access: user.access,
-				expire: user.expire?.getTime(),
-				handle: user.handle,
-				name: user.name,
-				description: user.description,
-				image: user.image
-			})
-			.onConflictDoUpdate({
-				// Update existing user if platform+account combination exists
-				target: [Drifter.platform, Drifter.account],
-				set: {
-					access: sql`excluded.access`,
-					expire: sql`excluded.expire`,
-					handle: sql`excluded.handle`,
-					name: sql`excluded.name`,
-					description: sql`excluded.description`,
-					image: sql`excluded.image`,
-				}
-			})
-			.returning({ ID: Drifter.ID }))[0];
+		const drifter = (
+			await db
+				.insert(Drifter)
+				.values({
+					ID: random(16),
+					platform: user.platform,
+					account: user.account,
+					refresh: user.refresh,
+					access: user.access,
+					expire: user.expire?.getTime(),
+					handle: user.handle,
+					name: user.name,
+					description: user.description,
+					image: user.image
+				})
+				.onConflictDoUpdate({
+					// Update existing user if platform+account combination exists
+					target: [Drifter.platform, Drifter.account],
+					set: {
+						access: sql`excluded.access`,
+						expire: sql`excluded.expire`,
+						handle: sql`excluded.handle`,
+						name: sql`excluded.name`,
+						description: sql`excluded.description`,
+						image: sql`excluded.image`
+					}
+				})
+				.returning({ ID: Drifter.ID })
+		)[0];
 
 		// Issue passport token with user visa for authentication
 		await Token.issue(cookies, "passport", { visa: drifter.ID });
@@ -86,7 +88,7 @@ export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, re
 		await Token.issue(cookies, "escort", { state, code_verifier, referrer: request.headers.get("referer") ?? "/" }, "5 minutes");
 
 		// Generate OAuth authorization URL and redirect user
-		let link: URL = new OAuth(platform).URL(state, code_verifier);
+		const link: URL = new OAuth(platform).URL(state, code_verifier);
 		return redirect(link.toString(), 302);
 	}
-}
+};

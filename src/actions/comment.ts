@@ -14,31 +14,31 @@ const env = import.meta.env;
 const nomad = env.CLOUDFLARE_TURNSTILE_SITE_KEY && env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
 
 /**
- * Define the Comment structure
+ * Define the CommentItem structure
  */
-export type Comment = {
-	ID: string,
-	section: string,
-	item: string,
-	reply: string | null,
-	drifter: string,
-	timestamp: Date,
-	content: string,
-	history: Comment[],
-	subcomments: Comment[]
+export type CommentItem = {
+	ID: string;
+	section: string;
+	item: string;
+	reply: string | null;
+	drifter: string;
+	timestamp: Date;
+	content: string;
+	history: CommentItem[];
+	subcomments: CommentItem[];
 };
 
 export const comment = {
 	// Action to create a new comment or edit an existing one
 	create: defineAction({
 		input: z.object({
-			section: z.string(),				// The section this comment belongs to
-			item: z.string(),					// The item ID this comment belongs to
-			reply: z.string().nullish(),		// ID of replied comment if this is a reply
-			content: z.string(),				// The comment content
-			link: z.string().url(),				// URL link for notifications
-			nickname: z.string().nullish(),		// Nickname for nomad users
-			CAPTCHA: z.string().nullish()		// CAPTCHA token for nomad users
+			section: z.string(), // The section this comment belongs to
+			item: z.string(), // The item ID this comment belongs to
+			reply: z.string().nullish(), // ID of replied comment if this is a reply
+			content: z.string(), // The comment content
+			link: z.string().url(), // URL link for notifications
+			nickname: z.string().nullish(), // Nickname for nomad users
+			CAPTCHA: z.string().nullish() // CAPTCHA token for nomad users
 		}),
 		handler: async ({ section, item, reply, content, link, nickname, CAPTCHA }, { cookies, request, locals }) => {
 			// Verify user authentication
@@ -77,27 +77,25 @@ export const comment = {
 
 			// Generate unique comment ID and timestamp
 			const now = new Date();
-			let ID = enhash(content + reply + now).substring(0, 8);
+			const ID = enhash(content + reply + now).substring(0, 8);
 
 			// Initialize database connection
-			let db = drizzle(locals.runtime.env.DB);
+			const db = drizzle(locals.runtime.env.DB);
 
 			// Insert the new comment
-			await db
-				.insert(Comment)
-				.values({
-					ID,
-					section,
-					item,
-					reply,
-					drifter,
-					nickname,
-					timestamp: now.getTime(),
-					content
-				});
+			await db.insert(Comment).values({
+				ID,
+				section,
+				item,
+				reply,
+				drifter,
+				nickname,
+				timestamp: now.getTime(),
+				content
+			});
 
 			// Prepare notification subscriptions array
-			let subscriptions: { locale: string; endpoint: string; p256dh: string; auth: string; }[] = [];
+			let subscriptions: { locale: string; endpoint: string; p256dh: string; auth: string }[] = [];
 
 			if (reply) {
 				// Notify the original commenter when someone replies to their comment
@@ -117,7 +115,7 @@ export const comment = {
 			// Send push notifications to subscribers
 			subscriptions.forEach(subscription => {
 				const t = i18nit(subscription.locale);
-				let message = { title: "", body: "", url: link };
+				const message = { title: "", body: "", url: link };
 
 				if (reply) {
 					// Notification for reply to comment
@@ -132,18 +130,19 @@ export const comment = {
 				// Send notification in the background
 				// The `ctx.waitUntil()` method is specific to Cloudflare Workers.
 				// Remove failed notification endpoints from database
-				locals.runtime.ctx.waitUntil(notify({ endpoint: subscription.endpoint, p256dh: subscription.p256dh, auth: subscription.auth }, message).then(success => success || db
-					.delete(Notification)
-					.where(and(eq(Notification.endpoint, subscription.endpoint)))
-				));
+				locals.runtime.ctx.waitUntil(
+					notify({ endpoint: subscription.endpoint, p256dh: subscription.p256dh, auth: subscription.auth }, message).then(
+						success => success || db.delete(Notification).where(and(eq(Notification.endpoint, subscription.endpoint)))
+					)
+				);
 			});
 		}
 	}),
 
 	edit: defineAction({
 		input: z.object({
-			ID: z.string(),			// The comment ID to edit
-			content: z.string()		// New content for the comment
+			ID: z.string(), // The comment ID to edit
+			content: z.string() // New content for the comment
 		}),
 		handler: async ({ ID, content }, { cookies, locals }) => {
 			// Verify user authentication
@@ -151,7 +150,7 @@ export const comment = {
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
-			let db = drizzle(locals.runtime.env.DB);
+			const db = drizzle(locals.runtime.env.DB);
 
 			// Generate new comment ID and timestamp for the edited version
 			const now = new Date();
@@ -169,24 +168,22 @@ export const comment = {
 			const comment = comments[0];
 
 			// Clone the original comment with new content and timestamp
-			await db
-				.insert(Comment)
-				.values({
-					ID: edit,
-					section: comment.section,
-					item: comment.item,
-					reply: comment.reply,
-					drifter: comment.drifter,
-					timestamp: now.getTime(),
-					content
-				});
+			await db.insert(Comment).values({
+				ID: edit,
+				section: comment.section,
+				item: comment.item,
+				reply: comment.reply,
+				drifter: comment.drifter,
+				timestamp: now.getTime(),
+				content
+			});
 		}
 	}),
 
 	// Action to delete a comment (marks it as edited by itself)
 	delete: defineAction({
 		input: z.object({
-			ID: z.string(),		// The comment ID to delete
+			ID: z.string() // The comment ID to delete
 		}),
 		handler: async ({ ID }, { cookies, locals }) => {
 			// Verify user authentication
@@ -194,7 +191,7 @@ export const comment = {
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
-			let db = drizzle(locals.runtime.env.DB);
+			const db = drizzle(locals.runtime.env.DB);
 
 			// Mark the comment as deleted by setting edit field to its own ID
 			// This creates a self-reference indicating deletion while preserving the record
@@ -208,18 +205,18 @@ export const comment = {
 	// Action to retrieve and list all comments for a specific section and item
 	list: defineAction({
 		input: z.object({
-			section: z.string(),	// The section this comment belongs to
-			item: z.string()		// The item ID to get comments for
+			section: z.string(), // The section this comment belongs to
+			item: z.string() // The item ID to get comments for
 		}),
 		handler: async ({ section, item }, { locals }) => {
 			// Get the site author ID
 			const author = env.AUTHOR_ID ?? null;
 
 			// Initialize database connection
-			let db = drizzle(locals.runtime.env.DB);
+			const db = drizzle(locals.runtime.env.DB);
 
 			// Fetch all comments with user information
-			let comments = await db
+			const comments = await db
 				.select({
 					ID: Comment.ID,
 					section: Comment.section,
@@ -246,11 +243,13 @@ export const comment = {
 
 			// Create a map for efficient comment lookup and initialize subcomments & history arrays
 			const map = new Map<string, any>();
-			comments.forEach((comment: any) => map.set(comment.ID, ((comment).subcomments = [], comment.history = [], comment)));
+			comments.forEach((comment: any) => {
+				map.set(comment.ID, ((comment.subcomments = []), (comment.history = []), comment));
+			});
 			const list = new Map(map);
 
 			// Build comment tree structure with replies and edit history
-			const treeification: Comment[] = [];
+			const treeification: CommentItem[] = [];
 
 			// Count the final comments
 			let count: number = 0;
@@ -260,8 +259,8 @@ export const comment = {
 				count++;
 
 				// Process edit history chain
-				let edit;
-				while (edit = map.get(comment.edit)) {
+				let edit: CommentItem;
+				while ((edit = map.get(comment.edit))) {
 					if (edit.ID === comment.ID) {
 						// Self-reference indicates deletion
 						delete comment.content;
@@ -295,4 +294,4 @@ export const comment = {
 			return { treeification, count };
 		}
 	})
-}
+};

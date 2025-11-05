@@ -6,9 +6,9 @@ const env = import.meta.env;
 // VAPID (Voluntary Application Server Identification) keys for web push authentication
 // These keys are used to identify the application server to push services
 const VAPID: VapidKeys = {
-	subject: config.author.email,			// Contact email for the application server
-	publicKey: env.NOTIFY_PUBLIC_KEY,		// Public key for VAPID authentication
-	privateKey: env.NOTIFY_PRIVATE_KEY,		// Private key for VAPID authentication
+	subject: config.author.email, // Contact email for the application server
+	publicKey: env.NOTIFY_PUBLIC_KEY, // Public key for VAPID authentication
+	privateKey: env.NOTIFY_PRIVATE_KEY // Private key for VAPID authentication
 };
 
 /**
@@ -23,7 +23,10 @@ const VAPID: VapidKeys = {
  * @param data.url - URL to open when notification is clicked (optional)
  * @returns Promise<boolean> - true if sent successfully, false if subscription is invalid/expired
  */
-export default async function notify(subscription: { endpoint: string; auth: string; p256dh: string; }, data: { title: string; body?: string; url?: string; }): Promise<boolean> {
+export default async function notify(
+	subscription: { endpoint: string; auth: string; p256dh: string },
+	data: { title: string; body?: string; url?: string }
+): Promise<boolean> {
 	// Convert subscription data to standard PushSubscription format
 	const push: PushSubscription = {
 		endpoint: subscription.endpoint!,
@@ -40,10 +43,10 @@ export default async function notify(subscription: { endpoint: string; auth: str
 			title: data.title,
 			body: data.body,
 			url: data.url,
-			timestamp: Date.now()	// Add timestamp for client-side handling
+			timestamp: Date.now() // Add timestamp for client-side handling
 		},
 		options: {
-			ttl: 60 * 60 * 24,		// Time-to-live: 24 hours in seconds
+			ttl: 60 * 60 * 24 // Time-to-live: 24 hours in seconds
 		}
 	};
 
@@ -53,7 +56,7 @@ export default async function notify(subscription: { endpoint: string; auth: str
 	// Send push notification to the push service
 	const response = await fetch(push.endpoint, payload);
 	if (response.ok) {
-		return true;	// Notification sent successfully
+		return true; // Notification sent successfully
 	} else if (response.status === 410 || response.status === 404) {
 		// 410 Gone or 404 Not Found indicates the subscription is invalid/expired
 		return false;

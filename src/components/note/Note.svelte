@@ -1,67 +1,107 @@
-<style lang="less">
-	article {
-		footer {
-			button {
-				display: flex;
-				align-items: center;
-				justify-content: center;
+<script lang="ts">
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { monolocale } from "astro:locales";
+import { onMount, type Snippet } from "svelte";
+import { flip } from "svelte/animate";
+import { fade } from "svelte/transition";
+import Time from "$utils/time";
+import i18nit from "$i18n";
 
-				width: 30px;
-				height: 30px;
+let {
+	locale,
+	notes,
+	series: series_list,
+	tags: tag_list,
+	top,
+	sensitive,
+	left,
+	right,
+	dots
+}: {
+	locale: string;
+	notes: any[];
+	series: string[];
+	tags: string[];
+} & { [key: string]: Snippet } = $props();
 
-				margin-top: 0.25rem 0rem 0.5rem;
-				border-bottom: 2px solid;
+const t = i18nit(locale);
 
-				font-style: var(--monospace);
-				font-size: 0.875rem;
+let initial = $state(false); // Track initial load to prevent unexpected effects
+let series: string | null = $state(null);
+let tags: string[] = $state([]);
+let filtered: any[] = $derived.by(() => {
+	let list: any[] = notes
+		// Apply series and tag filtering
+		.filter(note => {
+			// Check if note matches the specified series
+			let match_series = !series || note.data.series === series;
 
-				transition: color 0.15s ease-in-out;
+			// Check if note contains all specified tags
+			let match_tags = tags.every(tag => note.data.tags?.includes(tag));
 
-				&:hover,
-				&.location {
-					color: var(--primary-color);
-				}
-			}
-		}
-	}
+			return match_series && match_tags;
+		})
+		// Sort by timestamp (newest first)
+		.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
 
-	aside {
-		section {
-			display: flex;
-			flex-direction: column;
-			gap: 5px;
+	if (!initial) return list;
 
-			p {
-				display: flex;
-				flex-direction: row;
-				flex-wrap: wrap;
-				gap: 5px;
+	// Build URL with current page, series, and tag filters
+	let url = getRelativeLocaleUrl(locale, `/note?page=${page}${series ? `&series=${series}` : ""}${tags.map(tag => `&tag=${tag}`).join("")}`);
 
-				button {
-					border-bottom: 1px solid var(--primary-color);
-					padding: 0rem 0.2rem;
+	// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
+	window.history.replaceState({ url, random: Math.random(), source: "swup" }, "", url);
 
-					font-size: 0.9rem;
-					transition:
-						color 0.1s ease-in-out,
-						background-color 0.1s ease-in-out;
+	return list;
+});
 
-					&.selected {
-						color: var(--background-color);
-						background-color: var(--primary-color);
-					}
+// Calculate pagination
+const size: number = 20;
+let pages: number = $derived(Math.ceil(filtered.length / size));
 
-					@media (min-width: 640px) {
-						&:hover {
-							color: var(--background-color);
-							background-color: var(--primary-color);
-						}
-					}
-				}
-			}
-		}
-	}
-</style>
+// Ensure page is within valid range
+let page: number = $state(1);
+$effect(() => {
+	page = Math.max(1, Math.min(Math.floor(page), pages));
+});
+
+// Apply pagination by slicing the array
+let list: any[] = $derived(filtered.slice((page - 1) * size, page * size));
+
+/**
+ * Toggle tag inclusion/exclusion in the filter list
+ * @param tag Tag to toggle
+ * @param turn whether to include or exclude the tag
+ */
+function switch_tag(tag: string, turn?: boolean) {
+	let included = tags.includes(tag);
+	if (turn === undefined) turn = !included;
+
+	// Add tag if turning on and not included, or remove if turning off
+	tags = turn ? (included ? tags : [...tags, tag]) : tags.filter(item => item !== tag);
+}
+
+/**
+ * Select or deselect a series filter (only one series can be active at a time)
+ * @param series_choice the series to select or deselect
+ * @param turn whether to include or exclude the series
+ */
+function choose_series(series_choice: string, turn?: boolean) {
+	if (turn === undefined) turn = series !== series_choice;
+	// Set series if turning on, or clear if turning off
+	series = turn ? series_choice : null;
+}
+
+onMount(() => {
+	const params = new URLSearchParams(window.location.search);
+
+	page = Number(params.get("page")) || 1;
+	series = params.get("series");
+	tags = params.getAll("tag");
+
+	initial = true;
+});
+</script>
 
 <main class="flex flex-col-reverse sm:flex-row gap-10 grow">
 	<article class="flex flex-col gap-4 grow">
@@ -126,92 +166,67 @@
 	</aside>
 </main>
 
-<script lang="ts">
-	import { getRelativeLocaleUrl } from "astro:i18n";
-	import { monolocale } from "astro:locales";
-	import { onMount, type Snippet } from "svelte";
-	import { flip } from "svelte/animate";
-	import { fade } from "svelte/transition";
-	import Time from "$utils/time";
-	import i18nit from "$i18n";
+<style lang="less">
+	article {
+		footer {
+			button {
+				display: flex;
+				align-items: center;
+				justify-content: center;
 
-	let { locale, notes, series: series_list, tags: tag_list, top, sensitive, left, right, dots }: { locale: string; notes: any[]; series: string[]; tags: string[]; top: Snippet; sensitive: Snippet; left: Snippet; right: Snippet; dots: Snippet } = $props();
+				width: 30px;
+				height: 30px;
 
-	const t = i18nit(locale);
+				margin-top: 0.25rem 0rem 0.5rem;
+				border-bottom: 2px solid;
 
-	let initial = $state(false); // Track initial load to prevent unexpected effects
-	let series: string | null = $state(null);
-	let tags: string[] = $state([]);
-	let filtered: any[] = $derived.by(() => {
-		let list: any[] = notes
-			// Apply series and tag filtering
-			.filter(note => {
-				// Check if note matches the specified series
-				let match_series = !series || note.data.series == series;
+				font-style: var(--monospace);
+				font-size: 0.875rem;
 
-				// Check if note contains all specified tags
-				let match_tags = tags.every(tag => note.data.tags?.includes(tag));
+				transition: color 0.15s ease-in-out;
 
-				return match_series && match_tags;
-			})
-			// Sort by timestamp (newest first)
-			.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
-
-		if (!initial) return list;
-
-		// Build URL with current page, series, and tag filters
-		let url = getRelativeLocaleUrl(locale, `/note?page=${page}${series ? `&series=${series}` : ""}${tags.map(tag => `&tag=${tag}`).join("")}`);
-
-		// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
-		window.history.replaceState({ url, random: Math.random(), source: "swup" }, "", url);
-
-		return list;
-	});
-
-	// Calculate pagination
-	const size: number = 20;
-	let pages: number = $derived(Math.ceil(filtered.length / size));
-
-	// Ensure page is within valid range
-	let page: number = $state(1);
-	$effect(() => {
-		page = Math.max(1, Math.min(Math.floor(page), pages));
-	});
-
-	// Apply pagination by slicing the array
-	let list: any[] = $derived(filtered.slice((page - 1) * size, page * size));
-
-	/**
-	 * Toggle tag inclusion/exclusion in the filter list
-	 * @param tag Tag to toggle
-	 * @param turn whether to include or exclude the tag
-	 */
-	function switch_tag(tag: string, turn?: boolean) {
-		let included = tags.includes(tag);
-		if (turn === undefined) turn = !included;
-
-		// Add tag if turning on and not included, or remove if turning off
-		tags = turn ? (included ? tags : [...tags, tag]) : tags.filter(item => item !== tag);
+				&:hover,
+				&.location {
+					color: var(--primary-color);
+				}
+			}
+		}
 	}
 
-	/**
-	 * Select or deselect a series filter (only one series can be active at a time)
-	 * @param series_choice the series to select or deselect
-	 * @param turn whether to include or exclude the series
-	 */
-	function choose_series(series_choice: string, turn?: boolean) {
-		if (turn === undefined) turn = series !== series_choice;
-		// Set series if turning on, or clear if turning off
-		series = turn ? series_choice : null;
+	aside {
+		section {
+			display: flex;
+			flex-direction: column;
+			gap: 5px;
+
+			p {
+				display: flex;
+				flex-direction: row;
+				flex-wrap: wrap;
+				gap: 5px;
+
+				button {
+					border-bottom: 1px solid var(--primary-color);
+					padding: 0rem 0.2rem;
+
+					font-size: 0.9rem;
+					transition:
+						color 0.1s ease-in-out,
+						background-color 0.1s ease-in-out;
+
+					&.selected {
+						color: var(--background-color);
+						background-color: var(--primary-color);
+					}
+
+					@media (min-width: 640px) {
+						&:hover {
+							color: var(--background-color);
+							background-color: var(--primary-color);
+						}
+					}
+				}
+			}
+		}
 	}
-
-	onMount(() => {
-		const params = new URLSearchParams(window.location.search);
-
-		page = Number(params.get("page")) || 1;
-		series = params.get("series");
-		tags = params.getAll("tag");
-
-		initial = true;
-	});
-</script>
+</style>

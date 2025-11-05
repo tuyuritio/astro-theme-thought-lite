@@ -15,9 +15,9 @@ const { locale = i18n!.defaultLocale } = Astro.params;
 
 const t = i18nit(locale);
 
-const introduction = await getEntry("information", monolocale ? "" : locale + "/introduction");
-const roll = await getEntry("information", monolocale ? "" : locale + "/roll");
-const chronicle = (await getEntry("information", monolocale ? "" : locale + "/chronicle"))?.data;
+const introduction = await getEntry("information", `${monolocale ? "" : locale}/introduction`);
+const roll = await getEntry("information", `${monolocale ? "" : locale}/roll`);
+const chronicle = (await getEntry("information", `${monolocale ? "" : locale}/chronicle`))?.data;
 
 const { Content: Introduction } = introduction ? await render(introduction) : ({} as any);
 const { Content: Roll } = roll ? await render(roll) : ({} as any);

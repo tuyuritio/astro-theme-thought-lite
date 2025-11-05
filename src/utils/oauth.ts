@@ -5,16 +5,16 @@ const env = import.meta.env;
 
 // Interface defining the structure of OAuth account information
 export interface OAuthAccount {
-	platform: string;		// OAuth provider name (GitHub, Google, X)
-	access: string;			// Access token for API calls
-	expire?: Date;			// Token expiration date (if applicable)
-	refresh?: string;		// Refresh token for token renewal (if applicable)
-	account: string;		// Unique account identifier from provider
-	handle?: string;		// Username/handle (if applicable)
-	name: string;			// Display name
-	description?: string;	// User bio/description (if applicable)
-	image: string;			// Profile image URL
-};
+	platform: string; // OAuth provider name (GitHub, Google, X)
+	access: string; // Access token for API calls
+	expire?: Date; // Token expiration date (if applicable)
+	refresh?: string; // Refresh token for token renewal (if applicable)
+	account: string; // Unique account identifier from provider
+	handle?: string; // Username/handle (if applicable)
+	name: string; // Display name
+	description?: string; // User bio/description (if applicable)
+	image: string; // Profile image URL
+}
 
 // OAuth redirect URI for all providers
 const REDIRECT_URI = `${site}/drifter/anchor`;
@@ -38,13 +38,13 @@ export class OAuth {
 	 * @throws Error if platform is invalid or required environment variables are missing
 	 */
 	constructor(platform?: string) {
-		if (platform == "GitHub") {
+		if (platform === "GitHub") {
 			if (!(env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
 			this.provider = new GitHub(env.GITHUB_CLIENT_ID, env.GITHUB_CLIENT_SECRET, `${REDIRECT_URI}/GitHub`);
-		} else if (platform == "Google") {
+		} else if (platform === "Google") {
 			if (!(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
 			this.provider = new Google(env.GOOGLE_CLIENT_ID, env.GOOGLE_CLIENT_SECRET, `${REDIRECT_URI}/Google`);
-		} else if (platform == "X") {
+		} else if (platform === "X") {
 			if (!(env.TWITTER_CLIENT_ID && env.TWITTER_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
 			this.provider = new Twitter(env.TWITTER_CLIENT_ID, env.TWITTER_CLIENT_SECRET, `${REDIRECT_URI}/X`);
 		} else {
@@ -64,7 +64,7 @@ export class OAuth {
 			return this.provider.createAuthorizationURL(state, []);
 		} else if (this.provider instanceof Google) {
 			const URL = this.provider.createAuthorizationURL(state, code_verifier, ["openid", "profile"]);
-			URL.searchParams.set("access_type", "offline"); 	// Request refresh token
+			URL.searchParams.set("access_type", "offline"); // Request refresh token
 			return URL;
 		} else if (this.provider instanceof Twitter) {
 			return this.provider.createAuthorizationURL(state, code_verifier, ["users.read", "tweet.read", "offline.access"]);
@@ -86,27 +86,57 @@ export class OAuth {
 
 		if (this.provider instanceof GitHub) {
 			// Fetch user profile from GitHub API
-			const response = await fetch("https://api.github.com/user", { headers: { Authorization: `Bearer ${access_token}`, "User-Agent": USER_AGENT } });
+			const response = await fetch("https://api.github.com/user", {
+				headers: { Authorization: `Bearer ${access_token}`, "User-Agent": USER_AGENT }
+			});
 			const user = await response.json();
 
-			return { platform: "GitHub", access: access_token, account: user.id.toString(), handle: user.login, name: user.name, description: user.bio, image: user.avatar_url };
+			return {
+				platform: "GitHub",
+				access: access_token,
+				account: user.id.toString(),
+				handle: user.login,
+				name: user.name,
+				description: user.bio,
+				image: user.avatar_url
+			};
 		} else if (this.provider instanceof Google) {
 			// Extract token information and decode ID token
 			const expire_at = tokens.accessTokenExpiresAt();
 			const refresh_token = tokens.hasRefreshToken() ? tokens.refreshToken() : undefined;
 			const user: any = decodeIdToken(tokens.idToken());
 
-			return { platform: "Google", access: access_token, expire: expire_at, refresh: refresh_token, account: user.sub, name: user.name, image: user.picture };
+			return {
+				platform: "Google",
+				access: access_token,
+				expire: expire_at,
+				refresh: refresh_token,
+				account: user.sub,
+				name: user.name,
+				image: user.picture
+			};
 		} else if (this.provider instanceof Twitter) {
 			// Extract token information and fetch user profile from Twitter API
 			const expire_at = tokens.accessTokenExpiresAt();
 			const refresh_token = tokens.refreshToken();
 
-			const response = await fetch("https://api.twitter.com/2/users/me?user.fields=description,profile_image_url", { headers: { Authorization: `Bearer ${access_token}`, "User-Agent": USER_AGENT } });
+			const response = await fetch("https://api.twitter.com/2/users/me?user.fields=description,profile_image_url", {
+				headers: { Authorization: `Bearer ${access_token}`, "User-Agent": USER_AGENT }
+			});
 			const user = (await response.json()).data;
 
 			// Remove "_normal" suffix from Twitter profile image for higher resolution
-			return { platform: "X", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.username, name: user.name, description: user.description, image: user.profile_image_url.replace("_normal", "") };
+			return {
+				platform: "X",
+				access: access_token,
+				expire: expire_at,
+				refresh: refresh_token,
+				account: user.id,
+				handle: user.username,
+				name: user.name,
+				description: user.description,
+				image: user.profile_image_url.replace("_normal", "")
+			};
 		} else {
 			throw new Error("Invalid Provider");
 		}
@@ -126,9 +156,17 @@ export class OAuth {
 			const response = await fetch("https://api.github.com/user", { headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT } });
 			const user = await response.json();
 
-			return { platform: "GitHub", access: token, account: user.id.toString(), handle: user.login, name: user.name, description: user.bio, image: user.avatar_url };
+			return {
+				platform: "GitHub",
+				access: token,
+				account: user.id.toString(),
+				handle: user.login,
+				name: user.name,
+				description: user.bio,
+				image: user.avatar_url
+			};
 		} else if (this.provider instanceof Google) {
-			let expire_at: Date | undefined = undefined;
+			let expire_at: Date | undefined;
 			// Refresh access token if expired
 			if (expire) {
 				const tokens = await this.provider.refreshAccessToken(token);
@@ -137,25 +175,38 @@ export class OAuth {
 			}
 
 			// Fetch fresh profile data from Google API
-			const response = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", { headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT } });
+			const response = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+				headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT }
+			});
 			const user = await response.json();
 
 			return { platform: "Google", access: token, expire: expire_at, account: user.sub, name: user.name, image: user.picture };
 		} else if (this.provider instanceof Twitter) {
-			let expire_at: Date | undefined = undefined;
+			let expire_at: Date | undefined;
 			// Refresh access token if expired
 			if (expire) {
-				const tokens = (await this.provider.refreshAccessToken(token));
+				const tokens = await this.provider.refreshAccessToken(token);
 				token = tokens.accessToken();
 				expire_at = tokens.accessTokenExpiresAt();
 			}
 
 			// Fetch fresh profile data from Twitter API
-			const response = await fetch("https://api.twitter.com/2/users/me?user.fields=description,profile_image_url", { headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT } });
+			const response = await fetch("https://api.twitter.com/2/users/me?user.fields=description,profile_image_url", {
+				headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT }
+			});
 			const user = (await response.json()).data;
 
 			// Remove "_normal" suffix from Twitter profile image for higher resolution
-			return { platform: "X", access: token, expire: expire_at, account: user.id, handle: user.username, name: user.name, description: user.description, image: user.profile_image_url.replace("_normal", "") };
+			return {
+				platform: "X",
+				access: token,
+				expire: expire_at,
+				account: user.id,
+				handle: user.username,
+				name: user.name,
+				description: user.description,
+				image: user.profile_image_url.replace("_normal", "")
+			};
 		} else {
 			throw new Error("Invalid Provider");
 		}

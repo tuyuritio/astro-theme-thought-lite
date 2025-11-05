@@ -7,7 +7,7 @@ import svelte from "@astrojs/svelte";
 import UnoCSS from "unocss/astro";
 import swup from "@swup/astro";
 import icon from "astro-icon";
-import github_light from "shiki/themes/github-light.mjs"
+import github_light from "shiki/themes/github-light.mjs";
 
 import GFM from "remark-gfm";
 import ins from "remark-ins";
@@ -35,100 +35,100 @@ import wrapper from "./src/utils/remark/table-wrapper";
 import copy from "./src/utils/code-copy";
 import reading from "./src/utils/remark/reading";
 
-import locales from './integrations/astro-locales';
+import locales from "./integrations/astro-locales";
 
 // https://astro.build/config
 export default defineConfig({
-  adapter: cloudflare({
-    platformProxy: {
-      enabled: true
-    },
-    imageService: "compile"
-  }),
-  site: "https://thought-lite.ttio.workers.dev",
-  trailingSlash: "never",
-  i18n: {
-    locales: ["en", "zh-cn", "ja"],
-    defaultLocale: "en",
-    routing: {
-      redirectToDefaultLocale: false,
-      prefixDefaultLocale: false,
-    }
-  },
-  image: {
-    service: passthroughImageService(),
-  },
-  markdown: {
-    remarkPlugins: [
-      [GFM, { singleTilde: false }],
-      ins,
-      mark,
-      spoiler,
-      CJK,
-      [CJK_strikethrough, { singleTilde: false }],
-      math,
-      gemoji,
-      footnote,
-      abbr,
-      [table, { colspanWithEmpty: true }],
-      wrapper,
-      directive,
-      ruby,
-      [alerts, { legacyTitle: true }],
-      reading
-    ],
-    remarkRehype: {
-      footnoteLabel: null,
-      footnoteLabelTagName: "p",
-      footnoteLabelProperties: {
-        className: ["hidden"]
-      },
-      handlers: {
-        ...table_handler
-      }
-    },
-    rehypePlugins: [
-      ids,
-      [anchor, { behavior: "wrap" }],
-      [links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
-      katex,
-      figure,
-      sectionize
-    ],
-    smartypants: false,
-    shikiConfig: {
-      themes: {
-        light: {
-          ...github_light,
-          colorReplacements: {
-            "#fff": "var(--block-color)"
-          }
-        },
-        dark: "dark-plus"
-      },
-      transformers: [
-        copy({
-          duration: 1500
-        }),
-      ]
-    }
-  },
-  vite: {
-    plugins: [yaml()]
-  },
-  integrations: [
-    locales(),
-    svelte(),
-    sitemap(),
-    swup({
-      globalInstance: true,
-      preload: false,
-      smoothScrolling: false,
-      progress: true
-    }),
-    UnoCSS({
-      injectReset: "@unocss/reset/normalize.css"
-    }),
-    icon()
-  ]
+	adapter: cloudflare({
+		platformProxy: {
+			enabled: true
+		},
+		imageService: "compile"
+	}),
+	site: "https://thought-lite.ttio.workers.dev",
+	trailingSlash: "never",
+	i18n: {
+		locales: ["en", "zh-cn", "ja"],
+		defaultLocale: "en",
+		routing: {
+			redirectToDefaultLocale: false,
+			prefixDefaultLocale: false
+		}
+	},
+	image: {
+		service: passthroughImageService()
+	},
+	markdown: {
+		remarkPlugins: [
+			[GFM, { singleTilde: false }],
+			ins,
+			mark,
+			spoiler,
+			CJK,
+			[CJK_strikethrough, { singleTilde: false }],
+			math,
+			gemoji,
+			footnote,
+			abbr,
+			[table, { colspanWithEmpty: true }],
+			wrapper,
+			directive,
+			ruby,
+			[alerts, { legacyTitle: true }],
+			reading
+		],
+		remarkRehype: {
+			footnoteLabel: null,
+			footnoteLabelTagName: "p",
+			footnoteLabelProperties: {
+				className: ["hidden"]
+			},
+			handlers: {
+				...table_handler
+			}
+		},
+		rehypePlugins: [
+			ids,
+			[anchor, { behavior: "wrap" }],
+			[links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
+			katex,
+			figure,
+			sectionize
+		],
+		smartypants: false,
+		shikiConfig: {
+			themes: {
+				light: {
+					...github_light,
+					colorReplacements: {
+						"#fff": "var(--block-color)"
+					}
+				},
+				dark: "dark-plus"
+			},
+			transformers: [
+				copy({
+					duration: 1500
+				})
+			]
+		}
+	},
+	vite: {
+		plugins: [yaml()]
+	},
+	integrations: [
+		locales(),
+		svelte(),
+		sitemap(),
+		swup({
+			globalInstance: true,
+			preload: false,
+			smoothScrolling: false,
+			progress: true
+		}),
+		UnoCSS({
+			injectReset: "@unocss/reset/normalize.css"
+		}),
+		icon()
+	]
 });

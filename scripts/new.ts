@@ -9,7 +9,7 @@ import { cancel, confirm, intro, isCancel, log, multiselect, note, outro, select
 const CANCEL_MESSAGE = "Operation cancelled";
 
 // Main function: Interactive CLI script for creating new articles
-!async function () {
+!(async () => {
 	console.clear();
 	intro("📝 Create New Article");
 
@@ -59,18 +59,18 @@ const CANCEL_MESSAGE = "Operation cancelled";
 		// Preface uses timestamp as filename
 		information.timestamp = timestamp;
 
-		content += "Start your content here..."
+		content += "Start your content here...";
 		// Generate filename from timestamp (e.g., 2025-10-18-14-30-00.md)
 		path = join(path, `${timestamp.substring(0, 19).replace(/[\s:]/g, "-")}.md`);
 	} else {
 		// Note and Jotting require additional metadata
-		content += "## Start Writing\n\nStart your content here..."
+		content += "## Start Writing\n\nStart your content here...";
 
 		// Prompt user to input article title
 		const title = await text({
 			message: "Article title",
 			placeholder: "Enter title...",
-			validate: (value) => value ? undefined : "Title cannot be empty"
+			validate: value => (value ? undefined : "Title cannot be empty")
 		});
 
 		// Exit if user cancels the input
@@ -81,7 +81,15 @@ const CANCEL_MESSAGE = "Operation cancelled";
 
 		// Slugify function: Convert title to URL-friendly slug
 		// Normalizes Unicode, removes special characters, converts to lowercase and hyphens
-		const slugify = (text: string) => text.toLowerCase().normalize("NFKC").replace(/[^\p{L}\p{N}\s-]+/gu, "").trim().replace(/\s+/g, "-").replace(/-+/g, "-").replace(/^-+|-+$/g, "");
+		const slugify = (text: string) =>
+			text
+				.toLowerCase()
+				.normalize("NFKC")
+				.replace(/[^\p{L}\p{N}\s-]+/gu, "")
+				.trim()
+				.replace(/\s+/g, "-")
+				.replace(/-+/g, "-")
+				.replace(/^-+|-+$/g, "");
 
 		// Prompt user to input content ID (filename)
 		let ID: string | symbol = slugify(title);
@@ -89,7 +97,8 @@ const CANCEL_MESSAGE = "Operation cancelled";
 			message: "Content ID（Filename）",
 			placeholder: "Enter content ID...",
 			initialValue: ID,
-			validate: (value) => value == slugify(value) ? undefined : "Content ID can only contain letters, numbers, hyphens, and cannot start or end with a hyphen"
+			validate: value =>
+				value === slugify(value) ? undefined : "Content ID can only contain letters, numbers, hyphens, and cannot start or end with a hyphen"
 		});
 
 		// Exit if user cancels the input
@@ -181,7 +190,9 @@ const CANCEL_MESSAGE = "Operation cancelled";
 
 	// Construct frontmatter with metadata and content template
 	content = `---
-${Object.entries(information).map(([key, value]) => `${key}: ${value}`).join("\n")}
+${Object.entries(information)
+	.map(([key, value]) => `${key}: ${value}`)
+	.join("\n")}
 ---
 
 ${content}
@@ -202,7 +213,7 @@ ${content}
 	// Check if file already exists and prompt for confirmation to overwrite
 	if (existsSync(path)) {
 		const overwrite = await confirm({
-			message: `File ${path} already exists. Overwrite?`,
+			message: `File ${path} already exists. Overwrite?`
 		});
 
 		// Exit if user cancels or chooses not to overwrite
@@ -228,11 +239,11 @@ ${content}
 	// Open file in VS Code if confirmed
 	if (!isCancel(openInVSCode) && openInVSCode) {
 		const { exec } = await import("node:child_process");
-		exec(`code "${path}"`, (error) => error && log.error(`Failed to open VS Code: ${error.message}`));
+		exec(`code "${path}"`, error => error && log.error(`Failed to open VS Code: ${error.message}`));
 	}
 
 	outro("🎉 Done! Happy writing!");
-}().catch((error) => {
+})().catch(error => {
 	// Handle any errors that occur during execution
 	log.error("An error occurred:");
 	log.error(error);

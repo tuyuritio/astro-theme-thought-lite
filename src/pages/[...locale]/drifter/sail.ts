@@ -5,7 +5,7 @@ export const prerender = false;
 
 export const GET: APIRoute = async ({ request, cookies, redirect }) => {
 	// Verify user authentication before proceeding with signout
-	const passport = (await Token.check(cookies, "passport"));
+	const passport = await Token.check(cookies, "passport");
 	if (!passport.visa) return new Response("Unauthorized", { status: 401 });
 
 	// Remove authentication visa from passport token (signout)

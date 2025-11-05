@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry, render } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { monolocale } from "astro:locales";
 import Icon from "$components/Icon.astro";
 import i18nit from "$i18n";
 
@@ -44,7 +45,6 @@ switch (copyright.type) {
 		break;
 
 	default:
-	case "CC0 1.0":
 		CC_URL = "https://creativecommons.org/publicdomain/zero/1.0/";
 		CC_label = "CC0 1.0 Universal";
 		break;
@@ -65,35 +65,34 @@ if (copyright.type === "CC0 1.0") {
 }
 
 // Fetch notes and jottings collections to calculate total word count
-// Filter by publication status and locale
 
 const notes = await getCollection("note", note => {
-	// Extract language from the file path structure
-	const [language] = note.id.split("/");
-
-	// Filter criteria: must be published and match locale
+	// Filter by publication status and locale
 	let published = !note.data.draft;
-	let localed = language == locale;
+	let localed = monolocale || note.id.split("/")[0] === locale;
 
 	return published && localed;
 });
 
 // Calculate total word count across all notes
-const note_words = (await Promise.all(notes.map(async note => (await render(note)).remarkPluginFrontmatter.words))).reduce((summary, words) => summary + words, 0);
+const note_words = (await Promise.all(notes.map(async note => (await render(note)).remarkPluginFrontmatter.words))).reduce(
+	(summary, words) => summary + words,
+	0
+);
 
 const jottings = await getCollection("jotting", jotting => {
-	// Extract language from the file path structure
-	const [language] = jotting.id.split("/");
-
-	// Filter criteria: must be published and match locale
+	// Filter by publication status and locale
 	let published = !jotting.data.draft;
-	let localed = language == locale;
+	let localed = monolocale || jotting.id.split("/")[0] === locale;
 
 	return published && localed;
 });
 
 // Calculate total word count across all jottings
-const jotting_words = (await Promise.all(jottings.map(async jotting => (await render(jotting)).remarkPluginFrontmatter.words))).reduce((summary, words) => summary + words, 0);
+const jotting_words = (await Promise.all(jottings.map(async jotting => (await render(jotting)).remarkPluginFrontmatter.words))).reduce(
+	(summary, words) => summary + words,
+	0
+);
 
 // Aggregate total word count
 const total_words = note_words + jotting_words;

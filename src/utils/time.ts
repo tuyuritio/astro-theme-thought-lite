@@ -9,7 +9,7 @@ import { DateTime } from "luxon";
 function datetime(time?: Date | number | string, timezone: string = Time.default_timezone): DateTime {
 	if (time === undefined) {
 		return DateTime.now().setZone(timezone);
-	} else if (typeof time === 'number') {
+	} else if (typeof time === "number") {
 		return DateTime.fromMillis(time).setZone(timezone);
 	} else if (time instanceof Date) {
 		return DateTime.fromJSDate(time).setZone(timezone);

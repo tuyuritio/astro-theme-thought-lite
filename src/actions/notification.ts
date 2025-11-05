@@ -23,10 +23,10 @@ export const notification = {
 	// Action to subscribe a user to push notifications
 	subscribe: defineAction({
 		input: z.object({
-			locale: z.string(),				// User's language preference for notifications
-			endpoint: z.string().url(),		// Push service endpoint URL
-			p256dh: z.string(),				// Public key for encryption
-			auth: z.string()				// Authentication secret for encryption
+			locale: z.string(), // User's language preference for notifications
+			endpoint: z.string().url(), // Push service endpoint URL
+			p256dh: z.string(), // Public key for encryption
+			auth: z.string() // Authentication secret for encryption
 		}),
 		handler: async ({ locale, endpoint, p256dh, auth }, { cookies, locals }) => {
 			// Verify user authentication
@@ -34,7 +34,7 @@ export const notification = {
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
-			let db = drizzle(locals.runtime.env.DB);
+			const db = drizzle(locals.runtime.env.DB);
 
 			// Insert new notification subscription
 			// Use onConflictDoNothing to handle duplicate subscriptions gracefully
@@ -54,7 +54,7 @@ export const notification = {
 	// Action to unsubscribe a user from push notifications
 	unsubscribe: defineAction({
 		input: z.object({
-			endpoint: z.string().url()		// Push service endpoint URL to remove
+			endpoint: z.string().url() // Push service endpoint URL to remove
 		}),
 		handler: async ({ endpoint }, { cookies, locals }) => {
 			// Verify user authentication
@@ -62,20 +62,18 @@ export const notification = {
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
-			let db = drizzle(locals.runtime.env.DB);
+			const db = drizzle(locals.runtime.env.DB);
 
 			// Delete the specific notification subscription
 			// Match both user ID and endpoint to ensure user can only remove their own subscriptions
-			await db
-				.delete(Notification)
-				.where(and(eq(Notification.drifter, drifter), eq(Notification.endpoint, endpoint)));
+			await db.delete(Notification).where(and(eq(Notification.drifter, drifter), eq(Notification.endpoint, endpoint)));
 		}
 	}),
 
 	// Action to check if a user is subscribed to notifications for a specific endpoint
 	check: defineAction({
 		input: z.object({
-			endpoint: z.string().url(),		// Push service endpoint URL to check
+			endpoint: z.string().url() // Push service endpoint URL to check
 		}),
 		handler: async ({ endpoint }, { cookies, locals }) => {
 			// Verify user authentication
@@ -83,7 +81,7 @@ export const notification = {
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
-			let db = drizzle(locals.runtime.env.DB);
+			const db = drizzle(locals.runtime.env.DB);
 
 			// Query for existing subscription matching user and endpoint
 			const subscription = await db
@@ -95,4 +93,4 @@ export const notification = {
 			return subscription.length > 0;
 		}
 	})
-}
+};

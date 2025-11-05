@@ -24,7 +24,7 @@ const prefaces = (
 		const [language, id] = preface.id.split("/");
 		preface.id = id;
 
-		return language == locale;
+		return language === locale;
 	})
 ).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
 ---

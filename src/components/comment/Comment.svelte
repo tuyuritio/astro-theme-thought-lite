@@ -1,3 +1,76 @@
+<script lang="ts">
+import { actions } from "astro:actions";
+import remark from "$utils/remark";
+import Time from "$utils/time";
+import Modal from "$components/Modal.svelte";
+import { push_tip } from "$components/Tip.svelte";
+import i18nit from "$i18n";
+import Self from "./Comment.svelte";
+import Reply from "./Reply.svelte";
+
+let {
+	locale,
+	OAuth,
+	turnstile,
+	drifter,
+	comment,
+	icon,
+	refresh,
+	depth = 0,
+	limit = $bindable(0)
+}: {
+	locale: string;
+	OAuth: any;
+	turnstile?: string;
+	drifter?: any;
+	comment: any;
+	icon: any;
+	refresh: any;
+	depth?: number;
+	limit?: number;
+} = $props();
+
+const t = i18nit(locale);
+
+// Minimum nesting depth for comment threads to ensure proper display
+const MIN_DEPTH = 1;
+
+// Maximum nesting depth for comment threads to prevent infinite recursion
+const MAX_DEPTH = 4;
+
+// Control visibility of reply and edit forms (mutually exclusive)
+let reply_view = $state(false);
+let edit_view = $state(false);
+
+// Control visibility of history and delete confirmation modals
+let history_view = $state(false);
+let delete_view = $state(false);
+
+/**
+ * Copy comment permalink to clipboard for sharing
+ */
+async function share() {
+	await navigator.clipboard.writeText(`${location.origin}${location.pathname}#${comment.ID}`);
+	push_tip("success", t("comment.share.success"));
+}
+
+/**
+ * Delete comment after confirmation
+ */
+async function remove() {
+	const { data, error } = await actions.comment.delete({ ID: comment.ID });
+	if (!error) {
+		// Refresh comment list and close modal on successful deletion
+		refresh();
+		delete_view = false;
+
+		push_tip("success", t("comment.remove.success"));
+	} else {
+		push_tip("error", t("comment.remove.failure"));
+	}
+}
+</script>
+
 <Modal bind:open={delete_view}>
 	<div id="delete" class="flex flex-col items-center justify-center gap-5">
 		<h2>{t("comment.remove.name")}</h2>
@@ -84,56 +157,3 @@
 		{/each}
 	</div>
 </main>
-
-<script lang="ts">
-	import { actions } from "astro:actions";
-	import remark from "$utils/remark";
-	import Time from "$utils/time";
-	import Modal from "$components/Modal.svelte";
-	import { push_tip } from "$components/Tip.svelte";
-	import i18nit from "$i18n";
-	import Self from "./Comment.svelte";
-	import Reply from "./Reply.svelte";
-
-	let { locale, OAuth, turnstile, drifter, comment, icon, refresh, depth = 0, limit = $bindable(0) }: { locale: string; OAuth: any; turnstile?: string; drifter?: any; comment: any; icon: any; refresh: any; depth?: number; limit?: number } = $props();
-
-	const t = i18nit(locale);
-
-	// Minimum nesting depth for comment threads to ensure proper display
-	const MIN_DEPTH = 1;
-
-	// Maximum nesting depth for comment threads to prevent infinite recursion
-	const MAX_DEPTH = 4;
-
-	// Control visibility of reply and edit forms (mutually exclusive)
-	let reply_view = $state(false);
-	let edit_view = $state(false);
-
-	// Control visibility of history and delete confirmation modals
-	let history_view = $state(false);
-	let delete_view = $state(false);
-
-	/**
-	 * Copy comment permalink to clipboard for sharing
-	 */
-	async function share() {
-		await navigator.clipboard.writeText(`${location.origin}${location.pathname}#${comment.ID}`);
-		push_tip("success", t("comment.share.success"));
-	}
-
-	/**
-	 * Delete comment after confirmation
-	 */
-	async function remove() {
-		const { data, error } = await actions.comment.delete({ ID: comment.ID });
-		if (!error) {
-			// Refresh comment list and close modal on successful deletion
-			refresh();
-			delete_view = false;
-
-			push_tip("success", t("comment.remove.success"));
-		} else {
-			push_tip("error", t("comment.remove.failure"));
-		}
-	}
-</script>

@@ -20,7 +20,8 @@ function i18nit(language: string): (key: string, params?: Record<string, string 
 	 * @param key - Dot-separated key path (e.g., "notification.reply.title")
 	 * @returns Translation value or undefined if not found
 	 */
-	const nested = (language: string, key: string) => key.split('.').reduce((translation, key) => translation?.[key], (translations as any)[language]);
+	const nested = (language: string, key: string) =>
+		key.split(".").reduce((translation, key) => translation?.[key], (translations as any)[language]);
 
 	/**
 	 * Get translation with fallback to default locale
@@ -35,7 +36,8 @@ function i18nit(language: string): (key: string, params?: Record<string, string 
 	 * @param params - Optional parameters for string interpolation (replaces {paramName} placeholders)
 	 * @returns Translated and interpolated string, or the original key if translation not found
 	 */
-	const t = (key: string, params?: Record<string, string | number>) => (fallback(key) as string)?.replace(/\{(\w+)\}/g, (_, param) => String(params?.[param] ?? param)) ?? key;
+	const t = (key: string, params?: Record<string, string | number>) =>
+		(fallback(key) as string)?.replace(/\{(\w+)\}/g, (_, param) => String(params?.[param] ?? param)) ?? key;
 
 	return t;
 }

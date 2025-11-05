@@ -1,17 +1,17 @@
-import type { AstroIntegration } from 'astro';
-import type { Plugin } from 'vite';
+import type { AstroIntegration } from "astro";
+import type { Plugin } from "vite";
 
 // --- Vite Virtual Module Definition ---
 
 /**
- * Public ID of the virtual module (used by users in imports) 
+ * Public ID of the virtual module (used by users in imports)
  */
-const VIRTUAL_MODULE_ID = 'astro:locales';
+const VIRTUAL_MODULE_ID = "astro:locales";
 
 /**
- * Internally resolved ID by Vite/Rollup (convention uses \0 prefix) 
+ * Internally resolved ID by Vite/Rollup (convention uses \0 prefix)
  */
-const RESOLVED_VIRTUAL_MODULE_ID = '\0' + VIRTUAL_MODULE_ID;
+const RESOLVED_VIRTUAL_MODULE_ID = `\0${VIRTUAL_MODULE_ID}`;
 
 /**
  * Options type received by the plugin factory
@@ -23,7 +23,7 @@ interface VirtualModuleOptions {
 /**
  * Factory function to create a Vite plugin instance
  * (This is an internal helper function, does not need to be exported)
- * 
+ *
  * @param options Object containing monolocale boolean value
  * @returns A Vite plugin instance
  */
@@ -32,10 +32,10 @@ function createVirtualModulePlugin(options: VirtualModuleOptions): Plugin {
 
 	return {
 		// Plugin name, used for debugging
-		name: 'vite-plugin-monolocale',
+		name: "vite-plugin-monolocale",
 
 		/**
-		 * Vite/Rollup hook 
+		 * Vite/Rollup hook
 		 * Responsible for resolving our virtual module ID.
 		 */
 		resolveId(id) {
@@ -45,7 +45,7 @@ function createVirtualModulePlugin(options: VirtualModuleOptions): Plugin {
 		},
 
 		/**
-		 * Vite/Rollup hook 
+		 * Vite/Rollup hook
 		 * Responsible for "loading" the content of the virtual module when requested by Vite.
 		 */
 		load(id) {
@@ -60,20 +60,20 @@ function createVirtualModulePlugin(options: VirtualModuleOptions): Plugin {
 // --- Astro Integration Definition ---
 
 /**
- * Astro integration factory function 
+ * Astro integration factory function
  * This is the default export you will import from astro.config.mjs
  */
 export default function monolocaleIntegration(): AstroIntegration {
 	return {
 		// Unique name of the integration
-		name: 'astro-monolocale-integration',
+		name: "astro-monolocale-integration",
 
 		hooks: {
 			/**
-			 * 'astro:config:setup' hook 
+			 * 'astro:config:setup' hook
 			 * Read configuration and inject Vite plugin here.
 			 */
-			'astro:config:setup': (params) => {
+			"astro:config:setup": params => {
 				const { config, updateConfig, logger } = params;
 
 				// 1. Safely read Astro i18n configuration
@@ -85,24 +85,22 @@ export default function monolocaleIntegration(): AstroIntegration {
 
 				// 3. Instantiate our internal Vite plugin factory
 				const virtualModulePlugin = createVirtualModulePlugin({
-					monolocale: monolocale,
+					monolocale: monolocale
 				});
 
-				// 4. Inject the plugin into Astro using 'updateConfig' 
+				// 4. Inject the plugin into Astro using 'updateConfig'
 				updateConfig({
 					vite: {
-						plugins: [
-							virtualModulePlugin,
-						],
-					},
+						plugins: [virtualModulePlugin]
+					}
 				});
 			},
 
 			/**
-			 * 'astro:config:done' hook 
+			 * 'astro:config:done' hook
 			 * Responsibility: Automatically inject type definitions for IDE auto-completion.
 			 */
-			'astro:config:done': (params) => {
+			"astro:config:done": params => {
 				const { injectTypes } = params;
 
 				// 5. Define the content of the .d.ts file
@@ -115,10 +113,10 @@ declare module 'astro:locales' {
 }
         `;
 
-				// 6. Inject types 
+				// 6. Inject types
 				injectTypes({
-					filename: 'monolocale.d.ts',
-					content: typesContent,
+					filename: "monolocale.d.ts",
+					content: typesContent
 				});
 			}
 		}
