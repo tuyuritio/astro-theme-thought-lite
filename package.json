@@ -26,7 +26,8 @@
 		"format": "biome format --write",
 		"lint": "biome lint",
 		"update": "npx npm-check-updates --interactive",
-		"count": "git log --pretty=tformat: --numstat | grep -v package | awk '{ A += $1; S += $2; T += $1 - $2 } END { printf \"+ %s\tLines\\n- %s\tLines\\n= %s\tLines\\n\", A, S, T }'"
+		"count": "git log --pretty=tformat: --numstat | grep -v package | awk '{ A += $1; S += $2; T += $1 - $2 } END { printf \"+ %s\tLines\\n- %s\tLines\\n= %s\tLines\\n\", A, S, T }'",
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@astrojs/markdown-remark": "^6.3.8",
@@ -80,11 +81,16 @@
 		"@rollup/plugin-yaml": "^4.1.2",
 		"@types/luxon": "^3.7.1",
 		"@unocss/reset": "^66.5.4",
+		"husky": "^9.1.7",
 		"less": "^4.4.2",
+		"lint-staged": "^16.2.6",
 		"prettier": "3.6.2",
 		"prettier-plugin-astro": "0.14.1",
 		"prettier-plugin-svelte": "^3.4.0",
 		"tsx": "^4.20.6",
 		"unocss": "^66.5.4"
+	},
+	"lint-staged": {
+		"*.{js,ts,json,jsonc,svelte,astro}": ["biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"]
 	}
 }
