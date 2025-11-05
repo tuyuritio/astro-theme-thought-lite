@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.21.0...v0.21.1) (2025-11-05)
+
+
+### Bug Fixes
+
+* correct collection name ([b75a25a](https://github.com/tuyuritio/astro-theme-thought-lite/commit/b75a25ae3c93523a23817c33f141e23963c5c3d7))
+
 ## [0.21.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.20.0...v0.21.0) (2025-11-05)
 
 
