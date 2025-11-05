@@ -3,14 +3,7 @@
 	"type": "module",
 	"version": "0.21.1",
 	"description": "A modern Astro theme focused on content creation",
-	"keywords": [
-		"astro",
-		"theme",
-		"blog",
-		"svelte",
-		"typescript",
-		"i18n"
-	],
+	"keywords": ["astro", "theme", "blog", "svelte", "typescript", "i18n"],
 	"homepage": "https://github.com/tuyuritio/astro-theme-thought-lite",
 	"repository": {
 		"type": "git",
@@ -80,6 +73,7 @@
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.5",
+		"@biomejs/biome": "2.3.4",
 		"@clack/prompts": "^0.11.0",
 		"@rollup/plugin-yaml": "^4.1.2",
 		"@types/luxon": "^3.7.1",

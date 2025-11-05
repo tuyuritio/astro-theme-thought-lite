@@ -9,10 +9,10 @@ interface AbbrDefinition {
 
 /**
  * Remark plugin to process abbreviations in markdown.
- * 
+ *
  * Syntax: *[ABBR]: Definition
  * Example: *[HTML]: HyperText Markup Language
- * 
+ *
  * This will convert all instances of "HTML" in the text to <abbr title="HyperText Markup Language">HTML</abbr>
  */
 const remarkAbbr: Plugin<[], Root> = () => {
@@ -87,12 +87,7 @@ function escapeRegExp(string: string): string {
  * Escape HTML special characters
  */
 function escapeHtml(text: string): string {
-	return text
-		.replace(/&/g, "&amp;")
-		.replace(/</g, "&lt;")
-		.replace(/>/g, "&gt;")
-		.replace(/"/g, "&quot;")
-		.replace(/'/g, "&#39;");
+	return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
 /**

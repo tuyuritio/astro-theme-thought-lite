@@ -1,3 +1,20 @@
+<script lang="ts">
+import { getRelativeLocaleUrl } from "astro:i18n";
+import type { Snippet } from "svelte";
+import { fade } from "svelte/transition";
+import i18nit from "$i18n";
+
+let { locale, sensitive = false, back, children }: { locale: string; sensitive: boolean; back: string; children: Snippet } = $props();
+
+const t = i18nit(locale);
+
+if (sensitive) {
+	$effect(() => {
+		if (!sensitive) window.zoom();
+	});
+}
+</script>
+
 {#if sensitive}
 	<div transition:fade={{ duration: 150 }} class="flex flex-col items-center justify-end gap-6">
 		<h2>{t("sensitive.title")}</h2>
@@ -17,20 +34,3 @@
 {:else}
 	<div transition:fade={{ delay: 150, duration: 150 }}>{@render children()}</div>
 {/if}
-
-<script lang="ts">
-	import { getRelativeLocaleUrl } from "astro:i18n";
-	import type { Snippet } from "svelte";
-	import { fade } from "svelte/transition";
-	import i18nit from "$i18n";
-
-	let { locale, sensitive = false, children, back }: { locale: string; sensitive: boolean; children: Snippet; back: string } = $props();
-
-	const t = i18nit(locale);
-
-	if (sensitive) {
-		$effect(() => {
-			if (!sensitive) window.zoom();
-		});
-	}
-</script>

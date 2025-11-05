@@ -14,8 +14,8 @@ export async function getStaticPaths() {
 	const jottings = await getCollection("jotting", jotting => !jotting.data.draft);
 
 	return jottings.map(jotting => {
-		let locale;
-		let id;
+		let locale: string | undefined;
+		let id: string;
 
 		if (monolocale) {
 			locale = undefined;
@@ -24,7 +24,7 @@ export async function getStaticPaths() {
 			// Extract language and note ID from file path structure
 			const [language, ...ids] = jotting.id.split("/");
 
-			locale = language == i18n!.defaultLocale ? undefined : language;
+			locale = language === i18n!.defaultLocale ? undefined : language;
 			id = ids.join("/");
 		}
 

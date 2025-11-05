@@ -17,9 +17,9 @@ const { locale = i18n!.defaultLocale } = Astro.params;
 const t = i18nit(locale);
 
 const jottings = await getCollection("jotting", jotting => {
-	// Match published status and locale
+	// Filter by publication status and locale
 	let published = !jotting.data.draft;
-	let localed = monolocale || jotting.id.split("/")[0] == locale;
+	let localed = monolocale || jotting.id.split("/")[0] === locale;
 
 	return published && localed;
 });

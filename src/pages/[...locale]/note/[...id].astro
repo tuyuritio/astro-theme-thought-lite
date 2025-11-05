@@ -16,8 +16,8 @@ export async function getStaticPaths() {
 	const notes = await getCollection("note", note => !note.data.draft);
 
 	return notes.map(note => {
-		let locale;
-		let id;
+		let locale: string | undefined;
+		let id: string;
 
 		if (monolocale) {
 			locale = undefined;
@@ -26,7 +26,7 @@ export async function getStaticPaths() {
 			// Extract language and note ID from file path structure
 			const [language, ...ids] = note.id.split("/");
 
-			locale = language == i18n!.defaultLocale ? undefined : language;
+			locale = language === i18n!.defaultLocale ? undefined : language;
 			id = ids.join("/");
 		}
 

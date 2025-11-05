@@ -39,9 +39,7 @@
 							"format": "uri"
 						}
 					},
-					"required": [
-						"name"
-					]
+					"required": ["name"]
 				}
 			]
 		},
@@ -55,15 +53,7 @@
 			"properties": {
 				"type": {
 					"title": "Creative Commons 4.0 License Type",
-					"enum": [
-						"CC0 1.0",
-						"CC BY 4.0",
-						"CC BY-SA 4.0",
-						"CC BY-NC 4.0",
-						"CC BY-NC-SA 4.0",
-						"CC BY-ND 4.0",
-						"CC BY-NC-ND 4.0"
-					]
+					"enum": ["CC0 1.0", "CC BY 4.0", "CC BY-SA 4.0", "CC BY-NC 4.0", "CC BY-NC-SA 4.0", "CC BY-ND 4.0", "CC BY-NC-ND 4.0"]
 				},
 				"year": {
 					"title": "License Year",
@@ -71,10 +61,7 @@
 					"pattern": "^\\d{4}(-\\d{4})?$"
 				}
 			},
-			"required": [
-				"type",
-				"year"
-			]
+			"required": ["type", "year"]
 		},
 		"feed": {
 			"title": "Feed Configuration",
@@ -85,18 +72,13 @@
 					"oneOf": [
 						{
 							"type": "string",
-							"enum": [
-								"*"
-							]
+							"enum": ["*"]
 						},
 						{
 							"type": "array",
 							"items": {
 								"type": "string",
-								"enum": [
-									"note",
-									"jotting"
-								],
+								"enum": ["note", "jotting"],
 								"uniqueItems": true
 							}
 						}
@@ -127,11 +109,6 @@
 			}
 		}
 	},
-	"required": [
-		"title",
-		"author",
-		"description",
-		"copyright"
-	],
+	"required": ["title", "author", "description", "copyright"],
 	"additionalProperties": false
 }

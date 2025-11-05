@@ -30,7 +30,7 @@ const prefaces = (
 		preface.id = id;
 
 		// Filter by current locale
-		return language == locale;
+		return language === locale;
 	})
 ).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
 
@@ -39,9 +39,9 @@ const notes = await getCollection("note", note => {
 	// Assign type property
 	Reflect.set(note, "type", "note");
 
-	// Match published status and locale
+	// Filter by publication status and locale
 	let published = !note.data.draft;
-	let localed = monolocale || note.id.split("/")[0] == locale;
+	let localed = monolocale || note.id.split("/")[0] === locale;
 
 	// Filter published notes by current locale
 	return published && localed;
@@ -53,7 +53,7 @@ const jottings = await getCollection("jotting", jotting => {
 	Reflect.set(jotting, "type", "jotting");
 
 	// Check monolocale setup or extract language to match locale
-	let localed = monolocale || jotting.id.split("/")[0] == locale;
+	let localed = monolocale || jotting.id.split("/")[0] === locale;
 
 	// Filter published notes by current locale
 	return !jotting.data.draft && localed;

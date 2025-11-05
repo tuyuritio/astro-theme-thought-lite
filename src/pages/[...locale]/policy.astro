@@ -15,7 +15,7 @@ const { locale = i18n!.defaultLocale } = Astro.params;
 
 const t = i18nit(locale);
 
-const policy = await getEntry("information", monolocale ? "" : locale + "/policy");
+const policy = await getEntry("information", `${monolocale ? "" : locale}/policy`);
 const { Content } = policy ? await render(policy) : ({} as any);
 ---
 
