@@ -77,7 +77,7 @@ npm run dev
 2. Cloudflare Turnstile を設定、[Cloudflare Turnstile 設定ガイド](src/content/note/ja/cloudflare-turnstile.md)を参照。
     - 匿名コメントを有効にしない場合は、このステップをスキップできます。
 3. OAuth 認証を設定、[OAuth 設定ガイド](src/content/note/ja/oauth.md)を参照。
-4. サイト設定および国際化（i18n）設定をカスタマイズするには、以下のファイルを変更してください。[サイト設定ガイド](src/content/note/ja/configuration.md)を参照：
+4. サイト設定および国際化（i18n）設定をカスタマイズするには、以下のファイルを変更してください。[サイト設定ガイド](src/content/note/ja/configuration.md)と[国際化設定ガイド](src/content/note/ja/internationalization.md)を参照：
     - `.env`
     - `astro.config.ts`
     - `site.config.json`
@@ -131,7 +131,7 @@ npm run db:migrate:local
 - `preface` - 序文、第一印象としてサイトのホームページに表示
 - `information` - 情報、各種説明的なコンテンツを含む
 
-すべてのコンテンツブロックは多言語に対応しています。対応する言語ディレクトリを作成してからコンテンツ作成を開始してください。詳細は[コンテンツ作成ガイド](src/content/note/ja/content.md)を参照してください。
+詳細は[コンテンツ作成ガイド](src/content/note/ja/content.md)を参照してください。
 
 ## 🤝 貢献
 

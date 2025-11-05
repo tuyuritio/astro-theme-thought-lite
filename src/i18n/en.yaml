@@ -101,6 +101,7 @@ home:
 jotting:
   empty: No jottings available
   tag: Tag
+language: English
 navigation:
   about: About
   home: Home

@@ -2,7 +2,7 @@
 title: Site Configuration Guide
 timestamp: 2025-11-04 00:00:00+00:00
 tags: [Guide, Astro]
-description: Essential configuration guide for Astro theme sites, covering site settings, internationalization, and Markdown processing options.
+description: Essential configuration guide for Astro theme sites, covering environment variables, site information, Markdown processing, and icon generation.
 ---
 
 ## `.env`
@@ -89,24 +89,3 @@ Configuration can be done through the following three methods:
     - It is recommended to use `stroke="currentColor"` to adapt to theme color changes.
 2. Use [Iconify icon sets](https://www.astroicon.dev/guides/customization/#open-source-icon-sets), referenced in the format `<PREFIX>:<ICON>`.
 3. Directly modify to image import or remove this part of the content.
-
-## Internationalization (i18n) Configuration
-
-The theme supports multi-language switching, with the default language being **English (`en`)**.
-
-If you need to change the default language, please modify `i18n.defaultLocale`, noting that the value must be selected from `i18n.locales`.
-
-To add a new language, please create the corresponding translation file in the `src/i18n` directory and add that language to `i18n.locales` in `astro.config.ts`.
-
-Then modify the `src/i18n/index.ts` file:
-
-```ts
-// Import the translation file for the new language
-import zhCN from "./zh-cn.yaml";
-
-// Add the new language to the locale mapping list
-const translations = { 
-  ...,
-  "zh-cn": zhCN
-};
-```

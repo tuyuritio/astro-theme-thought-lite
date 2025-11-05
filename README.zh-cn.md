@@ -77,7 +77,7 @@ npm run dev
 2. 配置 Cloudflare Turnstile，参阅[Cloudflare Turnstile 配置指南](src/content/note/zh-cn/cloudflare-turnstile.md)。
     - 如果不启用匿名评论，可跳过这一步。
 3. 配置 OAuth 认证，参阅[OAuth 配置指南](src/content/note/zh-cn/oauth.md)。
-4. 自定义站点配置及国际化（i18n）配置，请修改以下文件，参阅[站点配置指南](src/content/note/zh-cn/configuration.md)：
+4. 自定义站点配置及国际化（i18n）配置，请修改以下文件，参阅[站点配置指南](src/content/note/zh-cn/configuration.md)及[国际化配置指南](src/content/note/zh-cn/internationalization.md)：
     - `.env`
     - `astro.config.ts`
     - `site.config.json`
@@ -131,7 +131,7 @@ npm run db:migrate:local
 - `preface` - 前言，作为第一印象在站点首页展示
 - `information` - 信息，包含各类说明性内容
 
-所有内容区块均支持多语言，创建对应语言目录后即可开始创作，详情请参阅[内容创作指南](src/content/note/zh-cn/content.md)。
+详情请参阅[内容创作指南](src/content/note/zh-cn/content.md)。
 
 ## 🤝 贡献
 

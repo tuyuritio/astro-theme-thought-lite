@@ -71,7 +71,7 @@
 					<span class="flex items-center gap-1">
 						{#if jotting.data.top > 0}<span>{@render top()}</span>{/if}
 						{#if jotting.data.sensitive}<span>{@render sensitive()}</span>{/if}
-						<a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} class="c-primary font-600 link">{jotting.data.title}</a>
+						<a href={getRelativeLocaleUrl(locale, `/jotting/${monolocale ? jotting.id : jotting.id.split("/").slice(1).join("/")}`)} class="c-primary font-600 link">{jotting.data.title}</a>
 					</span>
 					<span class="flex gap-1">
 						{#each jotting.data.tags as tag}
@@ -116,6 +116,7 @@
 
 <script lang="ts">
 	import { getRelativeLocaleUrl } from "astro:i18n";
+	import { monolocale } from "astro:locales";
 	import { onMount, type Snippet } from "svelte";
 	import { flip } from "svelte/animate";
 	import { fade } from "svelte/transition";

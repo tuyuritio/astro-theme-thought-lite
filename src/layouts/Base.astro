@@ -13,7 +13,7 @@ import "medium-zoom/dist/style.css";
 
 let route = Astro.url.pathname;
 
-const { locale = i18n?.defaultLocale, title: subtitle, description = config.description, article } = Astro.props;
+const { locale = i18n!.defaultLocale, title: subtitle, description = config.description, article } = Astro.props;
 const title = config.title;
 ---
 

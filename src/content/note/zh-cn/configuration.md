@@ -1,8 +1,8 @@
----
+﻿---
 title: 站点配置指南
 timestamp: 2025-11-04 00:00:00+00:00
 tags: [Guide, Astro]
-description: Astro 主题站点的基础配置说明，涵盖站点设置、国际化、Markdown 处理等核心配置项。
+description: Astro 主题站点的基础配置说明，涵盖环境变量、站点信息、Markdown 处理、图标生成等核心配置项。
 ---
 
 ## `.env`
@@ -89,24 +89,3 @@ description: Astro 主题站点的基础配置说明，涵盖站点设置、国�
     - 建议使用 `stroke="currentColor"` 以适应主题色彩变化。
 2. 使用 [Iconify 图标集](https://www.astroicon.dev/guides/customization/#open-source-icon-sets)，以 `<PREFIX>:<ICON>` 形式引用。
 3. 直接修改为图片导入或删除该部分内容。
-
-## 国际化（i18n）配置
-
-主题支持多语言切换，默认语言为**英文（`en`）**。
-
-如需变更默认语言请修改 `i18n.defaultLocale`，注意值须在 `i18n.locales` 中选择。
-
-如需添加新语言，请在 `src/i18n` 目录下创建相应的翻译文件，并在 `astro.config.ts` 中的 `i18n.locales` 中添加该语言。
-
-然后修改 `src/i18n/index.ts` 文件：
-
-```ts
-// 导入新语言的翻译文件
-import zhCN from "./zh-cn.yaml";
-
-// 添加新语言到 locale 映射列表
-const translations = { 
-  ...,
-  "zh-cn": zhCN
-};
-```

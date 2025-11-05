@@ -72,7 +72,7 @@
 						{#if note.data.top > 0}<span>{@render top()}</span>{/if}
 						{#if note.data.sensitive}<span>{@render sensitive()}</span>{/if}
 						{#if note.data.series}<button onclick={() => choose_series(note.data.series, true)}>{note.data.series}</button><b>|</b>{/if}
-						<a href={getRelativeLocaleUrl(locale, `/note/${note.id.split("/").slice(1).join("/")}`)} class="link">{note.data.title}</a>
+						<a href={getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)} class="link">{note.data.title}</a>
 					</div>
 					<time datetime={note.data.timestamp.toISOString()} class="font-mono text-2.6 c-remark">{Time(note.data.timestamp)}</time>
 				</div>
@@ -128,6 +128,7 @@
 
 <script lang="ts">
 	import { getRelativeLocaleUrl } from "astro:i18n";
+	import { monolocale } from "astro:locales";
 	import { onMount, type Snippet } from "svelte";
 	import { flip } from "svelte/animate";
 	import { fade } from "svelte/transition";

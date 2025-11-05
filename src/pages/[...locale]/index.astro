@@ -2,6 +2,7 @@
 import { i18n } from "astro:config/client";
 import { render, getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { monolocale } from "astro:locales";
 import { Icon } from "astro-icon/components";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
@@ -11,7 +12,7 @@ import i18nit from "$i18n";
 
 export async function getStaticPaths() {
 	// Create path for each locale, omitting default locale from URL
-	return i18n!.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
+	return i18n!.locales.map(locale => ({ params: { locale: i18n!.defaultLocale === locale ? undefined : (locale as string) } }));
 }
 
 const { locale = i18n!.defaultLocale } = Astro.params;
@@ -21,6 +22,9 @@ const t = i18nit(locale);
 // Get preface content for current locale, sorted by timestamp (latest first)
 const prefaces = (
 	await getCollection("preface", preface => {
+		// Handle single locale setup
+		if (monolocale) return true;
+
 		// Extract language and ID from file path structure
 		const [language, id] = preface.id.split("/");
 		preface.id = id;
@@ -32,26 +36,27 @@ const prefaces = (
 
 // Get published notes for current locale
 const notes = await getCollection("note", note => {
-	// Extract language and note ID from file path structure
-	const [language] = note.id.split("/");
-
 	// Assign type property
 	Reflect.set(note, "type", "note");
 
+	// Match published status and locale
+	let published = !note.data.draft;
+	let localed = monolocale || note.id.split("/")[0] == locale;
+
 	// Filter published notes by current locale
-	return !note.data.draft && language == locale;
+	return published && localed;
 });
 
 // Get published jottings for current locale
 const jottings = await getCollection("jotting", jotting => {
-	// Extract language and jotting ID from file path structure
-	const [language] = jotting.id.split("/");
-
 	// Assign type property
 	Reflect.set(jotting, "type", "jotting");
 
-	// Filter published jottings by current locale
-	return !jotting.data.draft && language == locale;
+	// Check monolocale setup or extract language to match locale
+	let localed = monolocale || jotting.id.split("/")[0] == locale;
+
+	// Filter published notes by current locale
+	return !jotting.data.draft && localed;
 });
 
 // Combine contents

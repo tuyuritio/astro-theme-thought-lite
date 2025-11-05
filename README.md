@@ -77,7 +77,7 @@ npm run dev
 2. Configure Cloudflare Turnstile, refer to [Cloudflare Turnstile Configuration Guide](src/content/note/en/cloudflare-turnstile.md).
     - You can skip this step if you don't enable anonymous comments.
 3. Configure OAuth authentication, refer to [OAuth Configuration Guide](src/content/note/en/oauth.md).
-4. Customize site configuration and internationalization (i18n) by modifying the following files, refer to [Site Configuration Guide](src/content/note/en/configuration.md):
+4. Customize site configuration and internationalization (i18n) by modifying the following files, refer to [Site Configuration Guide](src/content/note/en/configuration.md) and [Internationalization Configuration Guide](src/content/note/en/internationalization.md):
     - `.env`
     - `astro.config.ts`
     - `site.config.json`
@@ -131,7 +131,7 @@ Content creation is centralized in the `src/content` directory, mainly including
 - `preface` - Preface, displayed on the homepage as the first impression
 - `information` - Information, containing various descriptive content
 
-All content sections support multiple languages. Create the corresponding language directory to start creating content. For details, refer to the [Content Creation Guide](src/content/note/en/content.md).
+For details, refer to the [Content Creation Guide](src/content/note/en/content.md).
 
 ## 🤝 Contributing
 
