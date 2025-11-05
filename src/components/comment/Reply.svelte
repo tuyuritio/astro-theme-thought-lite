@@ -248,7 +248,7 @@ onMount(() => {
 				{/if}
 				<button id="submit" disabled={limit > 0 || (nomad && !CAPTCHA) || overlength} onclick={submit_comment}>
 					{#if limit > 0}
-						<span class="flex gap-0.5">{@render icon.delay()}<span class="font-mono pt-1">{Math.ceil(limit)}</span></span>
+						<span class="flex gap-0.5">{@render icon.delay()}<span class="relative top-0.5 font-mono line-height-none">{Math.ceil(limit)}</span></span>
 					{:else if nomad && !CAPTCHA}
 						<span class="contents c-primary">{@render icon.verifying()}</span>
 					{:else if overlength}
