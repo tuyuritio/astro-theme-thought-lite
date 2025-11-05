@@ -169,3 +169,35 @@ ABBR abbr xABBRx
 | Normal Cell | Merged Cell || Merged Column |
 | Normal Cell | 2×2 Cell ||^|
 | Normal Cell | ^ || Normal Cell |
+
+## Inline Element Attributes Extension {#custom-id}
+
+> Self-implemented
+
+```
+## Inline Element Attributes Extension {#custom-id}
+```
+
+```
+![](https://picsum.photos/1600/900?random=1){width=300}
+```
+
+![](https://picsum.photos/1600/900?random=1){width=300}
+
+```
+**Important**{.colorful} content
+```
+
+**Important**{.colorful} content
+
+```
+*Multiple*{.red .big} classes
+```
+
+*Multiple*{.red .big} classes
+
+```
+**Custom attributes**{key="This is a value"}
+```
+
+**Custom attributes**{key="This is a value"}
