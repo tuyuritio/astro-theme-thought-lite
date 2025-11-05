@@ -143,14 +143,16 @@
 
 		<a href={getRelativeLocaleUrl(locale, "/feed.xml")} target="_blank" aria-label="Subscription" class="inline-flex">{@render rss()}</a>
 
-		<Menu label="Language switcher">
-			{#snippet trigger()}{@render globe()}{/snippet}
-			<div data-no-swup class="contents">
-				{#each i18n!.locales as locale}
-					<a href={getRelativeLocaleUrl(locale as string, path)} aria-label={i18nit(locale as string)("language")}>{i18nit(locale as string)("language")}</a>
-				{/each}
-			</div>
-		</Menu>
+		{#if !monolocale}
+			<Menu label="Language switcher">
+				{#snippet trigger()}{@render globe()}{/snippet}
+				<div data-no-swup class="contents">
+					{#each i18n!.locales as locale}
+						<a href={getRelativeLocaleUrl(locale as string, path)} aria-label={i18nit(locale as string)("language")}>{i18nit(locale as string)("language")}</a>
+					{/each}
+				</div>
+			</Menu>
+		{/if}
 	</footer>
 </nav>
 
@@ -159,6 +161,7 @@
 <script lang="ts">
 	import { i18n } from "astro:config/client";
 	import { getRelativeLocaleUrl } from "astro:i18n";
+	import { monolocale } from "astro:locales";
 	import { onMount, type Snippet } from "svelte";
 	import i18nit from "$i18n";
 	import ThemeSwitcher from "./ThemeSwitcher.svelte";
@@ -173,7 +176,7 @@
 	let navigator: HTMLElement | undefined = $state();
 
 	// Extract path without locale prefix for language switching
-	let path: string | undefined = $derived(route.slice(`/${locale == i18n?.defaultLocale ? "" : locale}`.length) || undefined);
+	let path: string | undefined = $derived(route.slice(`/${locale == i18n!.defaultLocale ? "" : locale}`.length) || undefined);
 
 	onMount(() => {
 		// Close mobile menu when any navigation link is clicked

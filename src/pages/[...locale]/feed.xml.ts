@@ -8,7 +8,8 @@ import config from "$config";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
-	return i18n!.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
+	// Create path for each locale, omitting default locale from URL
+	return i18n!.locales.map(locale => ({ params: { locale: i18n!.defaultLocale === locale ? undefined : (locale as string) } }));
 }
 
 /**
@@ -16,7 +17,7 @@ export async function getStaticPaths() {
  * Supports filtering by language, series, and tags
  */
 export const GET: APIRoute = async ({ site, params }) => {
-	const { locale: language = i18n?.defaultLocale! } = params;
+	const { locale: language = i18n!.defaultLocale! } = params;
 	const t = i18nit(language);
 
 	// Initialize feed with site metadata and configuration

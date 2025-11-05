@@ -1,22 +1,23 @@
 ---
 import { i18n } from "astro:config/client";
-import { getEntry } from "astro:content";
+import { getEntry, render } from "astro:content";
+import { monolocale } from "astro:locales";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
 import i18nit from "$i18n";
-import { render } from "astro:content";
 
 export async function getStaticPaths() {
-	return i18n?.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
+	// Create path for each locale, omitting default locale from URL
+	return i18n!.locales.map(locale => ({ params: { locale: i18n!.defaultLocale === locale ? undefined : (locale as string) } }));
 }
 
 const { locale = i18n!.defaultLocale } = Astro.params;
 
 const t = i18nit(locale);
 
-const introduction = await getEntry("information", `${locale}/introduction`);
-const roll = await getEntry("information", `${locale}/roll`);
-const chronicle = (await getEntry("information", `${locale}/chronicle`))?.data;
+const introduction = await getEntry("information", monolocale ? "" : locale + "/introduction");
+const roll = await getEntry("information", monolocale ? "" : locale + "/roll");
+const chronicle = (await getEntry("information", monolocale ? "" : locale + "/chronicle"))?.data;
 
 const { Content: Introduction } = introduction ? await render(introduction) : ({} as any);
 const { Content: Roll } = roll ? await render(roll) : ({} as any);

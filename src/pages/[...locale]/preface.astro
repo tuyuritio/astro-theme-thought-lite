@@ -1,12 +1,14 @@
 ---
 import { i18n } from "astro:config/client";
+import { monolocale } from "astro:locales";
 import { getCollection } from "astro:content";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
-	return i18n!.locales.map(locale => ({ params: { locale: locale == i18n!.defaultLocale ? undefined : (locale as string) } }));
+	// Create path for each locale, omitting default locale from URL
+	return i18n!.locales.map(locale => ({ params: { locale: i18n!.defaultLocale === locale ? undefined : (locale as string) } }));
 }
 
 const { locale = i18n!.defaultLocale } = Astro.params;
@@ -15,6 +17,10 @@ const t = i18nit(locale);
 
 const prefaces = (
 	await getCollection("preface", preface => {
+		// Handle single locale setup
+		if (monolocale) return true;
+
+		// Extract language and ID from file path structure
 		const [language, id] = preface.id.split("/");
 		preface.id = id;
 

@@ -1,6 +1,7 @@
 ---
-import { getCollection } from "astro:content";
 import { i18n } from "astro:config/client";
+import { getCollection } from "astro:content";
+import { monolocale } from "astro:locales";
 import Base from "$layouts/Base.astro";
 import Note from "$components/note/Note.svelte";
 import Icon from "$components/Icon.astro";
@@ -8,7 +9,7 @@ import i18nit from "$i18n";
 
 export async function getStaticPaths() {
 	// Create path for each locale, omitting default locale from URL
-	return i18n!.locales.map(locale => ({ params: { locale: locale == i18n?.defaultLocale ? undefined : (locale as string) } }));
+	return i18n!.locales.map(locale => ({ params: { locale: i18n!.defaultLocale === locale ? undefined : (locale as string) } }));
 }
 
 const { locale = i18n!.defaultLocale } = Astro.params;
@@ -16,12 +17,9 @@ const { locale = i18n!.defaultLocale } = Astro.params;
 const t = i18nit(locale);
 
 const notes = await getCollection("note", note => {
-	// Extract language from the file path structure
-	const [language] = note.id.split("/");
-
-	// Filter criteria: must be published and match locale
+	// Match published status and locale
 	let published = !note.data.draft;
-	let localed = language == locale;
+	let localed = monolocale || note.id.split("/")[0] == locale;
 
 	return published && localed;
 });
