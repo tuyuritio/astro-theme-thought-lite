@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.21.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.20.0...v0.21.0) (2025-11-05)
+
+
+### Features
+
+* enable manual triggering of release workflow ([f3dcbbe](https://github.com/tuyuritio/astro-theme-thought-lite/commit/f3dcbbe8f808904c579d031c53c9df1d8548264c))
+* **i18n:** add monolocale integration ([277abe6](https://github.com/tuyuritio/astro-theme-thought-lite/commit/277abe67b2e61ab2fb93402ca0c1356a93efeb7f))
+* **i18n:** implement monolocale support ([f703a40](https://github.com/tuyuritio/astro-theme-thought-lite/commit/f703a4083bd705e69a7784cba35b0d42aa10a029))
+
 ## [0.20.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.19.6...v0.20.0) (2025-11-04)
 
 
