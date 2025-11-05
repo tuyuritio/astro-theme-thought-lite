@@ -24,7 +24,7 @@ import { rehypeHeadingIds as ids } from "@astrojs/markdown-remark";
 import anchor from "rehype-autolink-headings";
 import links from "rehype-external-links";
 import katex from "rehype-katex";
-// @ts-ignore
+// @ts-expect-error
 import figure from "rehype-figure";
 import sectionize from "@hbsnow/rehype-sectionize";
 
@@ -33,6 +33,8 @@ import abbr from "./src/utils/remark/abbr";
 import wrapper from "./src/utils/remark/table-wrapper";
 import copy from "./src/utils/code-copy";
 import reading from "./src/utils/remark/reading";
+
+import locales from './integrations/astro-locales';
 
 // https://astro.build/config
 export default defineConfig({
@@ -108,6 +110,7 @@ export default defineConfig({
     plugins: [yaml()]
   },
   integrations: [
+    locales(),
     svelte(),
     sitemap(),
     swup({
