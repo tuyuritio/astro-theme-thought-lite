@@ -23,6 +23,8 @@
 		"check": "astro check",
 		"build": "astro build",
 		"preview": "astro preview",
+		"format": "biome format --write",
+		"lint": "biome lint",
 		"update": "npx npm-check-updates --interactive",
 		"count": "git log --pretty=tformat: --numstat | grep -v package | awk '{ A += $1; S += $2; T += $1 - $2 } END { printf \"+ %s\tLines\\n- %s\tLines\\n= %s\tLines\\n\", A, S, T }'"
 	},
