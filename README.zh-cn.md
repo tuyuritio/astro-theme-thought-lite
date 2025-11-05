@@ -67,7 +67,9 @@ npm run dev
 - `astro.config.ts`
 - `site.config.json`
 
-详情请参阅[配置指南](src/content/note/zh-cn/configuration.md)。
+基础配置请参阅[站点配置指南](src/content/note/zh-cn/configuration.md)。
+
+国际化配置请参阅[国际化配置指南](src/content/note/zh-cn/internationalization.md)。
 
 ## 💻 命令
 
@@ -109,7 +111,7 @@ npm install
 - `preface` - 前言，作为第一印象在站点首页展示
 - `information` - 信息，包含各类说明性内容
 
-所有内容区块均支持多语言，创建对应语言目录后即可开始创作，详情请参阅[内容创作指南](src/content/note/zh-cn/content.md)。
+详情请参阅[内容创作指南](src/content/note/zh-cn/content.md)。
 
 ## 🤝 贡献
 

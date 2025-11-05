@@ -67,7 +67,9 @@ npm run dev
 - `astro.config.ts`
 - `site.config.json`
 
-詳細は[設定ガイド](src/content/note/ja/configuration.md)を参照してください。
+基本設定については[サイト設定ガイド](src/content/note/ja/configuration.md)を参照してください。
+
+国際化設定については[国際化設定ガイド](src/content/note/ja/internationalization.md)を参照してください。
 
 ## 💻 コマンド
 
@@ -109,7 +111,7 @@ npm install
 - `preface` - 序文、第一印象としてサイトのホームページに表示
 - `information` - 情報、各種説明的なコンテンツを含む
 
-すべてのコンテンツブロックは多言語に対応しています。対応する言語ディレクトリを作成してからコンテンツ作成を開始してください。詳細は[コンテンツ作成ガイド](src/content/note/ja/content.md)を参照してください。
+詳細は[コンテンツ作成ガイド](src/content/note/ja/content.md)を参照してください。
 
 ## 🤝 貢献
 

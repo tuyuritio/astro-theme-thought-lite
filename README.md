@@ -67,7 +67,9 @@ Customize site configuration and internationalization (i18n) by modifying the fo
 - `astro.config.ts`
 - `site.config.json`
 
-For details, refer to the [Configuration Guide](src/content/note/en/configuration.md).
+For basic configuration, refer to the [Site Configuration Guide](src/content/note/en/configuration.md).
+
+For internationalization configuration, refer to the [Internationalization Configuration Guide](src/content/note/en/internationalization.md).
 
 ## 💻 Commands
 
@@ -109,7 +111,7 @@ Content creation is centralized in the `src/content` directory, mainly including
 - `preface` - Preface, displayed on the homepage as the first impression
 - `information` - Information, containing various descriptive content
 
-All content sections support multiple languages. Create the corresponding language directory to start creating content. For details, refer to the [Content Creation Guide](src/content/note/en/content.md).
+For details, refer to the [Content Creation Guide](src/content/note/en/content.md).
 
 ## 🤝 Contributing
 

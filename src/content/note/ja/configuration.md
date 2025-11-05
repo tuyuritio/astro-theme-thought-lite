@@ -2,7 +2,7 @@
 title: サイト設定ガイド
 timestamp: 2025-11-04 00:00:00+00:00
 tags: [Guide, Astro]
-description: Astro テーマサイトの基本設定説明、サイト設定、国際化、Markdown処理などのコア設定項目をカバー。
+description: Astro テーマサイトの基本設定説明、環境変数、サイト情報、Markdown処理、アイコン生成などのコア設定項目をカバー。
 ---
 
 ## `.env`
@@ -85,24 +85,3 @@ description: Astro テーマサイトの基本設定説明、サイト設定、�
     - テーマカラーの変化に適応するため、`stroke="currentColor"` の使用をお勧めします。
 2. [Iconify アイコンセット](https://www.astroicon.dev/guides/customization/#open-source-icon-sets)を使用し、`<PREFIX>:<ICON>` 形式で参照します。
 3. 画像インポートに直接修正するか、この部分のコンテンツを削除します。
-
-## 国際化（i18n）設定
-
-テーマは多言語切り替えをサポートしており、デフォルト言語は**英語（`en`）**です。
-
-デフォルト言語を変更する必要がある場合は、`i18n.defaultLocale` を修正してください。値は `i18n.locales` から選択する必要があります。
-
-新しい言語を追加するには、`src/i18n` ディレクトリに対応する翻訳ファイルを作成し、`astro.config.ts` の `i18n.locales` にその言語を追加してください。
-
-その後、`src/i18n/index.ts` ファイルを修正します：
-
-```ts
-// 新しい言語の翻訳ファイルをインポート
-import zhCN from "./zh-cn.yaml";
-
-// 新しい言語をロケールマッピングリストに追加
-const translations = { 
-  ...,
-  "zh-cn": zhCN
-};
-```
