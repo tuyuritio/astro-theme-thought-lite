@@ -28,7 +28,7 @@
 - [x] **Responsive Design** - Adaptive for mobile, tablet, and desktop.
 - [x] **Light / Dark Mode** - Auto-follows system preference with manual toggle support.
 - [x] **CSR Dynamic Content Filtering** - List filtering and pagination via History API.
-- [x] **i18n Support** - Easy to extend and manage multilingual content.
+- [x] **i18n Support** - Easy to extend and manage multilingual content, while optimizing the monolingual mode creation experience.
 - [x] **Sitemap & Feed Subscription** - Automated generation of Sitemap and Atom Feed.
 - [x] **OpenGraph Support** - Built-in Open Graph meta tags for optimized social media sharing.
 
