@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.21.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.21.2...v0.21.3) (2025-11-06)
+
+
+### Bug Fixes
+
+* add workaround for dependency optimization ([b574724](https://github.com/tuyuritio/astro-theme-thought-lite/commit/b57472477b23bc5bfc0e4dbb6fd775a897991ae7))
+* **config:** update `latest` configuration ([ac1f90b](https://github.com/tuyuritio/astro-theme-thought-lite/commit/ac1f90b49394a57d792ce8c9aebb1ff6a9f7eb75))
+* **feed:** improve locale handling ([46ca019](https://github.com/tuyuritio/astro-theme-thought-lite/commit/46ca0193232402b348778d9e84a2ef6368ccf5e8))
+
 ## [0.21.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.21.1...v0.21.2) (2025-11-06)
 
 

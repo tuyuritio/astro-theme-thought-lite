@@ -114,6 +114,10 @@ export default defineConfig({
 		}
 	},
 	vite: {
+		// Workaround for https://github.com/withastro/astro/issues/14692
+		optimizeDeps: {
+			include: ["picocolors"]
+		},
 		plugins: [yaml()]
 	},
 	integrations: [
