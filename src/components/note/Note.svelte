@@ -53,7 +53,7 @@ let filtered: any[] = $derived.by(() => {
 	if (series) params.set("series", series);
 	for (const tag of tags) params.append("tag", tag);
 
-	let url = `${window.location.pathname}?${params.toString()}`;
+	let url = `${location.pathname}?${params.toString()}`;
 
 	// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
 	window.history.replaceState({ url, random: Math.random(), source: "swup" }, "", url);
