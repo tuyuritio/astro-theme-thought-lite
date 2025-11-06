@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.21.6](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.21.5...v0.21.6) (2025-11-06)
+
+
+### Bug Fixes
+
+* **config:** correct uniqueItems placement ([17ee92b](https://github.com/tuyuritio/astro-theme-thought-lite/commit/17ee92bcd1649853e519886a4c864719d20f1890))
+* filtered URL not applied correctly ([affd1ff](https://github.com/tuyuritio/astro-theme-thought-lite/commit/affd1ff6d5884444ac194d7028a242bd2fb830e6))
+
 ## [0.21.5](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.21.4...v0.21.5) (2025-11-06)
 
 
