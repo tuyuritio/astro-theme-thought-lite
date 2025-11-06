@@ -8,6 +8,16 @@ import { cancel, confirm, intro, isCancel, log, multiselect, note, outro, select
 
 const CANCEL_MESSAGE = "Operation cancelled";
 
+// Locale configuration
+// For single language mode: Set LOCALE_OPTIONS to single language array, e.g., [{ label: "English", value: "en" }]
+// For multi-language mode: Include all supported languages
+const LOCALES = [
+	{ label: "English", value: "en" },
+	{ label: "简体中文", value: "zh-cn" },
+	{ label: "日本語", value: "ja" }
+];
+const DEFAULT_LOCALE = "en";
+
 // Main function: Interactive CLI script for creating new articles
 !(async () => {
 	console.clear();
@@ -32,22 +42,21 @@ const CANCEL_MESSAGE = "Operation cancelled";
 	// Update path based on selected content type
 	path = join(path, content_type);
 
-	// Select language for the article
-	const locale = await select({
-		message: "Select language",
-		options: [
-			{ label: "English", value: "en" },
-			{ label: "简体中文", value: "zh-cn" },
-			{ label: "日本語", value: "ja" }
-		],
-		initialValue: "en"
-	});
+	// Select language for the article (skip if single language mode)
+	let locale: string | symbol = DEFAULT_LOCALE;
+	if (LOCALES.length > 1) {
+		locale = await select({
+			message: "Select language",
+			options: LOCALES,
+			initialValue: DEFAULT_LOCALE
+		});
 
-	// Exit if user cancels the selection
-	isCancel(locale) && (cancel(CANCEL_MESSAGE), process.exit(0));
+		// Exit if user cancels the selection
+		isCancel(locale) && (cancel(CANCEL_MESSAGE), process.exit(0));
 
-	// Update path based on selected locale
-	path = join(path, locale);
+		// Update path based on selected locale
+		path = join(path, locale);
+	}
 
 	// Generate timestamp in ISO format with timezone
 	let content = "";

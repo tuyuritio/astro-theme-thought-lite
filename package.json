@@ -1,7 +1,7 @@
 {
 	"name": "astro-theme-thought-lite",
 	"type": "module",
-	"version": "0.21.4",
+	"version": "0.21.5",
 	"description": "A modern Astro theme focused on content creation",
 	"keywords": ["astro", "theme", "blog", "cloudflare", "svelte", "typescript", "i18n"],
 	"homepage": "https://github.com/tuyuritio/astro-theme-thought-lite",
