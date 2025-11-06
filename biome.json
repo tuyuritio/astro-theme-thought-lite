@@ -10,6 +10,7 @@
 	},
 	"formatter": {
 		"enabled": true,
+		"includes": ["**", "!package{,-lock}.json"],
 		"indentStyle": "tab",
 		"indentWidth": 4,
 		"lineEnding": "lf",
