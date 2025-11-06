@@ -68,6 +68,21 @@ content/
 └── preface/tlh/
 ```
 
+**コンテンツ作成スクリプト**を使用する場合は、`scripts/new.ts` の言語選択オプションを更新し、必要に応じてデフォルト言語を設定します：
+
+```ts
+const locale = await select({
+    message: "Select language",
+    options: [
+        { label: "English", value: "en" },
+        { label: "简体中文", value: "zh-cn" },
+        { label: "日本語", value: "ja" },
+        { label: "tlhIngan Hol", value: "tlh" }
+    ],
+    initialValue: "ja"
+});
+```
+
 ## 単一言語モード
 
 > [!Warning]

@@ -68,6 +68,21 @@ content/
 └── preface/tlh/
 ```
 
+To use the **content creation script**, update the language selection options in `scripts/new.ts` and configure the default language as needed:
+
+```ts
+const locale = await select({
+    message: "Select language",
+    options: [
+        { label: "English", value: "en" },
+        { label: "简体中文", value: "zh-cn" },
+        { label: "日本語", value: "ja" },
+        { label: "tlhIngan Hol", value: "tlh" }
+    ],
+    initialValue: "en"
+});
+```
+
 ## Single Language Mode
 
 > [!Warning]
