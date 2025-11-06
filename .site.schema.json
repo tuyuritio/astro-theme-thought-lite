@@ -74,7 +74,7 @@
 					"oneOf": [
 						{
 							"type": "string",
-							"enum": ["*"]
+							"const": "*"
 						},
 						{
 							"type": "array",
@@ -97,20 +97,21 @@
 		},
 		"latest": {
 			"title": "Latest Content Display",
-			"type": "object",
-			"properties": {
-				"note": {
-					"title": "Show Latest Note",
-					"type": "boolean",
-					"default": true
+			"oneOf": [
+				{
+					"type": "string",
+					"const": "*"
 				},
-				"jotting": {
-					"title": "Show Latest Jotting",
-					"type": "boolean",
-					"default": true
+				{
+					"type": "array",
+					"items": {
+						"type": "string",
+						"enum": ["note", "jotting"],
+						"uniqueItems": true
+					}
 				}
-			},
-			"additionalProperties": false
+			],
+			"default": "*"
 		}
 	},
 	"required": ["title", "author", "description", "copyright"],

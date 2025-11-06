@@ -40,7 +40,10 @@ export const GET: APIRoute = async ({ site, params }) => {
 	// Aggregate items from specified sections
 	let items = [];
 
-	if (config.feed?.section?.includes("note") || config.feed?.section === "*" || config.feed?.section === undefined) {
+	// Determine which sections to include
+	const sections = config.feed?.section || "*";
+
+	if (sections === "*" || sections.includes("note")) {
 		const notes = await getCollection("note", note => {
 			// Apply filtering criteria
 			const published = !note.data.draft; // Exclude draft posts
@@ -59,7 +62,7 @@ export const GET: APIRoute = async ({ site, params }) => {
 		items.push(...notes);
 	}
 
-	if (config.feed?.section?.includes("jotting") || config.feed?.section === "*" || config.feed?.section === undefined) {
+	if (sections === "*" || sections.includes("jotting")) {
 		const jottings = await getCollection("jotting", jotting => {
 			// Apply filtering criteria
 			const published = !jotting.data.draft; // Exclude draft posts
