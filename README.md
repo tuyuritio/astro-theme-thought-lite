@@ -94,6 +94,8 @@ The theme provides the following commonly used commands:
 | `npm run check` | Run Astro type checking |
 | `npm run build` | Build the production version |
 | `npm run preview` | Preview the built site |
+| `npm run format` | Format code |
+| `npm run lint` | Lint code |
 | `npm run deploy` | Deploy to Cloudflare |
 | `npm run deploy:dry` | Simulate deployment |
 | `npm run update` | Update project dependencies |

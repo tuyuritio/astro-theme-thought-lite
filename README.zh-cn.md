@@ -94,6 +94,8 @@ npm run dev
 | `npm run check` | 运行 Astro 类型检查 |
 | `npm run build` | 构建生产版本 |
 | `npm run preview` | 预览构建后的站点 |
+| `npm run format` | 代码格式化 |
+| `npm run lint` | 代码检查 |
 | `npm run deploy` | 部署到 Cloudflare |
 | `npm run deploy:dry` | 模拟部署 |
 | `npm run update` | 更新项目依赖 |

@@ -31,6 +31,11 @@ let filtered: any[] = $derived.by(() => {
 	if (!initial) return list;
 
 	// Build URL with current page and tag filters
+	let params = new URLSearchParams();
+
+	params.set("page", String(page));
+	for (const tag of tags) params.append("tag", tag);
+
 	let url = getRelativeLocaleUrl(locale, `/jotting?page=${page}${tags.map(tag => `&tag=${tag}`).join("")}`);
 
 	// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22

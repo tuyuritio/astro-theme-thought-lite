@@ -18,21 +18,22 @@ const RESOLVED_VIRTUAL_MODULE_ID = `\0${VIRTUAL_MODULE_ID}`;
  */
 interface VirtualModuleOptions {
 	monolocale: boolean;
+	multilocales: boolean;
 }
 
 /**
  * Factory function to create a Vite plugin instance
  * (This is an internal helper function, does not need to be exported)
  *
- * @param options Object containing monolocale boolean value
+ * @param options Object containing locale configuration values
  * @returns A Vite plugin instance
  */
 function createVirtualModulePlugin(options: VirtualModuleOptions): Plugin {
-	const { monolocale } = options;
+	const { monolocale, multilocales } = options;
 
 	return {
 		// Plugin name, used for debugging
-		name: "vite-plugin-monolocale",
+		name: "vite-plugin-astro-locales",
 
 		/**
 		 * Vite/Rollup hook
@@ -51,7 +52,8 @@ function createVirtualModulePlugin(options: VirtualModuleOptions): Plugin {
 		load(id) {
 			if (id === RESOLVED_VIRTUAL_MODULE_ID) {
 				// Dynamically generate module content
-				return `export const monolocale = ${monolocale};`;
+				return `export const monolocale = ${monolocale};
+export const multilocales = ${multilocales};`;
 			}
 		}
 	};
@@ -63,10 +65,10 @@ function createVirtualModulePlugin(options: VirtualModuleOptions): Plugin {
  * Astro integration factory function
  * This is the default export you will import from astro.config.mjs
  */
-export default function monolocaleIntegration(): AstroIntegration {
+export default function localesIntegration(): AstroIntegration {
 	return {
 		// Unique name of the integration
-		name: "astro-monolocale-integration",
+		name: "astro-locales-integration",
 
 		hooks: {
 			/**
@@ -76,19 +78,20 @@ export default function monolocaleIntegration(): AstroIntegration {
 			"astro:config:setup": params => {
 				const { config, updateConfig, logger } = params;
 
-				// 1. Safely read Astro i18n configuration
-				// Calculate 'monolocale' status
+				// Read Astro i18n configuration and determine locale status
 				const monolocale = (config.i18n?.locales?.length ?? 0) === 1;
+				const multilocales = (config.i18n?.locales?.length ?? 0) > 1;
 
-				// 2. (Optional) Print log for debugging
-				logger.info(`i18n integration: monolocale = ${monolocale}`);
+				// Print log for debugging
+				logger.info(`i18n integration: ${monolocale ? "monolingual" : "multilingual"} mode`);
 
-				// 3. Instantiate our internal Vite plugin factory
+				// Instantiate internal Vite plugin factory
 				const virtualModulePlugin = createVirtualModulePlugin({
-					monolocale: monolocale
+					monolocale: monolocale,
+					multilocales: multilocales
 				});
 
-				// 4. Inject the plugin into Astro using 'updateConfig'
+				// Inject the plugin into Astro
 				updateConfig({
 					vite: {
 						plugins: [virtualModulePlugin]
@@ -103,19 +106,24 @@ export default function monolocaleIntegration(): AstroIntegration {
 			"astro:config:done": params => {
 				const { injectTypes } = params;
 
-				// 5. Define the content of the .d.ts file
+				// Define the content of the .d.ts file
 				const typesContent = `
 declare module 'astro:locales' {
   /**
    * True if there is only one locale in the Astro i18n configuration.
    */
   export const monolocale: boolean;
+  
+  /**
+   * True if there are multiple locales in the Astro i18n configuration.
+   */
+  export const multilocales: boolean;
 }
-        `;
+`;
 
-				// 6. Inject types
+				// Inject types
 				injectTypes({
-					filename: "monolocale.d.ts",
+					filename: "astro-locales.d.ts",
 					content: typesContent
 				});
 			}

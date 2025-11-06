@@ -1,7 +1,7 @@
 {
 	"name": "astro-theme-thought-lite",
 	"type": "module",
-	"version": "0.21.1",
+	"version": "0.21.2",
 	"description": "A modern Astro theme focused on content creation",
 	"keywords": ["astro", "theme", "blog", "cloudflare", "svelte", "typescript", "i18n"],
 	"homepage": "https://github.com/tuyuritio/astro-theme-thought-lite",
@@ -23,13 +23,16 @@
 		"check": "astro check",
 		"build": "astro build",
 		"preview": "wrangler dev",
+		"format": "biome format --write",
+		"lint": "biome lint",
 		"deploy": "wrangler deploy",
 		"deploy:dry": "wrangler deploy --dry-run",
 		"update": "npx npm-check-updates --interactive",
 		"count": "git log --pretty=tformat: --numstat | grep -v package | awk '{ A += $1; S += $2; T += $1 - $2 } END { printf \"+ %s\tLines\\n- %s\tLines\\n= %s\tLines\\n\", A, S, T }'",
 		"db:migration": "drizzle-kit generate",
 		"db:migrate:local": "wrangler d1 migrations apply DB --local",
-		"db:migrate:remote": "wrangler d1 migrations apply DB --remote"
+		"db:migrate:remote": "wrangler d1 migrations apply DB --remote",
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^12.6.10",
@@ -90,12 +93,17 @@
 		"@types/luxon": "^3.7.1",
 		"@unocss/reset": "^66.5.4",
 		"drizzle-kit": "^0.31.6",
+		"husky": "^9.1.7",
 		"less": "^4.4.2",
+		"lint-staged": "^16.2.6",
 		"prettier": "3.6.2",
 		"prettier-plugin-astro": "0.14.1",
 		"prettier-plugin-svelte": "^3.4.0",
 		"tsx": "^4.20.6",
 		"unocss": "^66.5.4",
 		"wrangler": "^4.45.3"
+	},
+	"lint-staged": {
+		"*.{js,ts,json,jsonc,svelte,astro}": ["biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"]
 	}
 }

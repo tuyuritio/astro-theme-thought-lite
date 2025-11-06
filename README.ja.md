@@ -94,6 +94,8 @@ npm run dev
 | `npm run check` | Astro 型チェックを実行 |
 | `npm run build` | 本番バージョンをビルド |
 | `npm run preview` | ビルドしたサイトをプレビュー |
+| `npm run format` | コードフォーマット |
+| `npm run lint` | コードリント |
 | `npm run deploy` | Cloudflare にデプロイ |
 | `npm run deploy:dry` | デプロイをシミュレート |
 | `npm run update` | プロジェクトの依存関係を更新 |
