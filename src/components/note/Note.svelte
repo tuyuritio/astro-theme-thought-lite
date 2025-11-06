@@ -46,8 +46,14 @@ let filtered: any[] = $derived.by(() => {
 
 	if (!initial) return list;
 
-	// Build URL with current page, series, and tag filters
-	let url = getRelativeLocaleUrl(locale, `/note?page=${page}${series ? `&series=${series}` : ""}${tags.map(tag => `&tag=${tag}`).join("")}`);
+	// Build URL with current page, series, and tag filters using URLSearchParams
+	let params = new URLSearchParams();
+
+	params.set("page", String(page));
+	if (series) params.set("series", series);
+	for (const tag of tags) params.append("tag", tag);
+
+	let url = `${window.location.pathname}?${params.toString()}`;
 
 	// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
 	window.history.replaceState({ url, random: Math.random(), source: "swup" }, "", url);
