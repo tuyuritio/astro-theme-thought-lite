@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.21.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.21.1...v0.21.2) (2025-11-06)
+
+
+### Bug Fixes
+
+* enhance URL building ([d1e9422](https://github.com/tuyuritio/astro-theme-thought-lite/commit/d1e9422d9b56be31f7f891e8d5fd942ae4bad3b9))
+* **i18n:** add multilocale constant ([ca28acf](https://github.com/tuyuritio/astro-theme-thought-lite/commit/ca28acfbd47635c0e853cf220cf963911d613828))
+
 ## [0.21.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.21.0...v0.21.1) (2025-11-05)
 
 
