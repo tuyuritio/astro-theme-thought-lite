@@ -66,8 +66,8 @@ let items: { id: string; type?: string; data: { timestamp: Date; tags?: string[]
 const sections = config.latest || "*";
 
 // Add contents based on config
-if (sections.includes("note")) items = items.concat(notes);
-if (sections.includes("jotting")) items = items.concat(jottings);
+if (sections === "*" || sections.includes("note")) items = items.concat(notes);
+if (sections === "*" || sections.includes("jotting")) items = items.concat(jottings);
 
 // Get the latest content for display
 const latest = items.sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime())[0];

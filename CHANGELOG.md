@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.4](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.21.3...v0.21.4) (2025-11-06)
+
+
+### Bug Fixes
+
+* content inclusion condition ([c582139](https://github.com/tuyuritio/astro-theme-thought-lite/commit/c5821396665672d161235ad9470c3d4b09b56b2f))
+
 ## [0.21.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.21.2...v0.21.3) (2025-11-06)
 
 
