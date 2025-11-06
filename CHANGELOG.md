@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.5](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.21.4...v0.21.5) (2025-11-06)
+
+
+### Bug Fixes
+
+* **i18n:** adapt creation script for monolingual mode ([b1e63e0](https://github.com/tuyuritio/astro-theme-thought-lite/commit/b1e63e0537f5767b9c1272e22e3bc2318064a9f2))
+
 ## [0.21.4](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.21.3...v0.21.4) (2025-11-06)
 
 
