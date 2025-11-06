@@ -36,7 +36,7 @@ let filtered: any[] = $derived.by(() => {
 	params.set("page", String(page));
 	for (const tag of tags) params.append("tag", tag);
 
-	let url = getRelativeLocaleUrl(locale, `/jotting?page=${page}${tags.map(tag => `&tag=${tag}`).join("")}`);
+	let url = `${location.pathname}?${params.toString()}`;
 
 	// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
 	window.history.replaceState({ url, random: Math.random(), source: "swup" }, "", url);

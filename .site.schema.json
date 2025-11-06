@@ -80,9 +80,9 @@
 							"type": "array",
 							"items": {
 								"type": "string",
-								"enum": ["note", "jotting"],
-								"uniqueItems": true
-							}
+								"enum": ["note", "jotting"]
+							},
+							"uniqueItems": true
 						}
 					],
 					"default": "*"
@@ -118,9 +118,9 @@
 					"type": "array",
 					"items": {
 						"type": "string",
-						"enum": ["note", "jotting"],
-						"uniqueItems": true
-					}
+						"enum": ["note", "jotting"]
+					},
+					"uniqueItems": true
 				}
 			],
 			"default": "*"
