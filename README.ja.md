@@ -148,22 +148,24 @@ npm run db:migrate:local
 
 ### 技術スタック
 
-- **メインフレームワーク** - [Astro](https://astro.build/)
-- **型チェック** - [TypeScript](https://www.typescriptlang.org/)
-- **スタイルシート** - [Less.js](https://lesscss.org/)
-- **リアクティブコンポーネント** - [Svelte](https://svelte.dev/)
-- **CSSエンジン** - [UnoCSS](https://unocss.dev/)
+- **コアフレームワーク** - [Astro](https://astro.build/)
+- **コア言語** - [TypeScript](https://www.typescriptlang.org/)
+- **UI コンポーネント** - [Svelte](https://svelte.dev/)
+- **CSS エンジン** - [UnoCSS](https://unocss.dev/)
+- **CSS プリプロセッサ** - [Less](https://lesscss.org/)
 - **アイコン** - [Iconify](https://iconify.design/)
-- **セリフフォント** - [Google Fonts](https://fonts.google.com/)
-- **等幅フォント** - [ZeoSeven Fonts](https://fonts.zeoseven.com/)
+- **フォント** - [Google Fonts](https://fonts.google.com/) | [ZeoSeven Fonts](https://fonts.zeoseven.com/)
 - **画像ビューア** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
-- **TypeScript ORM** - [Drizzle ORM](https://orm.drizzle.team/)
+- **SPA トランジション** - [Swup](https://swup.js.org/)
+- **時間処理** - [Luxon](https://moment.github.io/luxon/)
+- **コード品質** - [Biome](https://biomejs.dev/)
+- **OAuth 認証** - [Arctic](https://arcticjs.dev/)
+- **ORM** - [Drizzle ORM](https://orm.drizzle.team/)
 - **データベース** - [Cloudflare D1](https://developers.cloudflare.com/d1/)
-- **デプロイ** - [Cloudflare Workers](https://workers.cloudflare.com/)
+- **エッジ展開** - [Cloudflare Workers](https://workers.cloudflare.com/)
 
 ### インスピレーション
 
-- [Fuwari](https://github.com/saicaca/fuwari)
 - [Astro Sphere](https://github.com/markhorn-dev/astro-sphere)
 - [astro-vitesse](https://github.com/adrian-ub/astro-vitesse)
 - [Miniblog](https://github.com/nicholasdly/miniblog)

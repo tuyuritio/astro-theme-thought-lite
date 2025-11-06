@@ -148,22 +148,24 @@ npm run db:migrate:local
 
 ### 技术栈
 
-- **主框架** - [Astro](https://astro.build/)
-- **类型检查** - [TypeScript](https://www.typescriptlang.org/)
-- **样式表** - [Less.js](https://lesscss.org/)
-- **响应式组件** - [Svelte](https://svelte.dev/)
+- **核心框架** - [Astro](https://astro.build/)
+- **核心语言** - [TypeScript](https://www.typescriptlang.org/)
+- **UI 组件** - [Svelte](https://svelte.dev/)
 - **CSS 引擎** - [UnoCSS](https://unocss.dev/)
+- **CSS 预处理器** - [Less](https://lesscss.org/)
 - **图标** - [Iconify](https://iconify.design/)
-- **衬线字体** - [Google Fonts](https://fonts.google.com/)
-- **等宽字体** - [ZeoSeven Fonts](https://fonts.zeoseven.com/)
+- **字体** - [Google Fonts](https://fonts.google.com/) | [ZeoSeven Fonts](https://fonts.zeoseven.com/)
 - **图片查看器** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
-- **TypeScript ORM** - [Drizzle ORM](https://orm.drizzle.team/)
+- **SPA 过渡** - [Swup](https://swup.js.org/)
+- **时间处理** - [Luxon](https://moment.github.io/luxon/)
+- **OAuth 认证** - [Arctic](https://arcticjs.dev/)
+- **代码质量** - [Biome](https://biomejs.dev/)
+- **对象关系映射** - [Drizzle ORM](https://orm.drizzle.team/)
 - **数据库** - [Cloudflare D1](https://developers.cloudflare.com/d1/)
-- **部署平台** - [Cloudflare Workers](https://workers.cloudflare.com/)
+- **边缘部署** - [Cloudflare Workers](https://workers.cloudflare.com/)
 
 ### 灵感来源
 
-- [Fuwari](https://github.com/saicaca/fuwari)
 - [Astro Sphere](https://github.com/markhorn-dev/astro-sphere)
 - [astro-vitesse](https://github.com/adrian-ub/astro-vitesse)
 - [Miniblog](https://github.com/nicholasdly/miniblog)

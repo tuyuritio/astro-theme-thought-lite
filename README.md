@@ -148,22 +148,24 @@ All kinds of contributions are welcome and appreciated!
 
 ### Tech Stack
 
-- **Main Framework** - [Astro](https://astro.build/)
-- **Type Checking** - [TypeScript](https://www.typescriptlang.org/)
-- **Style Sheets** - [Less.js](https://lesscss.org/)
-- **Reactive Components** - [Svelte](https://svelte.dev/)
+- **Core Framework** - [Astro](https://astro.build/)
+- **Core Language** - [TypeScript](https://www.typescriptlang.org/)
+- **UI Components** - [Svelte](https://svelte.dev/)
 - **CSS Engine** - [UnoCSS](https://unocss.dev/)
+- **CSS Preprocessor** - [Less](https://lesscss.org/)
 - **Icons** - [Iconify](https://iconify.design/)
-- **Serif Fonts** - [Google Fonts](https://fonts.google.com/)
-- **Monospace Fonts** - [ZeoSeven Fonts](https://fonts.zeoseven.com/)
+- **Fonts** - [Google Fonts](https://fonts.google.com/) | [ZeoSeven Fonts](https://fonts.zeoseven.com/)
 - **Image Viewer** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
-- **TypeScript ORM** - [Drizzle ORM](https://orm.drizzle.team/)
+- **SPA Transitions** - [Swup](https://swup.js.org/)
+- **Time Handling** - [Luxon](https://moment.github.io/luxon/)
+- **OAuth** - [Arctic](https://arcticjs.dev/)
+- **Code Quality** - [Biome](https://biomejs.dev/)
+- **ORM** - [Drizzle ORM](https://orm.drizzle.team/)
 - **Database** - [Cloudflare D1](https://developers.cloudflare.com/d1/)
-- **Deployment** - [Cloudflare Workers](https://workers.cloudflare.com/)
+- **Edge Deployment** - [Cloudflare Workers](https://workers.cloudflare.com/)
 
 ### Inspiration
 
-- [Fuwari](https://github.com/saicaca/fuwari)
 - [Astro Sphere](https://github.com/markhorn-dev/astro-sphere)
 - [astro-vitesse](https://github.com/adrian-ub/astro-vitesse)
 - [Miniblog](https://github.com/nicholasdly/miniblog)
