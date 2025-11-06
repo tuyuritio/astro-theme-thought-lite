@@ -1,9 +1,16 @@
 {
 	"name": "astro-theme-thought-lite",
 	"type": "module",
-	"version": "0.21.2",
+	"version": "0.21.3",
 	"description": "A modern Astro theme focused on content creation",
-	"keywords": ["astro", "theme", "blog", "svelte", "typescript", "i18n"],
+	"keywords": [
+		"astro",
+		"theme",
+		"blog",
+		"svelte",
+		"typescript",
+		"i18n"
+	],
 	"homepage": "https://github.com/tuyuritio/astro-theme-thought-lite",
 	"repository": {
 		"type": "git",
@@ -91,6 +98,8 @@
 		"unocss": "^66.5.4"
 	},
 	"lint-staged": {
-		"*.{js,ts,json,jsonc,svelte,astro}": ["biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"]
+		"*.{js,ts,json,jsonc,svelte,astro}": [
+			"biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
+		]
 	}
 }
