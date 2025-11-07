@@ -40,7 +40,7 @@ const title = config.title;
 	document.addEventListener("astro:page-load", initialize);
 </script>
 
-<App {title} {subtitle} {description} {article} author={typeof config.author == "string" ? config.author : config.author.name}>
+<App {title} {subtitle} {description} {article} author={config.author.name}>
 	<Tip client:load>
 		<Icon name="lucide:info" slot="information" is:inline />
 		<Icon name="lucide:circle-check" slot="success" is:inline />
