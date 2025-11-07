@@ -1,8 +1,7 @@
 <script lang="ts">
-import { i18n } from "astro:config/client";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { onMount, type Snippet } from "svelte";
-import { monolocale } from "$config";
+import config, { monolocale } from "$config";
 import i18nit from "$i18n";
 import ThemeSwitcher from "./ThemeSwitcher.svelte";
 import Menu from "./Menu.svelte";
@@ -29,7 +28,7 @@ let menu: boolean = $state(false);
 let navigator: HTMLElement | undefined = $state();
 
 // Extract path without locale prefix for language switching
-let path: string | undefined = $derived(route.slice(`/${locale === i18n!.defaultLocale ? "" : locale}`.length) || undefined);
+let path: string | undefined = $derived(route.slice(`/${locale === config.i18n.defaultLocale ? "" : locale}`.length) || undefined);
 
 onMount(() => {
 	// Close mobile menu when any navigation link is clicked
@@ -84,8 +83,8 @@ onMount(() => {
 			<Menu label="Language switcher">
 				{#snippet trigger()}{@render globe()}{/snippet}
 				<div data-no-swup class="contents">
-					{#each i18n!.locales as locale}
-						<a href={getRelativeLocaleUrl(locale as string, path)} aria-label={i18nit(locale as string)("language")}>{i18nit(locale as string)("language")}</a>
+					{#each config.i18n.locales as locale}
+						<a href={getRelativeLocaleUrl(locale as string, path)} aria-label={i18nit(locale)("language")}>{i18nit(locale)("language")}</a>
 					{/each}
 				</div>
 			</Menu>

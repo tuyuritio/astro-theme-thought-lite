@@ -1,15 +1,15 @@
 import type { APIRoute } from "astro";
-import { i18n } from "astro:config/client";
 import { getRelativeLocaleUrl } from "astro:i18n";
+import config from "$config";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
 	// Create path for each locale, omitting default locale from URL
-	return i18n!.locales.map(locale => ({ params: { locale: i18n!.defaultLocale === locale ? undefined : (locale as string) } }));
+	return config.i18n.locales.map(locale => ({ params: { locale: config.i18n.defaultLocale === locale ? undefined : locale } }));
 }
 
 export const GET: APIRoute = ({ params }) => {
-	const { locale = i18n!.defaultLocale! } = params;
+	const { locale = config.i18n.defaultLocale } = params;
 	const t = i18nit(locale);
 
 	const text = `<?xml version="1.0" encoding="UTF-8"?>

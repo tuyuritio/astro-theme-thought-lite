@@ -1,5 +1,4 @@
 ---
-import { i18n } from "astro:config/client";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
 import config from "$config";
@@ -13,7 +12,7 @@ import "medium-zoom/dist/style.css";
 
 let route = Astro.url.pathname;
 
-const { locale = i18n!.defaultLocale, title: subtitle, description = config.description, article } = Astro.props;
+const { locale = config.i18n.defaultLocale, title: subtitle, description = config.description, article } = Astro.props;
 const title = config.title;
 ---
 

@@ -1,7 +1,6 @@
 ---
-import { i18n } from "astro:config/client";
 import { getCollection } from "astro:content";
-import { monolocale } from "$config";
+import config, { monolocale } from "$config";
 import Base from "$layouts/Base.astro";
 import Note from "$components/note/Note.svelte";
 import Icon from "$components/Icon.astro";
@@ -9,10 +8,10 @@ import i18nit from "$i18n";
 
 export async function getStaticPaths() {
 	// Create path for each locale, omitting default locale from URL
-	return i18n!.locales.map(locale => ({ params: { locale: i18n!.defaultLocale === locale ? undefined : (locale as string) } }));
+	return config.i18n.locales.map(locale => ({ params: { locale: config.i18n.defaultLocale === locale ? undefined : locale } }));
 }
 
-const { locale = i18n!.defaultLocale } = Astro.params;
+const { locale = config.i18n.defaultLocale } = Astro.params;
 
 const t = i18nit(locale);
 

@@ -1,8 +1,7 @@
 ---
 import type { MarkdownHeading } from "astro";
-import { i18n } from "astro:config/client";
 import { getCollection, render } from "astro:content";
-import { monolocale } from "$config";
+import config, { monolocale } from "$config";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
 import Icon from "$components/Icon.astro";
@@ -26,7 +25,7 @@ export async function getStaticPaths() {
 			// Extract language and note ID from file path structure
 			const [language, ...ids] = note.id.split("/");
 
-			locale = language === i18n!.defaultLocale ? undefined : language;
+			locale = config.i18n.defaultLocale === language ? undefined : language;
 			id = ids.join("/");
 		}
 
@@ -35,7 +34,7 @@ export async function getStaticPaths() {
 	});
 }
 
-const { locale = i18n!.defaultLocale } = Astro.params;
+const { locale = config.i18n.defaultLocale } = Astro.params;
 const { note } = Astro.props;
 
 // Render markdown content and extract headings for TOC
