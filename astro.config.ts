@@ -35,7 +35,6 @@ import copy from "./src/utils/code-copy";
 import reading from "./src/utils/remark/reading";
 
 import siteConfig from "./site.config";
-import locales from "./integrations/astro-locales";
 
 // https://astro.build/config
 export default defineConfig({
@@ -114,7 +113,6 @@ export default defineConfig({
 		plugins: [yaml()]
 	},
 	integrations: [
-		locales(),
 		svelte(),
 		sitemap(),
 		swup({

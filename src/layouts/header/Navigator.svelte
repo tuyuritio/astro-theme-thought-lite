@@ -1,8 +1,8 @@
 <script lang="ts">
 import { i18n } from "astro:config/client";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { monolocale } from "astro:locales";
 import { onMount, type Snippet } from "svelte";
+import { monolocale } from "$config";
 import i18nit from "$i18n";
 import ThemeSwitcher from "./ThemeSwitcher.svelte";
 import Menu from "./Menu.svelte";

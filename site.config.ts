@@ -24,4 +24,6 @@ const config = siteConfig({
 	latest: "*"
 });
 
+export const monolocale = Number(config.i18n.locales.length) === 1;
+
 export default config;

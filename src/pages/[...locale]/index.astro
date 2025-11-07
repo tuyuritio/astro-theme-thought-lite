@@ -2,8 +2,8 @@
 import { i18n } from "astro:config/client";
 import { render, getCollection } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { monolocale } from "astro:locales";
 import { Icon } from "astro-icon/components";
+import { monolocale } from "$config";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
 import Heatmap from "$components/Heatmap.svelte";

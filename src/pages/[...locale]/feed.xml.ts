@@ -3,9 +3,8 @@ import { experimental_AstroContainer as AstroContainer } from "astro/container";
 import { i18n } from "astro:config/client";
 import { getCollection, render } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { monolocale } from "astro:locales";
 import { Feed } from "feed";
-import config from "$config";
+import config, { monolocale } from "$config";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
