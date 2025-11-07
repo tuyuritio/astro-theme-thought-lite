@@ -53,6 +53,8 @@ description: Essential configuration guide for Astro theme sites, covering envir
             - `note` - Note section
             - `jotting` - Jotting section
     - `limit` - Content quantity limit for feeds
+- `comment`
+    - `max-length` - Maximum comment length
 - `latest` - Latest content display
     - `note` - Whether to show latest note
     - `jotting` - Whether to show latest jotting

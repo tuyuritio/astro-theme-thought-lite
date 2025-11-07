@@ -53,6 +53,8 @@ description: Astro テーマサイトの基本設定説明、環境変数、サ�
             - `note` - 文記セクション
             - `jotting` - 随筆セクション
     - `limit` - フィードの返すコンテンツ数量制限
+- `comment`
+    - `max-length` - コメントの最大文字数
 - `latest` - 最新コンテンツ表示
     - `note` - 最新の文記を表示するかどうか
     - `jotting` - 最新の随筆を表示するかどうか

@@ -53,6 +53,8 @@ description: Astro 主题站点的基础配置说明，涵盖环境变量、站�
             - `note` - 笔记板块
             - `jotting` - 随笔板块
     - `limit` - 返回内容数量限制
+- `comment`
+    - `max-length` - 评论最大字数
 - `latest` - 最新内容显示
     - `note` - 是否显示最新笔记
     - `jotting` - 是否显示最新随笔
