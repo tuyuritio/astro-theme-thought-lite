@@ -65,7 +65,7 @@ Customize site configuration and internationalization (i18n) by modifying the fo
 
 - `.env`
 - `astro.config.ts`
-- `site.config.json`
+- `site.config.ts`
 
 For basic configuration, refer to the [Site Configuration Guide](src/content/note/en/configuration.md).
 

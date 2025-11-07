@@ -65,7 +65,7 @@ npm run dev
 
 - `.env`
 - `astro.config.ts`
-- `site.config.json`
+- `site.config.ts`
 
 基本設定については[サイト設定ガイド](src/content/note/ja/configuration.md)を参照してください。
 

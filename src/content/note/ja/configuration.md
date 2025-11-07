@@ -28,7 +28,7 @@ description: Astro テーマサイトの基本設定説明、環境変数、サ�
     - `remarkPlugins` - Markdown 処理プラグイン
     - `rehypePlugins` - HTML 処理プラグイン
 
-## `site.config.json`
+## `site.config.ts`
 
 - `title` - サイトタイトル
 - `prologue` - ホームページのタグライン、`\n` 改行をサポート

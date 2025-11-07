@@ -65,7 +65,7 @@ npm run dev
 
 - `.env`
 - `astro.config.ts`
-- `site.config.json`
+- `site.config.ts`
 
 基础配置请参阅[站点配置指南](src/content/note/zh-cn/configuration.md)。
 
