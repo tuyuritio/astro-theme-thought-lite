@@ -73,7 +73,7 @@ export const comment = {
 			const { success } = await locals.runtime.env.COMMENT_LIMIT.limit({ key: drifter ?? ip ?? nickname });
 			if (!success) throw new ActionError({ code: "TOO_MANY_REQUESTS" });
 
-			if (content.length > config.comment["max-length"]) throw new ActionError({ code: "CONTENT_TOO_LARGE" });
+			if (content.length > Number(config.comment?.["max-length"])) throw new ActionError({ code: "CONTENT_TOO_LARGE" });
 
 			// Generate unique comment ID and timestamp
 			const now = new Date();

@@ -64,21 +64,6 @@ content/
 └── preface/tlh/
 ```
 
-如需使用**内容创建脚本**，请更新 `scripts/new.ts` 中的语言选择选项，同时根据需求配置默认语言：
-
-```ts
-const locale = await select({
-    message: "Select language",
-    options: [
-        { label: "English", value: "en" },
-        { label: "简体中文", value: "zh-cn" },
-        { label: "日本語", value: "ja" },
-        { label: "tlhIngan Hol", value: "tlh" }
-    ],
-    initialValue: "zh-cn"
-});
-```
-
 ## 单语言模式
 
 > [!Warning]

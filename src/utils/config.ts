@@ -8,20 +8,6 @@ type CCLicenseType = "CC0 1.0" | "CC BY 4.0" | "CC BY-SA 4.0" | "CC BY-NC 4.0" |
  */
 type Section = "note" | "jotting";
 
-/**
- * Author Information
- */
-interface AuthorInformation {
-	/** Author Name */
-	name: string;
-
-	/** Author Email */
-	email?: string;
-
-	/** Author Homepage Link */
-	link?: string;
-}
-
 interface SiteConfigOptions<Locales extends readonly string[] = readonly string[]> {
 	/** Site Title */
 	title: string;
@@ -29,8 +15,17 @@ interface SiteConfigOptions<Locales extends readonly string[] = readonly string[
 	/** Site Prologue */
 	prologue?: string;
 
-	/** Author Name or Author Information */
-	author: string | AuthorInformation;
+	/** Author Information */
+	author: {
+		/** Author Name */
+		name: string;
+
+		/** Author Email */
+		email?: string;
+
+		/** Author Homepage Link */
+		link?: string;
+	};
 
 	/** Site Description */
 	description: string;

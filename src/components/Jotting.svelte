@@ -1,9 +1,9 @@
 <script lang="ts">
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { monolocale } from "astro:locales";
 import { onMount, type Snippet } from "svelte";
 import { flip } from "svelte/animate";
 import { fade } from "svelte/transition";
+import { monolocale } from "$config";
 import i18nit from "$i18n";
 
 let {

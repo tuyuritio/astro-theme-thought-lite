@@ -1,16 +1,14 @@
 import type { APIRoute } from "astro";
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
-import { i18n } from "astro:config/client";
 import { getCollection, render } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { monolocale } from "astro:locales";
 import { Feed } from "feed";
-import config from "$config";
+import config, { monolocale } from "$config";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
 	// Create path for each locale, omitting default locale from URL
-	return i18n!.locales.map(locale => ({ params: { locale: i18n!.defaultLocale === locale ? undefined : (locale as string) } }));
+	return config.i18n.locales.map(locale => ({ params: { locale: config.i18n.defaultLocale === locale ? undefined : locale } }));
 }
 
 /**
@@ -18,7 +16,7 @@ export async function getStaticPaths() {
  * Supports filtering by language, series, and tags
  */
 export const GET: APIRoute = async ({ site, params }) => {
-	const { locale: language = i18n!.defaultLocale! } = params;
+	const { locale: language = config.i18n.defaultLocale } = params;
 	const t = i18nit(language);
 
 	// Initialize feed with site metadata and configuration
@@ -30,7 +28,7 @@ export const GET: APIRoute = async ({ site, params }) => {
 		copyright:
 			config.copyright.type === "CC0 1.0"
 				? "CC0 1.0 – No Rights Reserved"
-				: `${config.copyright.type} © ${config.copyright.year} ${typeof config.author === "string" ? config.author : config.author.name}`,
+				: `${config.copyright.type} © ${config.copyright.year} ${config.author.name}`,
 		image: new URL("favicon-96x96.png", site).toString(), // Feed image/logo
 		favicon: new URL("favicon.ico", site).toString(), // Feed favicon
 		id: site!.toString(), // Unique feed identifier

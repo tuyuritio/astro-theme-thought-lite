@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.22.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.21.6...v0.22.0) (2025-11-07)
+
+
+### Features
+
+* **config:** migrate site configuration to TypeScript ([183c99e](https://github.com/tuyuritio/astro-theme-thought-lite/commit/183c99e6eb04177002d04916271b7b626987dfcf))
+* **i18n:** implement multilingual support for content creation script ([64acaf4](https://github.com/tuyuritio/astro-theme-thought-lite/commit/64acaf4745200d3e00b0c7f4dc86b22b56d14004))
+
+
+### Bug Fixes
+
+* **config:** simplify author structure ([73ca403](https://github.com/tuyuritio/astro-theme-thought-lite/commit/73ca4037982c639a6b8bf81eb7a79f091464e020))
+* **i18n:** remove astro-locales integration and replace imports ([e565f8a](https://github.com/tuyuritio/astro-theme-thought-lite/commit/e565f8a0c2b14f49009f8185686c7579255d2432))
+
 ## [0.21.6](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.21.5...v0.21.6) (2025-11-06)
 
 

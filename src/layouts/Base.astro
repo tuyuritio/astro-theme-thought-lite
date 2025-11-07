@@ -1,5 +1,4 @@
 ---
-import { i18n } from "astro:config/client";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
 import config from "$config";
@@ -13,7 +12,7 @@ import "medium-zoom/dist/style.css";
 
 let route = Astro.url.pathname;
 
-const { locale = i18n!.defaultLocale, title: subtitle, description = config.description, article } = Astro.props;
+const { locale = config.i18n.defaultLocale, title: subtitle, description = config.description, article } = Astro.props;
 const title = config.title;
 ---
 
@@ -40,7 +39,7 @@ const title = config.title;
 	document.addEventListener("astro:page-load", initialize);
 </script>
 
-<App {title} {subtitle} {description} {article} author={typeof config.author == "string" ? config.author : config.author.name}>
+<App {title} {subtitle} {description} {article} author={config.author.name}>
 	<Tip client:load>
 		<Icon name="lucide:info" slot="information" is:inline />
 		<Icon name="lucide:circle-check" slot="success" is:inline />

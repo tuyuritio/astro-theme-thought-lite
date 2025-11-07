@@ -1,7 +1,7 @@
 {
 	"name": "astro-theme-thought-lite",
 	"type": "module",
-	"version": "0.21.6",
+	"version": "0.22.0",
 	"description": "A modern Astro theme focused on content creation",
 	"keywords": ["astro", "theme", "blog", "cloudflare", "svelte", "typescript", "i18n"],
 	"homepage": "https://github.com/tuyuritio/astro-theme-thought-lite",
@@ -18,7 +18,7 @@
 		"url": "https://github.com/tuyuritio"
 	},
 	"scripts": {
-		"new": "tsx scripts/new.ts",
+		"new": "tsx --loader esm-loader-yaml scripts/new.ts",
 		"dev": "astro dev",
 		"check": "astro check",
 		"build": "astro build",
@@ -93,6 +93,7 @@
 		"@types/luxon": "^3.7.1",
 		"@unocss/reset": "^66.5.4",
 		"drizzle-kit": "^0.31.6",
+		"esm-loader-yaml": "^1.0.2",
 		"husky": "^9.1.7",
 		"less": "^4.4.2",
 		"lint-staged": "^16.2.6",
