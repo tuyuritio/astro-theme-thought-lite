@@ -3,36 +3,30 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { DateTime } from "luxon";
 import { cancel, confirm, intro, isCancel, log, multiselect, note, outro, select, spinner, text } from "@clack/prompts";
+import { DateTime } from "luxon";
+import i18nit from "$i18n";
+import config, { monolocale } from "../site.config";
 
-const CANCEL_MESSAGE = "Operation cancelled";
+const t = i18nit(config.i18n.defaultLocale, "script");
 
-// Locale configuration
-// For single language mode: Set LOCALE_OPTIONS to single language array, e.g., [{ label: "English", value: "en" }]
-// For multi-language mode: Include all supported languages
-const LOCALES = [
-	{ label: "English", value: "en" },
-	{ label: "简体中文", value: "zh-cn" },
-	{ label: "日本語", value: "ja" }
-];
-const DEFAULT_LOCALE = "en";
+const CANCEL_MESSAGE = t("new.cancel");
 
 // Main function: Interactive CLI script for creating new articles
 !(async () => {
 	console.clear();
-	intro("📝 Create New Article");
+	intro(`📝 ${t("new.welcome")}`);
 
 	// Determine the base content directory path
 	let path = join(dirname(fileURLToPath(import.meta.url)), "..", "src", "content");
 
 	// Select content type: Note, Jotting, or Preface
 	const contentType = await select({
-		message: "Select content type",
+		message: t("new.step.type"),
 		options: [
-			{ label: "Note", value: "note", hint: "In-depth, carefully conceived long-form works" },
-			{ label: "Jotting", value: "jotting", hint: "Brief insights, scattered thoughts or daily observations" },
-			{ label: "Preface", value: "preface", hint: "Life updates, site announcements or creative philosophy" }
+			{ label: t("new.note.name"), value: "note", hint: t("new.note.description") },
+			{ label: t("new.jotting.name"), value: "jotting", hint: t("new.jotting.description") },
+			{ label: t("new.preface.name"), value: "preface", hint: t("new.preface.description") }
 		]
 	});
 
@@ -43,12 +37,12 @@ const DEFAULT_LOCALE = "en";
 	path = join(path, contentType);
 
 	// Select language for the article (skip if single language mode)
-	let locale: string | symbol = DEFAULT_LOCALE;
-	if (LOCALES.length > 1) {
+	let locale: string | symbol = config.i18n.defaultLocale;
+	if (!monolocale) {
 		locale = await select({
-			message: "Select language",
-			options: LOCALES,
-			initialValue: DEFAULT_LOCALE
+			message: t("new.step.language"),
+			options: config.i18n.locales.map(locale => ({ label: i18nit(locale)("language"), value: locale })),
+			initialValue: config.i18n.defaultLocale
 		});
 
 		// Exit if user cancels the selection
@@ -68,18 +62,18 @@ const DEFAULT_LOCALE = "en";
 		// Preface uses timestamp as filename
 		information.timestamp = timestamp;
 
-		content += "Start your content here...";
-		// Generate filename from timestamp (e.g., 2025-10-18-14-30-00.md)
+		content += t("new.preface.start");
+		// Generate filename from timestamp (e.g., 1970-01-01-00-00-00.md)
 		path = join(path, `${timestamp.substring(0, 19).replace(/[\s:]/g, "-")}.md`);
 	} else {
 		// Note and Jotting require additional metadata
-		content += "## Start Writing\n\nStart your content here...";
+		content += t("new.article.start");
 
 		// Prompt user to input article title
 		const title = await text({
-			message: "Article title",
-			placeholder: "Enter title...",
-			validate: value => (value ? undefined : "Title cannot be empty")
+			message: t("new.step.title.name"),
+			placeholder: t("new.step.title.placeholder"),
+			validate: value => (value ? undefined : t("new.step.title.validate"))
 		});
 
 		// Exit if user cancels the input
@@ -103,8 +97,8 @@ const DEFAULT_LOCALE = "en";
 		// Prompt user to input content ID (filename)
 		let id: string | symbol = slugify(title);
 		id = await text({
-			message: "Content ID（Filename）",
-			placeholder: "Enter content ID...",
+			message: t("new.step.id.name"),
+			placeholder: t("new.step.id.placeholder"),
 			initialValue: id,
 			validate: value =>
 				value === slugify(value) ? undefined : "Content ID can only contain letters, numbers, hyphens, and cannot start or end with a hyphen"
@@ -117,8 +111,8 @@ const DEFAULT_LOCALE = "en";
 		if (contentType === "note") {
 			// Prompt user to input series name (optional)
 			const series = await text({
-				message: "Series name (optional)",
-				placeholder: "Leave empty if not part of a series"
+				message: t("new.step.series.name"),
+				placeholder: t("new.step.series.placeholder")
 			});
 
 			// Exit if user cancels the input
@@ -130,8 +124,8 @@ const DEFAULT_LOCALE = "en";
 
 		// Prompt user to input tags (comma-separated)
 		const tags = await text({
-			message: "Tags (comma-separated, optional)",
-			placeholder: "e.g.: Guide, Astro, Tutorial"
+			message: t("new.step.tags.name"),
+			placeholder: t("new.step.tags.placeholder")
 		});
 
 		// Exit if user cancels the input
@@ -142,8 +136,8 @@ const DEFAULT_LOCALE = "en";
 
 		// Prompt user to input description (optional)
 		const description = await text({
-			message: "Description (optional)",
-			placeholder: "Brief description of the content..."
+			message: t("new.step.description.name"),
+			placeholder: t("new.step.description.placeholder")
 		});
 
 		// Exit if user cancels the input
@@ -154,12 +148,12 @@ const DEFAULT_LOCALE = "en";
 
 		// Prompt user to select additional options (draft, toc, top, sensitive)
 		const options = await multiselect({
-			message: "Select additional options",
+			message: t("new.step.options.name"),
 			options: [
-				{ value: "draft", label: "Mark as draft" },
-				...(contentType === "note" ? [{ value: "toc", label: "Show table of contents" }] : []),
-				{ value: "top", label: "Pin this content" },
-				{ value: "sensitive", label: "Mark as sensitive content" }
+				{ label: t("new.step.options.draft"), value: "draft" },
+				...(contentType === "note" ? [{ label: t("new.step.options.toc"), value: "toc" }] : []),
+				{ label: t("new.step.options.top"), value: "top" },
+				{ label: t("new.step.options.sensitive"), value: "sensitive" }
 			],
 			initialValues: ["draft"],
 			required: false
@@ -176,10 +170,10 @@ const DEFAULT_LOCALE = "en";
 
 		// Prompt user to choose file structure: flat (single .md file) or folder (with index.md)
 		const folder = await select({
-			message: "Which file structure would you like to use?",
+			message: t("new.step.structure.name"),
 			options: [
-				{ label: "Single markdown file", value: "flat", hint: `${id}.md` },
-				{ label: "Folder with index file (to include images)", value: "folder", hint: `${id}/index.md` }
+				{ label: t("new.step.structure.flat"), value: "flat", hint: `${id}.md` },
+				{ label: t("new.step.structure.folder"), value: "folder", hint: `${id}/index.md` }
 			],
 			initialValue: "flat"
 		});
@@ -208,11 +202,11 @@ ${content}
 `;
 
 	// Display the generated content to the user for review
-	note(content, `Here is the content that will be created at ${path}:`);
+	`${note(content, t("new.preview", { path }))}:`;
 
 	// Confirm with user to proceed with file creation
 	const proceed = await confirm({
-		message: "Do you want to proceed with creating this file?",
+		message: t("new.step.confirm"),
 		initialValue: true
 	});
 
@@ -222,7 +216,7 @@ ${content}
 	// Check if file already exists and prompt for confirmation to overwrite
 	if (existsSync(path)) {
 		const overwrite = await confirm({
-			message: `File ${path} already exists. Overwrite?`
+			message: t("new.step.overwrite", { path })
 		});
 
 		// Exit if user cancels or chooses not to overwrite
@@ -234,27 +228,27 @@ ${content}
 
 	// Write the file to disk
 	const waiting = spinner();
-	waiting.start("Creating file...");
+	waiting.start(t("new.creating"));
 
 	writeFileSync(path, content, "utf-8");
-	waiting.stop("✅ File created successfully!");
+	waiting.stop(`✅ ${t("new.created")}`);
 
 	// Ask if user wants to open the file in VS Code
 	const openInVSCode = await confirm({
-		message: "Do you want to open this file in VS Code?",
+		message: `🖥️ ${t("new.open.message")}`,
 		initialValue: true
 	});
 
 	// Open file in VS Code if confirmed
 	if (!isCancel(openInVSCode) && openInVSCode) {
 		const { exec } = await import("node:child_process");
-		exec(`code "${path}"`, error => error && log.error(`Failed to open VS Code: ${error.message}`));
+		exec(`code "${path}"`, error => error && log.error(`${t("new.open.error")}: ${error.message}`));
 	}
 
-	outro("🎉 Done! Happy writing!");
+	outro(`🎉 ${t("new.done")}`);
 })().catch(error => {
 	// Handle any errors that occur during execution
-	log.error("An error occurred:");
+	log.error(`${t("new.error")}:`);
 	log.error(error);
 	process.exit(1);
 });

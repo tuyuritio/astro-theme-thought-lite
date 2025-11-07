@@ -1,0 +1,57 @@
+new:
+  article:
+    start: |
+      ## Start Writing
+
+      Start your content here...
+  cancel: Operation cancelled
+  created: File created successfully!
+  creating: Creating file...
+  done: Done! Happy writing!
+  error: An error occurred
+  jotting:
+    description: Brief insights, scattered thoughts or daily observations
+    name: Jotting
+  note:
+    description: In-depth, carefully conceived long-form works
+    name: Note
+  open:
+    error: Failed to open VS Code
+    message: Do you want to open this file in VS Code?
+  preface:
+    description: Life updates, site announcements or creative philosophy
+    name: Preface
+    start: Start your content here...
+  preview: Here is the content that will be created at {path}
+  step:
+    confirm: Do you want to proceed with creating this file?
+    description:
+      name: Description (optional)
+      placeholder: Brief description of the content...
+    id:
+      name: Content ID（Filename）
+      placeholder: Enter content ID...
+    language: Select language
+    options:
+      draft: Mark as draft
+      name: Select additional options
+      sensitive: Mark as sensitive content
+      toc: Show table of contents
+      top: Pin this content
+    overwrite: File {path} already exists. Overwrite?
+    series:
+      name: Series name (optional)
+      placeholder: Leave empty if not part of a series
+    structure:
+      flat: Single markdown file
+      folder: Folder with index file (to include images)
+      name: Which file structure would you like to use?
+    tags:
+      name: Tags (comma-separated, optional)
+      placeholder: 'e.g.: Guide, Astro, Tutorial'
+    title:
+      name: Article title
+      placeholder: Enter title…
+      validate: Title cannot be empty
+    type: Select content type
+  welcome: Create New Article

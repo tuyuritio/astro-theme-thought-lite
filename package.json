@@ -25,7 +25,7 @@
 		"url": "https://github.com/tuyuritio"
 	},
 	"scripts": {
-		"new": "tsx scripts/new.ts",
+		"new": "tsx --loader esm-loader-yaml scripts/new.ts",
 		"dev": "astro dev",
 		"check": "astro check",
 		"build": "astro build",
@@ -88,6 +88,7 @@
 		"@rollup/plugin-yaml": "^4.1.2",
 		"@types/luxon": "^3.7.1",
 		"@unocss/reset": "^66.5.4",
+		"esm-loader-yaml": "^1.0.2",
 		"husky": "^9.1.7",
 		"less": "^4.4.2",
 		"lint-staged": "^16.2.6",

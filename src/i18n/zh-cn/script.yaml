@@ -1,0 +1,57 @@
+new:
+  article:
+    start: |
+      ## 开始写作
+
+      在此开始你的创作……
+  cancel: 操作中断
+  created: 文件创建成功！
+  creating: 正在创建文件...
+  done: 完成！写作愉快！
+  error: 发生错误
+  jotting:
+    description: 简短的见解、零散的思考或日常的观察
+    name: 随笔
+  note:
+    description: 具有深度，经过深思熟虑的长篇作品
+    name: 文记
+  open:
+    error: 无法打开 VS Code
+    message: 使用 VS Code 打开此文件？
+  preface:
+    description: 生活近况、网站公告或创作理念
+    name: 序文
+    start: 在此开始你的创作……
+  preview: 这是将在 {path} 创建的内容
+  step:
+    confirm: 确认创建该文件？
+    description:
+      name: 描述（可选）
+      placeholder: 内容的简要说明...
+    id:
+      name: 内容 ID（文件名）
+      placeholder: 输入内容 ID…
+    language: 选择语言
+    options:
+      draft: 标记为草稿
+      name: 选择附加选项
+      sensitive: 标记为敏感内容
+      toc: 显示目录
+      top: 置顶内容
+    overwrite: 文件 {path} 已存在，是否覆盖？
+    series:
+      name: 所属系列（可选）
+      placeholder: 如果不属于任意一个系列，请忽略
+    structure:
+      flat: 单一 Markdown 文件
+      folder: 带有索引文件的文件夹（用于包含图片）
+      name: 您想使用哪种文件结构？
+    tags:
+      name: 标签（半角逗号分隔，可选）
+      placeholder: 例如：Guide, Astro, Tutorial
+    title:
+      name: 文章标题
+      placeholder: 输入标题…
+      validate: 标题不能为空
+    type: 选择内容类型
+  welcome: 创建新文章

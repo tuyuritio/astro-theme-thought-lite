@@ -1,0 +1,57 @@
+new:
+  article:
+    start: |
+      ## 執筆開始
+
+      ここから創作を始めましょう…
+  cancel: 操作が中断されました
+  created: ファイルが正常に作成されました。
+  creating: ファイルを作成中...
+  done: 終わり！ハッピーライティング！
+  error: エラーが発生しました
+  jotting:
+    description: 簡単な洞察、雑多な考え、または日常の観察
+    name: 随筆
+  note:
+    description: 深く考え抜かれた長編作品
+    name: 文記
+  open:
+    error: VS コードを開けませんでした
+    message: このファイルを VS Code で開きますか?
+  preface:
+    description: 現在の生活状況、ウェブサイトでのお知らせやクリエイティブなアイデア
+    name: 序文
+    start: ここから創作を始めましょう…
+  preview: '{path} に作成される記事は次のとおりです。'
+  step:
+    confirm: このファイルを作成しますか?
+    description:
+      name: 説明 (任意)
+      placeholder: 内容について簡単な説明・・・
+    id:
+      name: 記事 ID（ファイル名）
+      placeholder: 記事 ID を入力してください...
+    language: 言語を選択してください
+    options:
+      draft: 下書きとしてマーク
+      name: 追加オプションを選択してください
+      sensitive: 機密記事としてマークする
+      toc: 目次を表示
+      top: この記事をピン留めする
+    overwrite: ファイル {path} はすでに存在しますが、上書きしますか?
+    series:
+      name: シリーズ名（任意）
+      placeholder: シリーズの一部でない場合は空白のままにしてください
+    structure:
+      flat: 単一のマークダウン ファイル
+      folder: 画像を含めるためのインデックスファイルがあるフォルダ
+      name: どのファイル構造を使用しますか?
+    tags:
+      name: タグ (半角カンマ区切り、任意)
+      placeholder: '例: Guide, Astro, Tutorial'
+    title:
+      name: 記事タイトル
+      placeholder: タイトルを入力してください…
+      validate: タイトルを空にすることはできません
+    type: 記事タイプを選択してください
+  welcome: 新しい記事を作成
