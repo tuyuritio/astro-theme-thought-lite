@@ -24,7 +24,13 @@
 			"recommended": true,
 			"style": {
 				"noNonNullAssertion": "off",
-				"noDescendingSpecificity": "off"
+				"noDescendingSpecificity": "off",
+				"useNamingConvention": {
+					"level": "warn",
+					"options": {
+						"strictCase": false
+					}
+				}
 			},
 			"complexity": {
 				"noCommaOperator": "off"

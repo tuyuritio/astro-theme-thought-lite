@@ -38,13 +38,13 @@ onMount(() => {
 	}
 
 	// Set up route tracking for page navigation with Swup integration
-	const update_route = () => (route = window.location.pathname);
+	const updateRoute = () => (route = window.location.pathname);
 	if (window.swup) {
 		// Register route update hook if Swup is already available
-		window.swup.hooks.on("page:load", update_route);
+		window.swup.hooks.on("page:load", updateRoute);
 	} else {
 		// Wait for Swup to be enabled and then register the hook
-		document.addEventListener("swup:enable", () => window.swup?.hooks.on("page:load", update_route));
+		document.addEventListener("swup:enable", () => window.swup?.hooks.on("page:load", updateRoute));
 	}
 });
 </script>

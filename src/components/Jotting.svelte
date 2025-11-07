@@ -9,7 +9,7 @@ import i18nit from "$i18n";
 let {
 	locale,
 	jottings,
-	tags: tag_list,
+	tags: tagList,
 	top,
 	sensitive,
 	left,
@@ -62,7 +62,7 @@ let list: any[] = $derived(filtered.slice((page - 1) * size, page * size));
  * @param tag Tag to toggle
  * @param turn whether to include or exclude the tag
  */
-function switch_tag(tag: string, turn?: boolean) {
+function switchTag(tag: string, turn?: boolean) {
 	let included = tags.includes(tag);
 	if (turn === undefined) turn = !included;
 
@@ -92,7 +92,7 @@ onMount(() => {
 					</span>
 					<span class="flex gap-1">
 						{#each jotting.data.tags as tag}
-							<button onclick={() => switch_tag(tag, true)} class="text-3.3 c-remark">#{tag}</button>
+							<button onclick={() => switchTag(tag, true)} class="text-3.3 c-remark">#{tag}</button>
 						{/each}
 					</span>
 				</section>
@@ -123,8 +123,8 @@ onMount(() => {
 		<section>
 			<h3>{t("jotting.tag")}</h3>
 			<p>
-				{#each tag_list as tag (tag)}
-					<button class:selected={tags.includes(tag)} onclick={() => switch_tag(tag)}>{tag}</button>
+				{#each tagList as tag (tag)}
+					<button class:selected={tags.includes(tag)} onclick={() => switchTag(tag)}>{tag}</button>
 				{/each}
 			</p>
 		</section>
