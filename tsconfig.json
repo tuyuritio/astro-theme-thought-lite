@@ -5,16 +5,14 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"paths": {
-			"$assets/*": ["src/assets/*"],
+			"$config": ["site.config.ts"],
 			"$actions/*": ["src/actions/*"],
 			"$utils/*": ["src/utils/*"],
 			"$components/*": ["src/components/*"],
 			"$db/*": ["src/db/*"],
 			"$i18n": ["src/i18n/index"],
 			"$layouts/*": ["src/layouts/*"],
-			"$styles/*": ["src/styles/*"],
-			"$scripts/*": ["src/scripts/*"],
-			"$config": ["site.config.json"]
+			"$styles/*": ["src/styles/*"]
 		}
 	}
 }

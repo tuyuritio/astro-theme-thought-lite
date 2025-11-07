@@ -80,7 +80,7 @@ npm run dev
 4. サイト設定および国際化（i18n）設定をカスタマイズするには、以下のファイルを変更してください。[サイト設定ガイド](src/content/note/ja/configuration.md)と[国際化設定ガイド](src/content/note/ja/internationalization.md)を参照：
     - `.env`
     - `astro.config.ts`
-    - `site.config.json`
+    - `site.config.ts`
 
 ## 💻 コマンド
 

@@ -80,7 +80,7 @@ npm run dev
 4. 自定义站点配置及国际化（i18n）配置，请修改以下文件，参阅[站点配置指南](src/content/note/zh-cn/configuration.md)及[国际化配置指南](src/content/note/zh-cn/internationalization.md)：
     - `.env`
     - `astro.config.ts`
-    - `site.config.json`
+    - `site.config.ts`
 
 ## 💻 命令
 

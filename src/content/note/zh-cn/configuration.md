@@ -32,7 +32,7 @@ description: Astro 主题站点的基础配置说明，涵盖环境变量、站�
     - `remarkPlugins` - Markdown 处理插件
     - `rehypePlugins` - HTML 处理插件
 
-## `site.config.json`
+## `site.config.ts`
 
 - `title` - 站点标题
 - `prologue` - 首页标语，支持 `\n` 换行

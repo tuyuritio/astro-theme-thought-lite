@@ -9,19 +9,15 @@ description: 详细介绍如何配置主题的多语言支持，包括修改默�
 
 ## 修改默认语言
 
-在 `astro.config.ts` 中修改 `i18n.defaultLocale`：
+在 `site.config.ts` 中修改 `i18n.defaultLocale`：
 
 ```ts
-export default defineConfig({
+export default siteConfig({
     i18n: {
         locales: ["en", "zh-cn", "ja"],
         // 将默认语言改为简体中文
-        defaultLocale: "zh-cn",
-        routing: {
-            redirectToDefaultLocale: false,
-            prefixDefaultLocale: false,
-        }
-    }
+        defaultLocale: "zh-cn"
+    },
 });
 ```
 
@@ -47,13 +43,13 @@ import tlh from "./tlh.yaml";
 const translations = { en, "zh-cn": zhCN, ja, tlh };
 ```
 
-在 `astro.config.ts` 中将新语言添加到 `i18n.locales` 数组：
+在 `site.config.ts` 中将新语言添加到 `i18n.locales` 数组：
 
 ```ts
-export default defineConfig({
+export default siteConfig({
     i18n: {
         locales: ["en", "zh-cn", "ja", "tlh"],
-        defaultLocale: "en",
+        defaultLocale: "en"
     },
 });
 ```
@@ -88,13 +84,13 @@ const locale = await select({
 > [!Warning]
 > 请勿直接删除 `i18n` 配置字段，这会导致主题无法正常工作！
 
-在 `astro.config.ts` 的 `i18n.locales` 中保留所需语言，移除其他项：
+在 `site.config.ts` 的 `i18n.locales` 中保留所需语言，移除其他项：
 
 ```ts
-export default defineConfig({
+export default siteConfig({
     i18n: {
         locales: ["zh-cn"],
-        defaultLocale: "zh-cn",
+        defaultLocale: "zh-cn"
     },
 });
 ```

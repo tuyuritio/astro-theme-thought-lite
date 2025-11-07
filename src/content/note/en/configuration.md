@@ -32,7 +32,7 @@ description: Essential configuration guide for Astro theme sites, covering envir
     - `remarkPlugins` - Markdown processing plugins
     - `rehypePlugins` - HTML processing plugins
 
-## `site.config.json`
+## `site.config.ts`
 
 - `title` - Site title
 - `prologue` - Homepage tagline, supports `\n` line breaks

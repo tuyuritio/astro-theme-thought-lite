@@ -9,19 +9,15 @@ The theme has built-in multi-language support, with the default language being *
 
 ## Changing Default Language
 
-Modify `i18n.defaultLocale` in `astro.config.ts`:
+Modify `i18n.defaultLocale` in `site.config.ts`:
 
 ```ts
-export default defineConfig({
+export default siteConfig({
     i18n: {
         locales: ["en", "zh-cn", "ja"],
         // Change default language to Simplified Chinese
-        defaultLocale: "zh-cn",
-        routing: {
-            redirectToDefaultLocale: false,
-            prefixDefaultLocale: false,
-        }
-    }
+        defaultLocale: "zh-cn"
+    },
 });
 ```
 
@@ -47,13 +43,13 @@ import tlh from "./tlh.yaml";
 const translations = { en, "zh-cn": zhCN, ja, tlh };
 ```
 
-Add the new language to the `i18n.locales` array in `astro.config.ts`:
+Add the new language to the `i18n.locales` array in `site.config.ts`:
 
 ```ts
-export default defineConfig({
+export default siteConfig({
     i18n: {
         locales: ["en", "zh-cn", "ja", "tlh"],
-        defaultLocale: "en",
+        defaultLocale: "en"
     },
 });
 ```
@@ -88,13 +84,13 @@ const locale = await select({
 > [!Warning]
 > Do not directly delete the `i18n` configuration field, as this will cause the theme to malfunction!
 
-Keep only the desired language in `i18n.locales` in `astro.config.ts`, removing other entries:
+Keep only the desired language in `i18n.locales` in `site.config.ts`, removing other entries:
 
 ```ts
-export default defineConfig({
+export default siteConfig({
     i18n: {
         locales: ["en"],
-        defaultLocale: "en",
+        defaultLocale: "en"
     },
 });
 ```

@@ -9,19 +9,15 @@ description: テーマの多言語サポートの設定方法の詳細ガイド�
 
 ## デフォルト言語の変更
 
-`astro.config.ts` で `i18n.defaultLocale` を修正します：
+`site.config.ts` で `i18n.defaultLocale` を修正します：
 
 ```ts
-export default defineConfig({
+export default siteConfig({
     i18n: {
         locales: ["en", "zh-cn", "ja"],
         // デフォルト言語を日本語に変更
-        defaultLocale: "ja",
-        routing: {
-            redirectToDefaultLocale: false,
-            prefixDefaultLocale: false,
-        }
-    }
+        defaultLocale: "ja"
+    },
 });
 ```
 
@@ -47,13 +43,13 @@ import tlh from "./tlh.yaml";
 const translations = { en, "zh-cn": zhCN, ja, tlh };
 ```
 
-`astro.config.ts` で新しい言語を `i18n.locales` 配列に追加します：
+`site.config.ts` で新しい言語を `i18n.locales` 配列に追加します：
 
 ```ts
-export default defineConfig({
+export default siteConfig({
     i18n: {
         locales: ["en", "zh-cn", "ja", "tlh"],
-        defaultLocale: "en",
+        defaultLocale: "en"
     },
 });
 ```
@@ -88,13 +84,13 @@ const locale = await select({
 > [!Warning]
 > `i18n` 設定フィールドを直接削除しないでください。テーマが正常に動作しなくなります！
 
-`astro.config.ts` の `i18n.locales` で必要な言語のみを保持し、他の項目を削除します：
+`site.config.ts` の `i18n.locales` で必要な言語のみを保持し、他の項目を削除します：
 
 ```ts
-export default defineConfig({
+export default siteConfig({
     i18n: {
         locales: ["ja"],
-        defaultLocale: "ja",
+        defaultLocale: "ja"
     },
 });
 ```

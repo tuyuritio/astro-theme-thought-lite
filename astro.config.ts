@@ -35,6 +35,7 @@ import wrapper from "./src/utils/remark/table-wrapper";
 import copy from "./src/utils/code-copy";
 import reading from "./src/utils/remark/reading";
 
+import siteConfig from "./site.config";
 import locales from "./integrations/astro-locales";
 
 // https://astro.build/config
@@ -48,8 +49,7 @@ export default defineConfig({
 	site: "https://thought-lite.ttio.workers.dev",
 	trailingSlash: "never",
 	i18n: {
-		locales: ["en", "zh-cn", "ja"],
-		defaultLocale: "en",
+		...siteConfig.i18n,
 		routing: {
 			redirectToDefaultLocale: false,
 			prefixDefaultLocale: false
