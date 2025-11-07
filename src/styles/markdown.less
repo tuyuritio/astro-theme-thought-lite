@@ -332,42 +332,39 @@
 	}
 
 	.markdown-alert {
-		border-left: 4px solid;
+		&-note {
+			--alert-color: var(--secondary-color);
+		}
+
+		&-tip {
+			--alert-color: #66ba33;
+		}
+
+		&-important {
+			--alert-color: #3366cc;
+		}
+
+		&-warning {
+			--alert-color: #efa755;
+		}
+
+		&-caution {
+			--alert-color: #ee3838;
+		}
+
+		border-left: 4px solid var(--alert-color);
 		padding: 0px 1rem 5px;
 
 		&-title {
 			display: flex;
 			align-items: center;
 
+			color: var(--alert-color);
 			font-weight: bold;
 
 			svg {
 				margin-right: 8px;
 			}
-		}
-
-		&-note {
-			color: var(--remark-color);
-		}
-
-		&-tip {
-			color: #66ba33;
-		}
-
-		&-important {
-			color: #3366cc;
-		}
-
-		&-warning {
-			color: #efa755;
-		}
-
-		&-caution {
-			color: #ee3838;
-		}
-
-		p:not(:first-child) {
-			color: var(--primary-color);
 		}
 	}
 

@@ -10,8 +10,8 @@ import i18nit from "$i18n";
 let {
 	locale,
 	notes,
-	series: series_list,
-	tags: tag_list,
+	series: seriesList,
+	tags: tagList,
 	top,
 	sensitive,
 	left,
@@ -34,12 +34,12 @@ let filtered: any[] = $derived.by(() => {
 		// Apply series and tag filtering
 		.filter(note => {
 			// Check if note matches the specified series
-			let match_series = !series || note.data.series === series;
+			let matchSeries = !series || note.data.series === series;
 
 			// Check if note contains all specified tags
-			let match_tags = tags.every(tag => note.data.tags?.includes(tag));
+			let matchTags = tags.every(tag => note.data.tags?.includes(tag));
 
-			return match_series && match_tags;
+			return matchSeries && matchTags;
 		})
 		// Sort by timestamp (newest first)
 		.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
@@ -79,7 +79,7 @@ let list: any[] = $derived(filtered.slice((page - 1) * size, page * size));
  * @param tag Tag to toggle
  * @param turn whether to include or exclude the tag
  */
-function switch_tag(tag: string, turn?: boolean) {
+function switchTag(tag: string, turn?: boolean) {
 	let included = tags.includes(tag);
 	if (turn === undefined) turn = !included;
 
@@ -89,13 +89,13 @@ function switch_tag(tag: string, turn?: boolean) {
 
 /**
  * Select or deselect a series filter (only one series can be active at a time)
- * @param series_choice the series to select or deselect
+ * @param seriesChoice the series to select or deselect
  * @param turn whether to include or exclude the series
  */
-function choose_series(series_choice: string, turn?: boolean) {
-	if (turn === undefined) turn = series !== series_choice;
+function chooseSeries(seriesChoice: string, turn?: boolean) {
+	if (turn === undefined) turn = series !== seriesChoice;
 	// Set series if turning on, or clear if turning off
-	series = turn ? series_choice : null;
+	series = turn ? seriesChoice : null;
 }
 
 onMount(() => {
@@ -117,14 +117,14 @@ onMount(() => {
 					<div class="flex gap-1 items-center">
 						{#if note.data.top > 0}<span>{@render top()}</span>{/if}
 						{#if note.data.sensitive}<span>{@render sensitive()}</span>{/if}
-						{#if note.data.series}<button onclick={() => choose_series(note.data.series, true)}>{note.data.series}</button><b>|</b>{/if}
+						{#if note.data.series}<button onclick={() => chooseSeries(note.data.series, true)}>{note.data.series}</button><b>|</b>{/if}
 						<a href={getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)} class="link">{note.data.title}</a>
 					</div>
 					<time datetime={note.data.timestamp.toISOString()} class="font-mono text-2.6 c-remark">{Time(note.data.timestamp)}</time>
 				</div>
 				<span class="flex items-center gap-1 sm:ml-a c-remark">
 					{#each note.data.tags as tag}
-						<button onclick={() => switch_tag(tag, true)} class="text-3.5 sm:text-sm">#{tag}</button>
+						<button onclick={() => switchTag(tag, true)} class="text-3.5 sm:text-sm">#{tag}</button>
 					{/each}
 				</span>
 			</section>
@@ -155,8 +155,8 @@ onMount(() => {
 		<section>
 			<h3>{t("note.series")}</h3>
 			<p>
-				{#each series_list as series_item (series_item)}
-					<button class:selected={series_item == series} onclick={() => choose_series(series_item)}>{series_item}</button>
+				{#each seriesList as seriesItem (seriesItem)}
+					<button class:selected={seriesItem == series} onclick={() => chooseSeries(seriesItem)}>{seriesItem}</button>
 				{/each}
 			</p>
 		</section>
@@ -164,8 +164,8 @@ onMount(() => {
 		<section>
 			<h3>{t("note.tag")}</h3>
 			<p>
-				{#each tag_list as tag (tag)}
-					<button class:selected={tags.includes(tag)} onclick={() => switch_tag(tag)}>{tag}</button>
+				{#each tagList as tag (tag)}
+					<button class:selected={tags.includes(tag)} onclick={() => switchTag(tag)}>{tag}</button>
 				{/each}
 			</p>
 		</section>

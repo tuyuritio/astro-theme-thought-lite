@@ -22,14 +22,14 @@ const title = config.title;
 	import Time from "$utils/time";
 
 	// Set the `title` attribute of all `<time>` elements to localized date-time strings
-	const localize_times = () => document.querySelectorAll("time").forEach(time => time.dateTime && (time.title = Time.locale(time.dateTime, navigator.language, Time.user_timezone)));
+	const localizeTimes = () => document.querySelectorAll("time").forEach(time => time.dateTime && (time.title = Time.locale(time.dateTime, navigator.language, Time.userTimezone)));
 
 	// Add zoom effect to images within markdown content
 	window.zoom = () => zoom(".markdown img", { background: "#00000044" });
 
 	// Page initialization function
 	function initialize() {
-		localize_times();
+		localizeTimes();
 		window.zoom();
 	}
 

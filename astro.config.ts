@@ -7,17 +7,17 @@ import svelte from "@astrojs/svelte";
 import UnoCSS from "unocss/astro";
 import swup from "@swup/astro";
 import icon from "astro-icon";
-import github_light from "shiki/themes/github-light.mjs";
+import githubLight from "shiki/themes/github-light.mjs";
 
 import GFM from "remark-gfm";
 import ins from "remark-ins";
 import mark from "remark-flexible-markers";
 import CJK from "remark-cjk-friendly";
-import CJK_strikethrough from "remark-cjk-friendly-gfm-strikethrough";
+import CJKStrikethrough from "remark-cjk-friendly-gfm-strikethrough";
 import math from "remark-math";
 import gemoji from "remark-gemoji";
 import footnote from "remark-footnotes-extra";
-import { remarkExtendedTable as table, extendedTableHandlers as table_handler } from "remark-extended-table";
+import { remarkExtendedTable as table, extendedTableHandlers as tableHandler } from "remark-extended-table";
 import directive from "remark-directive";
 import ruby from "remark-ruby-directive";
 import alerts from "remark-github-blockquote-alert";
@@ -65,7 +65,7 @@ export default defineConfig({
 			mark,
 			spoiler,
 			CJK,
-			[CJK_strikethrough, { singleTilde: false }],
+			[CJKStrikethrough, { singleTilde: false }],
 			math,
 			gemoji,
 			footnote,
@@ -84,7 +84,7 @@ export default defineConfig({
 				className: ["hidden"]
 			},
 			handlers: {
-				...table_handler
+				...tableHandler
 			}
 		},
 		rehypePlugins: [
@@ -99,7 +99,7 @@ export default defineConfig({
 		shikiConfig: {
 			themes: {
 				light: {
-					...github_light,
+					...githubLight,
 					colorReplacements: {
 						"#fff": "var(--block-color)"
 					}

@@ -3,7 +3,7 @@ import { sqliteTable, text, integer, unique, foreignKey, primaryKey } from "driz
 export const Drifter = sqliteTable(
 	"drifter",
 	{
-		ID: text("id").primaryKey().notNull(),
+		id: text("id").primaryKey().notNull(),
 		platform: text().notNull(),
 		account: text().notNull(),
 		access: text().notNull(),
@@ -24,7 +24,7 @@ export const Drifter = sqliteTable(
 export const Comment = sqliteTable(
 	"comment",
 	{
-		ID: text("id").primaryKey().notNull(),
+		id: text("id").primaryKey().notNull(),
 		section: text().notNull(),
 		item: text().notNull(),
 		reply: text(),
@@ -39,7 +39,7 @@ export const Comment = sqliteTable(
 	table => [
 		foreignKey({
 			columns: [table.drifter],
-			foreignColumns: [Drifter.ID],
+			foreignColumns: [Drifter.id],
 			name: "comment_drifter_fkey"
 		})
 			.onUpdate("cascade")
@@ -60,7 +60,7 @@ export const Notification = sqliteTable(
 		primaryKey({ columns: [table.drifter, table.endpoint] }),
 		foreignKey({
 			columns: [table.drifter],
-			foreignColumns: [Drifter.ID],
+			foreignColumns: [Drifter.id],
 			name: "notification_drifter_fkey"
 		})
 			.onUpdate("cascade")

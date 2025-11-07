@@ -7,7 +7,7 @@ let { sun, moon, dark = $bindable(false) } = $props();
  * Apply theme to DOM and persist to localStorage
  * @param on whether to enable dark mode
  */
-function turn_dark(on: boolean) {
+function turnDark(on: boolean) {
 	let theme = (dark = on) ? "dark" : "light";
 	// Update CSS custom properties via data attribute
 	document.documentElement.dataset.theme = theme;
@@ -19,8 +19,8 @@ function turn_dark(on: boolean) {
  * Handle theme toggle with animated transition effect
  * @param event Mouse event for click coordinates
  */
-function trigger_dark(event: MouseEvent) {
-	const trigger = () => turn_dark(!dark);
+function triggerDark(event: MouseEvent) {
+	const trigger = () => turnDark(!dark);
 
 	let transition: ViewTransition;
 	if (!(transition = document.startViewTransition?.(trigger))) return trigger(); // Compatibility check
@@ -54,13 +54,13 @@ onMount(() => {
 	const theme = localStorage.getItem("theme");
 
 	// Use stored preference or fallback to system preference
-	turn_dark(theme ? theme === "dark" : mode.matches);
+	turnDark(theme ? theme === "dark" : mode.matches);
 	// Listen for system theme changes and apply automatically
-	mode.addEventListener("change", ({ matches }) => turn_dark(matches));
+	mode.addEventListener("change", ({ matches }) => turnDark(matches));
 });
 </script>
 
-<button class="items-center" aria-label="Toggle dark theme" onclick={trigger_dark}>
+<button class="items-center" aria-label="Toggle dark theme" onclick={triggerDark}>
 	{#if dark}
 		{@render moon()}
 	{:else}

@@ -16,9 +16,9 @@ const env = import.meta.env;
 
 // Check which OAuth providers are configured for comment authentication
 const OAuth = {
-	GitHub: env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET,
-	Google: env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET,
-	X: env.TWITTER_CLIENT_ID && env.TWITTER_CLIENT_SECRET
+	github: env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET,
+	google: env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET,
+	x: env.TWITTER_CLIENT_ID && env.TWITTER_CLIENT_SECRET
 };
 
 // Get the Turnstile site key if unauthenticated comments are allowed
@@ -32,9 +32,9 @@ const turnstile = env.CLOUDFLARE_TURNSTILE_SECRET_KEY ? env.CLOUDFLARE_TURNSTILE
 	<Icon name="lucide:signature" title={t("comment.author")} slot="author" />
 	<Icon name="lucide:house" slot="home" inline />
 	<Icon name="lucide:triangle-alert" slot="alert" inline />
-	<Icon name="simple-icons:github" slot="GitHub" />
-	<Icon name="simple-icons:google" slot="Google" />
-	<Icon name="simple-icons:x" slot="X" />
+	<Icon name="simple-icons:github" slot="github" />
+	<Icon name="simple-icons:google" slot="google" />
+	<Icon name="simple-icons:x" slot="x" />
 	<Icon name="lucide:refresh-cw" title={t("comment.reload.name")} slot="reload" />
 	<Icon name="lucide:clock-arrow-up" title={t("comment.sort.asc")} slot="asc" />
 	<Icon name="lucide:clock-arrow-down" title={t("comment.sort.desc")} slot="desc" />

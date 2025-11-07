@@ -2,7 +2,7 @@
 import { actions } from "astro:actions";
 import { onMount, type Snippet } from "svelte";
 import Modal from "$components/Modal.svelte";
-import { push_tip } from "$components/Tip.svelte";
+import { pushTip } from "$components/Tip.svelte";
 import i18nit from "$i18n";
 
 let { open = $bindable(), locale, drifter, icon }: { open: boolean; locale: string; drifter: any; icon: { [key: string]: Snippet } } = $props();
@@ -13,23 +13,23 @@ const t = i18nit(locale);
  * Fetch and update user profile data from OAuth provider
  */
 async function synchronize() {
-	push_tip("information", t("drifter.sync.fetch"));
+	pushTip("information", t("drifter.sync.fetch"));
 
 	const { data, error } = await actions.drifter.synchronize();
 	if (!error) {
 		// Update local drifter object with fresh data from OAuth provider
 		drifter.name = data.name;
 		drifter.description = data.description;
-		push_tip("success", t("drifter.sync.success"));
+		pushTip("success", t("drifter.sync.success"));
 	} else {
-		push_tip("error", t("drifter.sync.failure"));
+		pushTip("error", t("drifter.sync.failure"));
 	}
 }
 
 /**
  * Toggle push notification subscription on/off
  */
-async function toggle_notification() {
+async function toggleNotification() {
 	const registration = await navigator.serviceWorker.ready;
 
 	// Check for existing subscription to determine current state
@@ -40,30 +40,30 @@ async function toggle_notification() {
 		const { data, error } = await actions.notification.unsubscribe({ endpoint: subscription.endpoint });
 		if (!error) {
 			notification = false;
-			push_tip("success", t("notification.disable.success"));
+			pushTip("success", t("notification.disable.success"));
 		} else {
-			push_tip("error", t("notification.disable.failure"));
+			pushTip("error", t("notification.disable.failure"));
 		}
 	} else {
 		// Request notification permission before subscribing
 		const permission = await Notification.requestPermission();
 		if (permission !== "granted") {
 			notification = false;
-			return push_tip("information", t("notification.denied"));
+			return pushTip("information", t("notification.denied"));
 		}
 
 		// Get VAPID public key for push subscription
-		const { data: public_key, error: key_error } = await actions.notification.key();
-		if (key_error) {
+		const { data: publicKey, error: keyError } = await actions.notification.key();
+		if (keyError) {
 			notification = false;
-			return push_tip("error", t("notification.enable.failure"));
+			return pushTip("error", t("notification.enable.failure"));
 		}
 
 		// Create push subscription with VAPID key
 		const subscription = (
 			await registration.pushManager.subscribe({
 				userVisibleOnly: true,
-				applicationServerKey: public_key
+				applicationServerKey: publicKey
 			})
 		).toJSON();
 
@@ -76,10 +76,10 @@ async function toggle_notification() {
 		});
 		if (!error) {
 			notification = true;
-			push_tip("success", t("notification.enable.success"));
+			pushTip("success", t("notification.enable.success"));
 		} else {
 			notification = false;
-			push_tip("error", t("notification.enable.failure"));
+			pushTip("error", t("notification.enable.failure"));
 		}
 	}
 }
@@ -88,14 +88,14 @@ async function toggle_notification() {
 async function update() {
 	const { data, error } = await actions.drifter.update({ homepage: drifter.homepage });
 	if (!error) {
-		push_tip("success", t("drifter.update.success"));
+		pushTip("success", t("drifter.update.success"));
 	} else {
-		push_tip("error", t("drifter.update.failure"));
+		pushTip("error", t("drifter.update.failure"));
 	}
 }
 
 // Control deactivation confirmation modal
-let deactivate_view = $state(false);
+let deactivateView = $state(false);
 
 /**
  * Permanently deactivate user account and clean up data
@@ -108,14 +108,14 @@ async function deactivate() {
 		let subscription = await registration.pushManager.getSubscription();
 		if (subscription) await subscription.unsubscribe();
 
-		push_tip("success", t("drifter.deactivate.success"));
+		pushTip("success", t("drifter.deactivate.success"));
 		// Redirect to home page after account deactivation
 		setTimeout(() => (location.href = "/"), 2000);
 	} else {
-		push_tip("error", t("drifter.deactivate.failure"));
+		pushTip("error", t("drifter.deactivate.failure"));
 	}
 
-	deactivate_view = false;
+	deactivateView = false;
 }
 
 // Track push notification subscription state
@@ -139,7 +139,7 @@ onMount(async () => {
 });
 </script>
 
-<Modal bind:open={deactivate_view}>
+<Modal bind:open={deactivateView}>
 	<div class="flex flex-col items-center justify-center gap-5">
 		<h2>{t("drifter.deactivate.title")}</h2>
 		<div class="flex flex-col gap-4">
@@ -154,7 +154,7 @@ onMount(async () => {
 			</ul>
 		</div>
 		<section class="flex gap-5">
-			<button class="form-button" onclick={() => (deactivate_view = false)}>{t("drifter.deactivate.cancel")}</button>
+			<button class="form-button" onclick={() => (deactivateView = false)}>{t("drifter.deactivate.cancel")}</button>
 			<button class="form-button bg-red-5 text-white" onclick={deactivate}>{t("drifter.deactivate.confirm")}</button>
 		</section>
 	</div>
@@ -176,7 +176,7 @@ onMount(async () => {
 					{drifter.name}
 					<button onclick={synchronize}>{@render icon.sync()}</button>
 					<button onclick={() => (location.href = "/drifter/sail")}>{@render icon.signout()}</button>
-					<button onclick={() => (deactivate_view = true)} class="ml-a c-red-5">{@render icon.deactivate()}</button>
+					<button onclick={() => (deactivateView = true)} class="ml-a c-red-5">{@render icon.deactivate()}</button>
 				</menu>
 				{#if drifter.description}<span class="text-3.5">{drifter.description}</span>{/if}
 			</aside>
@@ -184,7 +184,7 @@ onMount(async () => {
 		<hr class="b-b-1 b-b-solid b-weak" />
 		<div class="flex flex-col items-start gap-5">
 			<section>
-				<label class="flex items-center">{t("notification.name")}：<input type="checkbox" class="switch" bind:checked={notification} onchange={toggle_notification} /></label>
+				<label class="flex items-center">{t("notification.name")}：<input type="checkbox" class="switch" bind:checked={notification} onchange={toggleNotification} /></label>
 			</section>
 			<section class="flex flex-col gap-2">
 				<label>{t("drifter.homepage")}：<input type="url" class="input" bind:value={drifter.homepage} /></label>

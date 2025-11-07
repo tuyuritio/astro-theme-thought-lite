@@ -44,7 +44,7 @@ const { Content, headings, remarkPluginFrontmatter: frontmatter } = await render
 
 // Build hierarchical table of contents from flat heading list
 type Heading = MarkdownHeading & { subheadings: Heading[] };
-const table_of_contents: Heading[] = [];
+const tableOfContents: Heading[] = [];
 const stack: Heading[] = [];
 for (const item of headings) {
 	// Pop headings from stack that are at same or deeper level
@@ -57,7 +57,7 @@ for (const item of headings) {
 		parent.subheadings.push(heading);
 	} else {
 		// Add as top-level heading
-		table_of_contents.push(heading);
+		tableOfContents.push(heading);
 	}
 
 	stack.push(heading);
@@ -102,7 +102,7 @@ const t = i18nit(locale);
 							<div class="sticky top-3 flex flex-col gap-2">
 								<h3>{t("note.contents")}</h3>
 								<nav class="overflow-y-auto">
-									<TOC headings={table_of_contents} />
+									<TOC headings={tableOfContents} />
 								</nav>
 							</div>
 						</aside>

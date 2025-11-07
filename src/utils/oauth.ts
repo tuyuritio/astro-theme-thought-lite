@@ -55,19 +55,19 @@ export class OAuth {
 	/**
 	 * Generate authorization URL for OAuth flow
 	 * @param state - CSRF protection state parameter
-	 * @param code_verifier - PKCE code verifier for enhanced security
+	 * @param codeVerifier - PKCE code verifier for enhanced security
 	 * @returns Authorization URL to redirect user to
 	 * @throws Error if provider is invalid
 	 */
-	URL(state: string, code_verifier: string): URL {
+	url(state: string, codeVerifier: string): URL {
 		if (this.provider instanceof GitHub) {
 			return this.provider.createAuthorizationURL(state, []);
 		} else if (this.provider instanceof Google) {
-			const URL = this.provider.createAuthorizationURL(state, code_verifier, ["openid", "profile"]);
-			URL.searchParams.set("access_type", "offline"); // Request refresh token
-			return URL;
+			const url = this.provider.createAuthorizationURL(state, codeVerifier, ["openid", "profile"]);
+			url.searchParams.set("access_type", "offline"); // Request refresh token
+			return url;
 		} else if (this.provider instanceof Twitter) {
-			return this.provider.createAuthorizationURL(state, code_verifier, ["users.read", "tweet.read", "offline.access"]);
+			return this.provider.createAuthorizationURL(state, codeVerifier, ["users.read", "tweet.read", "offline.access"]);
 		} else {
 			throw new Error("Invalid Provider");
 		}
@@ -82,18 +82,18 @@ export class OAuth {
 	 */
 	async validate(code: string, verifier: string): Promise<OAuthAccount> {
 		const tokens = await this.provider.validateAuthorizationCode(code, verifier);
-		const access_token = tokens.accessToken();
+		const accessToken = tokens.accessToken();
 
 		if (this.provider instanceof GitHub) {
 			// Fetch user profile from GitHub API
 			const response = await fetch("https://api.github.com/user", {
-				headers: { Authorization: `Bearer ${access_token}`, "User-Agent": USER_AGENT }
+				headers: { authorization: `Bearer ${accessToken}`, "user-agent": USER_AGENT }
 			});
 			const user = await response.json();
 
 			return {
 				platform: "GitHub",
-				access: access_token,
+				access: accessToken,
 				account: user.id.toString(),
 				handle: user.login,
 				name: user.name,
@@ -102,35 +102,35 @@ export class OAuth {
 			};
 		} else if (this.provider instanceof Google) {
 			// Extract token information and decode ID token
-			const expire_at = tokens.accessTokenExpiresAt();
-			const refresh_token = tokens.hasRefreshToken() ? tokens.refreshToken() : undefined;
+			const expireAt = tokens.accessTokenExpiresAt();
+			const refreshToken = tokens.hasRefreshToken() ? tokens.refreshToken() : undefined;
 			const user: any = decodeIdToken(tokens.idToken());
 
 			return {
 				platform: "Google",
-				access: access_token,
-				expire: expire_at,
-				refresh: refresh_token,
+				access: accessToken,
+				expire: expireAt,
+				refresh: refreshToken,
 				account: user.sub,
 				name: user.name,
 				image: user.picture
 			};
 		} else if (this.provider instanceof Twitter) {
 			// Extract token information and fetch user profile from Twitter API
-			const expire_at = tokens.accessTokenExpiresAt();
-			const refresh_token = tokens.refreshToken();
+			const expireAt = tokens.accessTokenExpiresAt();
+			const refreshToken = tokens.refreshToken();
 
 			const response = await fetch("https://api.twitter.com/2/users/me?user.fields=description,profile_image_url", {
-				headers: { Authorization: `Bearer ${access_token}`, "User-Agent": USER_AGENT }
+				headers: { authorization: `Bearer ${accessToken}`, "user-agent": USER_AGENT }
 			});
 			const user = (await response.json()).data;
 
 			// Remove "_normal" suffix from Twitter profile image for higher resolution
 			return {
 				platform: "X",
-				access: access_token,
-				expire: expire_at,
-				refresh: refresh_token,
+				access: accessToken,
+				expire: expireAt,
+				refresh: refreshToken,
 				account: user.id,
 				handle: user.username,
 				name: user.name,
@@ -153,7 +153,7 @@ export class OAuth {
 	async update(token: string, expire: boolean): Promise<OAuthAccount> {
 		if (this.provider instanceof GitHub) {
 			// GitHub tokens don't expire, fetch fresh profile data
-			const response = await fetch("https://api.github.com/user", { headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT } });
+			const response = await fetch("https://api.github.com/user", { headers: { authorization: `Bearer ${token}`, "user-agent": USER_AGENT } });
 			const user = await response.json();
 
 			return {
@@ -166,33 +166,33 @@ export class OAuth {
 				image: user.avatar_url
 			};
 		} else if (this.provider instanceof Google) {
-			let expire_at: Date | undefined;
+			let expireAt: Date | undefined;
 			// Refresh access token if expired
 			if (expire) {
 				const tokens = await this.provider.refreshAccessToken(token);
 				token = tokens.accessToken();
-				expire_at = tokens.accessTokenExpiresAt();
+				expireAt = tokens.accessTokenExpiresAt();
 			}
 
 			// Fetch fresh profile data from Google API
 			const response = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-				headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT }
+				headers: { authorization: `Bearer ${token}`, "user-agent": USER_AGENT }
 			});
 			const user = await response.json();
 
-			return { platform: "Google", access: token, expire: expire_at, account: user.sub, name: user.name, image: user.picture };
+			return { platform: "Google", access: token, expire: expireAt, account: user.sub, name: user.name, image: user.picture };
 		} else if (this.provider instanceof Twitter) {
-			let expire_at: Date | undefined;
+			let expireAt: Date | undefined;
 			// Refresh access token if expired
 			if (expire) {
 				const tokens = await this.provider.refreshAccessToken(token);
 				token = tokens.accessToken();
-				expire_at = tokens.accessTokenExpiresAt();
+				expireAt = tokens.accessTokenExpiresAt();
 			}
 
 			// Fetch fresh profile data from Twitter API
 			const response = await fetch("https://api.twitter.com/2/users/me?user.fields=description,profile_image_url", {
-				headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT }
+				headers: { authorization: `Bearer ${token}`, "user-agent": USER_AGENT }
 			});
 			const user = (await response.json()).data;
 
@@ -200,7 +200,7 @@ export class OAuth {
 			return {
 				platform: "X",
 				access: token,
-				expire: expire_at,
+				expire: expireAt,
 				account: user.id,
 				handle: user.username,
 				name: user.name,
@@ -231,10 +231,10 @@ export class OAuth {
 			await fetch("https://api.twitter.com/2/oauth2/revoke", {
 				method: "POST",
 				headers: {
-					"Content-Type": "application/x-www-form-urlencoded",
-					"User-Agent": USER_AGENT,
+					"content-type": "application/x-www-form-urlencoded",
+					"user-agent": USER_AGENT,
 					// Basic authentication using client credentials
-					Authorization: `Basic ${btoa(`${env.TWITTER_CLIENT_ID}:${env.TWITTER_CLIENT_SECRET}`)}`
+					authorization: `Basic ${btoa(`${env.TWITTER_CLIENT_ID}:${env.TWITTER_CLIENT_SECRET}`)}`
 				},
 				body: `token=${encodeURIComponent(token)}&token_type_hint=access_token`
 			});

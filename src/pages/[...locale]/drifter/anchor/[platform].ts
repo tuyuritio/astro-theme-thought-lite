@@ -13,7 +13,7 @@ export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, re
 
 	const code = url.searchParams.get("code");
 	const state = url.searchParams.get("state");
-	const error_status = url.searchParams.get("error");
+	const errorStatus = url.searchParams.get("error");
 
 	// Retrieve and clean up escort token containing OAuth state
 	const escort = await Token.check(cookies, "escort");
@@ -32,7 +32,7 @@ export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, re
 			await db
 				.insert(Drifter)
 				.values({
-					ID: random(16),
+					id: random(16),
 					platform: user.platform,
 					account: user.account,
 					refresh: user.refresh,
@@ -55,17 +55,17 @@ export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, re
 						image: sql`excluded.image`
 					}
 				})
-				.returning({ ID: Drifter.ID })
+				.returning({ id: Drifter.id })
 		)[0];
 
 		// Issue passport token with user visa for authentication
-		await Token.issue(cookies, "passport", { visa: drifter.ID });
+		await Token.issue(cookies, "passport", { visa: drifter.id });
 
 		// Redirect to original page or home after successful authentication
 		return redirect(escort.referrer ?? "/", 302);
-	} else if (error_status) {
+	} else if (errorStatus) {
 		// Handle OAuth errors from provider
-		switch (error_status) {
+		switch (errorStatus) {
 			case "access_denied":
 				// User denied access, redirect back to referrer
 				return redirect(escort?.referrer ?? "/", 302);
@@ -82,13 +82,13 @@ export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, re
 	} else {
 		// Initialize OAuth flow with PKCE parameters
 		const state = generateState();
-		const code_verifier = generateCodeVerifier();
+		const codeVerifier = generateCodeVerifier();
 
 		// Store OAuth state and referrer in escort token
-		await Token.issue(cookies, "escort", { state, code_verifier, referrer: request.headers.get("referer") ?? "/" }, "5 minutes");
+		await Token.issue(cookies, "escort", { state, codeVerifier, referrer: request.headers.get("referer") ?? "/" }, "5 minutes");
 
 		// Generate OAuth authorization URL and redirect user
-		const link: URL = new OAuth(platform).URL(state, code_verifier);
+		const link: URL = new OAuth(platform).url(state, codeVerifier);
 		return redirect(link.toString(), 302);
 	}
 };

@@ -19,7 +19,7 @@ const Close = (tip: Tip) => tips.update(list => list.filter(item => (item !== ti
  * @param type - Type of notification (determines icon and styling)
  * @param content - Text content to display in the notification
  */
-export function push_tip(type: "information" | "success" | "question" | "warning" | "error", content: string): void {
+export function pushTip(type: "information" | "success" | "question" | "warning" | "error", content: string): void {
 	const tip = { type, content };
 
 	// Add tip to the reactive store (triggers UI update)

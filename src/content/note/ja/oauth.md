@@ -60,7 +60,7 @@ constructor(platform?: string) {
 `URL` メソッドに新しいプロバイダーの認証リンク生成ロジックを追加します：
 
 ```ts
-URL(state: string, code_verifier: string): URL {
+url(state: string, codeVerifier: string): URL {
     // ...
 
     else if (this.provider instanceof PLATFORM) {

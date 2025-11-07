@@ -3,7 +3,7 @@ import { actions } from "astro:actions";
 import { onMount, type Snippet } from "svelte";
 import { flip } from "svelte/animate";
 import type { CommentItem } from "$actions/comment";
-import { push_tip } from "$components/Tip.svelte";
+import { pushTip } from "$components/Tip.svelte";
 import i18nit from "$i18n";
 import CommentBlock from "./Comment.svelte";
 import Reply from "./Reply.svelte";
@@ -12,7 +12,7 @@ let {
 	locale,
 	section,
 	item,
-	OAuth,
+	oauth,
 	turnstile,
 	author,
 	home,
@@ -35,13 +35,13 @@ let {
 	loading,
 	rendering,
 	verifying,
-	GitHub,
-	Google,
-	X,
+	github,
+	google,
+	x,
 	sync,
 	signout,
 	deactivate
-}: { locale: string; nomad: boolean; section: string; item: string; OAuth: any; turnstile?: string } & { [key: string]: Snippet } = $props();
+}: { locale: string; nomad: boolean; section: string; item: string; oauth: any; turnstile?: string } & { [key: string]: Snippet } = $props();
 
 // Group all icon snippets into a single object for easier prop passing
 const icon = {
@@ -63,9 +63,9 @@ const icon = {
 	loading,
 	rendering,
 	verifying,
-	GitHub,
-	Google,
-	X,
+	github,
+	google,
+	x,
 	sync,
 	signout,
 	deactivate
@@ -92,51 +92,51 @@ async function refresh(auto: boolean = true) {
 	if (!error) {
 		if (!auto) {
 			if (data.count > count) {
-				push_tip("success", t("comment.reload.increase"));
+				pushTip("success", t("comment.reload.increase"));
 			} else {
-				push_tip("information", t("comment.reload.same"));
+				pushTip("information", t("comment.reload.same"));
 			}
 		}
 
 		count = data.count;
 		comments = data.treeification;
 	} else {
-		push_tip("error", t("comment.fetch.failure"));
+		pushTip("error", t("comment.fetch.failure"));
 	}
 }
 
 onMount(async () => {
-	let load_comments = false;
-	let load_drifter = false;
+	let loadComments = false;
+	let loadDrifter = false;
 
 	// Initial load of comments
-	const { data: comment_list, error: comment_error } = await actions.comment.list({ section, item });
-	if (!comment_error) {
-		count = comment_list.count;
-		comments = comment_list.treeification;
+	const { data: commentList, error: commentError } = await actions.comment.list({ section, item });
+	if (!commentError) {
+		count = commentList.count;
+		comments = commentList.treeification;
 
-		load_comments = true;
+		loadComments = true;
 	} else {
-		push_tip("error", t("comment.fetch.failure"));
+		pushTip("error", t("comment.fetch.failure"));
 	}
 
 	// Initial load of user authentication status
-	const { data: drifter_profile, error: drifter_error } = await actions.drifter.profile();
-	if (!drifter_error) {
-		drifter = drifter_profile;
+	const { data: drifterProfile, error: drifterError } = await actions.drifter.profile();
+	if (!drifterError) {
+		drifter = drifterProfile;
 
-		load_drifter = true;
+		loadDrifter = true;
 	} else {
-		push_tip("error", t("drifter.fetch.failure"));
+		pushTip("error", t("drifter.fetch.failure"));
 	}
 
-	loaded = load_comments && load_drifter;
+	loaded = loadComments && loadDrifter;
 });
 </script>
 
 <main>
 	{#if loaded}
-		<Reply {locale} {OAuth} {turnstile} {section} {item} {drifter} {icon} {refresh} bind:limit />
+		<Reply {locale} oauth={oauth} {turnstile} {section} {item} {drifter} {icon} {refresh} bind:limit />
 		{#if comments.length}
 			<div class="flex items-center justify-between mt-6">
 				<p class="flex items-center gap-2">
@@ -156,9 +156,9 @@ onMount(async () => {
 				</p>
 			</div>
 		{/if}
-		{#each list as comment (comment.ID)}
+		{#each list as comment (comment.id)}
 			<div animate:flip={{ duration: 150 }}>
-				<CommentBlock {locale} {OAuth} {turnstile} {icon} {drifter} {comment} {refresh} bind:limit />
+				<CommentBlock {locale} oauth={oauth} {turnstile} {icon} {drifter} {comment} {refresh} bind:limit />
 			</div>
 		{/each}
 	{:else}

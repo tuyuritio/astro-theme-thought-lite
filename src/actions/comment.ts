@@ -17,7 +17,7 @@ const nomad = env.CLOUDFLARE_TURNSTILE_SITE_KEY && env.CLOUDFLARE_TURNSTILE_SECR
  * Define the CommentItem structure
  */
 export type CommentItem = {
-	ID: string;
+	id: string;
 	section: string;
 	item: string;
 	reply: string | null;
@@ -38,25 +38,25 @@ export const comment = {
 			content: z.string(), // The comment content
 			link: z.string().url(), // URL link for notifications
 			nickname: z.string().nullish(), // Nickname for nomad users
-			CAPTCHA: z.string().nullish() // CAPTCHA token for nomad users
+			captcha: z.string().nullish() // CAPTCHA token for nomad users
 		}),
-		handler: async ({ section, item, reply, content, link, nickname, CAPTCHA }, { cookies, request, locals }) => {
+		handler: async ({ section, item, reply, content, link, nickname, captcha }, { cookies, request, locals }) => {
 			// Verify user authentication
 			const drifter = (await Token.check(cookies, "passport"))?.visa;
 
 			// Get the client IP address from Cloudflare headers
-			const IP = request.headers.get("CF-Connecting-IP");
+			const ip = request.headers.get("CF-Connecting-IP");
 
 			if (!drifter) {
-				if (nomad && nickname?.trim() && CAPTCHA) {
+				if (nomad && nickname?.trim() && captcha) {
 					// If nomad is enabled, verify captcha
 					const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({
 							secret: env.CLOUDFLARE_TURNSTILE_SECRET_KEY,
-							response: CAPTCHA,
-							remoteip: IP
+							response: captcha,
+							remoteip: ip
 						})
 					});
 
@@ -70,21 +70,21 @@ export const comment = {
 
 			// Apply rate limiting to prevent spam
 			// Use drifter ID for authenticated users, clientAddress for unauthenticated users
-			const { success } = await locals.runtime.env.COMMENT_LIMIT.limit({ key: drifter ?? IP ?? nickname });
+			const { success } = await locals.runtime.env.COMMENT_LIMIT.limit({ key: drifter ?? ip ?? nickname });
 			if (!success) throw new ActionError({ code: "TOO_MANY_REQUESTS" });
 
 			if (content.length > config.comment["max-length"]) throw new ActionError({ code: "CONTENT_TOO_LARGE" });
 
 			// Generate unique comment ID and timestamp
 			const now = new Date();
-			const ID = enhash(content + reply + now).substring(0, 8);
+			const id = enhash(content + reply + now).substring(0, 8);
 
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
 
 			// Insert the new comment
 			await db.insert(Comment).values({
-				ID,
+				id,
 				section,
 				item,
 				reply,
@@ -103,7 +103,7 @@ export const comment = {
 					.select({ locale: Notification.locale, endpoint: Notification.endpoint, p256dh: Notification.p256dh, auth: Notification.auth })
 					.from(Comment)
 					.innerJoin(Notification, eq(Notification.drifter, Comment.drifter))
-					.where(eq(Comment.ID, reply));
+					.where(eq(Comment.id, reply));
 			} else if (env.AUTHOR_ID) {
 				// Notify the site author when there's a new top-level comment
 				subscriptions = await db
@@ -141,10 +141,10 @@ export const comment = {
 
 	edit: defineAction({
 		input: z.object({
-			ID: z.string(), // The comment ID to edit
+			id: z.string(), // The comment ID to edit
 			content: z.string() // New content for the comment
 		}),
-		handler: async ({ ID, content }, { cookies, locals }) => {
+		handler: async ({ id, content }, { cookies, locals }) => {
 			// Verify user authentication
 			const drifter = (await Token.check(cookies, "passport")).visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
@@ -154,13 +154,13 @@ export const comment = {
 
 			// Generate new comment ID and timestamp for the edited version
 			const now = new Date();
-			const edit = enhash(content + ID + now).substring(0, 8);
+			const edit = enhash(content + id + now).substring(0, 8);
 
 			// Update the original comment to point to the new edited version and return all data for cloning
 			const comments = await db
 				.update(Comment)
 				.set({ edit })
-				.where(and(eq(Comment.ID, ID), eq(Comment.drifter, drifter)))
+				.where(and(eq(Comment.id, id), eq(Comment.drifter, drifter)))
 				.returning();
 
 			if (comments.length === 0) throw new ActionError({ code: "NOT_FOUND" });
@@ -169,7 +169,7 @@ export const comment = {
 
 			// Clone the original comment with new content and timestamp
 			await db.insert(Comment).values({
-				ID: edit,
+				id: edit,
 				section: comment.section,
 				item: comment.item,
 				reply: comment.reply,
@@ -183,9 +183,9 @@ export const comment = {
 	// Action to delete a comment (marks it as edited by itself)
 	delete: defineAction({
 		input: z.object({
-			ID: z.string() // The comment ID to delete
+			id: z.string() // The comment ID to delete
 		}),
-		handler: async ({ ID }, { cookies, locals }) => {
+		handler: async ({ id }, { cookies, locals }) => {
 			// Verify user authentication
 			const drifter = (await Token.check(cookies, "passport")).visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
@@ -197,8 +197,8 @@ export const comment = {
 			// This creates a self-reference indicating deletion while preserving the record
 			await db
 				.update(Comment)
-				.set({ edit: ID })
-				.where(and(eq(Comment.ID, ID), eq(Comment.drifter, drifter)));
+				.set({ edit: id })
+				.where(and(eq(Comment.id, id), eq(Comment.drifter, drifter)));
 		}
 	}),
 
@@ -218,7 +218,7 @@ export const comment = {
 			// Fetch all comments with user information
 			const comments = await db
 				.select({
-					ID: Comment.ID,
+					id: Comment.id,
 					section: Comment.section,
 					item: Comment.item,
 					reply: Comment.reply,
@@ -234,12 +234,12 @@ export const comment = {
 					image: Drifter.image,
 					homepage: Drifter.homepage,
 					// Mark if this user is the site author
-					author: sql`CASE WHEN ${Drifter.ID} = ${author} THEN 1 ELSE 0 END`
+					author: sql`CASE WHEN ${Drifter.id} = ${author} THEN 1 ELSE 0 END`
 				})
 				.from(Comment)
 				.where(and(eq(Comment.section, section), eq(Comment.item, item)))
 				.orderBy(Comment.timestamp)
-				.leftJoin(Drifter, eq(Comment.drifter, Drifter.ID));
+				.leftJoin(Drifter, eq(Comment.drifter, Drifter.id));
 
 			// Create a map for efficient comment lookup and initialize subcomments & history arrays
 			const map = new Map<string, any>();
@@ -261,7 +261,7 @@ export const comment = {
 				// Process edit history chain
 				let edit: CommentItem;
 				while ((edit = map.get(comment.edit))) {
-					if (edit.ID === comment.ID) {
+					if (edit.id === comment.ID) {
 						// Self-reference indicates deletion
 						delete comment.content;
 					} else {

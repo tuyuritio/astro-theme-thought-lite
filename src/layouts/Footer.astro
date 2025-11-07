@@ -9,59 +9,59 @@ let { locale, author, copyright } = Astro.props;
 
 const t = i18nit(locale);
 
-let CC_URL: string;
-let CC_label: string;
+let ccURL: string;
+let ccLabel: string;
 
 // Map Creative Commons license types to their official URLs and descriptions
 switch (copyright.type) {
 	case "CC BY 4.0":
-		CC_URL = "https://creativecommons.org/licenses/by/4.0/";
-		CC_label = "Attribution 4.0 International";
+		ccURL = "https://creativecommons.org/licenses/by/4.0/";
+		ccLabel = "Attribution 4.0 International";
 		break;
 
 	case "CC BY-SA 4.0":
-		CC_URL = "https://creativecommons.org/licenses/by-sa/4.0/";
-		CC_label = "Attribution-ShareAlike 4.0 International";
+		ccURL = "https://creativecommons.org/licenses/by-sa/4.0/";
+		ccLabel = "Attribution-ShareAlike 4.0 International";
 		break;
 
 	case "CC BY-NC 4.0":
-		CC_URL = "https://creativecommons.org/licenses/by-nc/4.0/";
-		CC_label = "Creative Commons Attribution-NonCommercial 4.0 International";
+		ccURL = "https://creativecommons.org/licenses/by-nc/4.0/";
+		ccLabel = "Creative Commons Attribution-NonCommercial 4.0 International";
 		break;
 
 	case "CC BY-NC-SA 4.0":
-		CC_URL = "https://creativecommons.org/licenses/by-nc-sa/4.0/";
-		CC_label = "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International";
+		ccURL = "https://creativecommons.org/licenses/by-nc-sa/4.0/";
+		ccLabel = "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International";
 		break;
 
 	case "CC BY-ND 4.0":
-		CC_URL = "https://creativecommons.org/licenses/by-nd/4.0/";
-		CC_label = "Creative Commons Attribution-NoDerivatives 4.0 International";
+		ccURL = "https://creativecommons.org/licenses/by-nd/4.0/";
+		ccLabel = "Creative Commons Attribution-NoDerivatives 4.0 International";
 		break;
 
 	case "CC BY-NC-ND 4.0":
-		CC_URL = "https://creativecommons.org/licenses/by-nc-nd/4.0/";
-		CC_label = "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International";
+		ccURL = "https://creativecommons.org/licenses/by-nc-nd/4.0/";
+		ccLabel = "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International";
 		break;
 
 	default:
-		CC_URL = "https://creativecommons.org/publicdomain/zero/1.0/";
-		CC_label = "CC0 1.0 Universal";
+		ccURL = "https://creativecommons.org/publicdomain/zero/1.0/";
+		ccLabel = "CC0 1.0 Universal";
 		break;
 }
 
 // Build array of Creative Commons icons based on license type
 // Start with base CC icon, then add specific license component icons
-const CC_icons = ["fa6-brands:creative-commons"];
+const ccIcons = ["fa6-brands:creative-commons"];
 if (copyright.type === "CC0 1.0") {
 	// CC0 uses a special "zero" icon
-	CC_icons.push("fa6-brands:creative-commons-zero");
+	ccIcons.push("fa6-brands:creative-commons-zero");
 } else {
 	// For other licenses, add icons based on license components
-	if (copyright.type.includes("BY")) CC_icons.push("fa6-brands:creative-commons-by"); // Attribution required
-	if (copyright.type.includes("NC")) CC_icons.push("fa6-brands:creative-commons-nc"); // Non-commercial
-	if (copyright.type.includes("SA")) CC_icons.push("fa6-brands:creative-commons-sa"); // Share-alike
-	if (copyright.type.includes("ND")) CC_icons.push("fa6-brands:creative-commons-nd"); // No derivatives
+	if (copyright.type.includes("BY")) ccIcons.push("fa6-brands:creative-commons-by"); // Attribution required
+	if (copyright.type.includes("NC")) ccIcons.push("fa6-brands:creative-commons-nc"); // Non-commercial
+	if (copyright.type.includes("SA")) ccIcons.push("fa6-brands:creative-commons-sa"); // Share-alike
+	if (copyright.type.includes("ND")) ccIcons.push("fa6-brands:creative-commons-nd"); // No derivatives
 }
 
 // Fetch notes and jottings collections to calculate total word count
@@ -75,7 +75,7 @@ const notes = await getCollection("note", note => {
 });
 
 // Calculate total word count across all notes
-const note_words = (await Promise.all(notes.map(async note => (await render(note)).remarkPluginFrontmatter.words))).reduce(
+const noteWords = (await Promise.all(notes.map(async note => (await render(note)).remarkPluginFrontmatter.words))).reduce(
 	(summary, words) => summary + words,
 	0
 );
@@ -89,13 +89,13 @@ const jottings = await getCollection("jotting", jotting => {
 });
 
 // Calculate total word count across all jottings
-const jotting_words = (await Promise.all(jottings.map(async jotting => (await render(jotting)).remarkPluginFrontmatter.words))).reduce(
+const jottingWords = (await Promise.all(jottings.map(async jotting => (await render(jotting)).remarkPluginFrontmatter.words))).reduce(
 	(summary, words) => summary + words,
 	0
 );
 
 // Aggregate total word count
-const total_words = note_words + jotting_words;
+const totalWords = noteWords + jottingWords;
 
 // Check if policy file exists for current locale
 const policy = await getEntry("information", `${locale}/policy`);
@@ -123,11 +123,11 @@ const policy = await getEntry("information", `${locale}/policy`);
 			)
 		}
 		<span>|</span>
-		<a target="_blank" href={CC_URL} aria-label={CC_label} class="flex items-center gap-1">
-			{CC_icons.map(icon => <Icon name={icon} />)}
+		<a target="_blank" href={ccURL} aria-label={ccLabel} class="flex items-center gap-1">
+			{ccIcons.map(icon => <Icon name={icon} />)}
 		</a>
 		<span>·</span>
-		<span class="contents"><Icon name="lucide:activity" title={t("statistics", { words: total_words })} /></span>
+		<span class="contents"><Icon name="lucide:activity" title={t("statistics", { words: totalWords })} /></span>
 		{
 			policy && [
 				<span>·</span>,

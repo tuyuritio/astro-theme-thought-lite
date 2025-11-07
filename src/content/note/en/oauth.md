@@ -60,7 +60,7 @@ constructor(platform?: string) {
 Add authorization link generation logic for the new provider in the `URL` method:
 
 ```ts
-URL(state: string, code_verifier: string): URL {
+url(state: string, codeVerifier: string): URL {
     // ...
 
     else if (this.provider instanceof PLATFORM) {

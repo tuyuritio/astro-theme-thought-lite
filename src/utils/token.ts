@@ -107,7 +107,7 @@ export namespace Token {
 }
 
 // AES namespace for symmetric encryption utilities
-export namespace AES {
+export namespace AESEncryption {
 	// Derive 256-bit encryption key from master password
 	const key = crypto.createHash("sha256").update(PASS_KEY).digest();
 

@@ -3,14 +3,14 @@ import { actions } from "astro:actions";
 import remark from "$utils/remark";
 import Time from "$utils/time";
 import Modal from "$components/Modal.svelte";
-import { push_tip } from "$components/Tip.svelte";
+import { pushTip } from "$components/Tip.svelte";
 import i18nit from "$i18n";
 import Self from "./Comment.svelte";
 import Reply from "./Reply.svelte";
 
 let {
 	locale,
-	OAuth,
+	oauth,
 	turnstile,
 	drifter,
 	comment,
@@ -20,7 +20,7 @@ let {
 	limit = $bindable(0)
 }: {
 	locale: string;
-	OAuth: any;
+	oauth: any;
 	turnstile?: string;
 	drifter?: any;
 	comment: any;
@@ -39,51 +39,51 @@ const MIN_DEPTH = 1;
 const MAX_DEPTH = 4;
 
 // Control visibility of reply and edit forms (mutually exclusive)
-let reply_view = $state(false);
-let edit_view = $state(false);
+let replyView = $state(false);
+let editView = $state(false);
 
 // Control visibility of history and delete confirmation modals
-let history_view = $state(false);
-let delete_view = $state(false);
+let historyView = $state(false);
+let deleteView = $state(false);
 
 /**
  * Copy comment permalink to clipboard for sharing
  */
 async function share() {
 	await navigator.clipboard.writeText(`${location.origin}${location.pathname}#${comment.ID}`);
-	push_tip("success", t("comment.share.success"));
+	pushTip("success", t("comment.share.success"));
 }
 
 /**
  * Delete comment after confirmation
  */
 async function remove() {
-	const { data, error } = await actions.comment.delete({ ID: comment.ID });
+	const { data, error } = await actions.comment.delete({ id: comment.ID });
 	if (!error) {
 		// Refresh comment list and close modal on successful deletion
 		refresh();
-		delete_view = false;
+		deleteView = false;
 
-		push_tip("success", t("comment.remove.success"));
+		pushTip("success", t("comment.remove.success"));
 	} else {
-		push_tip("error", t("comment.remove.failure"));
+		pushTip("error", t("comment.remove.failure"));
 	}
 }
 </script>
 
-<Modal bind:open={delete_view}>
+<Modal bind:open={deleteView}>
 	<div id="delete" class="flex flex-col items-center justify-center gap-5">
 		<h2>{t("comment.remove.name")}</h2>
 		<input type="hidden" name="ID" value={comment.ID} />
-		<time>{t("comment.time")}：{Time.full(comment.timestamp, Time.user_timezone)}</time>
+		<time>{t("comment.time")}：{Time.full(comment.timestamp, Time.userTimezone)}</time>
 		<section class="flex gap-5">
-			<button class="form-button" onclick={() => (delete_view = false)}>{t("cancel")}</button>
+			<button class="form-button" onclick={() => (deleteView = false)}>{t("cancel")}</button>
 			<button class="form-button" onclick={remove}>{t("confirm")}</button>
 		</section>
 	</div>
 </Modal>
 
-<Modal bind:open={history_view}>
+<Modal bind:open={historyView}>
 	<div id="history" class="flex flex-col gap-5">
 		<h3>{t("comment.edit.history")}</h3>
 		<dl class="flex flex-col gap-2">
@@ -94,7 +94,7 @@ async function remove() {
 				{/await}
 			{/each}
 		</dl>
-		<section><button class="form-button" onclick={() => (history_view = false)}>{t("confirm")}</button></section>
+		<section><button class="form-button" onclick={() => (historyView = false)}>{t("confirm")}</button></section>
 	</div>
 </Modal>
 
@@ -109,7 +109,7 @@ async function remove() {
 						{#if comment.author}{@render icon.author()}{/if}
 						{#if comment.homepage}<a href={comment.homepage} target="_blank" class="inline-flex">{@render icon.home()}</a>{/if}
 						<span>·</span>
-						<time class="text-3">{Time(comment.timestamp, Time.user_timezone).replace("-", " ")}</time>
+						<time class="text-3">{Time(comment.timestamp, Time.userTimezone).replace("-", " ")}</time>
 					</p>
 					{#if comment.description}<span title={comment.description} class="c-secondary text-3 line-height-normal whitespace-nowrap [text-overflow:ellipsis] overflow-hidden">{comment.description}</span>{/if}
 				</dt>
@@ -123,7 +123,7 @@ async function remove() {
 							<b class="c-weak">{t("drifter.deactivate.done")}</b>
 						{/if}
 						<span>·</span>
-						<time class="text-3">{Time(comment.timestamp, Time.user_timezone).replace("-", " ")}</time>
+						<time class="text-3">{Time(comment.timestamp, Time.userTimezone).replace("-", " ")}</time>
 					</p>
 				</dt>
 			{/if}
@@ -132,12 +132,12 @@ async function remove() {
 			{#if comment.content}
 				<div class="markdown comment">{#await remark.process(comment.content) then html}{@html html}{/await}</div>
 				<dd class="flex items-center gap-4 mt-2">
-					<button onclick={() => ((reply_view = !reply_view), (edit_view = false))} disabled={!turnstile && !drifter}>{@render icon.reply()}</button>
-					{#if comment.history.length > 0}<button onclick={() => (history_view = true)}>{@render icon.history()}</button>{/if}
+					<button onclick={() => ((replyView = !replyView), (editView = false))} disabled={!turnstile && !drifter}>{@render icon.reply()}</button>
+					{#if comment.history.length > 0}<button onclick={() => (historyView = true)}>{@render icon.history()}</button>{/if}
 					<button onclick={share}>{@render icon.share()}</button>
 					{#if comment.drifter === drifter?.ID}
-						<button onclick={() => ((edit_view = !edit_view), (reply_view = false))}>{@render icon.edit()}</button>
-						<button onclick={() => (delete_view = true)}>{@render icon.remove()}</button>
+						<button onclick={() => ((editView = !editView), (replyView = false))}>{@render icon.edit()}</button>
+						<button onclick={() => (deleteView = true)}>{@render icon.remove()}</button>
 					{/if}
 				</dd>
 			{:else}
@@ -146,14 +146,14 @@ async function remove() {
 		</blockquote>
 	</dl>
 	<div class:ml-7={depth < MIN_DEPTH} class:sm:ml-7={depth < Math.max(MIN_DEPTH, MAX_DEPTH)}>
-		{#if reply_view && !edit_view}
-			<Reply {locale} {OAuth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.ID} {icon} {refresh} bind:view={reply_view} bind:limit />
-		{:else if edit_view && !reply_view}
-			<Reply {locale} {OAuth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.reply} edit={comment.ID} text={comment.content} {icon} {refresh} bind:view={edit_view} bind:limit />
+		{#if replyView && !editView}
+			<Reply {locale} oauth={oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.ID} {icon} {refresh} bind:view={replyView} bind:limit />
+		{:else if editView && !replyView}
+			<Reply {locale} oauth={oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.reply} edit={comment.ID} text={comment.content} {icon} {refresh} bind:view={editView} bind:limit />
 		{/if}
 
 		{#each comment.subcomments as subcomment}
-			<Self {locale} {OAuth} {turnstile} {drifter} comment={subcomment} {icon} {refresh} depth={depth + 1} bind:limit />
+			<Self {locale} oauth={oauth} {turnstile} {drifter} comment={subcomment} {icon} {refresh} depth={depth + 1} bind:limit />
 		{/each}
 	</div>
 </main>

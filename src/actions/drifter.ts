@@ -11,8 +11,8 @@ export const drifter = {
 	profile: defineAction({
 		handler: async (_, { cookies, locals }) => {
 			// Verify user authentication
-			const ID = (await Token.check(cookies, "passport"))?.visa;
-			if (!ID) return;
+			const id = (await Token.check(cookies, "passport"))?.visa;
+			if (!id) return;
 
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
@@ -21,7 +21,7 @@ export const drifter = {
 			const drifter = (
 				await db
 					.select({
-						ID: Drifter.ID,
+						id: Drifter.id,
 						platform: Drifter.platform,
 						name: sql`CASE WHEN ${Drifter.name} IS NULL THEN ${Drifter.handle} ELSE ${Drifter.name} END`,
 						description: Drifter.description,
@@ -30,7 +30,7 @@ export const drifter = {
 						notify: Drifter.notify
 					})
 					.from(Drifter)
-					.where(eq(Drifter.ID, ID))
+					.where(eq(Drifter.id, id))
 			)[0];
 
 			return drifter;
@@ -41,8 +41,8 @@ export const drifter = {
 	synchronize: defineAction({
 		handler: async (_, { cookies, locals }) => {
 			// Verify user authentication
-			const ID = (await Token.check(cookies, "passport"))?.visa;
-			if (!ID) throw new ActionError({ code: "UNAUTHORIZED" });
+			const id = (await Token.check(cookies, "passport"))?.visa;
+			if (!id) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
@@ -57,7 +57,7 @@ export const drifter = {
 						refresh: Drifter.refresh
 					})
 					.from(Drifter)
-					.where(eq(Drifter.ID, ID))
+					.where(eq(Drifter.id, id))
 			)[0];
 
 			// Check if access token has expired
@@ -68,7 +68,7 @@ export const drifter = {
 			const profile: OAuthAccount = await new OAuth(drifter.platform).update(expire ? drifter.refresh! : drifter.access, expire);
 
 			// Update user profile in database with latest OAuth data
-			const new_profile = (
+			const newProfile = (
 				await db
 					.update(Drifter)
 					.set({
@@ -77,11 +77,11 @@ export const drifter = {
 						description: profile.description,
 						image: profile.image
 					})
-					.where(eq(Drifter.ID, ID))
+					.where(eq(Drifter.id, id))
 					.returning({ name: Drifter.name, description: Drifter.description })
 			)[0];
 
-			return new_profile;
+			return newProfile;
 		}
 	}),
 
@@ -92,8 +92,8 @@ export const drifter = {
 		}),
 		handler: async ({ homepage }, { cookies, locals }) => {
 			// Verify user authentication
-			const ID = (await Token.check(cookies, "passport"))?.visa;
-			if (!ID) throw new ActionError({ code: "UNAUTHORIZED" });
+			const id = (await Token.check(cookies, "passport"))?.visa;
+			if (!id) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
@@ -104,7 +104,7 @@ export const drifter = {
 				.set({
 					homepage
 				})
-				.where(eq(Drifter.ID, ID));
+				.where(eq(Drifter.id, id));
 		}
 	}),
 
@@ -112,20 +112,20 @@ export const drifter = {
 	deactivate: defineAction({
 		handler: async (_, { cookies, locals }) => {
 			// Verify user authentication
-			const ID = (await Token.check(cookies, "passport"))?.visa;
-			if (!ID) throw new ActionError({ code: "UNAUTHORIZED" });
+			const id = (await Token.check(cookies, "passport"))?.visa;
+			if (!id) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
 
 			// Get user's OAuth platform and access token for revocation
-			const drifter = (await db.select({ platform: Drifter.platform, access: Drifter.access }).from(Drifter).where(eq(Drifter.ID, ID)))[0];
+			const drifter = (await db.select({ platform: Drifter.platform, access: Drifter.access }).from(Drifter).where(eq(Drifter.id, id)))[0];
 
 			// Revoke OAuth access token with the provider
 			await new OAuth(drifter.platform).revoke(drifter.access);
 
 			// Delete user record from database
-			await db.delete(Drifter).where(eq(Drifter.ID, ID));
+			await db.delete(Drifter).where(eq(Drifter.id, id));
 
 			// Revoke authentication passport token
 			await Token.revoke("passport", cookies);

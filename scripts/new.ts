@@ -27,7 +27,7 @@ const DEFAULT_LOCALE = "en";
 	let path = join(dirname(fileURLToPath(import.meta.url)), "..", "src", "content");
 
 	// Select content type: Note, Jotting, or Preface
-	const content_type = await select({
+	const contentType = await select({
 		message: "Select content type",
 		options: [
 			{ label: "Note", value: "note", hint: "In-depth, carefully conceived long-form works" },
@@ -37,10 +37,10 @@ const DEFAULT_LOCALE = "en";
 	});
 
 	// Exit if user cancels the selection
-	isCancel(content_type) && (cancel(CANCEL_MESSAGE), process.exit(0));
+	isCancel(contentType) && (cancel(CANCEL_MESSAGE), process.exit(0));
 
 	// Update path based on selected content type
-	path = join(path, content_type);
+	path = join(path, contentType);
 
 	// Select language for the article (skip if single language mode)
 	let locale: string | symbol = DEFAULT_LOCALE;
@@ -64,7 +64,7 @@ const DEFAULT_LOCALE = "en";
 
 	// Generate frontmatter metadata based on content type
 	const information: any = {};
-	if (content_type === "preface") {
+	if (contentType === "preface") {
 		// Preface uses timestamp as filename
 		information.timestamp = timestamp;
 
@@ -101,20 +101,20 @@ const DEFAULT_LOCALE = "en";
 				.replace(/^-+|-+$/g, "");
 
 		// Prompt user to input content ID (filename)
-		let ID: string | symbol = slugify(title);
-		ID = await text({
+		let id: string | symbol = slugify(title);
+		id = await text({
 			message: "Content ID（Filename）",
 			placeholder: "Enter content ID...",
-			initialValue: ID,
+			initialValue: id,
 			validate: value =>
 				value === slugify(value) ? undefined : "Content ID can only contain letters, numbers, hyphens, and cannot start or end with a hyphen"
 		});
 
 		// Exit if user cancels the input
-		isCancel(ID) && (cancel(CANCEL_MESSAGE), process.exit(0));
+		isCancel(id) && (cancel(CANCEL_MESSAGE), process.exit(0));
 
 		// If content type is Note, allow user to specify a series
-		if (content_type === "note") {
+		if (contentType === "note") {
 			// Prompt user to input series name (optional)
 			const series = await text({
 				message: "Series name (optional)",
@@ -157,7 +157,7 @@ const DEFAULT_LOCALE = "en";
 			message: "Select additional options",
 			options: [
 				{ value: "draft", label: "Mark as draft" },
-				...(content_type === "note" ? [{ value: "toc", label: "Show table of contents" }] : []),
+				...(contentType === "note" ? [{ value: "toc", label: "Show table of contents" }] : []),
 				{ value: "top", label: "Pin this content" },
 				{ value: "sensitive", label: "Mark as sensitive content" }
 			],
@@ -178,8 +178,8 @@ const DEFAULT_LOCALE = "en";
 		const folder = await select({
 			message: "Which file structure would you like to use?",
 			options: [
-				{ label: "Single markdown file", value: "flat", hint: `${ID}.md` },
-				{ label: "Folder with index file (to include images)", value: "folder", hint: `${ID}/index.md` }
+				{ label: "Single markdown file", value: "flat", hint: `${id}.md` },
+				{ label: "Folder with index file (to include images)", value: "folder", hint: `${id}/index.md` }
 			],
 			initialValue: "flat"
 		});
@@ -190,10 +190,10 @@ const DEFAULT_LOCALE = "en";
 		// Set file path based on selected structure
 		if (folder === "folder") {
 			// Folder structure: content-type/locale/ID/index.md
-			path = join(path, ID, "index.md");
+			path = join(path, id, "index.md");
 		} else {
 			// Flat structure: content-type/locale/ID.md
-			path = join(path, `${ID}.md`);
+			path = join(path, `${id}.md`);
 		}
 	}
 

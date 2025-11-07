@@ -60,7 +60,7 @@ constructor(platform?: string) {
 在 `URL` 方法中添加新提供商的授权链接生成逻辑：
 
 ```ts
-URL(state: string, code_verifier: string): URL {
+url(state: string, codeVerifier: string): URL {
     // ...
 
     else if (this.provider instanceof PLATFORM) {

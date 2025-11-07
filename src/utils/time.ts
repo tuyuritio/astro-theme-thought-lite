@@ -6,7 +6,7 @@ import { DateTime } from "luxon";
  * @param timezone - Target timezone
  * @returns DateTime object in the specified timezone
  */
-function datetime(time?: Date | number | string, timezone: string = Time.default_timezone): DateTime {
+function datetime(time?: Date | number | string, timezone: string = Time.defaultTimezone): DateTime {
 	if (time === undefined) {
 		return DateTime.now().setZone(timezone);
 	} else if (typeof time === "number") {
@@ -24,16 +24,16 @@ function datetime(time?: Date | number | string, timezone: string = Time.default
  * @param timezone - Timezone string (defaults to configured default timezone)
  * @returns Formatted date-time string in "yyyy/MM/dd-HH:mm:ss" format
  */
-function Time(time?: Date | number | string, timezone: string = Time.default_timezone): string {
+function Time(time?: Date | number | string, timezone: string = Time.defaultTimezone): string {
 	return datetime(time, timezone).toFormat("yyyy/MM/dd-HH:mm:ss");
 }
 
 // Time namespace containing various date/time formatting and manipulation utilities
 namespace Time {
 	// Default timezone from environment configuration
-	export const default_timezone = import.meta.env.PUBLIC_TIMEZONE;
+	export const defaultTimezone = import.meta.env.PUBLIC_TIMEZONE;
 	// User's local timezone detected from browser/system
-	export const user_timezone = DateTime.local().zoneName;
+	export const userTimezone = DateTime.local().zoneName;
 
 	/**
 	 * Format date only (without time) in yyyy/MM/dd format
@@ -41,7 +41,7 @@ namespace Time {
 	 * @param timezone - Timezone string (defaults to configured default timezone)
 	 * @returns Formatted date string in "yyyy/MM/dd" format
 	 */
-	export function date(time?: Date | number | string, timezone: string = default_timezone): string {
+	export function date(time?: Date | number | string, timezone: string = defaultTimezone): string {
 		return datetime(time, timezone).toFormat("yyyy/MM/dd");
 	}
 
@@ -54,7 +54,7 @@ namespace Time {
 		 * @param timezone - Timezone string (defaults to configured default timezone)
 		 * @returns Localized date string in medium format (e.g., "Jan 15, 2024")
 		 */
-		export function locale(time?: Date | number | string, locale: string = navigator.language, timezone: string = default_timezone): string {
+		export function locale(time?: Date | number | string, locale: string = navigator.language, timezone: string = defaultTimezone): string {
 			return datetime(time, timezone).setLocale(locale).toLocaleString(DateTime.DATE_MED);
 		}
 
@@ -64,7 +64,7 @@ namespace Time {
 		 * @param timezone - Timezone string (defaults to configured default timezone)
 		 * @returns Date string in "yyyy-MM-dd" format (HTML5 date input format)
 		 */
-		export function input(time?: Date | number | string, timezone: string = default_timezone): string {
+		export function input(time?: Date | number | string, timezone: string = defaultTimezone): string {
 			return datetime(time, timezone).toFormat("yyyy-MM-dd");
 		}
 	}
@@ -75,7 +75,7 @@ namespace Time {
 	 * @param timezone - Timezone string (defaults to configured default timezone)
 	 * @returns Formatted time string in "HH:mm:ss" format
 	 */
-	export function time(time?: Date | number | string, timezone: string = default_timezone): string {
+	export function time(time?: Date | number | string, timezone: string = defaultTimezone): string {
 		return datetime(time, timezone).toFormat("HH:mm:ss");
 	}
 
@@ -85,7 +85,7 @@ namespace Time {
 	 * @param timezone - Timezone string (defaults to configured default timezone)
 	 * @returns Formatted date-time string with timezone offset (e.g., "2024/01/15-14:30:00 UTC+09:00")
 	 */
-	export function full(time?: Date | number | string, timezone: string = default_timezone): string {
+	export function full(time?: Date | number | string, timezone: string = defaultTimezone): string {
 		return datetime(time, timezone).toFormat("yyyy/MM/dd-HH:mm:ss 'UTC'ZZ");
 	}
 
@@ -96,7 +96,7 @@ namespace Time {
 	 * @param timezone - Timezone string (defaults to configured default timezone)
 	 * @returns Localized date-time string in medium format
 	 */
-	export function locale(time?: Date | number | string, locale: string = navigator.language, timezone: string = default_timezone): string {
+	export function locale(time?: Date | number | string, locale: string = navigator.language, timezone: string = defaultTimezone): string {
 		return datetime(time, timezone).setLocale(locale).toLocaleString(DateTime.DATETIME_MED_WITH_SECONDS);
 	}
 
@@ -106,7 +106,7 @@ namespace Time {
 	 * @param timezone - Timezone string (defaults to configured default timezone)
 	 * @returns Day of week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
 	 */
-	export function weekday(date: Date, timezone: string = default_timezone): number {
+	export function weekday(date: Date, timezone: string = defaultTimezone): number {
 		return DateTime.fromJSDate(date).setZone(timezone).weekday % 7;
 	}
 
@@ -134,16 +134,16 @@ namespace Time {
 
 	/**
 	 * Calculate the difference in days between two dates
-	 * @param date_1 - First date (minuend)
-	 * @param date_2 - Second date (subtrahend)
+	 * @param date1 - First date (minuend)
+	 * @param date2 - Second date (subtrahend)
 	 * @param timezone - Timezone for calculation (defaults to configured default timezone)
-	 * @returns Number of days difference (positive if date_1 is later than date_2)
+	 * @returns Number of days difference (positive if date1 is later than date2)
 	 */
-	export function diffDays(date_1: Date, date_2: Date, timezone: string = default_timezone): number {
-		const day_1 = DateTime.fromJSDate(date_1).setZone(timezone).startOf("day");
-		const day_2 = DateTime.fromJSDate(date_2).setZone(timezone).startOf("day");
+	export function diffDays(date1: Date, date2: Date, timezone: string = defaultTimezone): number {
+		const day1 = DateTime.fromJSDate(date1).setZone(timezone).startOf("day");
+		const day2 = DateTime.fromJSDate(date2).setZone(timezone).startOf("day");
 
-		return Math.floor(day_1.diff(day_2, "days").days);
+		return Math.floor(day1.diff(day2, "days").days);
 	}
 }
 

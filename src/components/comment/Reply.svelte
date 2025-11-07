@@ -4,14 +4,14 @@ import { slide } from "svelte/transition";
 import { onMount } from "svelte";
 import remark from "$utils/remark";
 import Modal from "$components/Modal.svelte";
-import { push_tip } from "$components/Tip.svelte";
+import { pushTip } from "$components/Tip.svelte";
 import config from "$config";
 import i18nit from "$i18n";
 import Drifter from "./Drifter.svelte";
 
 let {
 	locale,
-	OAuth,
+	oauth,
 	turnstile,
 	drifter,
 	section,
@@ -25,7 +25,7 @@ let {
 	limit = $bindable(0)
 }: {
 	locale: string;
-	OAuth: any;
+	oauth: any;
 	turnstile?: string;
 	drifter?: any;
 	section: string;
@@ -41,15 +41,15 @@ let {
 
 const t = i18nit(locale);
 
-let anchor_view: boolean = $state(false); // OAuth signin view state
-let docker_view: boolean = $state(false); // User profile view state
+let anchorView: boolean = $state(false); // OAuth signin view state
+let dockerView: boolean = $state(false); // User profile view state
 let content: string = $state(text ?? ""); // Comment content, initialize with existing text if editing
 let preview: boolean = $state(false); // Toggle between edit and preview mode
 let nomad: boolean = $state(!!turnstile && !drifter); // Check if unauthenticated comments are allowed
 let nickname: string | null = $state(null);
-let CAPTCHA: string | undefined = $state();
-let turnstile_element: HTMLElement | undefined = $state();
-let turnstile_ID: string | undefined = $state();
+let captcha: string | undefined = $state();
+let turnstileElement: HTMLElement | undefined = $state();
+let turnstileID: string | undefined = $state();
 let overlength: boolean = $derived(content.length > config.comment["max-length"]);
 
 // Predefined emoji shortcuts for quick insertion
@@ -71,7 +71,7 @@ let textarea: HTMLTextAreaElement | null = $state(null);
 /**
  * Insert emoji at current cursor position in textarea
  */
-function insert_emoji(emoji: string) {
+function insertEmoji(emoji: string) {
 	if (textarea) {
 		// Get current cursor position
 		const start = textarea.selectionStart;
@@ -89,26 +89,26 @@ function insert_emoji(emoji: string) {
 /**
  * Create or edit comment with validation and rate limiting
  */
-async function submit_comment() {
+async function submitComment() {
 	// Validate content is not empty
-	if (!content.trim()) return push_tip("warning", t("comment.empty"));
+	if (!content.trim()) return pushTip("warning", t("comment.empty"));
 
 	// If nomad mode is enabled, validate CAPTCHA and nickname
 	if (nomad) {
-		if (!CAPTCHA) return push_tip("error", t("comment.verify.failure"));
-		if (!nickname?.trim()) return push_tip("warning", t("comment.nickname.empty"));
+		if (!captcha) return pushTip("error", t("comment.verify.failure"));
+		if (!nickname?.trim()) return pushTip("warning", t("comment.nickname.empty"));
 	}
 
 	// Call appropriate API action based on whether editing or creating
 	const { data, error } = edit
-		? await actions.comment.edit({ ID: edit, content })
-		: await actions.comment.create({ section, item, reply, content, link: location.href, nickname, CAPTCHA });
+		? await actions.comment.edit({ id: edit, content })
+		: await actions.comment.create({ section, item, reply, content, link: location.href, nickname, captcha: captcha });
 
 	if (nomad) {
 		// Only reset turnstile for top-level comments (when reply is undefined) or if there was an error
 		if (!reply || error) {
-			window.turnstile.reset(turnstile_ID);
-			CAPTCHA = undefined;
+			window.turnstile.reset(turnstileID);
+			captcha = undefined;
 		}
 
 		localStorage.setItem("nickname", nickname!);
@@ -128,21 +128,21 @@ async function submit_comment() {
 		content = "";
 		textarea?.blur();
 
-		push_tip("success", t("comment.success"));
+		pushTip("success", t("comment.success"));
 	} else {
 		// Handle different error types
 		switch (error.code) {
 			case "TOO_MANY_REQUESTS":
-				return push_tip("error", t("comment.limit"));
+				return pushTip("error", t("comment.limit"));
 
 			case "CONTENT_TOO_LARGE":
-				return push_tip("error", t("comment.overlength"));
+				return pushTip("error", t("comment.overlength"));
 
 			case "FORBIDDEN":
-				return push_tip("error", t("comment.verify.failure"));
+				return pushTip("error", t("comment.verify.failure"));
 
 			default:
-				return push_tip("error", t("comment.failure"));
+				return pushTip("error", t("comment.failure"));
 		}
 	}
 }
@@ -155,32 +155,32 @@ onMount(() => {
 		/**
 		 * Render Turnstile widget
 		 */
-		function init_turnstile() {
-			turnstile_ID = window.turnstile.render(turnstile_element, {
+		function initTurnstile() {
+			turnstileID = window.turnstile.render(turnstileElement, {
 				sitekey: turnstile,
 				callback: (token: string) => {
-					CAPTCHA = token;
+					captcha = token;
 				},
 				"expired-callback": () => {
-					CAPTCHA = undefined;
+					captcha = undefined;
 				},
 				"error-callback": () => {
-					CAPTCHA = undefined;
+					captcha = undefined;
 				}
 			});
 		}
 
 		// Check if turnstile is available and render immediately
 		if (window.turnstile) {
-			init_turnstile();
+			initTurnstile();
 		} else {
-			window.onloadTurnstileCallback = init_turnstile;
+			window.onloadTurnstileCallback = initTurnstile;
 		}
 	}
 });
 </script>
 
-<Modal bind:open={anchor_view}>
+<Modal bind:open={anchorView}>
 	<div class="flex flex-col items-center gap-5">
 		<h2>{t("drifter.signin")}</h2>
 
@@ -194,21 +194,21 @@ onMount(() => {
 		<hr class="b-b-1 b-b-dashed w-full" />
 
 		<div class="flex flex-col items-center gap-2 [&>a]:(flex items-center justify-center gap-2 w-200px b-2 b-solid b-secondary p-1 rd-1 font-bold)">
-			{#if OAuth.GitHub}<a href="/drifter/anchor/GitHub">{@render icon.GitHub()}<span>{t("oauth.github")}</span></a>{/if}
-			{#if OAuth.Google}<a href="/drifter/anchor/Google">{@render icon.Google()}<span>{t("oauth.google")}</span></a>{/if}
-			{#if OAuth.X}<a href="/drifter/anchor/X">{@render icon.X()}<span>{t("oauth.x")}</span></a>{/if}
+			{#if oauth.GitHub}<a href="/drifter/anchor/GitHub">{@render icon.GitHub()}<span>{t("oauth.github")}</span></a>{/if}
+			{#if oauth.Google}<a href="/drifter/anchor/Google">{@render icon.Google()}<span>{t("oauth.google")}</span></a>{/if}
+			{#if oauth.X}<a href="/drifter/anchor/X">{@render icon.X()}<span>{t("oauth.x")}</span></a>{/if}
 		</div>
 
-		<button class="form-button" onclick={() => (anchor_view = false)}>{t("cancel")}</button>
+		<button class="form-button" onclick={() => (anchorView = false)}>{t("cancel")}</button>
 	</div>
 </Modal>
 
-<Drifter bind:open={docker_view} {locale} {drifter} {icon} />
+<Drifter bind:open={dockerView} {locale} {drifter} {icon} />
 
 <main transition:slide={{ duration: 150 }} class="relative mt-5">
 	{#if !turnstile && !drifter}
 		<div class="absolute flex flex-col items-center justify-center gap-1 w-full h-full font-bold cursor-not-allowed">
-			<button onclick={() => (anchor_view = true)} class="b-2 b-solid py-1 px-2 rd-1 font-bold">{t("comment.signin")}</button>
+			<button onclick={() => (anchorView = true)} class="b-2 b-solid py-1 px-2 rd-1 font-bold">{t("comment.signin")}</button>
 		</div>
 	{/if}
 	<div class={!turnstile && !drifter ? "pointer-events-none filter-blur" : ""}>
@@ -232,7 +232,7 @@ onMount(() => {
 					<figcaption class="line-height-none">{@render icon.emoji()}</figcaption>
 					<ul class="absolute bottom-full left--3 flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 mb-1 b-2 b-solid b-weak rd-1 py-2 px-3 bg-background shadow-md pop">
 						{#each emojis as emoji}
-							<button onclick={() => insert_emoji(emoji.code)}>{emoji.icon}</button>
+							<button onclick={() => insertEmoji(emoji.code)}>{emoji.icon}</button>
 						{/each}
 						<a href="https://github.com/ikatyang/emoji-cheat-sheet?tab=readme-ov-file#table-of-contents" target="_blank">…</a>
 					</ul>
@@ -240,16 +240,16 @@ onMount(() => {
 				<label class="flex items-center cursor-pointer">{@render icon.preview()}<input type="checkbox" class="switch" bind:checked={preview} /></label>
 				<div class="grow"></div>
 				{#if nomad}
-					<div bind:this={turnstile_element}></div>
+					<div bind:this={turnstileElement}></div>
 					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input b-weak w-35" />
-					<button onclick={() => (anchor_view = true)}>{@render icon.signin()}</button>
+					<button onclick={() => (anchorView = true)}>{@render icon.signin()}</button>
 				{:else}
-					<button onclick={() => (docker_view = true)}>{@render icon.profile()}</button>
+					<button onclick={() => (dockerView = true)}>{@render icon.profile()}</button>
 				{/if}
-				<button id="submit" disabled={limit > 0 || (nomad && !CAPTCHA) || overlength} onclick={submit_comment}>
+				<button id="submit" disabled={limit > 0 || (nomad && !captcha) || overlength} onclick={submitComment}>
 					{#if limit > 0}
 						<span class="flex gap-0.5">{@render icon.delay()}<span class="relative top-0.5 font-mono line-height-none">{Math.ceil(limit)}</span></span>
-					{:else if nomad && !CAPTCHA}
+					{:else if nomad && !captcha}
 						<span class="contents c-primary">{@render icon.verifying()}</span>
 					{:else if overlength}
 						<span class="contents c-orange-6">{@render icon.overlength()}</span>
