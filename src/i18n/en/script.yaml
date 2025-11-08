@@ -31,6 +31,9 @@ new:
     id:
       name: Content ID（Filename）
       placeholder: Enter content ID...
+      validate: >-
+        Content ID can only contain letters, numbers, hyphens, and cannot start
+        or end with a hyphen
     language: Select language
     options:
       draft: Mark as draft

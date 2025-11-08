@@ -31,6 +31,7 @@ new:
     id:
       name: 記事 ID（ファイル名）
       placeholder: 記事 ID を入力してください...
+      validate: 記事 ID には文字、数字、ハイフンのみを含めることができ、ハイフンで開始または終了することはできません。
     language: 言語を選択してください
     options:
       draft: 下書きとしてマーク
