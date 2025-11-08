@@ -194,9 +194,9 @@ onMount(() => {
 		<hr class="b-b-1 b-b-dashed w-full" />
 
 		<div class="flex flex-col items-center gap-2 [&>a]:(flex items-center justify-center gap-2 w-200px b-2 b-solid b-secondary p-1 rd-1 font-bold)">
-			{#if oauth.GitHub}<a href="/drifter/anchor/GitHub">{@render icon.GitHub()}<span>{t("oauth.github")}</span></a>{/if}
-			{#if oauth.Google}<a href="/drifter/anchor/Google">{@render icon.Google()}<span>{t("oauth.google")}</span></a>{/if}
-			{#if oauth.X}<a href="/drifter/anchor/X">{@render icon.X()}<span>{t("oauth.x")}</span></a>{/if}
+			{#if oauth.github}<a href="/drifter/anchor/GitHub">{@render icon.github()}<span>{t("oauth.github")}</span></a>{/if}
+			{#if oauth.google}<a href="/drifter/anchor/Google">{@render icon.google()}<span>{t("oauth.google")}</span></a>{/if}
+			{#if oauth.x}<a href="/drifter/anchor/X">{@render icon.x()}<span>{t("oauth.x")}</span></a>{/if}
 		</div>
 
 		<button class="form-button" onclick={() => (anchorView = false)}>{t("cancel")}</button>

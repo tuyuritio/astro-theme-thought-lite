@@ -167,11 +167,11 @@ onMount(async () => {
 			<aside class="flex flex-col justify-around gap-2 sm:gap-0">
 				<menu class="flex items-center gap-2 font-bold">
 					{#if drifter.platform == "GitHub"}
-						{@render icon.GitHub()}
+						{@render icon.github()}
 					{:else if drifter.platform == "Google"}
-						{@render icon.Google()}
+						{@render icon.google()}
 					{:else if drifter.platform == "X"}
-						{@render icon.X()}
+						{@render icon.x()}
 					{/if}
 					{drifter.name}
 					<button onclick={synchronize}>{@render icon.sync()}</button>
