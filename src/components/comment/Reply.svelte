@@ -50,7 +50,7 @@ let nickname: string | null = $state(null);
 let captcha: string | undefined = $state();
 let turnstileElement: HTMLElement | undefined = $state();
 let turnstileID: string | undefined = $state();
-let overlength: boolean = $derived(content.length > config.comment["max-length"]);
+let overlength: boolean = $derived(content.length > Number(config.comment?.["max-length"]));
 
 // Predefined emoji shortcuts for quick insertion
 const emojis = [

@@ -50,7 +50,7 @@ let deleteView = $state(false);
  * Copy comment permalink to clipboard for sharing
  */
 async function share() {
-	await navigator.clipboard.writeText(`${location.origin}${location.pathname}#${comment.ID}`);
+	await navigator.clipboard.writeText(`${location.origin}${location.pathname}#${comment.id}`);
 	pushTip("success", t("comment.share.success"));
 }
 
@@ -58,7 +58,7 @@ async function share() {
  * Delete comment after confirmation
  */
 async function remove() {
-	const { data, error } = await actions.comment.delete({ id: comment.ID });
+	const { data, error } = await actions.comment.delete({ id: comment.id });
 	if (!error) {
 		// Refresh comment list and close modal on successful deletion
 		refresh();
@@ -74,7 +74,7 @@ async function remove() {
 <Modal bind:open={deleteView}>
 	<div id="delete" class="flex flex-col items-center justify-center gap-5">
 		<h2>{t("comment.remove.name")}</h2>
-		<input type="hidden" name="ID" value={comment.ID} />
+		<input type="hidden" name="ID" value={comment.id} />
 		<time>{t("comment.time")}：{Time.full(comment.timestamp, Time.userTimezone)}</time>
 		<section class="flex gap-5">
 			<button class="form-button" onclick={() => (deleteView = false)}>{t("cancel")}</button>
@@ -98,7 +98,7 @@ async function remove() {
 	</div>
 </Modal>
 
-<main id={comment.ID} class:before:hidden={depth >= MIN_DEPTH} class:sm:before:block={depth < Math.max(MIN_DEPTH, MAX_DEPTH)} class="relative before:(absolute content-empty top-12 left-4 h-[calc(100%-2rem)] w-0.2rem bg-[linear-gradient(var(--shadow-color)calc(100%-2rem),transparent)])">
+<main id={comment.id} class:before:hidden={depth >= MIN_DEPTH} class:sm:before:block={depth < Math.max(MIN_DEPTH, MAX_DEPTH)} class="relative before:(absolute content-empty top-12 left-4 h-[calc(100%-2rem)] w-0.2rem bg-[linear-gradient(var(--shadow-color)calc(100%-2rem),transparent)])">
 	<dl class="flex flex-col gap-2 mt-6">
 		<div class="flex items-center gap-2">
 			{#if comment.name !== null}
@@ -147,9 +147,9 @@ async function remove() {
 	</dl>
 	<div class:ml-7={depth < MIN_DEPTH} class:sm:ml-7={depth < Math.max(MIN_DEPTH, MAX_DEPTH)}>
 		{#if replyView && !editView}
-			<Reply {locale} oauth={oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.ID} {icon} {refresh} bind:view={replyView} bind:limit />
+			<Reply {locale} oauth={oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.id} {icon} {refresh} bind:view={replyView} bind:limit />
 		{:else if editView && !replyView}
-			<Reply {locale} oauth={oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.reply} edit={comment.ID} text={comment.content} {icon} {refresh} bind:view={editView} bind:limit />
+			<Reply {locale} oauth={oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.reply} edit={comment.id} text={comment.content} {icon} {refresh} bind:view={editView} bind:limit />
 		{/if}
 
 		{#each comment.subcomments as subcomment}

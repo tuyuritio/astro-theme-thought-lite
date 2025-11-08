@@ -244,7 +244,7 @@ export const comment = {
 			// Create a map for efficient comment lookup and initialize subcomments & history arrays
 			const map = new Map<string, any>();
 			comments.forEach((comment: any) => {
-				map.set(comment.ID, ((comment.subcomments = []), (comment.history = []), comment));
+				map.set(comment.id, ((comment.subcomments = []), (comment.history = []), comment));
 			});
 			const list = new Map(map);
 
@@ -261,7 +261,7 @@ export const comment = {
 				// Process edit history chain
 				let edit: CommentItem;
 				while ((edit = map.get(comment.edit))) {
-					if (edit.id === comment.ID) {
+					if (edit.id === comment.id) {
 						// Self-reference indicates deletion
 						delete comment.content;
 					} else {
@@ -274,7 +274,7 @@ export const comment = {
 					edit.subcomments = comment.subcomments;
 					comment.history = [];
 					delete comment.edit;
-					list.delete(comment.ID);
+					list.delete(comment.id);
 
 					comment = edit;
 				}
@@ -288,7 +288,7 @@ export const comment = {
 					treeification.push(comment);
 				}
 
-				list.delete(comment.ID);
+				list.delete(comment.id);
 			}
 
 			return { treeification, count };
