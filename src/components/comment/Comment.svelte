@@ -135,7 +135,7 @@ async function remove() {
 					<button onclick={() => ((replyView = !replyView), (editView = false))} disabled={!turnstile && !drifter}>{@render icon.reply()}</button>
 					{#if comment.history.length > 0}<button onclick={() => (historyView = true)}>{@render icon.history()}</button>{/if}
 					<button onclick={share}>{@render icon.share()}</button>
-					{#if comment.drifter === drifter?.ID}
+					{#if comment.drifter === drifter?.id}
 						<button onclick={() => ((editView = !editView), (replyView = false))}>{@render icon.edit()}</button>
 						<button onclick={() => (deleteView = true)}>{@render icon.remove()}</button>
 					{/if}
