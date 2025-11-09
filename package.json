@@ -49,6 +49,7 @@
 		"astro": "^5.15.3",
 		"astro-icon": "^1.1.5",
 		"feed": "^5.1.0",
+		"hast": "^0.0.2",
 		"luxon": "^3.7.2",
 		"mdast-util-to-string": "^4.0.0",
 		"medium-zoom": "^1.1.0",

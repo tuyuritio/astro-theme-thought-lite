@@ -24,8 +24,6 @@ import { rehypeHeadingIds as ids } from "@astrojs/markdown-remark";
 import anchor from "rehype-autolink-headings";
 import links from "rehype-external-links";
 import katex from "rehype-katex";
-// @ts-expect-error
-import figure from "rehype-figure";
 import sectionize from "@hbsnow/rehype-sectionize";
 
 import spoiler from "./src/utils/remark/spoiler";
@@ -33,6 +31,7 @@ import abbr from "./src/utils/remark/abbr";
 import wrapper from "./src/utils/remark/table-wrapper";
 import copy from "./src/utils/code-copy";
 import reading from "./src/utils/remark/reading";
+import figure from "./src/utils/remark/figure";
 
 import siteConfig from "./site.config";
 
@@ -85,6 +84,7 @@ export default defineConfig({
 			[links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
 			katex,
 			figure,
+			// @ts-expect-error
 			sectionize
 		],
 		smartypants: false,
