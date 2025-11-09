@@ -23,6 +23,29 @@ let {
 
 const t = i18nit(locale);
 
+// Define home route and navigation routes configuration
+const homeRoute = getRelativeLocaleUrl(locale);
+const routes: { path: string; extra?: string[]; icon: Snippet; label: string }[] = [
+	{ label: t("navigation.home"), path: homeRoute, extra: [getRelativeLocaleUrl(locale, "/preface")], icon: home },
+	{ label: t("navigation.note"), path: getRelativeLocaleUrl(locale, "/note"), icon: note },
+	{ label: t("navigation.jotting"), path: getRelativeLocaleUrl(locale, "/jotting"), icon: jotting },
+	{ label: t("navigation.about"), path: getRelativeLocaleUrl(locale, "/about"), icon: about }
+];
+
+/**
+ * Check if a route is currently active based on the current route path
+ * @param route - The current route path
+ * @param home - The home route path
+ * @param path - The navigation item path to check against
+ * @param extra - Optional array of additional paths that should be considered active
+ * @returns True if the route is active, false otherwise
+ */
+function active(path: string, extra?: string[]) {
+	if (extra?.some(item => item === route)) return true;
+	if (path === homeRoute) return path === route;
+	return route.startsWith(path);
+}
+
 // Control mobile menu visibility state
 let menu: boolean = $state(false);
 let navigator: HTMLElement | undefined = $state();
@@ -56,22 +79,12 @@ onMount(() => {
 	<header class="grid gap-5 c-secondary grid-rows-[repeat(5,1fr)] sm:(grid-rows-none grid-cols-[repeat(4,1fr)])">
 		<button onclick={() => (menu = false)} class="sm:hidden">{@render close()}</button>
 
-		<a href={getRelativeLocaleUrl(locale)} class:location={route == getRelativeLocaleUrl(locale) || route.startsWith(getRelativeLocaleUrl(locale, "/preface"))}>
-			<span>{@render home()}</span>
-			<p>{t("navigation.home")}</p>
-		</a>
-		<a href={getRelativeLocaleUrl(locale, "/note")} class:location={route.startsWith(getRelativeLocaleUrl(locale, "/note"))}>
-			<span>{@render note()}</span>
-			<p>{t("navigation.note")}</p>
-		</a>
-		<a href={getRelativeLocaleUrl(locale, "/jotting")} class:location={route.startsWith(getRelativeLocaleUrl(locale, "/jotting"))}>
-			<span>{@render jotting()}</span>
-			<p>{t("navigation.jotting")}</p>
-		</a>
-		<a href={getRelativeLocaleUrl(locale, "/about")} class:location={route.startsWith(getRelativeLocaleUrl(locale, "/about"))}>
-			<span>{@render about()}</span>
-			<p>{t("navigation.about")}</p>
-		</a>
+		{#each routes as item}
+			<a href={item.path} class:location={active(item.path, item.extra)}>
+				<span>{@render item.icon()}</span>
+				<p>{item.label}</p>
+			</a>
+		{/each}
 	</header>
 
 	<footer class="flex flex-col gap-2 sm:gap-5 sm:(flex-row gap-7)">
