@@ -15,7 +15,7 @@ const t = i18nit(locale);
 const env = import.meta.env;
 
 // Check which OAuth providers are configured for comment authentication
-const OAuth = {
+const oauth = {
 	github: env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET,
 	google: env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET,
 	x: env.TWITTER_CLIENT_ID && env.TWITTER_CLIENT_SECRET
@@ -25,7 +25,7 @@ const OAuth = {
 const turnstile = env.CLOUDFLARE_TURNSTILE_SECRET_KEY ? env.CLOUDFLARE_TURNSTILE_SITE_KEY : null;
 ---
 
-<Comments client:visible {locale} {section} {item} {OAuth} {turnstile}>
+<Comments client:visible {locale} {section} {item} {oauth} {turnstile}>
 	<Icon name="svg-spinners:3-dots-move" size={25} slot="loading" inline />
 	<Icon name="svg-spinners:pulse-3" size={30} slot="rendering" inline />
 	<Icon name="svg-spinners:pulse-rings-3" title={t("comment.verify.progress")} slot="verifying" inline />

@@ -136,7 +136,7 @@ onMount(async () => {
 
 <main>
 	{#if loaded}
-		<Reply {locale} oauth={oauth} {turnstile} {section} {item} {drifter} {icon} {refresh} bind:limit />
+		<Reply {locale} {oauth} {turnstile} {section} {item} {drifter} {icon} {refresh} bind:limit />
 		{#if comments.length}
 			<div class="flex items-center justify-between mt-6">
 				<p class="flex items-center gap-2">
@@ -158,7 +158,7 @@ onMount(async () => {
 		{/if}
 		{#each list as comment (comment.id)}
 			<div animate:flip={{ duration: 150 }}>
-				<CommentBlock {locale} oauth={oauth} {turnstile} {icon} {drifter} {comment} {refresh} bind:limit />
+				<CommentBlock {locale} {oauth} {turnstile} {icon} {drifter} {comment} {refresh} bind:limit />
 			</div>
 		{/each}
 	{:else}
