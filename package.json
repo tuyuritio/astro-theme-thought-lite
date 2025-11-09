@@ -1,7 +1,7 @@
 {
 	"name": "astro-theme-thought-lite",
 	"type": "module",
-	"version": "0.22.1",
+	"version": "0.22.2",
 	"description": "A modern Astro theme focused on content creation",
 	"keywords": ["astro", "theme", "blog", "cloudflare", "svelte", "typescript", "i18n"],
 	"homepage": "https://github.com/tuyuritio/astro-theme-thought-lite",
@@ -53,6 +53,7 @@
 		"drizzle-orm": "^0.44.7",
 		"feed": "^5.1.0",
 		"jose": "^6.1.0",
+		"hast": "^0.0.2",
 		"luxon": "^3.7.2",
 		"mdast-util-to-string": "^4.0.0",
 		"medium-zoom": "^1.1.0",
