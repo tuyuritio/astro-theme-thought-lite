@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.22.1...v0.22.2) (2025-11-09)
+
+
+### Bug Fixes
+
+* replace rehype-figure plugin with custom implementation ([8a94eb7](https://github.com/tuyuritio/astro-theme-thought-lite/commit/8a94eb7cf69575d29026201446d87c1115094806))
+
 ## [0.22.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.22.0...v0.22.1) (2025-11-09)
 
 
