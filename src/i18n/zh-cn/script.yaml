@@ -31,6 +31,7 @@ new:
     id:
       name: 内容 ID（文件名）
       placeholder: 输入内容 ID…
+      validate: 内容 ID 只能包含字母、数字和连字符，且不能以连字符开头或结尾。
     language: 选择语言
     options:
       draft: 标记为草稿

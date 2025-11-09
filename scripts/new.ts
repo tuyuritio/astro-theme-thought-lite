@@ -100,8 +100,7 @@ const CANCEL_MESSAGE = t("new.cancel");
 			message: t("new.step.id.name"),
 			placeholder: t("new.step.id.placeholder"),
 			initialValue: id,
-			validate: value =>
-				value === slugify(value) ? undefined : "Content ID can only contain letters, numbers, hyphens, and cannot start or end with a hyphen"
+			validate: value => (value === slugify(value) ? undefined : t("new.step.id.validate"))
 		});
 
 		// Exit if user cancels the input
