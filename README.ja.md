@@ -93,6 +93,9 @@ npm run dev
 
 各プラットフォームのデプロイ方法については、[Astro 公式デプロイガイド](https://docs.astro.build/ja/guides/deploy/)を参照してください。
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/tuyuritio/astro-theme-thought-lite&project-name=astro-blog-thought-lite&repository-name=astro-blog-thought-lite&teamSlug=tuyuritios-projects)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/integration/start/deploy?repository=https://github.com/tuyuritio/astro-theme-thought-lite)
+
 ## 🔄 更新
 
 アップストリームの更新を同期するには、以下のコマンドを実行します：

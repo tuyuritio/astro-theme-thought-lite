@@ -93,6 +93,9 @@ npm run dev
 
 各平台部署方法请参阅 [Astro 官方部署指南](https://docs.astro.build/zh-cn/guides/deploy/)。
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/tuyuritio/astro-theme-thought-lite&project-name=astro-blog-thought-lite&repository-name=astro-blog-thought-lite&teamSlug=tuyuritios-projects)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/integration/start/deploy?repository=https://github.com/tuyuritio/astro-theme-thought-lite)
+
 ## 🔄 更新
 
 运行以下命令以同步上游更新：
