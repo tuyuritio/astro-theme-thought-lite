@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.22.0...v0.22.1) (2025-11-09)
+
+
+### Bug Fixes
+
+* **i18n:** update validation messages for content ID ([28a355d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/28a355d0155a1620ae57ef9c16fbfcf04e059d65))
+
 ## [0.22.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.21.6...v0.22.0) (2025-11-07)
 
 
