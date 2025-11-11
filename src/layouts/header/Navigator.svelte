@@ -97,7 +97,7 @@ onMount(() => {
 				{#snippet trigger()}{@render globe()}{/snippet}
 				<div data-no-swup class="contents">
 					{#each config.i18n.locales as locale}
-						<a href={getRelativeLocaleUrl(locale as string, path)} aria-label={i18nit(locale)("language")}>{i18nit(locale)("language")}</a>
+						<a href={getRelativeLocaleUrl(locale as string, path)} lang={locale} aria-label={i18nit(locale)("language")}>{i18nit(locale)("language")}</a>
 					{/each}
 				</div>
 			</Menu>

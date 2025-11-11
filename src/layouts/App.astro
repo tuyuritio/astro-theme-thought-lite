@@ -1,5 +1,11 @@
 ---
 const { title, subtitle, description, author, article } = Astro.props;
+
+// Locale-specific Noto Serif font mappings for Google Fonts
+const notoFonts: Record<string, string> = {
+	"zh-cn": "Noto+Serif+SC",
+	ja: "Noto+Serif+JP"
+};
 ---
 
 <html lang={Astro.currentLocale}>
@@ -24,15 +30,16 @@ const { title, subtitle, description, author, article } = Astro.props;
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 
-		<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&family=Noto+Serif:ital,wght@1,200..900&family=Playwrite+MX:wght@100..400&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-		<link rel="preload" as="style" href="https://fontsapi.zeoseven.com/442/main/result.css" onload="this.onload=null;this.rel='stylesheet'" />
-		<link rel="preload" as="style" href="https://fontsapi.zeoseven.com/556/main/result.css" onload="this.onload=null;this.rel='stylesheet'" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playwrite+MX:wght@100..400&display=block" />
+		<link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css" />
+		<link rel="stylesheet" href="https://fontsapi.zeoseven.com/556/main/result.css" />
 		<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.4/katex.min.css" onload="this.onload=null;this.rel='stylesheet'" />
 
-		{(Astro.currentLocale === "zh-hk" || Astro.currentLocale === "zh-mo") && <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+HK:wght@200..900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />}
-		{Astro.currentLocale === "zh-tw" && <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />}
-		{Astro.currentLocale === "ja" && <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />}
-		{Astro.currentLocale === "ko" && <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />}
+		{Astro.currentLocale && notoFonts[Astro.currentLocale] && <link rel="stylesheet" href={`https://fonts.googleapis.com/css2?family=${notoFonts[Astro.currentLocale]}:wght@200..900&display=swap`} />}
 
 		<script is:inline>
 			var theme = localStorage.getItem("theme");

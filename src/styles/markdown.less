@@ -4,7 +4,7 @@
 	section {
 		display: flex;
 		flex-direction: column;
-		gap: 0.8rem;
+		gap: 0.8em;
 
 		width: 100%;
 	}
@@ -19,7 +19,7 @@
 	h1,
 	h2 {
 		&:not(:first-child) {
-			margin-top: 0.5rem;
+			margin-top: 0.5em;
 		}
 	}
 
@@ -27,7 +27,7 @@
 		align-self: flex-start;
 
 		border-bottom: 4px solid;
-		padding-bottom: 0.5rem;
+		padding-bottom: 0.2em;
 
 		font-size: 1.75rem;
 	}
@@ -36,7 +36,7 @@
 		align-self: flex-start;
 
 		border-bottom: 2px solid;
-		padding-bottom: 0.2rem;
+		padding-bottom: 0.1em;
 	}
 
 	hr {
@@ -88,7 +88,7 @@
 
 				&::after {
 					content: "󰌷";
-					margin: 0rem 0.3rem;
+					margin: 0 0.3em;
 
 					font-size: 0.8em;
 					font-weight: normal;
@@ -106,15 +106,7 @@
 
 	ul,
 	ol {
-		padding-left: 1.5rem;
-
-		li {
-			margin-top: 0.2rem;
-
-			> *:not(:last-child) {
-				margin-bottom: 0.2rem;
-			}
-		}
+		padding-left: 1.2em;
 	}
 
 	ul.contains-task-list {
@@ -141,17 +133,17 @@
 
 	blockquote {
 		border-left: 4px solid var(--shadow-color);
-		padding-left: 1rem;
+		padding-left: 1em;
 
 		p {
-			margin: 0rem;
-			padding-bottom: 0.5rem;
+			margin: 0;
+			padding-bottom: 0.5em;
 		}
 	}
 
 	code {
-		border-radius: 0.3rem;
-		padding: 0.2rem 0.4rem;
+		border-radius: 0.3em;
+		padding: 0.25em 0.5em;
 
 		font-size: 0.8em;
 		-webkit-user-drag: none;
@@ -165,21 +157,21 @@
 
 	pre {
 		position: relative;
-		border-radius: 0.3rem;
+		border-radius: 0.3em;
 
 		> code {
 			display: block;
 
-			padding: 1rem;
+			padding: 1em;
 
 			line-height: 1.5;
 
 			> button.code-copy-button {
 				position: absolute;
-				top: 0.7rem;
-				right: 0.7rem;
-				width: 1rem;
-				height: 1rem;
+				top: 0.875em;
+				right: 0.875em;
+				width: 1.25em;
+				height: 1.25em;
 
 				color: var(--secondary-color);
 				opacity: 0;
@@ -241,7 +233,7 @@
 	}
 
 	div.table-wrapper {
-		padding-bottom: 0.5rem;
+		padding-bottom: 0.5em;
 		overflow-x: auto;
 	}
 
@@ -293,22 +285,22 @@
 	}
 
 	.footnotes {
-		margin-top: 2rem;
+		margin-top: 2.5em;
 		border-top: 4px dotted var(--weak-color);
-		padding-top: 1rem;
+		padding-top: 1.5em;
 
 		color: var(--remark-color);
-		font-size: 0.8rem;
+		font-size: 0.8em;
 
 		ol {
-			padding: 0rem;
+			padding: 0;
 			list-style: none;
 			counter-reset: footnote;
 
 			li {
 				position: relative;
 				counter-increment: footnote;
-				padding-left: 1.2rem;
+				padding-left: 1.5em;
 
 				&::before {
 					position: absolute;
@@ -353,7 +345,7 @@
 		}
 
 		border-left: 4px solid var(--alert-color);
-		padding: 0px 1rem 5px;
+		padding: 0px 1em 5px;
 
 		&-title {
 			display: flex;
@@ -395,69 +387,6 @@
 
 	&-display > & {
 		text-align: inherit;
-	}
-}
-
-#markdown-contents {
-	display: flex;
-	flex-direction: column;
-
-	* {
-		line-height: 1.6;
-		list-style: none;
-	}
-
-	a a {
-		display: none;
-	}
-
-	li {
-		color: var(--weak-color);
-
-		.toc-active-link {
-			color: var(--primary-color);
-			font-weight: bold;
-		}
-
-		a:hover {
-			text-decoration: underline;
-		}
-	}
-
-	ol ol {
-		margin-left: 1rem;
-
-		li {
-			position: relative;
-
-			&::before {
-				content: "";
-				position: absolute;
-
-				top: 0px;
-				left: -8px;
-				height: 100%;
-
-				border-left: 1px solid var(--remark-color);
-			}
-
-			&:last-child {
-				&::before {
-					height: 1rem;
-				}
-			}
-
-			&::after {
-				content: "";
-				position: absolute;
-
-				top: 1rem;
-				left: -8px;
-
-				border-bottom: 1px solid var(--remark-color);
-				width: 5px;
-			}
-		}
 	}
 }
 
