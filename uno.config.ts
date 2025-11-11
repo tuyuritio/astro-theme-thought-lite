@@ -26,8 +26,9 @@ export default defineConfig({
 			selection: "var(--selection-color)"
 		},
 		fontFamily: {
-			mono: ["Maple Mono NF CN", "monospace"],
-			cursive: ["Playwrite MX", "The Peak Font Plus", "serif"]
+			serif: "var(--font-serif)",
+			mono: "var(--font-monospace)",
+			cursive: "var(--font-cursive)"
 		},
 		animation: {
 			keyframes: {

@@ -1,5 +1,3 @@
-import config from "../../site.config";
-
 // Import translation files for different locales
 import zhCN from "./zh-cn/index.yaml";
 import zhCNScript from "./zh-cn/script.yaml";
@@ -64,10 +62,7 @@ export default function i18nit(
 	 */
 	function t(key: string, params?: Record<string, string | number>) {
 		const keys = key.split(".");
-		const value: string | undefined = keys.reduce(
-			(translation: any, key) => translation[key] || translations[config.i18n.defaultLocale],
-			translation
-		);
+		const value: string | undefined = keys.reduce((translation: any, key) => translation[key], translation);
 
 		return value?.replace(/\{(\w+)\}/g, (_, param) => String(params?.[param] ?? param)) ?? key;
 	}

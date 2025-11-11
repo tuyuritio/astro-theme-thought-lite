@@ -3,6 +3,12 @@ const { title, subtitle, description, author, article } = Astro.props;
 
 const env = import.meta.env;
 const nomad = env.CLOUDFLARE_TURNSTILE_SITE_KEY && env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
+
+// Locale-specific Noto Serif font mappings for Google Fonts
+const notoFonts: Record<string, string> = {
+	"zh-cn": "Noto+Serif+SC",
+	ja: "Noto+Serif+JP"
+};
 ---
 
 <html lang={Astro.currentLocale}>
@@ -25,20 +31,18 @@ const nomad = env.CLOUDFLARE_TURNSTILE_SITE_KEY && env.CLOUDFLARE_TURNSTILE_SECR
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
 		<link rel="shortcut icon" href="/favicon.ico" />
-		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-		<meta name="apple-mobile-web-app-title" content={title} />
-		<link rel="manifest" href="/site.webmanifest" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 
-		<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200..900&family=Noto+Serif:ital,wght@1,200..900&family=Playwrite+MX:wght@100..400&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-		<link rel="preload" as="style" href="https://fontsapi.zeoseven.com/442/main/result.css" onload="this.onload=null;this.rel='stylesheet'" />
-		<link rel="preload" as="style" href="https://fontsapi.zeoseven.com/556/main/result.css" onload="this.onload=null;this.rel='stylesheet'" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playwrite+MX:wght@100..400&display=block" />
+		<link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css" />
+		<link rel="stylesheet" href="https://fontsapi.zeoseven.com/556/main/result.css" />
 		<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.4/katex.min.css" onload="this.onload=null;this.rel='stylesheet'" />
 
-		{(Astro.currentLocale === "zh-hk" || Astro.currentLocale === "zh-mo") && <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+HK:wght@200..900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />}
-		{Astro.currentLocale === "zh-tw" && <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@200..900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />}
-		{Astro.currentLocale === "ja" && <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />}
-		{Astro.currentLocale === "ko" && <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200..900&display=swap" onload="this.onload=null;this.rel='stylesheet'" />}
+		{Astro.currentLocale && notoFonts[Astro.currentLocale] && <link rel="stylesheet" href={`https://fonts.googleapis.com/css2?family=${notoFonts[Astro.currentLocale]}:wght@200..900&display=swap`} />}
 
 		{nomad && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback" async defer is:inline />}
 

@@ -43,6 +43,16 @@ import tlh from "./tlh.yaml";
 const translations = { en, "zh-cn": zhCN, ja, tlh };
 ```
 
+If the new language requires specific font support, you can add a font mapping in the `notoFonts` object in `src/layouts/App.astro`:
+
+```ts
+const notoFonts: Record<string, string> = {
+    "zh-cn": "Noto+Serif+SC",
+    ja: "Noto+Serif+JP",
+    tlh: "Noto+Serif+..."
+};
+```
+
 Add the new language to the `i18n.locales` array in `site.config.ts`:
 
 ```ts

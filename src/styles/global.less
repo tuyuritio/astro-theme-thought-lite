@@ -31,26 +31,18 @@
 
 :root {
 	.light-theme();
-	--serif: "Noto Serif SC", serif;
-	--monospace: "Maple Mono NF CN", monospace;
+	--font-serif: "Noto Serif", serif;
+	--font-monospace: "Maple Mono NF CN", monospace;
+	--font-cursive: "Playwrite MX", "The Peak Font Plus", serif;
 	--swup-fade-theme-duration: .15s;
 }
 
-:lang(zh-hk),
-:lang(zh-mo) {
-	--serif: "Noto Serif HK", "Noto Serif SC", serif;
-}
-
-:lang(zh-tw) {
-	--serif: "Noto Serif TC", "Noto Serif SC", serif;
+:lang(zh-cn) {
+	--font-serif: "Noto Serif SC", serif;
 }
 
 :lang(ja) {
-	--serif: "Noto Serif JP", "Noto Serif SC", serif;
-}
-
-:lang(ko) {
-	--serif: "Noto Serif KR", "Noto Serif SC", serif;
+	--font-serif: "Noto Serif JP", serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -110,11 +102,16 @@ html {
 }
 
 body {
-	font-family: var(--serif), var(--monospace);
+	font-size: 1.0625rem;
+	font-family: var(--font-serif), var(--font-monospace);
 	color: var(--primary-color);
 	background-color: var(--background-color);
 
 	overflow-x: clip;
+
+	@media screen and (max-width: 640px) {
+		font-size: 1rem;
+	}
 }
 
 a {
@@ -167,13 +164,12 @@ input[type="checkbox"] {
 			align-items: center;
 			justify-content: center;
 
+			left: 0;
 			height: 1rem;
 			width: 1rem;
 
-			left: 0em;
-
-			font-family: var(--monospace);
-			font-size: 0.8em;
+			font-family: var(--font-monospace);
+			font-size: 0.8rem;
 			text-align: center;
 			color: var(--background-color);
 

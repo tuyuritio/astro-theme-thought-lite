@@ -43,6 +43,16 @@ import tlh from "./tlh.yaml";
 const translations = { en, "zh-cn": zhCN, ja, tlh };
 ```
 
+如果新语言需要使用特定字体，可在 `src/layouts/App.astro` 中的 `notoFonts` 对象中添加字体映射：
+
+```ts
+const notoFonts: Record<string, string> = {
+    "zh-cn": "Noto+Serif+SC",
+    ja: "Noto+Serif+JP",
+    tlh: "Noto+Serif+..."
+};
+```
+
 在 `site.config.ts` 中将新语言添加到 `i18n.locales` 数组：
 
 ```ts
