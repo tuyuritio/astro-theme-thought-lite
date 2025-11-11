@@ -113,6 +113,8 @@ onMount(() => {
 			position: relative;
 			display: inline-block;
 
+			font-weight: 500;
+
 			p,
 			span {
 				padding: 5px 10px;
@@ -180,6 +182,8 @@ onMount(() => {
 				a {
 					display: flex;
 					gap: 0.5rem;
+
+					font-weight: normal;
 
 					span,
 					p {

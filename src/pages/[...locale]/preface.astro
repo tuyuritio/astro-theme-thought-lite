@@ -36,7 +36,7 @@ const prefaces = (
 				prefaces.map(preface => [
 					<hr class="my-5 b-b b-b-solid b-primary" />,
 					<li>
-						<time datetime={preface.data.timestamp.toISOString()} class="block mb-5 font-bold text-5">
+						<time datetime={preface.data.timestamp.toISOString()} class="block mb-5 font-serif font-bold text-5.5">
 							{Time.locale(preface.data.timestamp, locale)}
 						</time>
 						<article class="markdown" set:html={preface.rendered?.html} />

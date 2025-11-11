@@ -1,5 +1,7 @@
 .markdown {
 
+	font-family: var(--font-sans);
+
 	&,
 	section {
 		display: flex;
@@ -58,20 +60,21 @@
 				content: @icon;
 				white-space: pre;
 
+				font-family: var(--font-monospace);
 				font-size: @size;
 				vertical-align: @offset;
 			}
 		}
 
 		&[target="_blank"] {
-			.link-icon("\202F \202F", 0.8em, 1px);
+			.link-icon("\202F\2002", 0.8em, 1px);
 		}
 
 		&:not([target="_blank"], [data-footnote-ref], [data-footnote-backref]) {
-			.link-icon("\202F \202F", 0.85em, 0.5px);
+			.link-icon("\202F\2002", 0.85em, 0.5px);
 
 			&[href^="mailto:"] {
-				.link-icon("\202F󱃝 \202F", 0.9em, 0px);
+				.link-icon("\202F󱃝\2002", 0.9em, 0px);
 			}
 		}
 	}

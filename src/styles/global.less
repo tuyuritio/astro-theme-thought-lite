@@ -31,27 +31,11 @@
 
 :root {
 	.light-theme();
-	--font-serif: "Noto Serif SC", serif;
+	--font-sans: sans-serif;
+	--font-serif: serif;
 	--font-monospace: "Maple Mono NF CN", monospace;
 	--font-cursive: "Playwrite MX", "The Peak Font Plus", serif;
 	--swup-fade-theme-duration: .15s;
-}
-
-:lang(zh-hk),
-:lang(zh-mo) {
-	--font-serif: "Noto Serif HK", "Noto Serif SC", serif;
-}
-
-:lang(zh-tw) {
-	--font-serif: "Noto Serif TC", "Noto Serif SC", serif;
-}
-
-:lang(ja) {
-	--font-serif: "Noto Serif JP", "Noto Serif SC", serif;
-}
-
-:lang(ko) {
-	--font-serif: "Noto Serif KR", "Noto Serif SC", serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -111,11 +95,20 @@ html {
 }
 
 body {
-	font-family: var(--font-serif), var(--font-monospace);
+	font-family: var(--font-sans);
 	color: var(--primary-color);
 	background-color: var(--background-color);
 
 	overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-serif);
 }
 
 a {
