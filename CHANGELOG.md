@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.22.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.22.2...v0.22.3) (2025-11-11)
+
+
+### Bug Fixes
+
+* **i18n:** remove fallback to default locale ([83f2320](https://github.com/tuyuritio/astro-theme-thought-lite/commit/83f23201ce5720054d9d366414eacefe7a5fac67))
+* implement dynamic navigation routes ([21d1941](https://github.com/tuyuritio/astro-theme-thought-lite/commit/21d1941c993a4a4d4cd354f67463cb6e244ad7ba))
+* remove web app manifest ([ab6ddc8](https://github.com/tuyuritio/astro-theme-thought-lite/commit/ab6ddc83327eed36a357466ba4b8654f7f5c2e9a))
+
 ## [0.22.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.22.1...v0.22.2) (2025-11-09)
 
 
