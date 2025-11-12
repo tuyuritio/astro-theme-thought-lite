@@ -10,7 +10,7 @@
 	},
 	"formatter": {
 		"enabled": true,
-		"includes": ["**", "!package.json", "!package-lock.json"],
+		"includes": ["**", "!package.json", "!pnpm-lock.yaml"],
 		"indentStyle": "tab",
 		"indentWidth": 4,
 		"lineEnding": "lf",

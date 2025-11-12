@@ -84,7 +84,6 @@ export default defineConfig({
 			[links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
 			katex,
 			figure,
-			// @ts-expect-error
 			sectionize
 		],
 		smartypants: false,
@@ -110,6 +109,7 @@ export default defineConfig({
 		optimizeDeps: {
 			include: ["picocolors"]
 		},
+		// @ts-expect-error
 		plugins: [yaml()]
 	},
 	integrations: [

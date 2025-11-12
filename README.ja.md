@@ -39,12 +39,12 @@
 以下のコマンドを実行します：
 
 ```sh
-npx create-astro@latest --template tuyuritio/astro-theme-thought-lite
+pnpm create astro --template tuyuritio/astro-theme-thought-lite
 
 # 対話型プロンプトに従ってプロジェクトを作成
 
 cd <your-project-name>
-npm run dev
+pnpm dev
 ```
 
 ### テンプレートを使用
@@ -55,8 +55,8 @@ npm run dev
 ```sh
 git clone <your-repo-url>
 cd <your-repo-name>
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 ## 🔧 設定
@@ -77,15 +77,15 @@ npm run dev
 
 | コマンド | アクション |
 | --- | --- |
-| `npm install` | プロジェクトの依存関係をインストール |
-| `npm run new` | 新しいコンテンツファイルを作成 |
-| `npm run dev` | ローカル開発サーバーを起動（デフォルト：`http://localhost:4321`） |
-| `npm run check` | Astro 型チェックを実行 |
-| `npm run build` | 本番バージョンをビルド |
-| `npm run preview` | ビルドしたサイトをプレビュー |
-| `npm run format` | コードフォーマット |
-| `npm run lint` | コードリント |
-| `npm run update` | プロジェクトの依存関係を更新 |
+| `pnpm install` | プロジェクトの依存関係をインストール |
+| `pnpm new` | 新しいコンテンツファイルを作成 |
+| `pnpm dev` | ローカル開発サーバーを起動（デフォルト：`http://localhost:4321`） |
+| `pnpm check` | Astro 型チェックを実行 |
+| `pnpm build` | 本番バージョンをビルド |
+| `pnpm preview` | ビルドしたサイトをプレビュー |
+| `pnpm format` | コードフォーマット |
+| `pnpm lint` | コードリント |
+| `pnpm update` | プロジェクトの依存関係を更新 |
 
 ## 🚀 デプロイ
 
@@ -104,7 +104,7 @@ npm run dev
 git remote add theme https://github.com/tuyuritio/astro-theme-thought-lite.git
 git fetch theme
 git merge theme/main    # 初回更新時は `--allow-unrelated-histories` フラグを追加
-npm install
+pnpm install
 ```
 
 ## ✍️ コンテンツ作成
