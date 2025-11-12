@@ -49,13 +49,13 @@ Run the following command:
 
 ```sh
 # `cloudflare` at the end is the branch name, do not omit it!
-npx create-astro@latest --template tuyuritio/astro-theme-thought-lite#cloudflare
+pnpm create astro --template tuyuritio/astro-theme-thought-lite#cloudflare
 
 # Follow the interactive prompts to create the project
 
 cd <your-project-name>
-npm run db:migrate:local    # Generate local test database
-npm run dev
+pnpm db:migrate:local    # Generate local test database
+pnpm dev
 ```
 
 ### Using Template
@@ -66,9 +66,9 @@ npm run dev
 ```sh
 git clone <your-repo-url>
 cd <your-repo-name>
-npm install
-npm run db:migrate:local    # Generate local test database
-npm run dev
+pnpm install
+pnpm db:migrate:local    # Generate local test database
+pnpm dev
 ```
 
 ## 🔧 Configuration
@@ -88,26 +88,26 @@ The theme provides the following commonly used commands:
 
 | Command | Action |
 | --- | --- |
-| `npm install` | Install project dependencies |
-| `npm run new` | Create a new content file |
-| `npm run dev` | Start the local development server (default: `http://localhost:4321`) |
-| `npm run check` | Run Astro type checking |
-| `npm run build` | Build the production version |
-| `npm run preview` | Preview the built site |
-| `npm run format` | Format code |
-| `npm run lint` | Lint code |
-| `npm run deploy` | Deploy to Cloudflare |
-| `npm run deploy:dry` | Simulate deployment |
-| `npm run update` | Update project dependencies |
-| `npm run db:migration` | Generate database migration files |
-| `npm run db:migrate:local` | Apply database migrations locally |
-| `npm run db:migrate:remote` | Apply database migrations remotely |
+| `pnpm install` | Install project dependencies |
+| `pnpm new` | Create a new content file |
+| `pnpm dev` | Start the local development server (default: `http://localhost:4321`) |
+| `pnpm check` | Run Astro type checking |
+| `pnpm build` | Build the production version |
+| `pnpm preview` | Preview the built site |
+| `pnpm format` | Format code |
+| `pnpm lint` | Lint code |
+| `pnpm deploy` | Deploy to Cloudflare |
+| `pnpm deploy:dry` | Simulate deployment |
+| `pnpm update` | Update project dependencies |
+| `pnpm db:migration` | Generate database migration files |
+| `pnpm db:migrate:local` | Apply database migrations locally |
+| `pnpm db:migrate:remote` | Apply database migrations remotely |
 
 ## 🚀 Deployment
 
 ```sh
-npm run build
-npm run deploy
+pnpm build
+pnpm deploy
 ```
 
 For **automated deployment** using GitHub Actions, refer to [GitHub Actions Configuration Guide](src/content/note/en/github-actions.md).
@@ -120,8 +120,8 @@ Run the following commands to sync upstream updates:
 git remote add theme https://github.com/tuyuritio/astro-theme-thought-lite.git
 git fetch theme
 git merge theme/cloudflare  # Add `--allow-unrelated-histories` flag for first update
-npm install
-npm run db:migrate:local
+pnpm install
+pnpm db:migrate:local
 ```
 
 ## ✍️ Content Creation

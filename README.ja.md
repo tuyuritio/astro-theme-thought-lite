@@ -49,13 +49,13 @@
 
 ```sh
 # 末尾の `cloudflare` はブランチ名です。省略しないでください！
-npx create-astro@latest --template tuyuritio/astro-theme-thought-lite#cloudflare
+pnpm create astro --template tuyuritio/astro-theme-thought-lite#cloudflare
 
 # 対話型プロンプトに従ってプロジェクトを作成
 
 cd <your-project-name>
-npm run db:migrate:local    # ローカルテストデータベースを生成
-npm run dev
+pnpm db:migrate:local    # ローカルテストデータベースを生成
+pnpm dev
 ```
 
 ### テンプレートを使用
@@ -66,9 +66,9 @@ npm run dev
 ```sh
 git clone <your-repo-url>
 cd <your-repo-name>
-npm install
-npm run db:migrate:local    # ローカルテストデータベースを生成
-npm run dev
+pnpm install
+pnpm db:migrate:local    # ローカルテストデータベースを生成
+pnpm dev
 ```
 
 ## 🔧 設定
@@ -88,26 +88,26 @@ npm run dev
 
 | コマンド | アクション |
 | --- | --- |
-| `npm install` | プロジェクトの依存関係をインストール |
-| `npm run new` | 新しいコンテンツファイルを作成 |
-| `npm run dev` | ローカル開発サーバーを起動（デフォルト：`http://localhost:4321`） |
-| `npm run check` | Astro 型チェックを実行 |
-| `npm run build` | 本番バージョンをビルド |
-| `npm run preview` | ビルドしたサイトをプレビュー |
-| `npm run format` | コードフォーマット |
-| `npm run lint` | コードリント |
-| `npm run deploy` | Cloudflare にデプロイ |
-| `npm run deploy:dry` | デプロイをシミュレート |
-| `npm run update` | プロジェクトの依存関係を更新 |
-| `npm run db:migration` | データベースマイグレーションファイルを生成 |
-| `npm run db:migrate:local` | データベースマイグレーションをローカルで適用 |
-| `npm run db:migrate:remote` | データベースマイグレーションをリモートで適用 |
+| `pnpm install` | プロジェクトの依存関係をインストール |
+| `pnpm new` | 新しいコンテンツファイルを作成 |
+| `pnpm dev` | ローカル開発サーバーを起動（デフォルト：`http://localhost:4321`） |
+| `pnpm check` | Astro 型チェックを実行 |
+| `pnpm build` | 本番バージョンをビルド |
+| `pnpm preview` | ビルドしたサイトをプレビュー |
+| `pnpm format` | コードフォーマット |
+| `pnpm lint` | コードリント |
+| `pnpm deploy` | Cloudflare にデプロイ |
+| `pnpm deploy:dry` | デプロイをシミュレート |
+| `pnpm update` | プロジェクトの依存関係を更新 |
+| `pnpm db:migration` | データベースマイグレーションファイルを生成 |
+| `pnpm db:migrate:local` | データベースマイグレーションをローカルで適用 |
+| `pnpm db:migrate:remote` | データベースマイグレーションをリモートで適用 |
 
 ## 🚀 デプロイ
 
 ```sh
-npm run build
-npm run deploy
+pnpm build
+pnpm deploy
 ```
 
 GitHub Actions による**自動デプロイ**の設定については、[GitHub Actions 設定ガイド](src/content/note/ja/github-actions.md)を参照してください。
@@ -120,8 +120,8 @@ GitHub Actions による**自動デプロイ**の設定については、[GitHub
 git remote add theme https://github.com/tuyuritio/astro-theme-thought-lite.git
 git fetch theme
 git merge theme/cloudflare  # 初回更新時は `--allow-unrelated-histories` フラグを追加
-npm install
-npm run db:migrate:local
+pnpm install
+pnpm db:migrate:local
 ```
 
 ## ✍️ コンテンツ作成

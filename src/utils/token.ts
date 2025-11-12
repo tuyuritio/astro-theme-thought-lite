@@ -53,7 +53,7 @@ export namespace Token {
 		const token = await new EncryptJWT(payload)
 			.setProtectedHeader({ alg: "dir", enc: "A128GCM" })
 			.setExpirationTime(expiration)
-			.encrypt(Buffer.from(PASS_KEY, "base64"));
+			.encrypt(new Uint8Array(Buffer.from(PASS_KEY, "base64")));
 
 		// Set secure HTTP-only cookie with proper domain and security settings
 		cookies.set(name, token, {
@@ -78,7 +78,7 @@ export namespace Token {
 			if (!cookies.has(name)) return null;
 
 			// Decrypt and verify the JWT token
-			const result = await jwtDecrypt(cookies.get(name)!.value, Buffer.from(PASS_KEY, "base64"));
+			const result = await jwtDecrypt(cookies.get(name)!.value, new Uint8Array(Buffer.from(PASS_KEY, "base64")));
 			const payload = result.payload as any;
 
 			// Check if token should be renewed
@@ -120,9 +120,11 @@ export namespace AESEncryption {
 		try {
 			// Generate random 16-byte initialization vector
 			const iv = crypto.randomBytes(16);
-			const cipher = crypto.createCipheriv("aes-256-cbc", Buffer.from(key), iv);
+			const cipher = crypto.createCipheriv("aes-256-cbc", new Uint8Array(key), new Uint8Array(iv));
 			// Prepend IV to encrypted data for decryption
-			return Buffer.concat([iv, cipher.update(text, "utf8"), cipher.final()]).toString("base64url");
+			const encrypted = cipher.update(text, "utf8");
+			const final = cipher.final();
+			return Buffer.concat([new Uint8Array(iv), new Uint8Array(encrypted), new Uint8Array(final)]).toString("base64url");
 		} catch (_) {
 			return null;
 		}
@@ -140,8 +142,10 @@ export namespace AESEncryption {
 			const iv = buffer.subarray(0, 16);
 			// Extract encrypted data from remaining bytes
 			const encryptedText = buffer.subarray(16);
-			const decipher = crypto.createDecipheriv("aes-256-cbc", Buffer.from(key), iv);
-			return Buffer.concat([decipher.update(encryptedText), decipher.final()]).toString("utf8");
+			const decipher = crypto.createDecipheriv("aes-256-cbc", new Uint8Array(key), new Uint8Array(iv));
+			const decrypted = decipher.update(new Uint8Array(encryptedText));
+			const final = decipher.final();
+			return Buffer.concat([new Uint8Array(decrypted), new Uint8Array(final)]).toString("utf8");
 		} catch (_) {
 			return null;
 		}

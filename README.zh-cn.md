@@ -49,13 +49,13 @@
 
 ```sh
 # 末尾的 `cloudflare` 是分支名称，请勿省略！
-npx create-astro@latest --template tuyuritio/astro-theme-thought-lite#cloudflare
+pnpm create astro --template tuyuritio/astro-theme-thought-lite#cloudflare
 
 # 根据交互提示创建项目
 
 cd <your-project-name>
-npm run db:migrate:local
-npm run dev
+pnpm db:migrate:local
+pnpm dev
 ```
 
 ### 使用模板
@@ -66,9 +66,9 @@ npm run dev
 ```sh
 git clone <your-repo-url>
 cd <your-repo-name>
-npm install
-npm run db:migrate:local
-npm run dev
+pnpm install
+pnpm db:migrate:local
+pnpm dev
 ```
 
 ## 🔧 配置
@@ -88,26 +88,26 @@ npm run dev
 
 | 命令 | 行为 |
 | --- | --- |
-| `npm install` | 安装项目依赖 |
-| `npm run new` | 创建新的内容文件 |
-| `npm run dev` | 启动本地开发服务器（默认：`http://localhost:4321`） |
-| `npm run check` | 运行 Astro 类型检查 |
-| `npm run build` | 构建生产版本 |
-| `npm run preview` | 预览构建后的站点 |
-| `npm run format` | 代码格式化 |
-| `npm run lint` | 代码检查 |
-| `npm run deploy` | 部署到 Cloudflare |
-| `npm run deploy:dry` | 模拟部署 |
-| `npm run update` | 更新项目依赖 |
-| `npm run db:migration` | 生成数据库迁移文件 |
-| `npm run db:migrate:local` | 在本地应用数据库迁移 |
-| `npm run db:migrate:remote` | 在远程应用数据库迁移 |
+| `pnpm install` | 安装项目依赖 |
+| `pnpm new` | 创建新的内容文件 |
+| `pnpm dev` | 启动本地开发服务器（默认：`http://localhost:4321`） |
+| `pnpm check` | 运行 Astro 类型检查 |
+| `pnpm build` | 构建生产版本 |
+| `pnpm preview` | 预览构建后的站点 |
+| `pnpm format` | 代码格式化 |
+| `pnpm lint` | 代码检查 |
+| `pnpm deploy` | 部署到 Cloudflare |
+| `pnpm deploy:dry` | 模拟部署 |
+| `pnpm update` | 更新项目依赖 |
+| `pnpm db:migration` | 生成数据库迁移文件 |
+| `pnpm db:migrate:local` | 在本地应用数据库迁移 |
+| `pnpm db:migrate:remote` | 在远程应用数据库迁移 |
 
 ## 🚀 部署
 
 ```sh
-npm run build
-npm run deploy
+pnpm build
+pnpm deploy
 ```
 
 使用 GitHub Actions **自动部署**的配置请参阅[GitHub Actions 配置指南](src/content/note/zh-cn/github-actions.md)。
@@ -120,8 +120,8 @@ npm run deploy
 git remote add theme https://github.com/tuyuritio/astro-theme-thought-lite.git
 git fetch theme
 git merge theme/cloudflare  # 首次更新需添加 `--allow-unrelated-histories` 参数
-npm install
-npm run db:migrate:local
+pnpm install
+pnpm db:migrate:local
 ```
 
 ## ✍️ 创作
