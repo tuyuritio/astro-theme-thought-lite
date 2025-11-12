@@ -102,7 +102,7 @@ async function submitComment() {
 	// Call appropriate API action based on whether editing or creating
 	const { data, error } = edit
 		? await actions.comment.edit({ id: edit, content })
-		: await actions.comment.create({ section, item, reply, content, link: location.href, nickname, captcha: captcha });
+		: await actions.comment.create({ section, item, reply, content, link: location.origin + location.pathname, nickname, captcha: captcha });
 
 	if (nomad) {
 		// Only reset turnstile for top-level comments (when reply is undefined) or if there was an error
