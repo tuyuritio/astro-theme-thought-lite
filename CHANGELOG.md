@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.0.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.22.3...v1.0.0) (2025-11-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* migrate from npm to pnpm
+
+### Reverts
+
+* downgrade unocss ([3c873ae](https://github.com/tuyuritio/astro-theme-thought-lite/commit/3c873aeb979072d1a5731adb83ea20bc72177857))
+
+
+### Miscellaneous Chores
+
+* migrate from npm to pnpm ([a99b8d6](https://github.com/tuyuritio/astro-theme-thought-lite/commit/a99b8d642fbc1a614819277f64115b9b55ee94ca))
+
 ## [0.22.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.22.2...v0.22.3) (2025-11-11)
 
 
