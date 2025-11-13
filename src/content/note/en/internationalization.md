@@ -110,10 +110,9 @@ content/
 │   │       └── photo.png
 │   └── zh-cn/
 │       ├── common.md
-│       ├── image-preview/
-│       │   ├── index.md
-│       │   └── photo.png
-│       └── special.md
+│       └── image-preview/
+│           ├── index.md
+│           └── photo.png
 ├── jotting/
 │     ├── en/
 │     │   ├── normal.md
