@@ -8,13 +8,13 @@ import jaScript from "./ja/script.yaml";
 
 // Translation object mapping locale codes to their respective translation data
 const translations = {
-	"zh-cn": {
-		...zhCN,
-		script: zhCNScript
-	},
 	en: {
 		...en,
 		script: enScript
+	},
+	"zh-cn": {
+		...zhCN,
+		script: zhCNScript
 	},
 	ja: {
 		...ja,

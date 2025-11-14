@@ -23,12 +23,12 @@ export default siteConfig({
 
 ## 新しい言語の追加
 
-`src/i18n/` ディレクトリに新しい **YAML** 翻訳ファイルを作成します。例えば `tlh.yaml`（クリンゴン語）。
+`src/i18n/` ディレクトリに新しい **YAML** 翻訳ファイルを作成します。例えば `tlh/index.yaml`（クリンゴン語）。
 
 `i18n` ディレクトリ内の既存の翻訳ファイルの形式を参考にして翻訳内容を追加します：
 
 ```yaml
-# src/i18n/tlh.yaml
+# src/i18n/tlh/index.yaml
 
 # 注意：現在の言語の表示名として `language` フィールドを追加します
 language: tlhIngan Hol
@@ -38,9 +38,27 @@ language: tlhIngan Hol
 `src/i18n/index.ts` を修正して、新しい言語をインポートして登録します：
 
 ```ts
-import tlh from "./tlh.yaml";
+import tlh from "./tlh/index.yaml";
+import tlhScript from "./tlh/script.yaml";
 
-const translations = { en, "zh-cn": zhCN, ja, tlh };
+const translations = {
+  en: {
+    ...en,
+    script: enScript
+  },
+  "zh-cn": {
+    ...zhCN,
+    script: zhCNScript
+  },
+  ja: {
+    ...ja,
+    script: jaScript
+  },
+  tlh: {
+    ...tlh,
+    script: tlhScript
+  }
+};
 ```
 
 新しい言語に特定のフォントが必要な場合は、`src/layouts/App.astro` の `notoFonts` オブジェクトにフォントマッピングを追加できます：

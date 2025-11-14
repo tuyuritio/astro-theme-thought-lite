@@ -89,6 +89,7 @@ pnpm dev
 | コマンド | アクション |
 | --- | --- |
 | `pnpm install` | プロジェクトの依存関係をインストール |
+| `pnpm update` | プロジェクトの依存関係を更新 |
 | `pnpm new` | 新しいコンテンツファイルを作成 |
 | `pnpm dev` | ローカル開発サーバーを起動（デフォルト：`http://localhost:4321`） |
 | `pnpm check` | Astro 型チェックを実行 |

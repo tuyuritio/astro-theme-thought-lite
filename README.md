@@ -89,6 +89,7 @@ The theme provides the following commonly used commands:
 | Command | Action |
 | --- | --- |
 | `pnpm install` | Install project dependencies |
+| `pnpm update` | Update project dependencies |
 | `pnpm new` | Create a new content file |
 | `pnpm dev` | Start the local development server (default: `http://localhost:4321`) |
 | `pnpm check` | Run Astro type checking |

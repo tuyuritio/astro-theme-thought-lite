@@ -23,12 +23,12 @@ export default siteConfig({
 
 ## 添加新语言
 
-在 `src/i18n/` 目录下创建新的 **YAML** 翻译文件，如 `tlh.yaml`（克林贡语）。
+在 `src/i18n/` 目录下创建新的 **YAML** 翻译文件，如 `tlh/index.yaml`（克林贡语）。
 
 参考 `i18n` 目录下已有的翻译文件格式添加翻译内容：
 
 ```yaml
-# src/i18n/tlh.yaml
+# src/i18n/tlh/index.yaml
 
 # 注意添加 `language` 字段作为当前语言的显示名称
 language: tlhIngan Hol
@@ -38,9 +38,27 @@ language: tlhIngan Hol
 修改 `src/i18n/index.ts`，导入并注册新语言：
 
 ```ts
-import tlh from "./tlh.yaml";
+import tlh from "./tlh/index.yaml";
+import tlhScript from "./tlh/script.yaml";
 
-const translations = { en, "zh-cn": zhCN, ja, tlh };
+const translations = {
+  en: {
+    ...en,
+    script: enScript
+  },
+  "zh-cn": {
+    ...zhCN,
+    script: zhCNScript
+  },
+  ja: {
+    ...ja,
+    script: jaScript
+  },
+  tlh: {
+    ...tlh,
+    script: tlhScript
+  }
+};
 ```
 
 如果新语言需要使用特定字体，可在 `src/layouts/App.astro` 中的 `notoFonts` 对象中添加字体映射：

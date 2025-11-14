@@ -89,6 +89,7 @@ pnpm dev
 | 命令 | 行为 |
 | --- | --- |
 | `pnpm install` | 安装项目依赖 |
+| `pnpm update` | 更新项目依赖 |
 | `pnpm new` | 创建新的内容文件 |
 | `pnpm dev` | 启动本地开发服务器（默认：`http://localhost:4321`） |
 | `pnpm check` | 运行 Astro 类型检查 |
