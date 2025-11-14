@@ -99,7 +99,6 @@ pnpm dev
 | `pnpm lint` | 代码检查 |
 | `pnpm deploy` | 部署到 Cloudflare |
 | `pnpm deploy:dry` | 模拟部署 |
-| `pnpm update` | 更新项目依赖 |
 | `pnpm db:migration` | 生成数据库迁移文件 |
 | `pnpm db:migrate:local` | 在本地应用数据库迁移 |
 | `pnpm db:migrate:remote` | 在远程应用数据库迁移 |

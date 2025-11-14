@@ -99,7 +99,6 @@ The theme provides the following commonly used commands:
 | `pnpm lint` | Lint code |
 | `pnpm deploy` | Deploy to Cloudflare |
 | `pnpm deploy:dry` | Simulate deployment |
-| `pnpm update` | Update project dependencies |
 | `pnpm db:migration` | Generate database migration files |
 | `pnpm db:migrate:local` | Apply database migrations locally |
 | `pnpm db:migrate:remote` | Apply database migrations remotely |

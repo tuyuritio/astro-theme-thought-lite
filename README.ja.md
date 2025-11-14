@@ -99,7 +99,6 @@ pnpm dev
 | `pnpm lint` | コードリント |
 | `pnpm deploy` | Cloudflare にデプロイ |
 | `pnpm deploy:dry` | デプロイをシミュレート |
-| `pnpm update` | プロジェクトの依存関係を更新 |
 | `pnpm db:migration` | データベースマイグレーションファイルを生成 |
 | `pnpm db:migrate:local` | データベースマイグレーションをローカルで適用 |
 | `pnpm db:migrate:remote` | データベースマイグレーションをリモートで適用 |
