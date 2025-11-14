@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.23.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.23.0...v0.23.1) (2025-11-14)
+
+
+### Miscellaneous Chores
+
+* hide documentation section in changelog ([faf47a1](https://github.com/tuyuritio/astro-theme-thought-lite/commit/faf47a1c3cc74c17832cef4404cba1f65d1ce9cb))
+* unhide Styles section in changelog ([5a051cc](https://github.com/tuyuritio/astro-theme-thought-lite/commit/5a051cc2c34fb018e4b2a1d99a867590086668a3))
+
+
+### Styles
+
+* timeline refactor ([556b898](https://github.com/tuyuritio/astro-theme-thought-lite/commit/556b8981e2554b5e2c3cce9e9eaf305f6e943f6d))
+
 ## [0.23.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.22.3...v0.23.0) (2025-11-12)
 
 
