@@ -1,5 +1,6 @@
 <script lang="ts">
 import { getRelativeLocaleUrl } from "astro:i18n";
+import { monolocale } from "$config";
 import Time from "$utils/time";
 import i18nit from "$i18n";
 
@@ -55,7 +56,7 @@ jottings.forEach(jotting => {
 						<p class="my-1">{t("home.heatmap.note", { count: day.notes.length })}：</p>
 						<ul class="flex flex-col gap-0.5">
 							{#each day.notes as note}
-								<a href={getRelativeLocaleUrl(locale, `/note/${note.id.split("/").slice(1).join("/")}`)} aria-label={note.data.title} class="ml-1 link">{note.data.title}</a>
+								<a href={getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)} aria-label={note.data.title} class="ml-1 link">{note.data.title}</a>
 							{/each}
 						</ul>
 					{/if}
@@ -63,7 +64,7 @@ jottings.forEach(jotting => {
 						<p class="my-1">{t("home.heatmap.jotting", { count: day.jottings.length })}：</p>
 						<ul class="flex flex-col gap-0.5">
 							{#each day.jottings as jotting}
-								<a href={getRelativeLocaleUrl(locale, `/jotting/${jotting.id.split("/").slice(1).join("/")}`)} aria-label={jotting.data.title} class="ml-1 link">{jotting.data.title}</a>
+								<a href={getRelativeLocaleUrl(locale, `/jotting/${monolocale ? jotting.id : jotting.id.split("/").slice(1).join("/")}`)} aria-label={jotting.data.title} class="ml-1 link">{jotting.data.title}</a>
 							{/each}
 						</ul>
 					{/if}
