@@ -1,6 +1,6 @@
 new:
   article:
-    start: |
+    start: |-
       ## Start Writing
 
       Start your content here...

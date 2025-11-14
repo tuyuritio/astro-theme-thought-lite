@@ -104,13 +104,15 @@ const { Content } = preface ? await render(preface) : ({} as any);
 					<blockquote class="flex-grow">
 						<h3>{t("home.latest")}</h3>
 						<div class="flex flex-col sm:flex-row justify-between gap-1 mt-2">
-							<a href={getRelativeLocaleUrl(locale, `/${latest.type}/${latest.id.split("/").slice(1).join("/")}`)} class="link">
+							<a href={getRelativeLocaleUrl(locale, `/${latest.type}/${monolocale ? latest.id : latest.id.split("/").slice(1).join("/")}`)} class="link">
 								{latest.data.series && `${latest.data.series} | `}
 								{latest.data.title}
 							</a>
 							<div class="flex gap-1">
 								{latest.data.tags?.map(tag => (
-									<span class="c-remark text-size-sm">#{tag}</span>
+									<a href={`${getRelativeLocaleUrl(locale, `/${latest.type}`)}?tag=${encodeURIComponent(tag)}`} class="c-remark text-size-sm link">
+										#{tag}
+									</a>
 								))}
 							</div>
 						</div>

@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.24.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.23.1...v0.24.0) (2025-11-14)
+
+
+### Features
+
+* make tags clickable with links to filtered items ([7d4401f](https://github.com/tuyuritio/astro-theme-thought-lite/commit/7d4401f6bf194e3904028959d8af4e5b32008762))
+
+
+### Bug Fixes
+
+* add monolocale support for id path handling ([ff828e6](https://github.com/tuyuritio/astro-theme-thought-lite/commit/ff828e69bd21151df30d675a6aabfab3d90e94fe))
+* **script:** remove trailing whitespace in content ([52c375d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/52c375d093181c48981e27b2c7c93b191e0171b6))
+
 ## [0.23.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.23.0...v0.23.1) (2025-11-14)
 
 
