@@ -23,12 +23,12 @@ export default siteConfig({
 
 ## Adding a New Language
 
-Create a new **YAML** translation file in the `src/i18n/` directory, such as `tlh.yaml` (Klingon).
+Create a new **YAML** translation file in the `src/i18n/` directory, such as `tlh/index.yaml` (Klingon).
 
 Add translation content following the format of existing translation files in the `i18n` directory:
 
 ```yaml
-# src/i18n/tlh.yaml
+# src/i18n/tlh/index.yaml
 
 # Note: Add the `language` field as the display name for the current language
 language: tlhIngan Hol
@@ -38,9 +38,27 @@ language: tlhIngan Hol
 Modify `src/i18n/index.ts` to import and register the new language:
 
 ```ts
-import tlh from "./tlh.yaml";
+import tlh from "./tlh/index.yaml";
+import tlhScript from "./tlh/script.yaml";
 
-const translations = { en, "zh-cn": zhCN, ja, tlh };
+const translations = {
+  en: {
+    ...en,
+    script: enScript
+  },
+  "zh-cn": {
+    ...zhCN,
+    script: zhCNScript
+  },
+  ja: {
+    ...ja,
+    script: jaScript
+  },
+  tlh: {
+    ...tlh,
+    script: tlhScript
+  }
+};
 ```
 
 If the new language requires specific font support, you can add a font mapping in the `notoFonts` object in `src/layouts/App.astro`:
