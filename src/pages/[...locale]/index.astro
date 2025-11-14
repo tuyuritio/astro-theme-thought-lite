@@ -110,7 +110,9 @@ const { Content } = preface ? await render(preface) : ({} as any);
 							</a>
 							<div class="flex gap-1">
 								{latest.data.tags?.map(tag => (
-									<span class="c-remark text-size-sm">#{tag}</span>
+									<a href={`${getRelativeLocaleUrl(locale, `/${latest.type}`)}?tag=${encodeURIComponent(tag)}`} class="c-remark text-size-sm link">
+										#{tag}
+									</a>
 								))}
 							</div>
 						</div>
