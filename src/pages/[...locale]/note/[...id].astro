@@ -79,7 +79,7 @@ const t = i18nit(locale);
 					)
 				}
 				{
-					note.data.tags?.length && (
+					note.data.tags?.length !== 0 && (
 						<span>
 							<Icon name="lucide:hash" />
 							{note.data.tags?.join("; ")}
