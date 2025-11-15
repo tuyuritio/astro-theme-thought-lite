@@ -228,8 +228,8 @@ onMount(() => {
 				{/if}
 			</article>
 			<section class="flex items-center gap-2">
-				<figure class="relative group">
-					<figcaption class="line-height-none">{@render icon.emoji()}</figcaption>
+				<figure class="relative flex items-center group">
+					<figcaption class="contents">{@render icon.emoji()}</figcaption>
 					<ul class="absolute bottom-full left--3 flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 mb-1 b-2 b-solid b-weak rd-1 py-2 px-3 bg-background shadow-md pop">
 						{#each emojis as emoji}
 							<button onclick={() => insertEmoji(emoji.code)}>{emoji.icon}</button>
