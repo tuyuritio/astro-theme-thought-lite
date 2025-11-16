@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.25.1...v0.25.2) (2025-11-16)
+
+
+### Styles
+
+* **component:** update line-height ([926af0e](https://github.com/tuyuritio/astro-theme-thought-lite/commit/926af0ebdb36e642cb21f8555b89a6fef7fd0d30))
+
 ## [0.25.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.25.0...v0.25.1) (2025-11-16)
 
 
