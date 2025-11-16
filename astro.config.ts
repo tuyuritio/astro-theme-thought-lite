@@ -2,6 +2,7 @@
 import { defineConfig, passthroughImageService } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import yaml from "@rollup/plugin-yaml";
+import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import UnoCSS from "unocss/astro";
@@ -121,6 +122,7 @@ export default defineConfig({
 	},
 	integrations: [
 		svelte(),
+		mdx(),
 		sitemap(),
 		swup({
 			globalInstance: true,

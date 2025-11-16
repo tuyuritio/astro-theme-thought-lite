@@ -1,7 +1,8 @@
 {
 	"name": "astro-theme-thought-lite",
 	"type": "module",
-	"version": "0.24.0",
+	"private": true,
+	"version": "0.25.0",
 	"description": "A modern Astro theme focused on content creation",
 	"keywords": [
 		"astro",
@@ -45,6 +46,7 @@
 	"dependencies": {
 		"@astrojs/cloudflare": "^12.6.10",
 		"@astrojs/markdown-remark": "^6.3.8",
+		"@astrojs/mdx": "^4.3.10",
 		"@astrojs/sitemap": "^3.6.0",
 		"@astrojs/svelte": "^7.2.2",
 		"@block65/webcrypto-web-push": "^1.0.2",

@@ -2,16 +2,23 @@
 import { Icon as I } from "astro-icon/components";
 
 interface Props {
-	name: string; // Icon name/identifier (required) - corresponds to icon file or icon set key
-	inline?: boolean; // Whether to render as inline element (optional) - affects display behavior
-	size?: number | string; // Icon size in pixels or CSS units (optional) - controls width/height
-	title?: string; // Tooltip text to display on hover (optional) - enhances accessibility
+	/** Icon name/identifier (required) - corresponds to icon file or icon set key */
+	name: string;
+
+	/** Whether to render as inline element (optional) - affects display behavior */
+	inline?: boolean;
+
+	/** Icon size in pixels or CSS units (optional) - controls width/height */
+	size?: number | string;
+
+	/** Tooltip text to display on hover (optional) - enhances accessibility */
+	title?: string;
 }
 
 const { name, inline, size, title } = Astro.props;
 ---
 
-<figure aria-label={title} class="relative inline-flex items-center font-normal group">
+<figure aria-label={title} class="relative inline-flex items-center group">
 	<I {name} {size} is:inline={inline} class="relative top-0.05rem" />
-	{title && <figcaption class="absolute bottom-full left-50% -transform-translate-x-50% mb-1 rd-1 py-1 px-1.25 w-max c-background bg-primary text-3.5 z-2 pointer-events-none opacity-0 invisible transition-[opacity,visibility,transform] translate-y-1 group-hover:(opacity-100 visible translate-y-0)">{title}</figcaption>}
+	{title && <sup class="absolute bottom-full left-50% -transform-translate-x-50% mb-1 rd-1 py-1 px-1.25 w-max font-normal c-background bg-primary line-height-none text-3.5 z-2 pointer-events-none opacity-0 invisible transition-[opacity,visibility,transform] translate-y-1 group-hover:(opacity-100 visible translate-y-0)">{title}</sup>}
 </figure>

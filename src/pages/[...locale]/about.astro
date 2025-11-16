@@ -58,29 +58,31 @@ const chronicles = Object.entries<string[]>(chronicle ?? {})
 					<div>
 						<h1>{t("about.roll")}</h1>
 						<samp class="markdown">
-							<Roll />
+							<Roll {locale} />
 						</samp>
 					</div>
 				)
 			}
 		</article>
 
-		<aside class="flex flex-col justify-between flex-basis-60 flex-shrink-0 mb-3">
-			<ul class="list-none relative before:(absolute content-empty h-full top-2 b-l-2 b-l-solid b-primary) after:(absolute content-empty w-2 h-2 -bottom-2 -left-1.2 b-2 b-solid b-primary rd-full bg-primary)">
-				{
-					chronicles.map(chronicle => (
-						<li class="relative mb-2 pb-2 pl-3 before:(absolute content-empty w-2 h-2 top-1 -left-1.2 b-2 b-solid b-primary rd-full bg-background)">
-							<span class="relative font-mono">{Time.date(chronicle.date)}</span>
-							<ul class="my-2 pl-3.5 list-none">
-								{chronicle.events.map(event => {
-									const remove = event?.match(/^~(?!~)(.*)$/);
-									return <li class="relative my-1 before:(absolute content-empty top-2 -left-2.5 w-1 h-1 b b-solid b-primary rd-full)">{remove ? <del>{remove[1]}</del> : event}</li>;
-								})}
-							</ul>
-						</li>
-					))
-				}
-			</ul>
-		</aside>
+		{
+			chronicles.length > 0 && (
+				<aside class="flex flex-col justify-between flex-basis-60 flex-shrink-0 mb-3">
+					<ul class="list-none relative before:(absolute content-empty h-full top-2 b-l-2 b-l-solid b-primary) after:(absolute content-empty w-2 h-2 -bottom-2 -left-1.2 b-2 b-solid b-primary rd-full bg-primary)">
+						{chronicles.map(chronicle => (
+							<li class="relative mb-2 pb-2 pl-3 before:(absolute content-empty w-2 h-2 top-1 -left-1.2 b-2 b-solid b-primary rd-full bg-background)">
+								<span class="relative font-mono">{Time.date(chronicle.date)}</span>
+								<ul class="my-2 pl-3.5 list-none">
+									{chronicle.events.map(event => {
+										const remove = event?.match(/^~(?!~)(.*)$/);
+										return <li class="relative my-1 before:(absolute content-empty top-2 -left-2.5 w-1 h-1 b b-solid b-primary rd-full)">{remove ? <del>{remove[1]}</del> : event}</li>;
+									})}
+								</ul>
+							</li>
+						))}
+					</ul>
+				</aside>
+			)
+		}
 	</main>
 </Base>
