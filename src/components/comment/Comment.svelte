@@ -111,7 +111,7 @@ async function remove() {
 						<span>·</span>
 						<time class="text-3">{Time(comment.timestamp, Time.userTimezone).replace("-", " ")}</time>
 					</p>
-					{#if comment.description}<span title={comment.description} class="c-secondary text-3 line-height-normal whitespace-nowrap [text-overflow:ellipsis] overflow-hidden">{comment.description}</span>{/if}
+					{#if comment.description}<span title={comment.description} class="c-secondary text-3 line-height-normal truncate">{comment.description}</span>{/if}
 				</dt>
 			{:else}
 				<img src={comment.nickname ? "/nomad.webp" : "/akkarin.webp"} alt="Default avatar" class="w-9 h-9 b b-solid b-weak rd-full" />
