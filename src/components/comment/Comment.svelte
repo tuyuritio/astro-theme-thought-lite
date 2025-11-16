@@ -102,7 +102,7 @@ async function remove() {
 	<dl class="flex flex-col gap-2 mt-6">
 		<div class="flex items-center gap-2">
 			{#if comment.name !== null}
-				<img src={comment.image} alt="image-{comment.name}" class="w-9 h-9 border b-solid b-weak rd-full" />
+				<img src={comment.image} alt="image-{comment.name}" class="w-9 h-9 border b-solid b-weak rd-full" onerror={e => (((e.currentTarget as HTMLImageElement).onerror = null), ((e.currentTarget as HTMLImageElement).src = "/akkarin.webp"))} />
 				<dt class="flex flex-col gap-0.5 min-w-0">
 					<p class="flex items-center gap-1">
 						<b>{comment.name}</b>
@@ -147,13 +147,13 @@ async function remove() {
 	</dl>
 	<div class:ml-7={depth < MIN_DEPTH} class:sm:ml-7={depth < Math.max(MIN_DEPTH, MAX_DEPTH)}>
 		{#if replyView && !editView}
-			<Reply {locale} oauth={oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.id} {icon} {refresh} bind:view={replyView} bind:limit />
+			<Reply {locale} {oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.id} {icon} {refresh} bind:view={replyView} bind:limit />
 		{:else if editView && !replyView}
-			<Reply {locale} oauth={oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.reply} edit={comment.id} text={comment.content} {icon} {refresh} bind:view={editView} bind:limit />
+			<Reply {locale} {oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.reply} edit={comment.id} text={comment.content} {icon} {refresh} bind:view={editView} bind:limit />
 		{/if}
 
 		{#each comment.subcomments as subcomment}
-			<Self {locale} oauth={oauth} {turnstile} {drifter} comment={subcomment} {icon} {refresh} depth={depth + 1} bind:limit />
+			<Self {locale} {oauth} {turnstile} {drifter} comment={subcomment} {icon} {refresh} depth={depth + 1} bind:limit />
 		{/each}
 	</div>
 </main>
