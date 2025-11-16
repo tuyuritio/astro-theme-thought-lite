@@ -1,6 +1,34 @@
+import LinkRoll from "$components/LinkRoll.astro";
+
+export const links = [
+	{
+		title: "Astro",
+		url: "https://astro.build/",
+		image: "https://astro.build/favicon.svg",
+		description: "The web framework for content-driven websites.",
+		type: "resources"
+	},
+	{
+		title: "Svelte",
+		url: "https://svelte.dev/",
+		image: "https://svelte.dev/favicon.png",
+		description: "Web development for the rest of us.",
+		type: "technology"
+	},
+	{
+		title: "GitHub",
+		url: "https://github.com",
+		image: "https://github.githubassets.com/favicons/favicon.svg",
+		description: "The future of building happens together.",
+		type: "insights"
+	}
+];
+
 The theme **does not provide** an online application interface for friendly links, and it is recommended that webmasters manually manage their own friend link lists.
 
 The author encourages every webmaster to view friendly links as genuine and valuable recommendations, including only sites they **truly appreciate, regularly read, or are willing to share**.
+
+<LinkRoll links={links} locale={props.locale} />
 
 Rather than randomly adding mutual links for exchange or pure SEO purposes, the author hopes that every link represents **content resonance** and **value recognition**, building a site network full of personality and warmth.
 

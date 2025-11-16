@@ -1,24 +1,30 @@
 // Import translation files for different locales
-import zhCN from "./zh-cn/index.yaml";
-import zhCNScript from "./zh-cn/script.yaml";
 import en from "./en/index.yaml";
 import enScript from "./en/script.yaml";
+import enRoll from "./en/roll.yaml";
+import zhCN from "./zh-cn/index.yaml";
+import zhCNScript from "./zh-cn/script.yaml";
+import zhRoll from "./zh-cn/roll.yaml";
 import ja from "./ja/index.yaml";
 import jaScript from "./ja/script.yaml";
+import jaRoll from "./ja/roll.yaml";
 
 // Translation object mapping locale codes to their respective translation data
 const translations = {
 	en: {
 		...en,
-		script: enScript
+		script: enScript,
+		roll: enRoll
 	},
 	"zh-cn": {
 		...zhCN,
-		script: zhCNScript
+		script: zhCNScript,
+		roll: zhRoll
 	},
 	ja: {
 		...ja,
-		script: jaScript
+		script: jaScript,
+		roll: jaRoll
 	}
 };
 
