@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.25.0...v0.25.1) (2025-11-16)
+
+
+### Bug Fixes
+
+* **component:** add fallback image for broken link ([5017640](https://github.com/tuyuritio/astro-theme-thought-lite/commit/5017640e621ecdfb8313c16d835950f7b06ac4d3))
+
 ## [0.25.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.24.0...v0.25.0) (2025-11-16)
 
 
