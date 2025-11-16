@@ -50,6 +50,8 @@ You can describe the site's **creation background**, **core positioning**, **fut
 
 Here you can elaborate on your recommendation criteria and management methods for external links, providing visitors with opportunities for extended reading, making it an important part of the site.
 
+> For more information about the `LinkRoll` component, please refer to the [LinkRoll Component Guide](/en/note/linkroll)
+
 ### Policy
 
 "Policy" is important content for establishing site **compliance** and clarifying **responsibility relationships**.
