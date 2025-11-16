@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.25.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.24.0...v0.25.0) (2025-11-16)
+
+
+### Features
+
+* **component:** add LinkRoll component for link display ([ea05a59](https://github.com/tuyuritio/astro-theme-thought-lite/commit/ea05a59c4056b1a83c230d3cb338fdc6adf19424))
+
+
+### Bug Fixes
+
+* conditionally render chronicles section ([02e8062](https://github.com/tuyuritio/astro-theme-thought-lite/commit/02e8062dc7d2678b2931b15245acc29103a4a1cd))
+* ensure tags are displayed only when present ([f749194](https://github.com/tuyuritio/astro-theme-thought-lite/commit/f749194d9430492d8c570a4a194849663e69f73d))
+* exclude images with `nozoom` from zoom effect ([e6c2425](https://github.com/tuyuritio/astro-theme-thought-lite/commit/e6c24256e76519534b70aec607236e5bb2316961))
+
+
+### Miscellaneous Chores
+
+* set package as private ([ce27f0c](https://github.com/tuyuritio/astro-theme-thought-lite/commit/ce27f0cd28eeb4de82c4efb8e60e936b23cfcc83))
+
 ## [0.24.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.23.1...v0.24.0) (2025-11-14)
 
 
