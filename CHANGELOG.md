@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.25.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.25.2...v0.25.3) (2025-11-16)
+
+
+### Styles
+
+* **component:** update grid layout ([406eb26](https://github.com/tuyuritio/astro-theme-thought-lite/commit/406eb2664fa7d496c050a526717066b1cbe054a9))
+
 ## [0.25.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.25.1...v0.25.2) (2025-11-16)
 
 
