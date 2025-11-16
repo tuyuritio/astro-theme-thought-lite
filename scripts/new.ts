@@ -62,12 +62,12 @@ const CANCEL_MESSAGE = t("new.cancel");
 		// Preface uses timestamp as filename
 		information.timestamp = timestamp;
 
-		content += t("new.preface.start");
+		content += i18nit(locale, "script")("new.preface.start");
 		// Generate filename from timestamp (e.g., 1970-01-01-00-00-00.md)
 		path = join(path, `${timestamp.substring(0, 19).replace(/[\s:]/g, "-")}.md`);
 	} else {
 		// Note and Jotting require additional metadata
-		content += t("new.article.start");
+		content += i18nit(locale, "script")("new.article.start");
 
 		// Prompt user to input article title
 		const title = await text({
