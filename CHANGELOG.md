@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.26.0...v0.26.1) (2025-11-17)
+
+
+### Bug Fixes
+
+* enhance copy button ([f3ce10e](https://github.com/tuyuritio/astro-theme-thought-lite/commit/f3ce10ea81a6c7a263327ef89fbf2ab845299d06))
+
 ## [0.26.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.25.3...v0.26.0) (2025-11-17)
 
 
