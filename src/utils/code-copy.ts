@@ -1,5 +1,6 @@
 // Import ShikiTransformer type for syntax highlighting transformations
 import type { ShikiTransformer } from "shiki";
+import { h } from "hastscript";
 
 /**
  * Creates a Shiki transformer that adds copy-to-clipboard functionality to code blocks
@@ -9,10 +10,13 @@ import type { ShikiTransformer } from "shiki";
  */
 const copy: (options: { duration: number }) => ShikiTransformer = ({ duration }) => ({
 	name: "code-copy-button",
-	// Transform the code block by adding a copy button
-	code(node): void {
-		// Add copy button element to the code block
-		node.children.push({
+	// Transform the pre element by adding a copy button and wrapping it in a container
+	root(node): void {
+		// Wrap the existing code block
+		const wrapper = h("div.code-container", [node.children[0]]);
+
+		// Append the copy button element
+		wrapper.children.push({
 			type: "element",
 			tagName: "button",
 			properties: {
@@ -76,6 +80,9 @@ const copy: (options: { duration: number }) => ShikiTransformer = ({ duration })
 				}
 			]
 		});
+
+		// Replace the original node's children with the new wrapper
+		node.children = [wrapper];
 	}
 });
 
