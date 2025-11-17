@@ -5,17 +5,17 @@ tags: [Guide, MDX]
 toc: true
 ---
 
-主题针对**连结**板块提供了 `LinkRoll` 组件，以更美观及灵活的方式展示友情链接或推荐站点。
+主题针对**连结**板块提供了 `Linkroll` 组件，以更美观及灵活的方式展示友情链接或推荐站点。
 
 ## 导入组件
 
 > [!Note]
-> `LinkRoll` 组件须在 `mdx` 文件中使用。
+> `Linkroll` 组件须在 `mdx` 文件中使用。
 
 ```mdx
-import LinkRoll from "$components/LinkRoll.astro";
+import Linkroll from "$components/Linkroll.astro";
 
-<LinkRoll locale={props.locale} links={links} />
+<Linkroll locale={props.locale} links={links} />
 ```
 
 - `locale` - 当前页面语言代码，已由 `about.astro` 以[**组件参数**](https://mdxjs.com/docs/using-mdx/#props)方式提供；

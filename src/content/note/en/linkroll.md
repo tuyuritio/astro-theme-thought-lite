@@ -1,21 +1,21 @@
 ---
-title: LinkRoll Component Guide
+title: Linkroll Component Guide
 timestamp: 2025-11-17 00:00:00+00:00
 tags: [Guide, MDX]
 toc: true
 ---
 
-The theme provides a `LinkRoll` component for the **Linkroll** section to display friend links or recommended sites in a more elegant and flexible way.
+The theme provides a `Linkroll` component for the **Linkroll** section to display friend links or recommended sites in a more elegant and flexible way.
 
 ## Import Component
 
 > [!NOTE]
-> The `LinkRoll` component must be used in `mdx` files.
+> The `Linkroll` component must be used in `mdx` files.
 
 ```mdx
-import LinkRoll from "$components/LinkRoll.astro";
+import Linkroll from "$components/Linkroll.astro";
 
-<LinkRoll locale={props.locale} links={links} />
+<Linkroll locale={props.locale} links={links} />
 ```
 
 - `locale` - Current page language code, provided by `about.astro` as a [**component prop**](https://mdxjs.com/docs/using-mdx/#props);

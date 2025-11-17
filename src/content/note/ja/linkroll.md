@@ -1,21 +1,21 @@
 ---
-title: LinkRollコンポーネント使用ガイド
+title: 連結コンポーネント使用ガイド
 timestamp: 2025-11-17 00:00:00+00:00
 tags: [Guide, MDX]
 toc: true
 ---
 
-テーマは**リンク集**セクションのために `LinkRoll` コンポーネントを提供し、友人リンクやおすすめサイトをより美しく柔軟に表示できます。
+テーマは**リンク集**セクションのために `Linkroll` コンポーネントを提供し、友人リンクやおすすめサイトをより美しく柔軟に表示できます。
 
 ## コンポーネントのインポート
 
 > [!Note]
-> `LinkRoll` コンポーネントは `mdx` ファイルで使用する必要があります。
+> `Linkroll` コンポーネントは `mdx` ファイルで使用する必要があります。
 
 ```mdx
-import LinkRoll from "$components/LinkRoll.astro";
+import Linkroll from "$components/Linkroll.astro";
 
-<LinkRoll locale={props.locale} links={links} />
+<Linkroll locale={props.locale} links={links} />
 ```
 
 - `locale` - 現在のページの言語コード、`about.astro` によって[**コンポーネントプロパティ**](https://mdxjs.com/docs/using-mdx/#props)として提供されます；
