@@ -69,7 +69,7 @@ Customize site configuration and internationalization (i18n) by modifying the fo
 
 For basic configuration, refer to the [Site Configuration Guide](src/content/note/en/configuration.md).
 
-For internationalization configuration, refer to the [Internationalization Configuration Guide](src/content/note/en/internationalization.md).
+For i18n configuration, refer to the [Internationalization Configuration Guide](src/content/note/en/internationalization.md).
 
 ## 💻 Commands
 
@@ -111,10 +111,10 @@ pnpm install
 
 Content creation is centralized in the `src/content` directory, mainly including:
 
-- `note` - Notes, focused on carefully crafted and detailed long-form works
-- `jotting` - Jottings, lightweight and immediate content recording
-- `preface` - Preface, displayed on the homepage as the first impression
-- `information` - Information, containing various descriptive content
+- `note` - Focused on carefully crafted and detailed long-form works
+- `jotting` - Lightweight and immediate content recording
+- `preface` - Displayed on the homepage as the first impression
+- `information` - Containing various descriptive content
 
 For details, refer to the [Content Creation Guide](src/content/note/en/content.md).
 

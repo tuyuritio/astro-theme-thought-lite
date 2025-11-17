@@ -46,11 +46,11 @@ description: Astro 主题站点的基础配置说明，涵盖环境变量、站�
     - `section` - 订阅源内容板块
         - **`*`** - 所有板块
         - **array**
-            - `note` - 笔记板块
+            - `note` - 文记板块
             - `jotting` - 随笔板块
-    - `limit` - 返回内容数量限制
+    - `limit` - 内容数量限制
 - `latest` - 最新内容显示
-    - `note` - 是否显示最新笔记
+    - `note` - 是否显示最新文记
     - `jotting` - 是否显示最新随笔
 
 ## 图标生成

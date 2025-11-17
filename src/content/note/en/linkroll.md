@@ -5,11 +5,11 @@ tags: [Guide, MDX]
 toc: true
 ---
 
-The theme provides a `LinkRoll` component for the **Links** section to display friend links or recommended sites in a more elegant and flexible way.
+The theme provides a `LinkRoll` component for the **Linkroll** section to display friend links or recommended sites in a more elegant and flexible way.
 
 ## Import Component
 
-> [!Note]
+> [!NOTE]
 > The `LinkRoll` component must be used in `mdx` files.
 
 ```mdx

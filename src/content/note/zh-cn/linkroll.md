@@ -45,7 +45,7 @@ export const links = [
   - `insights` - 媒体与灵感
   - `technology` - 技术与开发
   - `expertise` - 专业与学术
-  - `creative` - 设计与创造
+  - `creative` - 设计与创意
   - `lifestyle` - 生活与爱好
   - `general` - 综合与其它
 - `image`: 目标站点图标地址
