@@ -165,39 +165,43 @@
 			padding: 1em;
 
 			line-height: 1.5;
+		}
+	}
 
-			> button.code-copy-button {
-				position: absolute;
-				top: 0.875em;
-				right: 0.875em;
-				width: 1.25em;
-				height: 1.25em;
+	div.code-container {
+		position: relative;
 
-				color: var(--secondary-color);
-				opacity: 0;
-				visibility: hidden;
-				transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+		> button.code-copy-button {
+			position: absolute;
+			top: 0.75em;
+			right: 0.75em;
+			width: 1em;
+			height: 1em;
 
-				svg.done-icon {
+			color: var(--secondary-color);
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+
+			svg.done-icon {
+				display: none;
+			}
+
+			&.code-copied svg {
+				&.copy-icon {
 					display: none;
 				}
 
-				&.code-copied svg {
-					&.copy-icon {
-						display: none;
-					}
-
-					&.done-icon {
-						display: block;
-					}
+				&.done-icon {
+					display: block;
 				}
 			}
+		}
 
-			&:hover button,
-			button.code-copied {
-				opacity: 1;
-				visibility: visible;
-			}
+		&:hover button,
+		button.code-copied {
+			opacity: 1;
+			visibility: visible;
 		}
 	}
 
