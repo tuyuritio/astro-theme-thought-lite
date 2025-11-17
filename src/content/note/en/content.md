@@ -46,7 +46,7 @@ You can describe the site's **creation background**, **core positioning**, **fut
 
 ### Linkroll
 
-"Linkroll" is used to display related websites and resources. This is not only a recommendation for **quality content**, but also an important way to build **internet community** connections.
+"Linkroll" is used to display websites and resources. This is not only a recommendation for **quality content**, but also an important way to build **internet community** connections.
 
 Here you can elaborate on your recommendation criteria and management methods for external links, providing visitors with opportunities for extended reading, making it an important part of the site.
 
