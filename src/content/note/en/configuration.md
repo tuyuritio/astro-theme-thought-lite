@@ -52,12 +52,12 @@ description: Essential configuration guide for Astro theme sites, covering envir
         - **array**
             - `note` - Note section
             - `jotting` - Jotting section
-    - `limit` - Content quantity limit for feeds
+    - `limit` - Content quantity limit
 - `comment`
     - `max-length` - Maximum comment length
 - `latest` - Latest content display
-    - `note` - Whether to show latest note
-    - `jotting` - Whether to show latest jotting
+    - `note` - Whether to display latest note
+    - `jotting` - Whether to display latest jotting
 
 ## Icon Generation
 

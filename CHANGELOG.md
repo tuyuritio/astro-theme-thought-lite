@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.26.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.25.3...v0.26.0) (2025-11-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* Renamed "Link Roll" / "Links" / "Roll" to "Linkroll" for consistency across all documentation files.
+
+### Bug Fixes
+
+* **script:** use translation for content starts ([2ee865e](https://github.com/tuyuritio/astro-theme-thought-lite/commit/2ee865ea014328ab1f0a0cb7c3e2c9416486610d))
+
+
+### Styles
+
+* **markdown:** add img selector for figure ([e425b26](https://github.com/tuyuritio/astro-theme-thought-lite/commit/e425b26b06e0979f93d65aec2ba96ce1fc69f328))
+* **markdown:** update alert colors ([84b70fb](https://github.com/tuyuritio/astro-theme-thought-lite/commit/84b70fb826b0433044eeebf1df2bf59c4f233697))
+
+
+### Documentation
+
+* unify "Linkroll" terminology ([27e784f](https://github.com/tuyuritio/astro-theme-thought-lite/commit/27e784f1c880ae484fda8e2cd8afac8c6d5c6b90))
+
 ## [0.25.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.25.2...v0.25.3) (2025-11-16)
 
 

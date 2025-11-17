@@ -95,7 +95,7 @@ This site is a personal content creation platform based on open-source technolog
 #### Non-logged-in User Permissions
 
 - Browse all public content on the site.
-- Subscribe to feeds.
+- Subscribe to feed.
 - Post comments (non-logged-in users need to pass Cloudflare Turnstile human verification and provide a nickname).
 
 #### OAuth Login User Permissions
@@ -117,7 +117,7 @@ When using this site's services, you need to comply with:
 - Do not publish illegal, harmful, false, insulting, or infringing content.
 - Do not engage in malicious attacks, spam posting, or other destructive behaviors.
 - Respect the legitimate rights and interests of other users and content creators.
-- Do not abuse or attempt to damage the website's technical architecture.
+- Do not abuse or attempt to damage this site's technical architecture.
 
 ### Intellectual Property
 
@@ -129,7 +129,7 @@ When using this site's services, you need to comply with:
 ### Service Changes and Termination
 
 - This site reserves the right to modify, suspend, or terminate part or all services at any time.
-- Major changes will be notified to users through website announcements or other appropriate means.
+- Major changes will be notified to users through site's announcements or other appropriate means.
 - Users can stop using this site's services at any time and delete related account information.
 
 ## Disclaimer
@@ -150,7 +150,7 @@ When using this site's services, you need to comply with:
 
 ### Link Disclaimer
 
-- This site may contain links to third-party websites. This site is not responsible for the content or privacy policies of these websites.
+- This site may contain links to third-party sites. This site is not responsible for the content or privacy policies of these sites.
 - Users are responsible for their actions and consequences when clicking external links.
 
 ### Loss Disclaimer

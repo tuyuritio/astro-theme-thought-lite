@@ -128,10 +128,10 @@ pnpm db:migrate:local
 
 Content creation is centralized in the `src/content` directory, mainly including:
 
-- `note` - Notes, focused on carefully crafted and detailed long-form works
-- `jotting` - Jottings, lightweight and immediate content recording
-- `preface` - Preface, displayed on the homepage as the first impression
-- `information` - Information, containing various descriptive content
+- `note` - Focused on carefully crafted and detailed long-form works
+- `jotting` - Lightweight and immediate content recording
+- `preface` - Displayed on the homepage as the first impression
+- `information` - Containing various descriptive content
 
 For details, refer to the [Content Creation Guide](src/content/note/en/content.md).
 

@@ -130,7 +130,7 @@ pnpm db:migrate:local
 
 - `note` - 文记，专注于精心构思、内容详实的长篇作品
 - `jotting` - 随笔，轻量级、即时性的内容记录
-- `preface` - 前言，作为第一印象在站点首页展示
+- `preface` - 序文，作为第一印象在站点首页展示
 - `information` - 信息，包含各类说明性内容
 
 详情请参阅[内容创作指南](src/content/note/zh-cn/content.md)。

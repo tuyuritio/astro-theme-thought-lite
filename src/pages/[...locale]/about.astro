@@ -15,11 +15,11 @@ const { locale = config.i18n.defaultLocale } = Astro.params;
 const t = i18nit(locale);
 
 const introduction = await getEntry("information", `${monolocale ? "" : locale}/introduction`);
-const roll = await getEntry("information", `${monolocale ? "" : locale}/roll`);
+const linkroll = await getEntry("information", `${monolocale ? "" : locale}/linkroll`);
 const chronicle = (await getEntry("information", `${monolocale ? "" : locale}/chronicle`))?.data;
 
 const { Content: Introduction } = introduction ? await render(introduction) : ({} as any);
-const { Content: Roll } = roll ? await render(roll) : ({} as any);
+const { Content: Linkroll } = linkroll ? await render(linkroll) : ({} as any);
 
 const chronicles = Object.entries<string[]>(chronicle ?? {})
 	.map(([date, events]) => ({ date: new Date(date), events: events ?? [] }))
@@ -54,11 +54,11 @@ const chronicles = Object.entries<string[]>(chronicle ?? {})
 				)
 			}
 			{
-				roll && (
+				linkroll && (
 					<div>
-						<h1>{t("about.roll")}</h1>
+						<h1>{t("about.linkroll")}</h1>
 						<samp class="markdown">
-							<Roll {locale} />
+							<Linkroll {locale} />
 						</samp>
 					</div>
 				)

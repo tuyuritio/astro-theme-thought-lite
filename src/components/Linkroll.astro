@@ -6,7 +6,7 @@ interface Props {
 	/** Current locale/language code */
 	locale: string;
 
-	/** Array of link items to display in the roll */
+	/** Array of link items to display in the linkroll */
 	links: Array<{
 		/** Display title of the link */
 		title: string;
@@ -27,7 +27,7 @@ interface Props {
 
 const { locale, links } = Astro.props;
 
-const t = i18nit(locale, "roll");
+const t = i18nit(locale, "linkroll");
 
 const types = {
 	resources: { name: t("type.resources"), icon: "lucide:tool-case" },
@@ -47,7 +47,7 @@ const fallback = "/linkback.webp";
 	{
 		links.map(link => (
 			<article class="flex gap-2 b-b b-b-solid b-weak pl-1 pr-2 pb-2">
-				<img src={link.image || fallback} alt={`LinkRoll-${link.title}`} data-nozoom class="w-10 h-10 rd-full" onerror={`this.onerror=null;this.src='${fallback}';`} />
+				<img src={link.image || fallback} alt={`Linkroll-${link.title}`} data-nozoom class="w-10 h-10 rd-full" onerror={`this.onerror=null;this.src='${fallback}';`} />
 				<div class="grow min-w-0 flex flex-col justify-around">
 					<div class="flex items-center justify-between">
 						<a href={link.url} target="_blank" rel="noopener noreferrer" class="font-bold after:hidden link truncate">
