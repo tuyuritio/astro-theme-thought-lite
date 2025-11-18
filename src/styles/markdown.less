@@ -64,14 +64,14 @@
 		}
 
 		&[target="_blank"] {
-			.link-icon("\202F \202F", 0.8em, 1px);
+			.link-icon("\202F \202F", 0.8em, 0.05em);
 		}
 
 		&:not([target="_blank"], [data-footnote-ref], [data-footnote-backref]) {
-			.link-icon("\202F \202F", 0.85em, 0.5px);
+			.link-icon("\202F \202F", 0.85em, 0.05em);
 
 			&[href^="mailto:"] {
-				.link-icon("\202F󱃝 \202F", 0.9em, 0px);
+				.link-icon("\202F󱃝 \202F", 0.9em, -0.1em);
 			}
 		}
 	}
