@@ -13,7 +13,7 @@ In your GitHub repository's *Settings > Secrets and variables > Actions*, add th
 
 - `ENV`: All contents from the `.env` file
 - `CLOUDFLARE_PROJECT_NAME`: Project name
-- `CLOUDFLARE_ACCOUNT_ID`: CloudFlare account ID
-- `CLOUDFLARE_API_TOKEN`: CloudFlare API Token
+- `CLOUDFLARE_ACCOUNT_ID`: Cloudflare account ID
+- `CLOUDFLARE_API_TOKEN`: Cloudflare API Token
 - `CLOUDFLARE_DATABASE_NAME`: D1 database name
 - `CLOUDFLARE_DATABASE_ID`: D1 database ID

@@ -13,7 +13,7 @@ description: 配置 GitHub Actions 实现自动部署到 Cloudflare Workers，�
 
 - `ENV`：`.env` 文件中的所有内容
 - `CLOUDFLARE_PROJECT_NAME`：项目名称
-- `CLOUDFLARE_ACCOUNT_ID`：CloudFlare 账户 ID
-- `CLOUDFLARE_API_TOKEN`：CloudFlare API Token
+- `CLOUDFLARE_ACCOUNT_ID`：Cloudflare 账户 ID
+- `CLOUDFLARE_API_TOKEN`：Cloudflare API Token
 - `CLOUDFLARE_DATABASE_NAME`：D1 数据库名称
 - `CLOUDFLARE_DATABASE_ID`：D1 数据库 ID
