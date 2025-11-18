@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.26.1...v0.26.2) (2025-11-18)
+
+
+### Styles
+
+* **font:** optimize font loading ([5cec772](https://github.com/tuyuritio/astro-theme-thought-lite/commit/5cec77282c13060a0aeeae06babf02861d4fae8a))
+
 ## [0.26.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.26.0...v0.26.1) (2025-11-17)
 
 
