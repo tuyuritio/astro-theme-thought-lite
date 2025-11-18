@@ -3,8 +3,9 @@ const { title, subtitle, description, author, article } = Astro.props;
 
 // Locale-specific Noto Serif font mappings for Google Fonts
 const notoFonts: Record<string, string> = {
-	"zh-cn": "Noto+Serif+SC",
-	ja: "Noto+Serif+JP"
+	en: "https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap",
+	"zh-cn": "https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap",
+	ja: "https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap"
 };
 ---
 
@@ -32,14 +33,15 @@ const notoFonts: Record<string, string> = {
 
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="preconnect" href="https://fontsapi.zeoseven.com" />
+		<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
 
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" />
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playwrite+MX:wght@100..400&display=block" />
-		<link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css" />
-		<link rel="stylesheet" href="https://fontsapi.zeoseven.com/556/main/result.css" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playwrite+MX:wght@100&display=block" />
+		<link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css" crossorigin />
+		<link rel="stylesheet" href="https://fontsapi.zeoseven.com/556/main/result.css" crossorigin />
 		<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.4/katex.min.css" onload="this.onload=null;this.rel='stylesheet'" />
 
-		{Astro.currentLocale && notoFonts[Astro.currentLocale] && <link rel="stylesheet" href={`https://fonts.googleapis.com/css2?family=${notoFonts[Astro.currentLocale]}:wght@200..900&display=swap`} />}
+		{Astro.currentLocale && notoFonts[Astro.currentLocale] && <link rel="stylesheet" href={notoFonts[Astro.currentLocale]} />}
 
 		<script is:inline>
 			var theme = localStorage.getItem("theme");
