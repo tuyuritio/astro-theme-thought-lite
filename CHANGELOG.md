@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.26.2...v0.26.3) (2025-11-20)
+
+
+### Bug Fixes
+
+* tag length check fails when tags is undefined ([364e32c](https://github.com/tuyuritio/astro-theme-thought-lite/commit/364e32c9854d2a0e032068507808fe9af218884b))
+
 ## [0.26.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.26.1...v0.26.2) (2025-11-18)
 
 
