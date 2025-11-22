@@ -4,10 +4,12 @@ about:
 cancel: 取消
 comment:
   author: 笔者
+  collapse: 合上笔谈
   edit:
     history: 编辑历史
     name: 编辑
   empty: 想法内容为空
+  expand: 展开思绪
   failure: 抱歉，想法未能送达
   fetch:
     failure: 获取想法出错

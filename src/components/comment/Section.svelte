@@ -14,9 +14,12 @@ let {
 	item,
 	oauth,
 	turnstile,
+	compact = false,
 	author,
 	home,
 	alert,
+	fold,
+	unfold,
 	reload,
 	asc,
 	desc,
@@ -41,7 +44,9 @@ let {
 	sync,
 	signout,
 	deactivate
-}: { locale: string; nomad: boolean; section: string; item: string; oauth: any; turnstile?: string } & { [key: string]: Snippet } = $props();
+}: { locale: string; nomad: boolean; section: string; item: string; oauth: any; turnstile?: string; compact?: boolean } & {
+	[key: string]: Snippet;
+} = $props();
 
 // Group all icon snippets into a single object for easier prop passing
 const icon = {
@@ -76,6 +81,7 @@ const t = i18nit(locale);
 // Track rate limiting state across comment operations
 let limit: number = $state(0);
 let loaded: boolean = $state(false);
+let expanded: boolean = $state(!compact);
 let drifter: any | undefined = $state();
 
 let count: number = $state(0);
@@ -135,15 +141,29 @@ onMount(async () => {
 </script>
 
 <main>
-	{#if loaded}
+	{#if (!compact || expanded) && loaded}
 		<Reply {locale} {oauth} {turnstile} {section} {item} {drifter} {icon} {refresh} bind:limit />
-		{#if comments.length}
+	{/if}
+
+	{#if loaded}
+		{#if compact || comments.length}
 			<div class="flex items-center justify-between mt-6">
 				<p class="flex items-center gap-2">
 					<b class="text-4.5">{t("comment.name")}</b>
 					<span>·</span>
 					<span>{count}</span>
 				</p>
+
+				{#if compact}
+					<button onclick={() => (expanded = !expanded)}>
+						{#if expanded}
+							{@render unfold()}
+						{:else}
+							{@render fold()}
+						{/if}
+					</button>
+				{/if}
+
 				<p class="flex gap-4">
 					<button onclick={() => refresh(false)}>{@render reload()}</button>
 					<button onclick={() => (ascending = !ascending)}>

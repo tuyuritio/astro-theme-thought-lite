@@ -4,11 +4,13 @@ about:
 cancel: Cancel
 comment:
   author: Author
+  collapse: Fold away thoughts
   edit:
     history: Edit History
     name: Edit
   empty: Thought is empty
   failure: Sorry, your thoughts couldn't be sent
+  expand: Unfurl thoughts
   fetch:
     failure: Error loading thoughts
   history: History

@@ -7,9 +7,10 @@ interface Props {
 	locale: string;
 	section: string;
 	item: string;
+	compact?: boolean;
 }
 
-const { locale, section, item } = Astro.props;
+const { locale, section, item, compact } = Astro.props;
 const t = i18nit(locale);
 
 const env = import.meta.env;
@@ -25,32 +26,34 @@ const oauth = {
 const turnstile = env.CLOUDFLARE_TURNSTILE_SECRET_KEY ? env.CLOUDFLARE_TURNSTILE_SITE_KEY : null;
 ---
 
-<Comments client:visible {locale} {section} {item} {oauth} {turnstile}>
+<Comments client:visible {locale} {section} {item} {oauth} {turnstile} {compact}>
 	<Icon name="svg-spinners:3-dots-move" size={25} slot="loading" inline />
 	<Icon name="svg-spinners:pulse-3" size={30} slot="rendering" inline />
 	<Icon name="svg-spinners:pulse-rings-3" title={t("comment.verify.progress")} slot="verifying" inline />
 	<Icon name="lucide:signature" title={t("comment.author")} slot="author" />
 	<Icon name="lucide:house" slot="home" inline />
 	<Icon name="lucide:triangle-alert" slot="alert" inline />
-	<Icon name="simple-icons:github" slot="github" />
-	<Icon name="simple-icons:google" slot="google" />
+	<Icon name="simple-icons:github" slot="github" inline />
+	<Icon name="simple-icons:google" slot="google" inline />
 	<Icon name="simple-icons:x" slot="x" />
+	<Icon name="lucide:chevrons-up" title={t("comment.expand")} slot="fold" inline />
+	<Icon name="lucide:chevrons-down" title={t("comment.collapse")} slot="unfold" inline />
 	<Icon name="lucide:refresh-cw" title={t("comment.reload.name")} slot="reload" />
-	<Icon name="lucide:clock-arrow-up" title={t("comment.sort.asc")} slot="asc" />
-	<Icon name="lucide:clock-arrow-down" title={t("comment.sort.desc")} slot="desc" />
+	<Icon name="lucide:clock-arrow-down" title={t("comment.sort.asc")} slot="asc" />
+	<Icon name="lucide:clock-arrow-up" title={t("comment.sort.desc")} slot="desc" />
 	<Icon name="lucide:reply" title={t("comment.reply")} slot="reply" />
 	<Icon name="lucide:history" title={t("comment.history")} slot="history" />
 	<Icon name="lucide:share-2" title={t("comment.share.name")} slot="share" />
 	<Icon name="lucide:pencil" title={t("comment.edit.name")} slot="edit" />
 	<Icon name="lucide:trash" title={t("delete")} slot="remove" />
-	<Icon name="lucide:smile" slot="emoji" />
-	<Icon name="lucide:file-search" title={t("comment.preview.name")} slot="preview" />
-	<Icon name="lucide:user-round" title={t("drifter.signin")} slot="signin" />
-	<Icon name="lucide:user-round-pen" title={t("drifter.profile")} slot="profile" />
-	<Icon name="lucide:send" title={t("comment.submit")} slot="submit" />
-	<Icon name="lucide:timer" slot="delay" />
-	<Icon name="lucide:rectangle-ellipsis" title={t("comment.overlength")} slot="overlength" />
+	<Icon name="lucide:smile" slot="emoji" inline />
+	<Icon name="lucide:file-search" title={t("comment.preview.name")} slot="preview" inline />
+	<Icon name="lucide:user-round" title={t("drifter.signin")} slot="signin" inline />
+	<Icon name="lucide:user-round-pen" title={t("drifter.profile")} slot="profile" inline />
+	<Icon name="lucide:send" title={t("comment.submit")} slot="submit" inline />
+	<Icon name="lucide:timer" slot="delay" inline />
+	<Icon name="lucide:rectangle-ellipsis" title={t("comment.overlength")} slot="overlength" inline />
 	<Icon name="lucide:refresh-cw" title={t("drifter.sync.name")} slot="sync" inline />
-	<Icon name="lucide:log-out" title={t("drifter.signout")} slot="signout" />
-	<Icon name="lucide:user-round-x" title={t("drifter.deactivate.name")} slot="deactivate" />
+	<Icon name="lucide:log-out" title={t("drifter.signout")} slot="signout" inline />
+	<Icon name="lucide:user-round-x" title={t("drifter.deactivate.name")} slot="deactivate" inline />
 </Comments>

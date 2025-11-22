@@ -4,11 +4,13 @@ about:
 cancel: 取消
 comment:
   author: 筆者
+  collapse: 思いをたたむ
   edit:
     history: 編集歴史
     name: 編集
   empty: 感想内容が空です
   failure: 申し訳ありませんが、感想を送信できませんでした
+  expand: 思いをひらく
   fetch:
     failure: 感想取得に失敗しました
   history: 履歴
