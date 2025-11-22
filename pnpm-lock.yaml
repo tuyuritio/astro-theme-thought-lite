@@ -38,12 +38,6 @@ importers:
       '@swup/astro':
         specifier: ^1.7.0
         version: 1.7.0
-      '@unocss/transformer-directives':
-        specifier: ^66.5.4
-        version: 66.5.4
-      '@unocss/transformer-variant-group':
-        specifier: ^66.5.4
-        version: 66.5.4
       astro:
         specifier: ^5.15.4
         version: 5.15.5(@types/node@24.0.3)(jiti@2.5.1)(less@4.4.2)(rollup@2.79.2)(terser@5.43.1)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
@@ -175,6 +169,12 @@ importers:
         specifier: ^4.0.4
         version: 4.0.4
       '@unocss/reset':
+        specifier: ^66.5.4
+        version: 66.5.4
+      '@unocss/transformer-directives':
+        specifier: ^66.5.4
+        version: 66.5.4
+      '@unocss/transformer-variant-group':
         specifier: ^66.5.4
         version: 66.5.4
       esm-loader-yaml:
