@@ -28,6 +28,7 @@ import katex from "rehype-katex";
 import sectionize from "@hbsnow/rehype-sectionize";
 
 import spoiler from "./src/utils/remark/spoiler";
+import attr from "./src/utils/remark/attr";
 import abbr from "./src/utils/remark/abbr";
 import wrapper from "./src/utils/remark/table-wrapper";
 import copy from "./src/utils/code-copy";
@@ -56,6 +57,7 @@ export default defineConfig({
 			ins,
 			mark,
 			spoiler,
+			attr,
 			CJK,
 			[CJKStrikethrough, { singleTilde: false }],
 			math,

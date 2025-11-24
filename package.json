@@ -93,6 +93,7 @@
 		"@types/hast": "^3.0.4",
 		"@types/luxon": "^3.7.1",
 		"@types/mdast": "^4.0.4",
+		"@types/unist": "^3.0.3",
 		"@unocss/reset": "^66.5.4",
 		"@unocss/transformer-directives": "^66.5.4",
 		"@unocss/transformer-variant-group": "^66.5.4",
