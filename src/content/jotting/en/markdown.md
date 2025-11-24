@@ -1,10 +1,41 @@
 ---
 title: Markdown Extension Manual
-timestamp: 2024-07-21 00:00:00+00:00
+timestamp: 2025-11-24 00:00:00+00:00
 series: Astro
 tags: [Markup, Demo]
 description: Detailed guide to extended Markdown syntax features in the theme, including Ruby annotations, abbreviations, spoiler text, and other special markup syntax.
 ---
+
+<style>
+.red {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.big {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.colorful {
+  font-weight: bold;
+  background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 3s linear infinite;
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+</style>
 
 I originally wanted to use my favorite [markdown-it](https://github.com/markdown-it/markdown-it) as the Markdown rendering engine. But to adapt to Astro and prevent unexpected errors, I compromised and used [remark](https://github.com/remarkjs/remark).
 
