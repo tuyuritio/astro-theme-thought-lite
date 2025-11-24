@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.27.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.26.3...v0.27.0) (2025-11-24)
+
+
+### Features
+
+* **markdown:** add attributes plugin ([51021b4](https://github.com/tuyuritio/astro-theme-thought-lite/commit/51021b4fc43aaaf70fa145e9a6d76a404c2e4dfc))
+
+
+### Miscellaneous Chores
+
+* **dependencies:** reorganize unocss dependencies ([103d96a](https://github.com/tuyuritio/astro-theme-thought-lite/commit/103d96a97f3a786356f55b6646383396f6115285))
+* **dependencies:** update packages ([c208dfb](https://github.com/tuyuritio/astro-theme-thought-lite/commit/c208dfbe164c818bc8bd51f0c0ef3202ec712580))
+
 ## [0.26.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.26.2...v0.26.3) (2025-11-20)
 
 
