@@ -98,7 +98,8 @@ const jottingWords = (await Promise.all(jottings.map(async jotting => (await ren
 const totalWords = noteWords + jottingWords;
 
 // Check if policy file exists for current locale
-const policy = await getEntry("information", `${locale}/policy`);
+const localePrefix = monolocale ? "" : `${locale}/`;
+const policy = await getEntry("information", `${localePrefix}policy`);
 ---
 
 <footer class="flex flex-col sm:flex-row items-center justify-between gap-2 mt-8 mb-5 sm:mb-3 text-size-sm font-mono">
