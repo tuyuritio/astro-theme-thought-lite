@@ -7,6 +7,7 @@
 		"paths": {
 			"$config": ["site.config.ts"],
 			"$actions/*": ["src/actions/*"],
+			"$assets/*": ["src/assets/*"],
 			"$utils/*": ["src/utils/*"],
 			"$components/*": ["src/components/*"],
 			"$db/*": ["src/db/*"],

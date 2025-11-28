@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import config, { monolocale } from "$config";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
@@ -27,6 +27,9 @@ const prefaces = (
 		return language === locale;
 	})
 ).sort((a, b) => b.data.timestamp.getTime() - a.data.timestamp.getTime());
+
+// Render each entry
+const entries = await Promise.all(prefaces.map(async preface => ({ ...preface, content: (await render(preface)).Content })));
 ---
 
 <Base title={t("navigation.preface")} {locale}>
@@ -34,13 +37,15 @@ const prefaces = (
 		<h2>{t("home.prefaces")}</h2>
 		<ul class="flex flex-col list-none">
 			{
-				prefaces.map(preface => [
+				entries.map(preface => [
 					<hr class="my-5 b-b b-b-solid b-primary" />,
 					<li>
 						<time datetime={preface.data.timestamp.toISOString()} class="block mb-5 font-bold text-5">
 							{Time.locale(preface.data.timestamp, locale)}
 						</time>
-						<article class="markdown" set:html={preface.rendered?.html} />
+						<article class="markdown">
+							<preface.content />
+						</article>
 					</li>
 					<blockquote class="mb-4"><Comments compact={true} {locale} section="preface" item={preface.data.timestamp.toISOString()} /></blockquote>
 				])
