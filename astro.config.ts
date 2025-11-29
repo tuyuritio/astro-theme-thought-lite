@@ -116,6 +116,12 @@ export default defineConfig({
 		}
 	},
 	vite: {
+		resolve: {
+			alias: {
+				// Workaround for https://github.com/facebook/react/issues/31827
+				"react-dom/server": import.meta.env.PROD ? "react-dom/server.edge" : "react-dom/server"
+			}
+		},
 		// Workaround for https://github.com/withastro/astro/issues/14692
 		optimizeDeps: {
 			include: ["picocolors"]
