@@ -34,7 +34,17 @@ export default async ({
 	const time = timestamp.toISOString().split("T")[0].replace(/-/g, "/");
 
 	return await satori(
-		<div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "3rem", width: "100%", height: "100%" }}>
+		<div
+			style={{
+				display: "flex",
+				flexDirection: "column",
+				justifyContent: "space-between",
+				padding: "3rem",
+				width: "100%",
+				height: "100%",
+				background: "#fffffd"
+			}}
+		>
 			<div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", flexGrow: 1 }}>
 				<span style={{ alignSelf: "flex-start", borderLeft: "0.5rem solid black", padding: "0.25rem 1rem 0.75rem", fontSize: "1.5rem" }}>
 					{contentType}

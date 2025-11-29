@@ -18,7 +18,8 @@ export default async ({ locale, title, description, author }: { locale: string; 
 				flexDirection: "column",
 				alignItems: "center",
 				justifyContent: "center",
-				gap: "1.5rem"
+				gap: "1.5rem",
+				background: "#fffffd"
 			}}
 		>
 			<img src={`data:image/svg+xml;base64,${Buffer.from(icon).toString("base64")}`} alt="LOGO" width={120} height={120} />
