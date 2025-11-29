@@ -5,6 +5,7 @@ import yaml from "@rollup/plugin-yaml";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
+import react from "@astrojs/react";
 import UnoCSS from "unocss/astro";
 import swup from "@swup/astro";
 import icon from "astro-icon";
@@ -124,6 +125,7 @@ export default defineConfig({
 	},
 	integrations: [
 		svelte(),
+		react(),
 		mdx(),
 		sitemap(),
 		swup({

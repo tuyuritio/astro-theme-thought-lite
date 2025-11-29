@@ -8,12 +8,16 @@
 			"$config": ["site.config.ts"],
 			"$actions/*": ["src/actions/*"],
 			"$assets/*": ["src/assets/*"],
+			"$icons/*": ["src/icons/*"],
+			"$graph/*": ["src/graph/*"],
 			"$utils/*": ["src/utils/*"],
 			"$components/*": ["src/components/*"],
 			"$db/*": ["src/db/*"],
 			"$i18n": ["src/i18n/index"],
 			"$layouts/*": ["src/layouts/*"],
 			"$styles/*": ["src/styles/*"]
-		}
+		},
+		"jsx": "react-jsx",
+		"jsxImportSource": "react"
 	}
 }

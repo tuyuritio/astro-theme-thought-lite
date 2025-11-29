@@ -1,11 +1,27 @@
 # Changelog
 
+## [0.28.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.27.1...v0.28.0) (2025-11-29)
+
+
+### Features
+
+* add Open Graph image generation ([0a754b2](https://github.com/tuyuritio/astro-theme-thought-lite/commit/0a754b264b058c6f67a5b4d5d979a25d21ac6d61))
+
+
+### Bug Fixes
+
+* **preface:** render entries from prefaces collection ([7fc712d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/7fc712da62f15bb39d9c0c917e6e919964f2fb56))
+
+
+### Miscellaneous Chores
+
+* **dependencies:** update packages ([81f8f87](https://github.com/tuyuritio/astro-theme-thought-lite/commit/81f8f87e00eb97a108f83c0b67e7320aa10514fa))
+
 ## [0.27.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.27.0...v0.27.1) (2025-11-26)
 
 
 ### Bug Fixes
 
-* **i18n:** incorrect information collection path in single language mode ([0ed275a](https://github.com/tuyuritio/astro-theme-thought-lite/commit/0ed275adac176d35aa6e9c5b05ea1d01e1dfcf13))
 * **i18n:** incorrect information collection path in single language mode ([771d384](https://github.com/tuyuritio/astro-theme-thought-lite/commit/771d38462c64344a697fa98718f8b6db69e35423))
 
 ## [0.27.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.26.3...v0.27.0) (2025-11-24)
