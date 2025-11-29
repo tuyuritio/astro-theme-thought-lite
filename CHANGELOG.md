@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.28.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.27.1...v0.28.0) (2025-11-29)
+
+
+### Features
+
+* add Open Graph image generation ([0a754b2](https://github.com/tuyuritio/astro-theme-thought-lite/commit/0a754b264b058c6f67a5b4d5d979a25d21ac6d61))
+
+
+### Bug Fixes
+
+* **preface:** render entries from prefaces collection ([7fc712d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/7fc712da62f15bb39d9c0c917e6e919964f2fb56))
+
+
+### Miscellaneous Chores
+
+* **dependencies:** update packages ([81f8f87](https://github.com/tuyuritio/astro-theme-thought-lite/commit/81f8f87e00eb97a108f83c0b67e7320aa10514fa))
+
 ## [0.27.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.27.0...v0.27.1) (2025-11-26)
 
 
