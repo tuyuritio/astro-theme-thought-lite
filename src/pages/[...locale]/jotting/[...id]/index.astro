@@ -9,7 +9,7 @@ import Sensitive from "$components/Sensitive.svelte";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
-	// Get all notes excluding drafts
+	// Get all jottings excluding drafts
 	const jottings = await getCollection("jotting", jotting => !jotting.data.draft);
 
 	return jottings.map(jotting => {
@@ -20,7 +20,7 @@ export async function getStaticPaths() {
 			locale = undefined;
 			id = jotting.id;
 		} else {
-			// Extract language and note ID from file path structure
+			// Extract language and jotting ID from file path structure
 			const [language, ...ids] = jotting.id.split("/");
 
 			locale = config.i18n.defaultLocale === language ? undefined : language;
