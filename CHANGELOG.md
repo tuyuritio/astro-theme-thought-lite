@@ -5,7 +5,6 @@
 
 ### Bug Fixes
 
-* **i18n:** incorrect information collection path in single language mode ([0ed275a](https://github.com/tuyuritio/astro-theme-thought-lite/commit/0ed275adac176d35aa6e9c5b05ea1d01e1dfcf13))
 * **i18n:** incorrect information collection path in single language mode ([771d384](https://github.com/tuyuritio/astro-theme-thought-lite/commit/771d38462c64344a697fa98718f8b6db69e35423))
 
 ## [0.27.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.26.3...v0.27.0) (2025-11-24)
