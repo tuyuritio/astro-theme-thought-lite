@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.28.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.28.0...v0.28.1) (2025-11-29)
+
+
+### Styles
+
+* **graph:** add background color ([d0433dd](https://github.com/tuyuritio/astro-theme-thought-lite/commit/d0433ddd980cfefc9792519102f23591bee43421))
+
 ## [0.28.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.27.1...v0.28.0) (2025-11-29)
 
 
