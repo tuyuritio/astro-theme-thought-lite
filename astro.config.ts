@@ -122,8 +122,12 @@ export default defineConfig({
 				"react-dom/server": import.meta.env.PROD ? "react-dom/server.edge" : "react-dom/server"
 			}
 		},
-		// Workaround for https://github.com/withastro/astro/issues/14692
+		ssr: {
+			// Workaround for https://github.com/thx/resvg-js/issues/315
+			external: ["@resvg/resvg-js"]
+		},
 		optimizeDeps: {
+			// Workaround for https://github.com/withastro/astro/issues/14692
 			include: ["picocolors"]
 		},
 		// @ts-expect-error
