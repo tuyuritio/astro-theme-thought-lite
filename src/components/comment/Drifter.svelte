@@ -198,8 +198,8 @@ onMount(async () => {
 		</div>
 		<div class="self-center flex gap-5">
 			<button onclick={() => (open = false)} class="form-button">{t("cancel")}</button>
-			<button disabled={updating} onclick={update} class:bg-weak={updating} class="form-button relative">
-				<span class:opacity-0={updating}>{t("drifter.update.name")}</span>
+			<button disabled={updating} onclick={update} class:bg-weak={updating} class="relative form-button transition-background-color">
+				<span class:opacity-0={updating} class="opacity-100 transition-[color,opacity]">{t("drifter.update.name")}</span>
 				{#if updating}
 					<span class="absolute inset-0 inline-flex items-center justify-center c-secondary">{@render icon.uploading()}</span>
 				{/if}
