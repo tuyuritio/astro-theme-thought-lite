@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.28.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.28.1...v0.28.2) (2025-11-30)
+
+
+### Bug Fixes
+
+* **graph:** render SVG to PNG ([849058a](https://github.com/tuyuritio/astro-theme-thought-lite/commit/849058a734a6390efc975b726991cc056a6ed91f))
+* **graph:** update icon import to use favicon ([9f9cc95](https://github.com/tuyuritio/astro-theme-thought-lite/commit/9f9cc953793875abfd16ecb35116b2bb189093d7))
+* **graph:** update OpenGraph usage ([4abe560](https://github.com/tuyuritio/astro-theme-thought-lite/commit/4abe560c85f879d34d7146a7643a311d55846115))
+
 ## [0.28.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.28.0...v0.28.1) (2025-11-29)
 
 
