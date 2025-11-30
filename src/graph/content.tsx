@@ -1,4 +1,5 @@
 import satori from "satori";
+import { Resvg } from "@resvg/resvg-js";
 import i18nit from "$i18n";
 import icon from "$public/favicon.svg?raw";
 
@@ -33,7 +34,7 @@ export default async ({
 	const contentType = t(`navigation.${type}`);
 	const time = timestamp.toISOString().split("T")[0].replace(/-/g, "/");
 
-	return await satori(
+	const svg = await satori(
 		<div
 			style={{
 				display: "flex",
@@ -84,6 +85,9 @@ export default async ({
 			]
 		}
 	);
+
+	const renderer = new Resvg(svg, { fitTo: { mode: "width", value: 1200 } });
+	return renderer.render().asPng();
 };
 
 /**

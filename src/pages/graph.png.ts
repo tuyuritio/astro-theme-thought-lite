@@ -13,5 +13,5 @@ export const GET: APIRoute = async () => {
 		description: config.description
 	});
 
-	return new Response(image, { headers: { "Content-Type": "image/svg+xml" } });
+	return new Response(new Uint8Array(image), { headers: { "Content-Type": "image/png" } });
 };
