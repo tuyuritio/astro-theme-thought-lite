@@ -6,6 +6,7 @@
 		"baseUrl": ".",
 		"paths": {
 			"$config": ["site.config.ts"],
+			"$public/*": ["public/*"],
 			"$assets/*": ["src/assets/*"],
 			"$icons/*": ["src/icons/*"],
 			"$graph/*": ["src/graph/*"],

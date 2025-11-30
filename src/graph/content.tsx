@@ -1,6 +1,6 @@
 import satori from "satori";
 import i18nit from "$i18n";
-import icon from "$icons/site-logo.svg?raw";
+import icon from "$public/favicon.svg?raw";
 
 // Locale-specific Noto Serif font mappings for Google Fonts
 const notoFonts: Record<string, string> = {
