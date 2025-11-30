@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.28.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.28.2...v0.28.3) (2025-11-30)
+
+
+### Bug Fixes
+
+* **graph:** update OpenGraph meta tags ([0bd4a7b](https://github.com/tuyuritio/astro-theme-thought-lite/commit/0bd4a7b8f489d44844a1f79170053e3dfdb44e24))
+
 ## [0.28.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.28.1...v0.28.2) (2025-11-30)
 
 
