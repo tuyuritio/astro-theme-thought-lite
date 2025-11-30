@@ -1,6 +1,6 @@
 ## Privacy Policy
 
-> **Last Updated**: July 27, 2025
+> **Last Updated**: December 1, 2025
 
 This site is deployed on the Cloudflare Workers platform. We highly value your privacy and only collect the minimal data necessary to provide basic services. This policy explains how we collect, use, and protect your data.
 
@@ -9,7 +9,8 @@ This site is deployed on the Cloudflare Workers platform. We highly value your p
 1. User-submitted data
     - Custom nickname (required for non-logged-in users)
     - Comment data: includes comment content and publication timestamps.
-    - OAuth login information (user-authorized login): includes username, display name, avatar, and token data provided by third-party platforms. To maintain login status, OAuth identity information is stored in Cookies. During the authorization login process, Cookies are temporarily used to store verification information required for OAuth authorization.
+    - Comment drafts: unsent comment content that is saved in the browser's `localStorage` to allow restoring unfinished input.
+    - OAuth login information (user-authorized login): includes username, display name, avatar, and token data provided by third-party platforms.
     - Personal homepage link (optional for OAuth login users)
     - Web Push subscription data (OAuth login user authorization): includes subscription endpoints and related authentication information.
 2. Automatically collected data
@@ -22,6 +23,7 @@ The following table provides an overview of the types of data collected, collect
 | Data Type | Collection Method | Collection Purpose | Storage Location | Notes |
 | - | - | - | - | - |
 | Custom nickname | User input | Display comments | localStorage | Non-logged-in users only |
+| Comment drafts | Browser write | Recovery unfinished comments | localStorage | Removed after submission or when the text is cleared |
 | Comment data | User input | Display comments | Cloudflare D1 database | |
 | OAuth verification data | Automatic collection | OAuth authorization verification | Cookies | Temporary storage |
 | OAuth login information | OAuth authorization | Display comments, comment editing permissions | Cloudflare D1 database | |
@@ -34,8 +36,8 @@ The following table provides an overview of the types of data collected, collect
 
 ### Data Usage Purposes
 
-- Provide comment services: Collect and process user comment data, including comment content, publication time, user nicknames or OAuth account information, to display user comments and interactive content on the site. For OAuth login users, their authenticated platform username, display name, and avatar information will also be displayed.
-- Enhance user experience: Save user theme preference settings (light/dark mode) in localStorage to ensure users maintain their personalized interface settings on their next visit. For non-logged-in users, custom nicknames are saved in localStorage for subsequent comments.
+- Provide comment services: Collect and process user comment data, including comment content, comment drafts, publication time, user nickname or OAuth account information, to display user comments and interactive content on the site. For OAuth login users, their authenticated platform username, display name, and avatar information will also be displayed.
+- Enhance user experience: Save user theme preference settings (light/dark mode) in localStorage to ensure users maintain their personalized interface settings on their next visit. For non-logged-in users, custom nickname is saved in localStorage for subsequent comments.
 - Communication and notifications: For authorized OAuth login users, use Web Push subscription data to send desktop push notifications to promptly inform users about replies to their comments or other relevant interaction information.
 - Security protection: Use Cloudflare Turnstile service to perform human verification for non-logged-in users, preventing comment abuse and malicious attacks.
 - Internal analysis and service improvement: Use basic access log data provided by Cloudflare for site performance analysis and security monitoring to improve service quality and user experience.
@@ -44,7 +46,7 @@ The following table provides an overview of the types of data collected, collect
 
 - Cloudflare D1: Comment data, OAuth login information, personal homepage links, and Web Push subscription data are all stored in the Cloudflare D1 database. This database provides enterprise-level security protection, including encrypted data storage, access control, and regular backups. All data transmission is conducted through encrypted connections.
 - JWE Cookies: OAuth identity information and verification data during the authorization process are encrypted and stored in Cookies using JSON Web Encryption (JWE) technology. JWE provides end-to-end encryption protection, ensuring the security of sensitive authentication information during transmission and storage. Cookies are set with appropriate security flags (HttpOnly, Secure, SameSite).
-- localStorage: User custom nicknames and theme preference settings are stored in the browser's localStorage. This data is only stored on the user's local device and is not transmitted to the server. Users can clear this local data at any time through browser settings.
+- localStorage: User custom nickname, theme preference settings and comment drafts are stored in the browser's localStorage. This data is only stored on the user's local device and is not transmitted to the server. Users can clear this local data at any time through browser settings.
 - HTTPS encryption: The entire site uses HTTPS encrypted transmission. All data transmitted between the client and server is protected by TLS/SSL encryption, preventing data from being stolen or tampered with during transmission.
 - Cloudflare security protection: Utilize security services provided by Cloudflare, including DDoS protection, Web Application Firewall (WAF), Bot management, and threat intelligence to protect the site and user data from malicious attacks.
 
