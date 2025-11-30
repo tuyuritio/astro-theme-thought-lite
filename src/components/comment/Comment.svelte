@@ -84,9 +84,9 @@ async function remove() {
 </Modal>
 
 <Modal bind:open={historyView}>
-	<div id="history" class="flex flex-col gap-5">
+	<div id="history" class="flex flex-col gap-5 max-h-80vh">
 		<h3>{t("comment.edit.history")}</h3>
-		<dl class="flex flex-col gap-2">
+		<dl class="flex flex-col gap-2 overflow-y-auto">
 			{#each comment.history as history}
 				<dt class="font-bold">{Time(history.timestamp)}</dt>
 				{#await remark.process(history.content) then html}
