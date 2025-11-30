@@ -117,10 +117,8 @@ export default defineConfig({
 	},
 	vite: {
 		resolve: {
-			alias: {
-				// Workaround for https://github.com/facebook/react/issues/31827
-				"react-dom/server": import.meta.env.PROD ? "react-dom/server.edge" : "react-dom/server"
-			}
+			// Workaround for https://github.com/facebook/react/issues/31827
+			alias: import.meta.env.PROD ? { "react-dom/server": "react-dom/server.edge" } : {}
 		},
 		ssr: {
 			// Workaround for https://github.com/thx/resvg-js/issues/315
@@ -128,7 +126,10 @@ export default defineConfig({
 		},
 		optimizeDeps: {
 			// Workaround for https://github.com/withastro/astro/issues/14692
-			include: ["picocolors"]
+			include: ["picocolors"],
+
+			// Workaround for https://github.com/thx/resvg-js/issues/315
+			exclude: ["@resvg/resvg-js"]
 		},
 		// @ts-expect-error
 		plugins: [yaml()]

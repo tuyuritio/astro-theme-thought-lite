@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.28.4](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.28.3...v0.28.4) (2025-11-30)
+
+
+### Bug Fixes
+
+* add workaround for @resvg/resvg-js in dev environment ([144e735](https://github.com/tuyuritio/astro-theme-thought-lite/commit/144e735a1d701c17acb2fee8de7c1b9a674925c2))
+
 ## [0.28.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.28.2...v0.28.3) (2025-11-30)
 
 
