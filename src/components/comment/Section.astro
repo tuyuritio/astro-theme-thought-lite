@@ -29,6 +29,7 @@ const turnstile = env.CLOUDFLARE_TURNSTILE_SECRET_KEY ? env.CLOUDFLARE_TURNSTILE
 <Comments client:visible {locale} {section} {item} {oauth} {turnstile} {compact}>
 	<Icon name="svg-spinners:3-dots-move" size={25} slot="loading" inline />
 	<Icon name="svg-spinners:pulse-3" size={30} slot="rendering" inline />
+	<Icon name="svg-spinners:ring-resize" slot="uploading" />
 	<Icon name="svg-spinners:pulse-rings-3" title={t("comment.verify.progress")} slot="verifying" inline />
 	<Icon name="lucide:signature" title={t("comment.author")} slot="author" />
 	<Icon name="lucide:house" slot="home" inline />

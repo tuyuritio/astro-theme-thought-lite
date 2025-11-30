@@ -84,9 +84,15 @@ async function toggleNotification() {
 	}
 }
 
-// Update user homepage URL
+// Track information update state
+let updating: boolean = $state(false);
+
+// Update user information
 async function update() {
+	updating = true;
 	const { data, error } = await actions.drifter.update({ homepage: drifter.homepage });
+	updating = false;
+
 	if (!error) {
 		pushTip("success", t("drifter.update.success"));
 	} else {
@@ -192,7 +198,12 @@ onMount(async () => {
 		</div>
 		<div class="self-center flex gap-5">
 			<button onclick={() => (open = false)} class="form-button">{t("cancel")}</button>
-			<button onclick={update} class="form-button">{t("drifter.update.name")}</button>
+			<button disabled={updating} onclick={update} class:bg-weak={updating} class="form-button relative">
+				<span class:opacity-0={updating}>{t("drifter.update.name")}</span>
+				{#if updating}
+					<span class="absolute inset-0 inline-flex items-center justify-center c-secondary">{@render icon.uploading()}</span>
+				{/if}
+			</button>
 		</div>
 	</main>
 </Modal>
