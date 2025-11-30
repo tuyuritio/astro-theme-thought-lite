@@ -109,9 +109,12 @@ export default defineConfig({
 		}
 	},
 	vite: {
-		// Workaround for https://github.com/withastro/astro/issues/14692
 		optimizeDeps: {
-			include: ["picocolors"]
+			// Workaround for https://github.com/withastro/astro/issues/14692
+			include: ["picocolors"],
+
+			// Workaround for https://github.com/thx/resvg-js/issues/315
+			exclude: ["@resvg/resvg-js"]
 		},
 		// @ts-expect-error
 		plugins: [yaml()]
