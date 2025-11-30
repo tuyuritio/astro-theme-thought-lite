@@ -43,7 +43,7 @@ const t = i18nit(locale);
 
 let anchorView: boolean = $state(false); // OAuth signin view state
 let dockerView: boolean = $state(false); // User profile view state
-let content: string = $state(text ?? ""); // Comment content, initialize with existing text if editing
+let content: string = $state(""); // Comment content, will be initialized in onMount
 let preview: boolean = $state(false); // Toggle between edit and preview mode
 let nomad: boolean = $state(!!turnstile && !drifter); // Check if unauthenticated comments are allowed
 let nickname: string | null = $state(null);
@@ -51,6 +51,32 @@ let captcha: string | undefined = $state();
 let turnstileElement: HTMLElement | undefined = $state();
 let turnstileID: string | undefined = $state();
 let overlength: boolean = $derived(content.length > Number(config.comment?.["max-length"]));
+
+// Generate storage key
+const DRAFT_PREFIX = "comment-draft:";
+const DRAFT_SAVE_DELAY = 500;
+
+let draftKey = `${DRAFT_PREFIX}${section}:${item}`;
+if (reply) draftKey += `:reply-${reply}`;
+if (edit) draftKey += `:edit-${edit}`;
+
+// Watch content changes and save draft with debounce
+$effect(() => {
+	// Trigger reactivity by referencing
+	const current = content;
+
+	// Save draft for both new comments and edits (when content differs from original)
+	const debouncer = setTimeout(() => {
+		if (current.trim() && current !== text) {
+			localStorage.setItem(draftKey, current);
+		} else {
+			localStorage.removeItem(draftKey);
+		}
+	}, DRAFT_SAVE_DELAY);
+
+	// Cleanup before re-running the effect or when the component unmounts
+	return () => clearTimeout(debouncer);
+});
 
 // Predefined emoji shortcuts for quick insertion
 const emojis = [
@@ -128,6 +154,9 @@ async function submitComment() {
 		content = "";
 		textarea?.blur();
 
+		// Remove draft from localStorage upon successful submission
+		localStorage.removeItem(draftKey);
+
 		pushTip("success", t("comment.success"));
 	} else {
 		// Handle different error types
@@ -148,6 +177,15 @@ async function submitComment() {
 }
 
 onMount(() => {
+	// Restore draft from localStorage
+	const savedDraft = localStorage.getItem(draftKey);
+	if (savedDraft) {
+		content = savedDraft;
+	} else if (text) {
+		// For edit mode: use original text only when no draft exists
+		content = text;
+	}
+
 	// If nomad is enabled and user is not authenticated, show nickname input and Turnstile widget
 	if (nomad) {
 		nickname = localStorage.getItem("nickname");
