@@ -19,7 +19,9 @@ comment:
   nickname:
     empty: 昵称不能为空
     name: 昵称
-  overlength: 想法内容过长
+  overlength: |
+    想法过长
+    可于回复中续写
   placeholder: 于此留下想法
   preview:
     name: Markdown 预览

@@ -19,7 +19,9 @@ comment:
   nickname:
     empty: Nickname can't be empty
     name: Nickname
-  overlength: Content is too long
+  overlength: |
+    Too long
+    Continue in a reply
   placeholder: Leave your thoughts here
   preview:
     name: Markdown Preview

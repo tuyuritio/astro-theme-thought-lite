@@ -19,7 +19,9 @@ comment:
   nickname:
     empty: 渾名は空にすることはできません
     name: 渾名
-  overlength: 内容が長すぎます
+  overlength: |
+    長すぎます
+    続きは返信で
   placeholder: 感想をここに刻印しましょう
   preview:
     name: Markdown 試写
