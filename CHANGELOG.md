@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.28.5](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.28.4...v0.28.5) (2025-11-30)
+
+
+### Styles
+
+* **jotting:** update section styling and link truncation ([d8f8bb0](https://github.com/tuyuritio/astro-theme-thought-lite/commit/d8f8bb08ce5683cf2874ce4f5f30b9bb397fc4ca))
+
 ## [0.28.4](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.28.3...v0.28.4) (2025-11-30)
 
 
