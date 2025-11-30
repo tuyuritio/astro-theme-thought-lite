@@ -4,17 +4,17 @@ import config, { monolocale } from "$config";
 import graph from "$graph/content";
 
 export async function getStaticPaths() {
-	const notes = await getCollection("note", note => !note.data.draft);
+	const jottings = await getCollection("jotting", jotting => !jotting.data.draft);
 
-	return notes.map(note => {
+	return jottings.map(jotting => {
 		let locale: string | undefined;
 		let id: string;
 
 		if (monolocale) {
 			locale = undefined;
-			id = note.id;
+			id = jotting.id;
 		} else {
-			const [language, ...ids] = note.id.split("/");
+			const [language, ...ids] = jotting.id.split("/");
 			locale = config.i18n.defaultLocale === language ? undefined : language;
 			id = ids.join("/");
 		}
@@ -22,29 +22,27 @@ export async function getStaticPaths() {
 		return {
 			params: { locale, id },
 			props: {
-				title: note.data.title,
-				timestamp: note.data.timestamp,
-				series: note.data.series,
-				tags: note.data.tags
+				title: jotting.data.title,
+				timestamp: jotting.data.timestamp,
+				tags: jotting.data.tags
 			}
 		};
 	});
 }
 
 /**
- * GET handler that generates and returns the Open Graph image for a note.
+ * GET handler that generates and returns the Open Graph image for a jotting.
  */
 export const GET: APIRoute = async ({ params, props }) => {
 	const image = await graph({
 		locale: params.locale || config.i18n.defaultLocale,
-		type: "note",
+		type: "jotting",
 		site: config.title,
 		author: config.author.name,
 		title: props.title,
 		timestamp: props.timestamp,
-		series: props.series,
 		tags: props.tags
 	});
 
-	return new Response(image, { headers: { "Content-Type": "image/svg+xml" } });
+	return new Response(new Uint8Array(image), { headers: { "Content-Type": "image/png" } });
 };

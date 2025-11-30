@@ -6,8 +6,9 @@
 		"baseUrl": ".",
 		"paths": {
 			"$config": ["site.config.ts"],
-			"$actions/*": ["src/actions/*"],
+			"$public/*": ["public/*"],
 			"$assets/*": ["src/assets/*"],
+			"$actions/*": ["src/actions/*"],
 			"$icons/*": ["src/icons/*"],
 			"$graph/*": ["src/graph/*"],
 			"$utils/*": ["src/utils/*"],
