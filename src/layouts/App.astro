@@ -32,7 +32,7 @@ const notoFonts: Record<string, string> = {
 
 		<meta property="og:title" content={`${subtitle && `${subtitle} | `}${title}`} />
 		<meta property="og:type" content={(article && "article") || "website"} />
-		<meta property="og:image" content={article ? new URL(`${Astro.url.pathname}/graph.svg`, Astro.site) : new URL("graph.svg", Astro.site)} />
+		<meta property="og:image" content={article ? new URL(`${Astro.url.pathname}/graph.png`, Astro.site) : new URL("graph.png", Astro.site)} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
 
