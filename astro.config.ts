@@ -110,10 +110,7 @@ export default defineConfig({
 	vite: {
 		optimizeDeps: {
 			// Workaround for https://github.com/withastro/astro/issues/14692
-			include: ["picocolors"],
-
-			// Workaround for https://github.com/thx/resvg-js/issues/315
-			exclude: ["@resvg/resvg-js"]
+			include: ["picocolors"]
 		},
 		// @ts-expect-error
 		plugins: [yaml()]
