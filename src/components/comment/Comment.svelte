@@ -89,12 +89,20 @@ async function remove() {
 	<div id="history" class="flex flex-col gap-5 max-h-80vh">
 		<h3>{t("comment.edit.history")}</h3>
 		<dl class="flex flex-col gap-2 overflow-y-auto">
-			{#each comment.history as history}
-				<dt class="font-bold">{Time(history.timestamp)}</dt>
-				{#await remark.process(history.content) then html}
-					<dd class="markdown comment">{@html html}</dd>
-				{/await}
-			{/each}
+			{#await actions.comment.history({ id: comment.id })}
+				<div class="flex justify-center p-4">{@render icon.loading()}</div>
+			{:then response}
+				{#if !response.error}
+					{#each response.data.reverse() as item}
+						<dt class="font-bold">{Time(item.timestamp)}</dt>
+						{#await remark.process(item.content) then html}
+							<dd class="markdown comment">{@html html}</dd>
+						{/await}
+					{/each}
+				{:else}
+					<div>{@render icon.alert()}</div>
+				{/if}
+			{/await}
 		</dl>
 		<section><button class="form-button" onclick={() => (historyView = false)}>{t("confirm")}</button></section>
 	</div>
@@ -135,7 +143,7 @@ async function remove() {
 				<div class="markdown comment">{#await remark.process(comment.content) then html}{@html html}{/await}</div>
 				<dd class="flex items-center gap-4 mt-2">
 					<button onclick={() => ((replyView = !replyView), (editView = false))} disabled={!turnstile && !drifter}>{@render icon.reply()}</button>
-					{#if comment.history.length > 0}<button onclick={() => (historyView = true)}>{@render icon.history()}</button>{/if}
+					{#if comment.updated}<button onclick={() => (historyView = true)}>{@render icon.history()}</button>{/if}
 					<button onclick={share}>{@render icon.share()}</button>
 					{#if comment.drifter === drifter?.id}
 						<button onclick={() => ((editView = !editView), (replyView = false))}>{@render icon.edit()}</button>

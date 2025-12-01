@@ -3,7 +3,7 @@ import { sqliteTable, text, integer, unique, foreignKey, primaryKey } from "driz
 export const Drifter = sqliteTable(
 	"drifter",
 	{
-		id: text("id").primaryKey().notNull(),
+		id: text().primaryKey().notNull(),
 		platform: text().notNull(),
 		account: text().notNull(),
 		access: text().notNull(),
@@ -24,12 +24,13 @@ export const Drifter = sqliteTable(
 export const Comment = sqliteTable(
 	"comment",
 	{
-		id: text("id").primaryKey().notNull(),
+		id: text().primaryKey().notNull(),
 		section: text().notNull(),
 		item: text().notNull(),
 		reply: text(),
-		edit: text(),
-		timestamp: integer().notNull(),
+		timestamp: integer({ mode: "timestamp_ms" }).notNull(),
+		updated: integer({ mode: "timestamp_ms" }),
+		deleted: integer({ mode: "boolean" }),
 		// Store the drifter ID for authenticated users
 		drifter: text(),
 		// Optional nickname for unauthenticated users
@@ -44,6 +45,26 @@ export const Comment = sqliteTable(
 		})
 			.onUpdate("cascade")
 			.onDelete("set null")
+	]
+);
+
+export const CommentHistory = sqliteTable(
+	"comment_history",
+	{
+		id: integer().primaryKey({ autoIncrement: true }).notNull(),
+		// Reference to the original comment ID
+		comment: text().notNull(),
+		timestamp: integer({ mode: "timestamp_ms" }).notNull(),
+		content: text().notNull()
+	},
+	table => [
+		foreignKey({
+			columns: [table.comment],
+			foreignColumns: [Comment.id],
+			name: "comment_history_comment_fkey"
+		})
+			.onUpdate("cascade")
+			.onDelete("cascade")
 	]
 );
 

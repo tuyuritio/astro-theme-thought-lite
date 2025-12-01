@@ -2,7 +2,7 @@ import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { and, eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { Comment, Drifter, Notification } from "$db/schema";
+import { Comment, CommentHistory, Drifter, Notification } from "$db/schema";
 import { enhash, Token } from "$utils/token";
 import notify from "$utils/notify";
 import config from "$config";
@@ -24,7 +24,6 @@ export type CommentItem = {
 	drifter: string;
 	timestamp: Date;
 	content: string;
-	history: CommentItem[];
 	subcomments: CommentItem[];
 };
 
@@ -90,7 +89,7 @@ export const comment = {
 				reply,
 				drifter,
 				nickname,
-				timestamp: now.getTime(),
+				timestamp: now,
 				content
 			});
 
@@ -152,31 +151,33 @@ export const comment = {
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
 
-			// Generate new comment ID and timestamp for the edited version
-			const now = new Date();
-			const edit = enhash(content + id + now).substring(0, 8);
-
-			// Update the original comment to point to the new edited version and return all data for cloning
-			const comments = await db
-				.update(Comment)
-				.set({ edit })
-				.where(and(eq(Comment.id, id), eq(Comment.drifter, drifter)))
+			// Store the original comment in the history table
+			const inserted = await db
+				.insert(CommentHistory)
+				.select(
+					db
+						.select({
+							id: sql`NULL`.as("id"),
+							comment: Comment.id,
+							timestamp: sql`COALESCE(${Comment.updated}, ${Comment.timestamp})`.as("timestamp"),
+							content: Comment.content
+						})
+						.from(Comment)
+						.where(and(eq(Comment.id, id), eq(Comment.drifter, drifter)))
+				)
 				.returning();
 
-			if (comments.length === 0) throw new ActionError({ code: "NOT_FOUND" });
+			// If no history was inserted, the comment doesn't exist or user doesn't own it
+			if (inserted.length === 0) throw new ActionError({ code: "NOT_FOUND" });
 
-			const comment = comments[0];
-
-			// Clone the original comment with new content and timestamp
-			await db.insert(Comment).values({
-				id: edit,
-				section: comment.section,
-				item: comment.item,
-				reply: comment.reply,
-				drifter: comment.drifter,
-				timestamp: now.getTime(),
-				content
-			});
+			// Update the original comment
+			await db
+				.update(Comment)
+				.set({
+					updated: new Date(),
+					content
+				})
+				.where(and(eq(Comment.id, id), eq(Comment.drifter, drifter)));
 		}
 	}),
 
@@ -197,8 +198,33 @@ export const comment = {
 			// This creates a self-reference indicating deletion while preserving the record
 			await db
 				.update(Comment)
-				.set({ edit: id })
+				.set({ deleted: true })
 				.where(and(eq(Comment.id, id), eq(Comment.drifter, drifter)));
+		}
+	}),
+
+	// Action to retrieve the edit history of a comment
+	history: defineAction({
+		input: z.object({
+			id: z.string() // The comment ID to get history for
+		}),
+		handler: async ({ id }, { locals }) => {
+			// Initialize database connection
+			const db = drizzle(locals.runtime.env.DB);
+
+			// Fetch all history entries for this comment
+			const history = await db
+				.select({
+					id: CommentHistory.id,
+					comment: CommentHistory.comment,
+					timestamp: CommentHistory.timestamp,
+					content: CommentHistory.content
+				})
+				.from(CommentHistory)
+				.where(eq(CommentHistory.comment, id))
+				.orderBy(CommentHistory.timestamp);
+
+			return history;
 		}
 	}),
 
@@ -224,8 +250,10 @@ export const comment = {
 					reply: Comment.reply,
 					drifter: Comment.drifter,
 					timestamp: Comment.timestamp,
-					content: Comment.content,
-					edit: Comment.edit,
+					updated: Comment.updated,
+					deleted: Comment.deleted,
+					// Return null for content if the comment is deleted
+					content: sql`CASE WHEN ${Comment.deleted} = 1 THEN NULL ELSE ${Comment.content} END`,
 					// Use display name if available, otherwise use handle
 					name: sql`CASE WHEN ${Drifter.name} IS NULL THEN ${Drifter.handle} ELSE ${Drifter.name} END`,
 					// Use nickname for unauthenticated users
@@ -241,57 +269,28 @@ export const comment = {
 				.orderBy(Comment.timestamp)
 				.leftJoin(Drifter, eq(Comment.drifter, Drifter.id));
 
-			// Create a map for efficient comment lookup and initialize subcomments & history arrays
+			// Create a map for efficient comment lookup and initialize subcomments arrays
 			const map = new Map<string, any>();
 			comments.forEach((comment: any) => {
-				map.set(comment.id, ((comment.subcomments = []), (comment.history = []), comment));
+				comment.subcomments = [];
+				map.set(comment.id, comment);
 			});
-			const list = new Map(map);
 
-			// Build comment tree structure with replies and edit history
+			// Build comment tree structure with replies
 			const treeification: CommentItem[] = [];
 
-			// Count the final comments
-			let count: number = 0;
-
-			while (list.size) {
-				let comment = list.values().next().value;
-				count++;
-
-				// Process edit history chain
-				let edit: CommentItem;
-				while ((edit = map.get(comment.edit))) {
-					if (edit.id === comment.id) {
-						// Self-reference indicates deletion
-						delete comment.content;
-					} else {
-						// Build edit history chain
-						comment.history.push(comment);
-						edit.history = comment.history;
-					}
-
-					// Preserve subcomments through edit chain
-					edit.subcomments = comment.subcomments;
-					comment.history = [];
-					delete comment.edit;
-					list.delete(comment.id);
-
-					comment = edit;
-				}
-
-				// Organize comments into tree structure
+			// Organize comments into tree structure
+			comments.forEach((comment: any) => {
 				if (comment.reply) {
 					// This is a reply, add to parent's subcomments
-					map.get(comment.reply).subcomments.push(comment);
+					map.get(comment.reply)?.subcomments.push(comment);
 				} else {
 					// This is a top-level comment
 					treeification.push(comment);
 				}
+			});
 
-				list.delete(comment.id);
-			}
-
-			return { treeification, count };
+			return { treeification, count: comments.length };
 		}
 	})
 };
