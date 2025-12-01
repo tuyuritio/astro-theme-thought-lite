@@ -1,5 +1,6 @@
 <script lang="ts">
 import { actions } from "astro:actions";
+import config from "$config";
 import remark from "$utils/remark";
 import Time from "$utils/time";
 import Modal from "$components/Modal.svelte";
@@ -143,7 +144,7 @@ async function remove() {
 				<div class="markdown comment">{#await remark.process(comment.content) then html}{@html html}{/await}</div>
 				<dd class="flex items-center gap-4 mt-2">
 					<button onclick={() => ((replyView = !replyView), (editView = false))} disabled={!turnstile && !drifter}>{@render icon.reply()}</button>
-					{#if comment.updated}<button onclick={() => (historyView = true)}>{@render icon.history()}</button>{/if}
+					{#if comment.updated && config.comment?.history}<button onclick={() => (historyView = true)}>{@render icon.history()}</button>{/if}
 					<button onclick={share}>{@render icon.share()}</button>
 					{#if comment.drifter === drifter?.id}
 						<button onclick={() => ((editView = !editView), (replyView = false))}>{@render icon.edit()}</button>

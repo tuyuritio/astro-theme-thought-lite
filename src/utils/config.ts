@@ -64,6 +64,9 @@ interface SiteConfigOptions<Locales extends readonly string[] = readonly string[
 
 		/** Hide top-level deleted comments without replies */
 		"hide-deleted"?: boolean;
+
+		/** Show edit history */
+		history?: boolean;
 	};
 
 	/** Latest Content Display */

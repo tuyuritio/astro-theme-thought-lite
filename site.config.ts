@@ -23,7 +23,8 @@ const config = siteConfig({
 	},
 	comment: {
 		"max-length": 500,
-		"hide-deleted": true
+		"hide-deleted": true,
+		history: true
 	},
 	latest: "*"
 });
