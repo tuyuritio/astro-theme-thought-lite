@@ -11,6 +11,7 @@ import Drifter from "./Drifter.svelte";
 
 let {
 	locale,
+	link,
 	oauth,
 	turnstile,
 	drifter,
@@ -25,6 +26,7 @@ let {
 	limit = $bindable(0)
 }: {
 	locale: string;
+	link: string;
 	oauth: any;
 	turnstile?: string;
 	drifter?: any;
@@ -128,7 +130,7 @@ async function submitComment() {
 	// Call appropriate API action based on whether editing or creating
 	const { data, error } = edit
 		? await actions.comment.edit({ id: edit, content })
-		: await actions.comment.create({ section, item, reply, content, link: location.origin + location.pathname, nickname, captcha: captcha });
+		: await actions.comment.create({ section, item, reply, content, link, nickname, captcha: captcha });
 
 	if (nomad) {
 		// Only reset turnstile for top-level comments (when reply is undefined) or if there was an error

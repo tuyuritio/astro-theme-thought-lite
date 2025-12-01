@@ -39,15 +39,17 @@ const entries = await Promise.all(prefaces.map(async preface => ({ ...preface, c
 			{
 				entries.map(preface => [
 					<hr class="my-5 b-b b-b-solid b-primary" />,
-					<li>
+					<li id={preface.id}>
 						<time datetime={preface.data.timestamp.toISOString()} class="block mb-5 font-bold text-5">
 							{Time.locale(preface.data.timestamp, locale)}
 						</time>
 						<article class="markdown">
 							<preface.content />
 						</article>
+						<blockquote class="mb-4">
+							<Comments compact={true} {locale} link={`${Astro.url.origin}${Astro.url.pathname}#${preface.id}`} section="preface" item={preface.data.timestamp.toISOString()} />
+						</blockquote>
 					</li>
-					<blockquote class="mb-4"><Comments compact={true} {locale} section="preface" item={preface.data.timestamp.toISOString()} /></blockquote>
 				])
 			}
 		</ul>

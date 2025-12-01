@@ -5,12 +5,13 @@ import Comments from "./Section.svelte";
 
 interface Props {
 	locale: string;
+	link: string;
 	section: string;
 	item: string;
 	compact?: boolean;
 }
 
-const { locale, section, item, compact } = Astro.props;
+const { locale, link, section, item, compact } = Astro.props;
 const t = i18nit(locale);
 
 const env = import.meta.env;
@@ -26,7 +27,7 @@ const oauth = {
 const turnstile = env.CLOUDFLARE_TURNSTILE_SECRET_KEY ? env.CLOUDFLARE_TURNSTILE_SITE_KEY : null;
 ---
 
-<Comments client:visible {locale} {section} {item} {oauth} {turnstile} {compact}>
+<Comments client:visible {locale} {link} {section} {item} {oauth} {turnstile} {compact}>
 	<Icon name="svg-spinners:3-dots-move" size={25} slot="loading" inline />
 	<Icon name="svg-spinners:pulse-3" size={30} slot="rendering" inline />
 	<Icon name="svg-spinners:ring-resize" slot="uploading" />

@@ -10,6 +10,7 @@ import Reply from "./Reply.svelte";
 
 let {
 	locale,
+	link,
 	oauth,
 	turnstile,
 	drifter,
@@ -20,6 +21,7 @@ let {
 	limit = $bindable(0)
 }: {
 	locale: string;
+	link: string;
 	oauth: any;
 	turnstile?: string;
 	drifter?: any;
@@ -147,13 +149,13 @@ async function remove() {
 	</dl>
 	<div class:ml-7={depth < MIN_DEPTH} class:sm:ml-7={depth < Math.max(MIN_DEPTH, MAX_DEPTH)}>
 		{#if replyView && !editView}
-			<Reply {locale} {oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.id} {icon} {refresh} bind:view={replyView} bind:limit />
+			<Reply {locale} {link} {oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.id} {icon} {refresh} bind:view={replyView} bind:limit />
 		{:else if editView && !replyView}
-			<Reply {locale} {oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.reply} edit={comment.id} text={comment.content} {icon} {refresh} bind:view={editView} bind:limit />
+			<Reply {locale} {link} {oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.reply} edit={comment.id} text={comment.content} {icon} {refresh} bind:view={editView} bind:limit />
 		{/if}
 
 		{#each comment.subcomments as subcomment}
-			<Self {locale} {oauth} {turnstile} {drifter} comment={subcomment} {icon} {refresh} depth={depth + 1} bind:limit />
+			<Self {locale} {link} {oauth} {turnstile} {drifter} comment={subcomment} {icon} {refresh} depth={depth + 1} bind:limit />
 		{/each}
 	</div>
 </main>

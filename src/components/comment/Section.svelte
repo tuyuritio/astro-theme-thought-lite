@@ -10,6 +10,7 @@ import Reply from "./Reply.svelte";
 
 let {
 	locale,
+	link,
 	section,
 	item,
 	oauth,
@@ -45,7 +46,7 @@ let {
 	sync,
 	signout,
 	deactivate
-}: { locale: string; nomad: boolean; section: string; item: string; oauth: any; turnstile?: string; compact?: boolean } & {
+}: { locale: string; link: string; nomad: boolean; section: string; item: string; oauth: any; turnstile?: string; compact?: boolean } & {
 	[key: string]: Snippet;
 } = $props();
 
@@ -144,7 +145,7 @@ onMount(async () => {
 
 <main>
 	{#if (!compact || expanded) && loaded}
-		<Reply {locale} {oauth} {turnstile} {section} {item} {drifter} {icon} {refresh} bind:limit />
+		<Reply {locale} {link} {oauth} {turnstile} {section} {item} {drifter} {icon} {refresh} bind:limit />
 	{/if}
 
 	{#if loaded}
@@ -180,7 +181,7 @@ onMount(async () => {
 		{/if}
 		{#each list as comment (comment.id)}
 			<div animate:flip={{ duration: 150 }}>
-				<CommentBlock {locale} {oauth} {turnstile} {icon} {drifter} {comment} {refresh} bind:limit />
+				<CommentBlock {locale} {link} {oauth} {turnstile} {icon} {drifter} {comment} {refresh} bind:limit />
 			</div>
 		{/each}
 	{:else}
