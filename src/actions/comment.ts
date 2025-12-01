@@ -23,6 +23,8 @@ export type CommentItem = {
 	reply: string | null;
 	drifter: string;
 	timestamp: Date;
+	updated: Date | null;
+	deleted: boolean | null;
 	content: string;
 	subcomments: CommentItem[];
 };

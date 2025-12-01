@@ -22,7 +22,8 @@ const config = siteConfig({
 		limit: 20
 	},
 	comment: {
-		"max-length": 500
+		"max-length": 500,
+		"hide-deleted": true
 	},
 	latest: "*"
 });

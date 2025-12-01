@@ -119,7 +119,7 @@ async function remove() {
 						{#if comment.author}{@render icon.author()}{/if}
 						{#if comment.homepage}<a href={comment.homepage} target="_blank" class="inline-flex">{@render icon.home()}</a>{/if}
 						<span>·</span>
-						<time class="text-3">{Time(comment.timestamp, Time.userTimezone).replace("-", " ")}</time>
+						<time class="text-3">{Time(comment.updated ?? comment.timestamp, Time.userTimezone).replace("-", " ")}</time>
 					</p>
 					{#if comment.description}<span title={comment.description} class="c-secondary text-3 line-height-normal truncate">{comment.description}</span>{/if}
 				</dt>

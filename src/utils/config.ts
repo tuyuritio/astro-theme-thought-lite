@@ -61,6 +61,9 @@ interface SiteConfigOptions<Locales extends readonly string[] = readonly string[
 	comment?: {
 		/** Maximum Comment Length */
 		"max-length"?: number;
+
+		/** Hide top-level deleted comments without replies */
+		"hide-deleted"?: boolean;
 	};
 
 	/** Latest Content Display */
