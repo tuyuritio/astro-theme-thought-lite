@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, passthroughImageService } from "astro/config";
+import { defineConfig } from "astro/config";
 import cloudflare from "@astrojs/cloudflare";
 import yaml from "@rollup/plugin-yaml";
 import mdx from "@astrojs/mdx";
@@ -54,9 +54,6 @@ export default defineConfig({
 			redirectToDefaultLocale: false,
 			prefixDefaultLocale: false
 		}
-	},
-	image: {
-		service: passthroughImageService()
 	},
 	markdown: {
 		remarkPlugins: [

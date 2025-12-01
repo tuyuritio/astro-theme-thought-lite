@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.29.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.29.0...v0.29.1) (2025-12-01)
+
+
+### Bug Fixes
+
+* **config:** remove passthroughImageService ([17df608](https://github.com/tuyuritio/astro-theme-thought-lite/commit/17df608146d4dc660f4d92b66224dcebe6fd438f))
+
 ## [0.29.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.28.5...v0.29.0) (2025-12-01)
 
 
