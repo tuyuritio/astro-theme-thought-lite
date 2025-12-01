@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.29.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.28.5...v0.29.0) (2025-12-01)
+
+
+### Features
+
+* **graph:** migrate OpenGraph template from TSX to VNode ([fec2c62](https://github.com/tuyuritio/astro-theme-thought-lite/commit/fec2c6275649be7aa8fc77bbcf1f17cf0a0cafcc))
+
+
+### Miscellaneous Chores
+
+* remove unnecessary workaround ([649cf53](https://github.com/tuyuritio/astro-theme-thought-lite/commit/649cf53e11fb7ad292b062b38cb1345c51839c6f))
+
 ## [0.28.5](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.28.4...v0.28.5) (2025-11-30)
 
 

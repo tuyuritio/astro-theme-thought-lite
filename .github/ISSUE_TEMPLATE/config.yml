@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://thought-lite.ttio.workers.dev/note/
+    about: Consult the documentation available at the demo site before submitting an issue
+  - name: Discussions
+    url: https://github.com/tuyuritio/astro-theme-thought-lite/discussions
+    about: Ask questions and share ideas in GitHub Discussions

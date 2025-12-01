@@ -1,0 +1,65 @@
+name: Documentation Improvement
+description: Report documentation issues or suggest improvements
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping improve the documentation!
+        Clear documentation helps everyone get started faster.
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Issue Type
+      description: What kind of documentation issue is this?
+      options:
+        - Typo / Grammar
+        - Missing information
+        - Unclear explanation
+        - Translation issue
+        - Outdated content
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      description: Which language version needs improvement?
+      options:
+        - English
+        - 简体中文
+        - 日本語
+        - All languages
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Documentation Location
+      description: Which file or section has the issue?
+      placeholder: e.g., README.md, src/content/note/en/configuration.md
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description & Suggestion
+      description: What is wrong and how should it be fixed?
+      placeholder: |
+        In the "Configuration" section, the variable `siteName` is misspelled as `siteNmae`.
+        It should be: ...
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Would you be willing to help improve this documentation?
+      options:
+        - label: I am willing to submit a PR to fix this documentation

@@ -5,7 +5,6 @@ import yaml from "@rollup/plugin-yaml";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
-import react from "@astrojs/react";
 import UnoCSS from "unocss/astro";
 import swup from "@swup/astro";
 import icon from "astro-icon";
@@ -116,27 +115,15 @@ export default defineConfig({
 		}
 	},
 	vite: {
-		resolve: {
-			// Workaround for https://github.com/facebook/react/issues/31827
-			alias: import.meta.env.PROD ? { "react-dom/server": "react-dom/server.edge" } : {}
-		},
-		ssr: {
-			// Workaround for https://github.com/thx/resvg-js/issues/315
-			external: ["@resvg/resvg-js"]
-		},
 		optimizeDeps: {
 			// Workaround for https://github.com/withastro/astro/issues/14692
-			include: ["picocolors"],
-
-			// Workaround for https://github.com/thx/resvg-js/issues/315
-			exclude: ["@resvg/resvg-js"]
+			include: ["picocolors"]
 		},
 		// @ts-expect-error
 		plugins: [yaml()]
 	},
 	integrations: [
 		svelte(),
-		react(),
 		mdx(),
 		sitemap(),
 		swup({

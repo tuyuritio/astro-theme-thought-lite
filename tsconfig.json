@@ -17,8 +17,6 @@
 			"$i18n": ["src/i18n/index"],
 			"$layouts/*": ["src/layouts/*"],
 			"$styles/*": ["src/styles/*"]
-		},
-		"jsx": "react-jsx",
-		"jsxImportSource": "react"
+		}
 	}
 }
