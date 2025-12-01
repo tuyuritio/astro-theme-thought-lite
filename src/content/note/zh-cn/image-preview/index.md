@@ -23,7 +23,7 @@ description: 演示 Markdown 中图片引用的三种方式：相对路径、绝
 
 使用 `/public` 目录下的图片文件：
 
-![ThoughtLite](/web-app-manifest-512x512.png)
+![ThoughtLite](/favicon-96x96.png)
 
 ## 外部图床
 

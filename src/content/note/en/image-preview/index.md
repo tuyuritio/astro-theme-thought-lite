@@ -23,7 +23,7 @@ Using an image file from the same directory[^boat]:
 
 Using an image file from the `/public` directory:
 
-![ThoughtLite](/web-app-manifest-512x512.png)
+![ThoughtLite](/favicon-96x96.png)
 
 ## External Image Hosting
 
