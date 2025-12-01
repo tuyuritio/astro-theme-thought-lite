@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, passthroughImageService } from "astro/config";
+import { defineConfig } from "astro/config";
 import yaml from "@rollup/plugin-yaml";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
@@ -47,9 +47,6 @@ export default defineConfig({
 			redirectToDefaultLocale: false,
 			prefixDefaultLocale: false
 		}
-	},
-	image: {
-		service: passthroughImageService()
 	},
 	markdown: {
 		remarkPlugins: [
