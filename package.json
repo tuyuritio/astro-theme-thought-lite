@@ -89,7 +89,6 @@
 		"@astrojs/check": "^0.9.6",
 		"@biomejs/biome": "2.3.8",
 		"@clack/prompts": "^0.11.0",
-		"@resvg/resvg-js": "^2.6.2",
 		"@rollup/plugin-yaml": "^4.1.2",
 		"@types/hast": "^3.0.4",
 		"@types/luxon": "^3.7.1",
@@ -107,6 +106,7 @@
 		"prettier-plugin-astro": "0.14.1",
 		"prettier-plugin-svelte": "^3.4.0",
 		"satori": "^0.18.3",
+		"sharp": "^0.34.5",
 		"tsx": "^4.20.6",
 		"unocss": "^66.5.4"
 	},

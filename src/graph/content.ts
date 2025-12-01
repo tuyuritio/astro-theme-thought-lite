@@ -1,5 +1,5 @@
 import satori from "satori";
-import { Resvg } from "@resvg/resvg-js";
+import sharp from "sharp";
 import i18nit from "$i18n";
 import icon from "$public/favicon.svg?raw";
 
@@ -238,8 +238,7 @@ export default async ({
 		}
 	);
 
-	const renderer = new Resvg(svg, { fitTo: { mode: "width", value: 1200 } });
-	return renderer.render().asPng();
+	return sharp(Buffer.from(svg)).resize(1200).png().toBuffer();
 };
 
 /**

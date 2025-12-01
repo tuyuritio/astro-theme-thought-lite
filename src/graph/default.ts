@@ -1,5 +1,5 @@
 import satori from "satori";
-import { Resvg } from "@resvg/resvg-js";
+import sharp from "sharp";
 import icon from "$public/favicon.svg?raw";
 
 // Locale-specific Noto Serif font mappings for Google Fonts
@@ -95,8 +95,7 @@ export default async ({ locale, title, description, author }: { locale: string; 
 		}
 	);
 
-	const renderer = new Resvg(svg, { fitTo: { mode: "width", value: 1200 } });
-	return renderer.render().asPng();
+	return sharp(Buffer.from(svg)).resize(1200).png().toBuffer();
 };
 
 /**
