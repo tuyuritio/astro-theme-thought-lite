@@ -1,0 +1,54 @@
+name: Feature Request
+description: Suggest a new feature or enhancement
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a new feature!
+        Please provide as much detail as possible to help understand your idea.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before submitting
+      options:
+        - label: I have searched existing issues and this feature has not been requested
+          required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Feature Category
+      description: What area does this feature relate to?
+      options:
+        - UI / Design
+        - Comment System
+        - Functionality
+        - SEO / Performance
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: What is the feature and why is it useful?
+      placeholder: |
+        I would like to suggest adding... 
+        This would be helpful because...
+    validations:
+      required: true
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples / References
+      description: Have you seen this feature on other sites? Please share links or screenshots.
+      placeholder: |
+        - Like the footer on https://example.com
+        - Screenshot: ...
+    validations:
+      required: false

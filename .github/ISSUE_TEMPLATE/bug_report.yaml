@@ -1,0 +1,73 @@
+name: Bug Report
+description: Report a bug or unexpected behavior
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report a bug!
+        Please fill out the following information to help diagnose and fix the issue.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before submitting
+      options:
+        - label: I have searched existing issues and this bug has not been reported
+          required: true
+        - label: I am using the latest code from the branch
+          required: true
+
+  - type: dropdown
+    id: branch
+    attributes:
+      label: Branch
+      description: Which branch are you using?
+      options:
+        - main
+        - cloudflare
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description & Reproduction
+      description: What happened? What did you expect to happen?
+      placeholder: |
+        Describe the bug clearly.
+
+        Expected: ...
+        Actual: ...
+
+        Steps:
+        1. ...
+        2. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: envinfo
+    attributes:
+      label: Environment Information
+      description: Run `pnpx astro info` to get the environment details
+      placeholder: |
+        Astro             ...
+        Node              ...
+        System            ...
+        Package Manager   ...
+        Output            ...
+        Adapter           ...
+        Integrations      ...
+      render: shell
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Would you be willing to help implement this feature?
+      options:
+        - label: I am willing to submit a PR to implement this feature
