@@ -121,7 +121,7 @@ onMount(() => {
 	</article>
 	<aside class="sm:basis-[200px] flex flex-col gap-5">
 		<section>
-			<h3>{t("jotting.tag")}</h3>
+			<h4>{t("jotting.tag")}</h4>
 			<p>
 				{#each tagList as tag (tag)}
 					<button class:selected={tags.includes(tag)} onclick={() => switchTag(tag)}>{tag}</button>
@@ -159,11 +159,6 @@ onMount(() => {
 			display: flex;
 			flex-direction: column;
 			gap: 5px;
-
-			h3 {
-				font-weight: bold;
-				font-size: 1.25rem;
-			}
 
 			p {
 				display: flex;
