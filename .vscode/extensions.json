@@ -1,4 +1,4 @@
 {
-	"recommendations": ["astro-build.astro-vscode", "tamasfe.even-better-toml", "lokalise.i18n-ally", "antfu.unocss"],
+	"recommendations": ["astro-build.astro-vscode", "tamasfe.even-better-toml", "lokalise.i18n-ally"],
 	"unwantedRecommendations": []
 }

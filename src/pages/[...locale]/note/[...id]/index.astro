@@ -67,8 +67,8 @@ const t = i18nit(locale);
 <Base title={note.data.title} {locale} description={note.data.description} article={{ timestamp: note.data.timestamp, section: note.data.series, tags: note.data.tags }}>
 	<main class="flex flex-col gap-6">
 		<header class="flex flex-col gap-4">
-			<h1 class="text-3xl">{note.data.title}</h1>
-			<div class="flex flex-col gap-3 sm:flex-row children:(flex items-center gap-1 text-3.5 c-secondary)">
+			<h1 class="text-3xl font-bold">{note.data.title}</h1>
+			<div class="flex flex-col gap-3 sm:flex-row *:flex *:items-center *:gap-1 *:text-[0.875rem] *:text-secondary">
 				<time datetime={note.data.timestamp.toISOString()}><Icon name="lucide:calendar" />{Time(note.data.timestamp)}</time>
 				{
 					note.data.series && (
@@ -88,7 +88,7 @@ const t = i18nit(locale);
 				}
 				<span><Icon name="lucide:pilcrow" />{t("read.words", { words: frontmatter.words })}</span>
 			</div>
-			<hr class="b-b b-b-solid b-weak" />
+			<hr class="border-b border-b-solid border-weak" />
 		</header>
 
 		<Sensitive {locale} back="/note" sensitive={note.data.sensitive} client:load>
@@ -96,7 +96,7 @@ const t = i18nit(locale);
 				<section id="markdown-content" class="markdown"><Content /></section>
 				{
 					note.data.toc && (
-						<aside class="hidden sm:(block flex-shrink-0 w-200px)">
+						<aside class="hidden sm:block sm:shrink-0 sm:w-[200px]">
 							<div class="sticky top-3 flex flex-col gap-2">
 								<h3>{t("note.contents")}</h3>
 								<nav class="overflow-y-auto">

@@ -11,27 +11,26 @@ const { locale } = Astro.props;
 const t = i18nit(locale);
 ---
 
-<style lang="less">
-	figure {
-		button {
-			position: relative;
-			border-width: 2px;
-			border-style: solid;
+<style>
+	figure button {
+		position: relative;
+		border-width: 2px;
+		border-style: solid;
+		border-radius: 50%;
 
-			border-radius: 50%;
-			padding: 5px;
+		padding: 5px;
+		background-color: var(--background-color);
 
-			background-color: var(--background-color);
-
-			--uno: shadow-md;
-		}
+		box-shadow:
+			0 4px 6px -1px rgb(0 0 0 / 0.1),
+			0 2px 4px -2px rgb(0 0 0 / 0.1);
 	}
 </style>
 
 <figure class="fixed right-[calc(20px+max(calc((100%-1100px)/2),0px))] bottom-5 sm:bottom-30 flex flex-col gap-2">
-	<button aria-label="Scroll to Top" class="b-weak" onclick="document.scrollingElement?.scrollTo({top: 0, behavior: 'smooth'})">
+	<button aria-label="Scroll to Top" class="border-weak" onclick="document.scrollingElement?.scrollTo({top: 0, behavior: 'smooth'})">
 		<Icon name="lucide:arrow-up-to-line" size={15} title={t("note.top")} />
-		<svg class="absolute top--2px left--2px w-[calc(100%+4px)] h-[calc(100%+4px)] transform-origin-center pointer-events-none">
+		<svg class="absolute -top-0.5 -left-0.5 w-[calc(100%+4px)] h-[calc(100%+4px)] transform-origin-center pointer-events-none">
 			<circle id="progress-circle" cx="50%" cy="50%" r="calc(50% - 1px)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"></circle>
 		</svg>
 	</button>
