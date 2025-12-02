@@ -358,17 +358,17 @@
 				/* biome-ignore lint/a11y/useGenericFontNames: https://github.com/biomejs/biome/issues/8339 */
 				font-family: "KaTeX_Main", var(--serif);
 			}
+		}
 
-			&-display {
-				margin: 0px;
+		.katex-display {
+			margin: 0px;
+			text-align: inherit;
+			padding-bottom: 2px;
+			overflow-x: auto;
+			overflow-y: hidden;
+
+			> .katex {
 				text-align: inherit;
-				padding-bottom: 2px;
-				overflow-x: auto;
-				overflow-y: hidden;
-
-				> .katex {
-					text-align: inherit;
-				}
 			}
 		}
 
