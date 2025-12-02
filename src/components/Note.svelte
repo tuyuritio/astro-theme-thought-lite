@@ -120,20 +120,20 @@ onMount(() => {
 						{#if note.data.series}<button onclick={() => chooseSeries(note.data.series, true)}>{note.data.series}</button><b>|</b>{/if}
 						<a href={getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)} class="link">{note.data.title}</a>
 					</div>
-					<time datetime={note.data.timestamp.toISOString()} class="font-mono text-2.6 c-remark">{Time(note.data.timestamp)}</time>
+					<time datetime={note.data.timestamp.toISOString()} class="font-mono text-[0.65rem] leading-none text-remark">{Time(note.data.timestamp)}</time>
 				</div>
-				<span class="flex items-center gap-1 sm:ml-a c-remark">
+				<span class="flex items-center gap-1 sm:ml-auto text-remark">
 					{#each note.data.tags as tag}
-						<button onclick={() => switchTag(tag, true)} class="text-3.5 sm:text-sm">#{tag}</button>
+						<button onclick={() => switchTag(tag, true)} class="text-[0.875rem] sm:text-sm">#{tag}</button>
 					{/each}
 				</span>
 			</section>
 		{:else}
-			<div class="pt-10vh text-center c-secondary font-bold text-xl">{t("note.empty")}</div>
+			<div class="pt-[10vh] text-center text-secondary font-bold text-xl">{t("note.empty")}</div>
 		{/each}
 
 		{#if pages > 1}
-			<footer class="sticky bottom-0 flex items-center justify-center gap-3 mt-a pb-1 c-weak bg-background font-mono">
+			<footer class="sticky bottom-0 flex items-center justify-center gap-3 mt-auto pb-1 text-weak bg-background font-mono">
 				<button onclick={() => (page = Math.max(1, page - 1))}>{@render left()}</button>
 				<button class:location={1 == page} onclick={() => (page = 1)}>{1}</button>
 
@@ -151,7 +151,7 @@ onMount(() => {
 		{/if}
 	</article>
 
-	<aside class="sm:flex-basis-200px flex flex-col gap-5">
+	<aside class="sm:basis-[200px] flex flex-col gap-5">
 		<section>
 			<h3>{t("note.series")}</h3>
 			<p>
@@ -172,7 +172,7 @@ onMount(() => {
 	</aside>
 </main>
 
-<style lang="less">
+<style>
 	article {
 		footer {
 			button {
@@ -205,6 +205,11 @@ onMount(() => {
 			flex-direction: column;
 			gap: 5px;
 
+			h3 {
+				font-weight: bold;
+				font-size: 1.25rem;
+			}
+
 			p {
 				display: flex;
 				flex-direction: row;
@@ -213,8 +218,7 @@ onMount(() => {
 
 				button {
 					border-bottom: 1px solid var(--primary-color);
-					padding: 0rem 0.2rem;
-
+					padding: 0rem 0.35rem;
 					font-size: 0.9rem;
 					transition:
 						color 0.1s ease-in-out,

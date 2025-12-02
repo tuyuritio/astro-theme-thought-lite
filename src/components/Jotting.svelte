@@ -84,25 +84,25 @@ onMount(() => {
 	<article class="flex flex-col grow">
 		<header class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-5">
 			{#each list as jotting (jotting.id)}
-				<section animate:flip={{ duration: 150 }} class="flex flex-col justify-center b-b b-b-dashed b-b-weak pb-1">
+				<section animate:flip={{ duration: 150 }} class="flex flex-col justify-center border-b border-dashed border-b-weak pb-1">
 					<span class="flex items-center gap-1">
 						{#if jotting.data.top > 0}<span>{@render top()}</span>{/if}
 						{#if jotting.data.sensitive}<span>{@render sensitive()}</span>{/if}
-						<a href={getRelativeLocaleUrl(locale, `/jotting/${monolocale ? jotting.id : jotting.id.split("/").slice(1).join("/")}`)} class="line-height-normal c-primary font-600 link truncate">{jotting.data.title}</a>
+						<a href={getRelativeLocaleUrl(locale, `/jotting/${monolocale ? jotting.id : jotting.id.split("/").slice(1).join("/")}`)} class="leading-normal text-primary font-semibold link truncate">{jotting.data.title}</a>
 					</span>
 					<span class="flex gap-1">
 						{#each jotting.data.tags as tag}
-							<button onclick={() => switchTag(tag, true)} class="text-3.3 c-remark">#{tag}</button>
+							<button onclick={() => switchTag(tag, true)} class="text-[0.825rem] text-remark">#{tag}</button>
 						{/each}
 					</span>
 				</section>
 			{:else}
-				<div class="col-span-2 pt-10vh text-center c-secondary font-bold text-xl">{t("jotting.empty")}</div>
+				<div class="col-span-2 pt-[10vh] text-center text-secondary font-bold text-xl">{t("jotting.empty")}</div>
 			{/each}
 		</header>
 
 		{#if pages > 1}
-			<footer class="sticky bottom-0 flex items-center justify-center gap-3 mt-a pb-1 c-weak bg-background font-mono">
+			<footer class="sticky bottom-0 flex items-center justify-center gap-3 mt-auto pb-1 text-weak bg-background font-mono">
 				<button onclick={() => (page = Math.max(1, page - 1))}>{@render left()}</button>
 				<button class:location={1 == page} onclick={() => (page = 1)}>{1}</button>
 
@@ -119,7 +119,7 @@ onMount(() => {
 			</footer>
 		{/if}
 	</article>
-	<aside class="sm:flex-basis-200px flex flex-col gap-5">
+	<aside class="sm:basis-[200px] flex flex-col gap-5">
 		<section>
 			<h3>{t("jotting.tag")}</h3>
 			<p>
@@ -131,23 +131,19 @@ onMount(() => {
 	</aside>
 </main>
 
-<style lang="less">
+<style>
 	article {
 		footer {
 			button {
 				display: flex;
 				align-items: center;
 				justify-content: center;
-
 				width: 30px;
 				height: 30px;
-
 				margin-top: 0.25rem 0rem 0.5rem;
 				border-bottom: 2px solid;
-
 				font-style: var(--font-monospace);
 				font-size: 0.875rem;
-
 				transition: color 0.15s ease-in-out;
 
 				&:hover,
@@ -164,6 +160,11 @@ onMount(() => {
 			flex-direction: column;
 			gap: 5px;
 
+			h3 {
+				font-weight: bold;
+				font-size: 1.25rem;
+			}
+
 			p {
 				display: flex;
 				flex-direction: row;
@@ -172,8 +173,7 @@ onMount(() => {
 
 				button {
 					border-bottom: 1px solid var(--primary-color);
-					padding: 0rem 0.2rem;
-
+					padding: 0rem 0.35rem;
 					font-size: 0.9rem;
 					transition:
 						color 0.1s ease-in-out,

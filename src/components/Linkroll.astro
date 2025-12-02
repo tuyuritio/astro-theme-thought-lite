@@ -46,8 +46,8 @@ const fallback = "/linkback.webp";
 <main class="grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-4 my-4">
 	{
 		links.map(link => (
-			<article class="flex gap-2 b-b b-b-solid b-weak pl-1 pr-2 pb-2">
-				<img src={link.image || fallback} alt={`Linkroll-${link.title}`} data-nozoom class="w-10 h-10 rd-full" onerror={`this.onerror=null;this.src='${fallback}';`} />
+			<article class="flex gap-2 border-b border-b-solid border-weak pl-1 pr-2 pb-2">
+				<img src={link.image || fallback} alt={`Linkroll-${link.title}`} data-nozoom class="w-10 h-10 rounded-full" onerror={`this.onerror=null;this.src='${fallback}';`} />
 				<div class="grow min-w-0 flex flex-col justify-around">
 					<div class="flex items-center justify-between">
 						<a href={link.url} target="_blank" rel="noopener noreferrer" class="font-bold after:hidden link truncate">
@@ -56,7 +56,7 @@ const fallback = "/linkback.webp";
 						<Icon name={types[link.type].icon} title={types[link.type].name} size="0.9rem" />
 					</div>
 					{link.description && (
-						<p title={link.description} class="text-xs c-secondary truncate">
+						<p title={link.description} class="text-xs text-secondary truncate">
 							{link.description}
 						</p>
 					)}
@@ -66,7 +66,7 @@ const fallback = "/linkback.webp";
 	}
 </main>
 
-<style lang="less">
+<style>
 	* {
 		line-height: normal;
 	}

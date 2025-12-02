@@ -49,7 +49,7 @@ jottings.forEach(jotting => {
 		<figure class="relative group">
 			<i class="block w-2.5 h-2.5 bg-primary {number > 2 ? 'opacity-100' : number > 1 ? 'opacity-70' : number > 0 ? 'opacity-40' : 'opacity-10'}"></i>
 
-			<div class="absolute left-0 bottom-full w-max -translate-x-1/2 flex flex-col mb-1 rd-1 px-2 py-2 text-size-xs c-background bg-primary pop">
+			<div class="absolute left-0 bottom-full w-max -translate-x-1/2 flex flex-col mb-1 rounded-sm px-2 py-2 text-xs text-background bg-primary pop">
 				<time class="font-bold">{Time.date.locale(day.date, locale)}</time>
 				{#if number > 0}
 					{#if day.notes.length > 0}

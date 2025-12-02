@@ -48,6 +48,7 @@
 		"@iconify-json/simple-icons": "^1.2.60",
 		"@iconify-json/svg-spinners": "^1.2.4",
 		"@swup/astro": "^1.7.0",
+		"@tailwindcss/vite": "^4.1.17",
 		"astro": "^5.16.2",
 		"astro-icon": "^1.1.5",
 		"feed": "^5.1.0",
@@ -76,6 +77,7 @@
 		"remark-ruby-directive": "^0.3.0",
 		"shiki": "^3.17.0",
 		"svelte": "^5.45.2",
+		"tailwindcss": "^4.1.17",
 		"typescript": "^5.9.3",
 		"unified": "^11.0.5",
 		"unist-builder": "^4.0.0",
@@ -94,12 +96,8 @@
 		"@types/luxon": "^3.7.1",
 		"@types/mdast": "^4.0.4",
 		"@types/unist": "^3.0.3",
-		"@unocss/reset": "^66.5.4",
-		"@unocss/transformer-directives": "^66.5.4",
-		"@unocss/transformer-variant-group": "^66.5.4",
 		"esm-loader-yaml": "^1.0.2",
 		"husky": "^9.1.7",
-		"less": "^4.4.2",
 		"lint-staged": "^16.2.7",
 		"picocolors": "^1.1.1",
 		"prettier": "3.7.1",
@@ -107,8 +105,7 @@
 		"prettier-plugin-svelte": "^3.4.0",
 		"satori": "^0.18.3",
 		"sharp": "^0.34.5",
-		"tsx": "^4.20.6",
-		"unocss": "^66.5.4"
+		"tsx": "^4.20.6"
 	},
 	"lint-staged": {
 		"*.{js,ts,json,jsonc,svelte,astro}": [
