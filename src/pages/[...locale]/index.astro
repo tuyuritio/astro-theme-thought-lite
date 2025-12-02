@@ -102,7 +102,7 @@ const { Content } = preface ? await render(preface) : ({} as any);
 					<Heatmap {locale} {notes} {jottings} />
 
 					<blockquote class="grow flex flex-col">
-						<h3 class="text-xl font-bold">{t("home.latest")}</h3>
+						<h4>{t("home.latest")}</h4>
 						<div class="flex flex-col sm:flex-row justify-between gap-1 mt-1">
 							<a href={getRelativeLocaleUrl(locale, `/${latest.type}/${monolocale ? latest.id : latest.id.split("/").slice(1).join("/")}`)} class="link">
 								{latest.data.series && `${latest.data.series} | `}

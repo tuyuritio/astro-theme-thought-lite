@@ -153,7 +153,7 @@ onMount(() => {
 
 	<aside class="sm:basis-[200px] flex flex-col gap-5">
 		<section>
-			<h3>{t("note.series")}</h3>
+			<h4>{t("note.series")}</h4>
 			<p>
 				{#each seriesList as seriesItem (seriesItem)}
 					<button class:selected={seriesItem == series} onclick={() => chooseSeries(seriesItem)}>{seriesItem}</button>
@@ -162,7 +162,7 @@ onMount(() => {
 		</section>
 
 		<section>
-			<h3>{t("note.tag")}</h3>
+			<h4>{t("note.tag")}</h4>
 			<p>
 				{#each tagList as tag (tag)}
 					<button class:selected={tags.includes(tag)} onclick={() => switchTag(tag)}>{tag}</button>
@@ -204,11 +204,6 @@ onMount(() => {
 			display: flex;
 			flex-direction: column;
 			gap: 5px;
-
-			h3 {
-				font-weight: bold;
-				font-size: 1.25rem;
-			}
 
 			p {
 				display: flex;
