@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.1...v0.30.2) (2025-12-03)
+
+
+### Styles
+
+* simplify border classes ([cdd40c4](https://github.com/tuyuritio/astro-theme-thought-lite/commit/cdd40c495175ea104ee54a51650049b148369f1e))
+
 ## [0.30.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.0...v0.30.1) (2025-12-03)
 
 
