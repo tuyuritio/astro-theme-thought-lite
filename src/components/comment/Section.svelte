@@ -1,9 +1,10 @@
 <script lang="ts">
 import { actions } from "astro:actions";
-import { onMount, type Snippet } from "svelte";
+import { onMount } from "svelte";
 import { flip } from "svelte/animate";
 import config from "$config";
 import type { CommentItem } from "$actions/comment";
+import Icon from "$components/Icon.svelte";
 import { pushTip } from "$components/Tip.svelte";
 import i18nit from "$i18n";
 import CommentBlock from "./Comment.svelte";
@@ -16,69 +17,8 @@ let {
 	item,
 	oauth,
 	turnstile,
-	compact = false,
-	author,
-	home,
-	alert,
-	fold,
-	unfold,
-	reload,
-	asc,
-	desc,
-	reply,
-	history,
-	share,
-	edit,
-	remove,
-	emoji,
-	preview,
-	signin,
-	profile,
-	submit,
-	delay,
-	overlength,
-	loading,
-	rendering,
-	uploading,
-	verifying,
-	github,
-	google,
-	x,
-	sync,
-	signout,
-	deactivate
-}: { locale: string; link: string; nomad: boolean; section: string; item: string; oauth: any; turnstile?: string; compact?: boolean } & {
-	[key: string]: Snippet;
-} = $props();
-
-// Group all icon snippets into a single object for easier prop passing
-const icon = {
-	author,
-	home,
-	alert,
-	reply,
-	history,
-	share,
-	edit,
-	remove,
-	emoji,
-	preview,
-	signin,
-	profile,
-	submit,
-	delay,
-	overlength,
-	loading,
-	rendering,
-	uploading,
-	verifying,
-	github,
-	google,
-	x,
-	sync,
-	signout,
-	deactivate
-};
+	compact = false
+}: { locale: string; link: string; nomad: boolean; section: string; item: string; oauth: any; turnstile?: string; compact?: boolean } = $props();
 
 const t = i18nit(locale);
 
@@ -146,7 +86,7 @@ onMount(async () => {
 
 <main>
 	{#if (!compact || expanded) && loaded}
-		<Reply {locale} {link} {oauth} {turnstile} {section} {item} {drifter} {icon} {refresh} bind:limit />
+		<Reply {locale} {link} {oauth} {turnstile} {section} {item} {drifter} {refresh} bind:limit />
 	{/if}
 
 	{#if loaded}
@@ -161,20 +101,20 @@ onMount(async () => {
 				{#if compact}
 					<button onclick={() => (expanded = !expanded)}>
 						{#if expanded}
-							{@render unfold()}
+							<Icon name="lucide--chevrons-down" title={t("comment.collapse")} />
 						{:else}
-							{@render fold()}
+							<Icon name="lucide--chevrons-up" title={t("comment.expand")} />
 						{/if}
 					</button>
 				{/if}
 
 				<p class="flex gap-4">
-					<button onclick={() => refresh(false)}>{@render reload()}</button>
+					<button onclick={() => refresh(false)}><Icon name="lucide--refresh-cw" title={t("comment.reload.name")} /></button>
 					<button onclick={() => (ascending = !ascending)}>
 						{#if ascending}
-							{@render asc()}
+							<Icon name="lucide--clock-arrow-down" title={t("comment.sort.asc")} />
 						{:else}
-							{@render desc()}
+							<Icon name="lucide--clock-arrow-up" title={t("comment.sort.desc")} />
 						{/if}
 					</button>
 				</p>
@@ -183,11 +123,11 @@ onMount(async () => {
 		{#each list as comment (comment.id)}
 			<div animate:flip={{ duration: 150 }}>
 				{#if !comment.deleted || comment.subcomments.length || !config.comment?.["hide-deleted"]}
-					<CommentBlock {locale} {link} {oauth} {turnstile} {icon} {drifter} {comment} {refresh} bind:limit />
+					<CommentBlock {locale} {link} {oauth} {turnstile} {drifter} {comment} {refresh} bind:limit />
 				{/if}
 			</div>
 		{/each}
 	{:else}
-		<i class="block w-full text-center mt-10">{@render loading()}</i>
+		<i class="block w-full text-center mt-10"><Icon name="svg-spinners--3-dots-move" size={25} /></i>
 	{/if}
 </main>

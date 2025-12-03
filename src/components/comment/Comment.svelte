@@ -3,6 +3,7 @@ import { actions } from "astro:actions";
 import config from "$config";
 import remark from "$utils/remark";
 import Time from "$utils/time";
+import Icon from "$components/Icon.svelte";
 import Modal from "$components/Modal.svelte";
 import { pushTip } from "$components/Tip.svelte";
 import i18nit from "$i18n";
@@ -16,7 +17,6 @@ let {
 	turnstile,
 	drifter,
 	comment,
-	icon,
 	refresh,
 	depth = 0,
 	limit = $bindable(0)
@@ -27,7 +27,6 @@ let {
 	turnstile?: string;
 	drifter?: any;
 	comment: any;
-	icon: any;
 	refresh: any;
 	depth?: number;
 	limit?: number;
@@ -91,7 +90,7 @@ async function remove() {
 		<h3>{t("comment.edit.history")}</h3>
 		<dl class="flex flex-col gap-2 overflow-y-auto">
 			{#await actions.comment.history({ id: comment.id })}
-				<div class="flex justify-center p-4">{@render icon.loading()}</div>
+				<div class="flex justify-center p-4"><Icon name="svg-spinners--3-dots-move" size={25} /></div>
 			{:then response}
 				{#if !response.error}
 					{#each response.data.reverse() as item}
@@ -101,7 +100,7 @@ async function remove() {
 						{/await}
 					{/each}
 				{:else}
-					<div>{@render icon.alert()}</div>
+					<div><Icon name="lucide--triangle-alert" /></div>
 				{/if}
 			{/await}
 		</dl>
@@ -117,8 +116,8 @@ async function remove() {
 				<dt class="flex flex-col gap-0.5 min-w-0">
 					<p class="flex items-center gap-1">
 						<b>{comment.name}</b>
-						{#if comment.author}{@render icon.author()}{/if}
-						{#if comment.homepage}<a href={comment.homepage} target="_blank" class="inline-flex">{@render icon.home()}</a>{/if}
+						{#if comment.author}<Icon name="lucide--signature" title={t("comment.author")} />{/if}
+						{#if comment.homepage}<a href={comment.homepage} target="_blank" class="inline-flex"><Icon name="lucide--house" /></a>{/if}
 						<span>·</span>
 						<time class="text-xs">{Time(comment.updated ?? comment.timestamp, Time.userTimezone).replace("-", " ")}</time>
 					</p>
@@ -143,28 +142,28 @@ async function remove() {
 			{#if comment.content}
 				<div class="markdown comment">{#await remark.process(comment.content) then html}{@html html}{/await}</div>
 				<dd class="flex items-center gap-4 mt-2">
-					<button onclick={() => ((replyView = !replyView), (editView = false))} disabled={!turnstile && !drifter}>{@render icon.reply()}</button>
-					{#if comment.updated && config.comment?.history}<button onclick={() => (historyView = true)}>{@render icon.history()}</button>{/if}
-					<button onclick={share}>{@render icon.share()}</button>
+					<button onclick={() => ((replyView = !replyView), (editView = false))} disabled={!turnstile && !drifter}><Icon name="lucide--reply" title={t("comment.reply")} /></button>
+					{#if comment.updated && config.comment?.history}<button onclick={() => (historyView = true)}><Icon name="lucide--history" title={t("comment.history")} /></button>{/if}
+					<button onclick={share}><Icon name="lucide--share-2" title={t("comment.share.name")} /></button>
 					{#if comment.drifter === drifter?.id}
-						<button onclick={() => ((editView = !editView), (replyView = false))}>{@render icon.edit()}</button>
-						<button onclick={() => (deleteView = true)}>{@render icon.remove()}</button>
+						<button onclick={() => ((editView = !editView), (replyView = false))}><Icon name="lucide--pencil" title={t("comment.edit.name")} /></button>
+						<button onclick={() => (deleteView = true)}><Icon name="lucide--trash" title={t("delete")} /></button>
 					{/if}
 				</dd>
 			{:else}
-				<div class="flex items-center gap-1 mt-1 font-bold leading-none">{@render icon.alert()}{t("comment.removed")}{@render icon.alert()}</div>
+				<div class="flex items-center gap-1 mt-1 font-bold leading-none"><Icon name="lucide--triangle-alert" />{t("comment.removed")}<Icon name="lucide--triangle-alert" /></div>
 			{/if}
 		</blockquote>
 	</dl>
 	<div class:ml-7={depth < MIN_DEPTH} class:sm:ml-7={depth < Math.max(MIN_DEPTH, MAX_DEPTH)}>
 		{#if replyView && !editView}
-			<Reply {locale} {link} {oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.id} {icon} {refresh} bind:view={replyView} bind:limit />
+			<Reply {locale} {link} {oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.id} {refresh} bind:view={replyView} bind:limit />
 		{:else if editView && !replyView}
-			<Reply {locale} {link} {oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.reply} edit={comment.id} text={comment.content} {icon} {refresh} bind:view={editView} bind:limit />
+			<Reply {locale} {link} {oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.reply} edit={comment.id} text={comment.content} {refresh} bind:view={editView} bind:limit />
 		{/if}
 
 		{#each comment.subcomments as subcomment}
-			<Self {locale} {link} {oauth} {turnstile} {drifter} comment={subcomment} {icon} {refresh} depth={depth + 1} bind:limit />
+			<Self {locale} {link} {oauth} {turnstile} {drifter} comment={subcomment} {refresh} depth={depth + 1} bind:limit />
 		{/each}
 	</div>
 </main>

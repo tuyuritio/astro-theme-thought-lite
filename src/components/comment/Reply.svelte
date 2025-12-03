@@ -3,6 +3,7 @@ import { actions } from "astro:actions";
 import { slide } from "svelte/transition";
 import { onMount } from "svelte";
 import remark from "$utils/remark";
+import Icon from "$components/Icon.svelte";
 import Modal from "$components/Modal.svelte";
 import { pushTip } from "$components/Tip.svelte";
 import config from "$config";
@@ -20,7 +21,6 @@ let {
 	reply,
 	edit,
 	text,
-	icon,
 	refresh,
 	view = $bindable(),
 	limit = $bindable(0)
@@ -35,7 +35,6 @@ let {
 	reply?: string;
 	edit?: string;
 	text?: string;
-	icon: any;
 	refresh: any;
 	view?: boolean;
 	limit?: number;
@@ -234,16 +233,16 @@ onMount(() => {
 		<hr class="border-b border-dashed w-full" />
 
 		<div class="flex flex-col items-center gap-2 [&>a]:flex [&>a]:items-center [&>a]:justify-center [&>a]:gap-2 [&>a]:w-55 [&>a]:border-2 [&>a]:border-solid [&>a]:border-secondary [&>a]:p-1 [&>a]:rounded [&>a]:font-bold">
-			{#if oauth.github}<a href="/drifter/anchor/GitHub">{@render icon.github()}<span>{t("oauth.github")}</span></a>{/if}
-			{#if oauth.google}<a href="/drifter/anchor/Google">{@render icon.google()}<span>{t("oauth.google")}</span></a>{/if}
-			{#if oauth.x}<a href="/drifter/anchor/X">{@render icon.x()}<span>{t("oauth.x")}</span></a>{/if}
+			{#if oauth.github}<a href="/drifter/anchor/GitHub"><Icon name="simple-icons--github" /><span>{t("oauth.github")}</span></a>{/if}
+			{#if oauth.google}<a href="/drifter/anchor/Google"><Icon name="simple-icons--google" /><span>{t("oauth.google")}</span></a>{/if}
+			{#if oauth.x}<a href="/drifter/anchor/X"><Icon name="simple-icons--x" /><span>{t("oauth.x")}</span></a>{/if}
 		</div>
 
 		<button class="form-button" onclick={() => (anchorView = false)}>{t("cancel")}</button>
 	</div>
 </Modal>
 
-<Drifter bind:open={dockerView} {locale} {drifter} {icon} />
+<Drifter bind:open={dockerView} {locale} {drifter} />
 
 <main transition:slide={{ duration: 150 }} class="relative mt-5">
 	{#if !turnstile && !drifter}
@@ -258,7 +257,7 @@ onMount(() => {
 				{#if preview}
 					{#if content.trim()}
 						{#await remark.process(content)}
-							{@render icon.rendering()}
+							<Icon name="svg-spinners--pulse-3" size={30} />
 						{:then html}
 							<div class="markdown comment">{@html html}</div>
 						{/await}
@@ -269,7 +268,7 @@ onMount(() => {
 			</article>
 			<section class="flex items-center gap-2">
 				<figure class="relative flex items-center group">
-					<figcaption class="contents">{@render icon.emoji()}</figcaption>
+					<figcaption class="contents"><Icon name="lucide--smile" /></figcaption>
 					<ul class="absolute bottom-full -left-3 flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 mb-1 border-2 border-weak rounded-sm py-2 px-3 bg-background shadow-md pop">
 						{#each emojis as emoji}
 							<button onclick={() => insertEmoji(emoji.code)}>{emoji.icon}</button>
@@ -277,24 +276,26 @@ onMount(() => {
 						<a href="https://github.com/ikatyang/emoji-cheat-sheet?tab=readme-ov-file#table-of-contents" target="_blank">…</a>
 					</ul>
 				</figure>
-				<label class="flex items-center cursor-pointer">{@render icon.preview()}<input type="checkbox" class="switch" bind:checked={preview} /></label>
+				<label class="flex items-center cursor-pointer"><Icon name="lucide--file-search" title={t("comment.preview.name")} /><input type="checkbox" class="switch" bind:checked={preview} /></label>
 				<div class="grow"></div>
 				{#if nomad}
 					<div bind:this={turnstileElement}></div>
 					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35" />
-					<button onclick={() => (anchorView = true)}>{@render icon.signin()}</button>
+					<button onclick={() => (anchorView = true)}><Icon name="lucide--user-round" title={t("drifter.signin")} /></button>
 				{:else}
-					<button onclick={() => (dockerView = true)}>{@render icon.profile()}</button>
+					<button onclick={() => (dockerView = true)}><Icon name="lucide--user-round-pen" title={t("drifter.profile")} /></button>
 				{/if}
 				<button id="submit" disabled={limit > 0 || (nomad && !captcha) || overlength} onclick={submitComment}>
 					{#if limit > 0}
-						<span class="flex gap-0.5">{@render icon.delay()}<span class="relative top-0.5 font-mono leading-none">{Math.ceil(limit)}</span></span>
+						<span class="flex gap-0.5"><Icon name="lucide--timer" /><span class="relative top-0.5 font-mono leading-none">{Math.ceil(limit)}</span></span>
 					{:else if nomad && !captcha}
-						<span class="contents text-primary">{@render icon.verifying()}</span>
+						<span class="contents text-primary"><Icon name="svg-spinners--pulse-rings-3" title={t("comment.verify.progress")} /></span>
 					{:else if overlength}
-						<span class="contents text-orange-600">{@render icon.overlength()}</span>
+						<span class="contents text-orange-600"><Icon name="lucide--rectangle-ellipsis" title={t("comment.overlength")} /></span>
+					{:else if edit}
+						<Icon name="lucide--pencil" title={t("comment.edit.name")} />
 					{:else}
-						{@render (edit ? icon.edit : icon.submit)()}
+						<Icon name="lucide--send" title={t("comment.submit")} />
 					{/if}
 				</button>
 			</section>

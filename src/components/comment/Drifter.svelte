@@ -1,11 +1,12 @@
 <script lang="ts">
 import { actions } from "astro:actions";
-import { onMount, type Snippet } from "svelte";
+import { onMount } from "svelte";
+import Icon from "$components/Icon.svelte";
 import Modal from "$components/Modal.svelte";
 import { pushTip } from "$components/Tip.svelte";
 import i18nit from "$i18n";
 
-let { open = $bindable(), locale, drifter, icon }: { open: boolean; locale: string; drifter: any; icon: { [key: string]: Snippet } } = $props();
+let { open = $bindable(), locale, drifter }: { open: boolean; locale: string; drifter: any } = $props();
 
 const t = i18nit(locale);
 
@@ -173,16 +174,16 @@ onMount(async () => {
 			<aside class="flex flex-col justify-around gap-2 sm:gap-0">
 				<menu class="flex items-center gap-2 font-bold">
 					{#if drifter.platform == "GitHub"}
-						{@render icon.github()}
+						<Icon name="simple-icons--github" />
 					{:else if drifter.platform == "Google"}
-						{@render icon.google()}
+						<Icon name="simple-icons--google" />
 					{:else if drifter.platform == "X"}
-						{@render icon.x()}
+						<Icon name="simple-icons--x" />
 					{/if}
 					{drifter.name}
-					<button onclick={synchronize}>{@render icon.sync()}</button>
-					<button onclick={() => (location.href = "/drifter/sail")}>{@render icon.signout()}</button>
-					<button onclick={() => (deactivateView = true)} class="ml-a text-red-500">{@render icon.deactivate()}</button>
+					<button onclick={synchronize}><Icon name="lucide--refresh-cw" title={t("drifter.sync.name")} /></button>
+					<button onclick={() => (location.href = "/drifter/sail")}><Icon name="lucide--log-out" title={t("drifter.signout")} /></button>
+					<button onclick={() => (deactivateView = true)} class="ml-auto text-red-500"><Icon name="lucide--user-round-x" title={t("drifter.deactivate.name")} /></button>
 				</menu>
 				{#if drifter.description}<span class="text-sm">{drifter.description}</span>{/if}
 			</aside>
@@ -201,7 +202,7 @@ onMount(async () => {
 			<button disabled={updating} onclick={update} class:bg-weak={updating} class="relative form-button transition-[background-color]">
 				<span class:opacity-0={updating} class="opacity-100 transition-[color,opacity]">{t("drifter.update.name")}</span>
 				{#if updating}
-					<span class="absolute inset-0 inline-flex items-center justify-center text-secondary">{@render icon.uploading()}</span>
+					<span class="absolute inset-0 inline-flex items-center justify-center text-secondary"><Icon name="svg-spinners--ring-resize" /></span>
 				{/if}
 			</button>
 		</div>
