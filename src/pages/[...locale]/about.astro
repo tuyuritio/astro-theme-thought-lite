@@ -28,40 +28,26 @@ const chronicles = Object.entries<string[]>(chronicle ?? {})
 	.sort((a, b) => b.date.getTime() - a.date.getTime());
 ---
 
-<style lang="less">
-	article {
-		div {
-			margin-bottom: 2rem;
-
-			h1 {
-				margin-bottom: 1rem;
-
-				font-size: 1.8rem;
-			}
-		}
-	}
-</style>
-
 <Base title={t("navigation.about")} {locale}>
 	<main class="flex flex-col sm:flex-row justify-between gap-5">
 		<article class="flex flex-col">
 			{
 				introduction && (
-					<div>
-						<h1>{t("about.introduction")}</h1>
-						<samp class="markdown">
+					<div class="mb-6">
+						<h2 class="mb-4">{t("about.introduction")}</h2>
+						<div class="markdown">
 							<Introduction />
-						</samp>
+						</div>
 					</div>
 				)
 			}
 			{
 				linkroll && (
 					<div>
-						<h1>{t("about.linkroll")}</h1>
-						<samp class="markdown">
+						<h2 class="mb-4">{t("about.linkroll")}</h2>
+						<div class="markdown">
 							<Linkroll {locale} />
-						</samp>
+						</div>
 					</div>
 				)
 			}
@@ -69,15 +55,15 @@ const chronicles = Object.entries<string[]>(chronicle ?? {})
 
 		{
 			chronicles.length > 0 && (
-				<aside class="flex flex-col justify-between flex-basis-60 flex-shrink-0 mb-3">
-					<ul class="list-none relative before:(absolute content-empty h-full top-2 b-l-2 b-l-solid b-primary) after:(absolute content-empty w-2 h-2 -bottom-2 -left-1.2 b-2 b-solid b-primary rd-full bg-primary)">
+				<aside class="flex flex-col justify-between basis-60 shrink-0">
+					<ul class="list-none relative before:absolute before:content-[''] before:h-full before:top-2 before:border-l-2 before:border-l-solid before:border-primary after:absolute after:content-[''] after:w-3 after:h-3 after:-bottom-2 after:-left-[0.325rem] after:border-2 after:border-solid after:border-primary after:rounded-full after:bg-primary">
 						{chronicles.map(chronicle => (
-							<li class="relative mb-2 pb-2 pl-3 before:(absolute content-empty w-2 h-2 top-1 -left-1.2 b-2 b-solid b-primary rd-full bg-background)">
+							<li class="relative mb-2 pb-2 pl-3 before:absolute before:content-[''] before:w-3 before:h-3 before:top-2 before:-left-[0.325rem] before:border-2 before:border-solid before:border-primary before:rounded-full before:bg-background">
 								<span class="relative font-mono">{Time.date(chronicle.date)}</span>
 								<ul class="my-2 pl-3.5 list-none">
 									{chronicle.events.map(event => {
 										const remove = event?.match(/^~(?!~)(.*)$/);
-										return <li class="relative my-1 before:(absolute content-empty top-2 -left-2.5 w-1 h-1 b b-solid b-primary rd-full)">{remove ? <del>{remove[1]}</del> : event}</li>;
+										return <li class="relative before:absolute before:content-[''] before:top-2.5 before:-left-3 before:w-1.75 before:h-1.75 before:border before:border-solid before:border-primary before:rounded-full">{remove ? <del>{remove[1]}</del> : event}</li>;
 									})}
 								</ul>
 							</li>

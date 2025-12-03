@@ -5,9 +5,8 @@ import yaml from "@rollup/plugin-yaml";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
-import UnoCSS from "unocss/astro";
+import tailwindcss from "@tailwindcss/vite";
 import swup from "@swup/astro";
-import icon from "astro-icon";
 import githubLight from "shiki/themes/github-light.mjs";
 
 import GFM from "remark-gfm";
@@ -117,7 +116,7 @@ export default defineConfig({
 			include: ["picocolors"]
 		},
 		// @ts-expect-error
-		plugins: [yaml()]
+		plugins: [yaml(), tailwindcss()]
 	},
 	integrations: [
 		svelte(),
@@ -128,10 +127,6 @@ export default defineConfig({
 			preload: false,
 			smoothScrolling: false,
 			progress: true
-		}),
-		UnoCSS({
-			injectReset: "@unocss/reset/normalize.css"
-		}),
-		icon()
+		})
 	]
 });

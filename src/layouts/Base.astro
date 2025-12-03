@@ -1,13 +1,13 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { Icon } from "astro-icon/components";
 import config from "$config";
 import App from "$layouts/App.astro";
 import Navigator from "$layouts/header/Navigator.svelte";
 import Footer from "$layouts/Footer.astro";
 import Tip from "$components/Tip.svelte";
-import "$styles/global.less";
-import "$styles/markdown.less";
+import "$styles/tailwind.css";
+import "$styles/global.css";
+import "$styles/markdown.css";
 import "medium-zoom/dist/style.css";
 
 let route = Astro.url.pathname;
@@ -40,31 +40,12 @@ const title = config.title;
 </script>
 
 <App {title} {subtitle} {description} {article} author={config.author.name}>
-	<Tip client:load>
-		<Icon name="lucide:info" slot="information" is:inline />
-		<Icon name="lucide:circle-check" slot="success" is:inline />
-		<Icon name="lucide:circle-question-mark" slot="question" is:inline />
-		<Icon name="lucide:circle-alert" slot="warning" is:inline />
-		<Icon name="lucide:circle-x" slot="error" is:inline />
-		<Icon name="lucide:x" slot="x" is:inline />
-	</Tip>
-	<div class="flex flex-col mx-a px-3 w-[min(100%,1000px)]">
+	<Tip client:load />
+	<div class="flex flex-col mx-auto px-3 w-[min(100%,1000px)]">
 		<div id="body" class="flex flex-col min-h-screen">
-			<header class="sticky top-0 flex items-center justify-between pt-3 pb-1 mb-4 bg-background z-2 sm:(static pb-12)">
-				<a href={getRelativeLocaleUrl(locale)} class="text-size-lg sm:text-size-2xl font-bold">{title}</a>
-
-				<Navigator {locale} {route} client:load>
-					<Icon name="lucide:tent" slot="home" is:inline />
-					<Icon name="lucide:list" slot="note" />
-					<Icon name="lucide:at-sign" slot="about" />
-					<Icon name="lucide:feather" slot="jotting" />
-					<Icon name="lucide:earth" slot="globe" />
-					<Icon name="lucide:rss" slot="rss" />
-					<Icon name="lucide:sun" slot="sun" />
-					<Icon name="lucide:moon" slot="moon" />
-					<Icon name="lucide:align-justify" slot="bars" />
-					<Icon name="lucide:x" slot="close" is:inline />
-				</Navigator>
+			<header class="sticky top-0 flex items-center justify-between pt-3 pb-1 mb-4 bg-background z-2 sm:static sm:pb-12">
+				<a href={getRelativeLocaleUrl(locale)} class="text-lg sm:text-2xl font-bold">{title}</a>
+				<Navigator {locale} {route} client:load />
 			</header>
 
 			<slot />

@@ -1,28 +1,14 @@
 <script lang="ts">
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { onMount, type Snippet } from "svelte";
+import { onMount } from "svelte";
 import { flip } from "svelte/animate";
 import { fade } from "svelte/transition";
 import { monolocale } from "$config";
 import Time from "$utils/time";
+import Icon from "$components/Icon.svelte";
 import i18nit from "$i18n";
 
-let {
-	locale,
-	notes,
-	series: seriesList,
-	tags: tagList,
-	top,
-	sensitive,
-	left,
-	right,
-	dots
-}: {
-	locale: string;
-	notes: any[];
-	series: string[];
-	tags: string[];
-} & { [key: string]: Snippet } = $props();
+let { locale, notes, series: seriesList, tags: tagList }: { locale: string; notes: any[]; series: string[]; tags: string[] } = $props();
 
 const t = i18nit(locale);
 
@@ -115,45 +101,45 @@ onMount(() => {
 			<section animate:flip={{ duration: 150 }} class="flex flex-col sm:flex-row">
 				<div class="flex flex-col gap-1">
 					<div class="flex gap-1 items-center">
-						{#if note.data.top > 0}<span>{@render top()}</span>{/if}
-						{#if note.data.sensitive}<span>{@render sensitive()}</span>{/if}
+						{#if note.data.top > 0}<Icon name="lucide--flag-triangle-right" />{/if}
+						{#if note.data.sensitive}<Icon name="lucide--siren" title={t("sensitive.icon")} />{/if}
 						{#if note.data.series}<button onclick={() => chooseSeries(note.data.series, true)}>{note.data.series}</button><b>|</b>{/if}
 						<a href={getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)} class="link">{note.data.title}</a>
 					</div>
-					<time datetime={note.data.timestamp.toISOString()} class="font-mono text-2.6 c-remark">{Time(note.data.timestamp)}</time>
+					<time datetime={note.data.timestamp.toISOString()} class="font-mono text-[0.65rem] leading-none text-remark">{Time(note.data.timestamp)}</time>
 				</div>
-				<span class="flex items-center gap-1 sm:ml-a c-remark">
+				<span class="flex items-center gap-1 sm:ml-auto text-remark">
 					{#each note.data.tags as tag}
-						<button onclick={() => switchTag(tag, true)} class="text-3.5 sm:text-sm">#{tag}</button>
+						<button onclick={() => switchTag(tag, true)} class="text-[0.875rem] sm:text-sm">#{tag}</button>
 					{/each}
 				</span>
 			</section>
 		{:else}
-			<div class="pt-10vh text-center c-secondary font-bold text-xl">{t("note.empty")}</div>
+			<div class="pt-[10vh] text-center text-secondary font-bold text-xl">{t("note.empty")}</div>
 		{/each}
 
 		{#if pages > 1}
-			<footer class="sticky bottom-0 flex items-center justify-center gap-3 mt-a pb-1 c-weak bg-background font-mono">
-				<button onclick={() => (page = Math.max(1, page - 1))}>{@render left()}</button>
+			<footer class="sticky bottom-0 flex items-center justify-center gap-3 mt-auto pb-1 text-weak bg-background font-mono">
+				<button onclick={() => (page = Math.max(1, page - 1))}><Icon name="lucide--arrow-left" /></button>
 				<button class:location={1 == page} onclick={() => (page = 1)}>{1}</button>
 
-				{#if pages > 7 && page > 4}{@render dots()}{/if}
+				{#if pages > 7 && page > 4}<Icon name="lucide--ellipsis" />{/if}
 
 				{#each Array.from({ length: Math.min(5, pages - 2) }, (_, i) => i + Math.max(2, Math.min(pages - 5, page - 2))) as P (P)}
 					<button class:location={P == page} onclick={() => (page = P)} animate:flip={{ duration: 150 }} transition:fade={{ duration: 150 }}>{P}</button>
 				{/each}
 
-				{#if pages > 7 && page < pages - 3}{@render dots()}{/if}
+				{#if pages > 7 && page < pages - 3}<Icon name="lucide--ellipsis" />{/if}
 
 				<button class:location={pages == page} onclick={() => (page = pages)}>{pages}</button>
-				<button onclick={() => (page = Math.min(pages, page + 1))}>{@render right()}</button>
+				<button onclick={() => (page = Math.min(pages, page + 1))}><Icon name="lucide--arrow-right" /></button>
 			</footer>
 		{/if}
 	</article>
 
-	<aside class="sm:flex-basis-200px flex flex-col gap-5">
+	<aside class="sm:basis-[200px] flex flex-col gap-5">
 		<section>
-			<h3>{t("note.series")}</h3>
+			<h4>{t("note.series")}</h4>
 			<p>
 				{#each seriesList as seriesItem (seriesItem)}
 					<button class:selected={seriesItem == series} onclick={() => chooseSeries(seriesItem)}>{seriesItem}</button>
@@ -162,7 +148,7 @@ onMount(() => {
 		</section>
 
 		<section>
-			<h3>{t("note.tag")}</h3>
+			<h4>{t("note.tag")}</h4>
 			<p>
 				{#each tagList as tag (tag)}
 					<button class:selected={tags.includes(tag)} onclick={() => switchTag(tag)}>{tag}</button>
@@ -172,7 +158,7 @@ onMount(() => {
 	</aside>
 </main>
 
-<style lang="less">
+<style>
 	article {
 		footer {
 			button {
@@ -213,8 +199,7 @@ onMount(() => {
 
 				button {
 					border-bottom: 1px solid var(--primary-color);
-					padding: 0rem 0.2rem;
-
+					padding: 0rem 0.35rem;
 					font-size: 0.9rem;
 					transition:
 						color 0.1s ease-in-out,

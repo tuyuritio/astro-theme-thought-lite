@@ -4,7 +4,7 @@ const Self = Astro.self;
 const { headings } = Astro.props;
 ---
 
-<style lang="less">
+<style>
 	ul {
 		margin-left: 1rem;
 
@@ -19,8 +19,7 @@ const { headings } = Astro.props;
 				color 0.15s ease-in-out,
 				font-weight 0.15s ease-in-out;
 
-			&:hover,
-			&:is(li.indicate > a) {
+			&:hover {
 				font-weight: bold;
 				color: var(--primary-color);
 			}
@@ -38,10 +37,8 @@ const { headings } = Astro.props;
 				border-left: 1px solid var(--remark-color);
 			}
 
-			&:last-child {
-				&::before {
-					height: 1rem;
-				}
+			&:last-child::before {
+				height: 1rem;
 			}
 
 			&::after {
@@ -51,6 +48,11 @@ const { headings } = Astro.props;
 				left: -0.5rem;
 				border-bottom: 1px solid var(--remark-color);
 				width: 5px;
+			}
+
+			&.indicate > a {
+				font-weight: bold;
+				color: var(--primary-color);
 			}
 		}
 

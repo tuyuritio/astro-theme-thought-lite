@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.30.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.29.1...v0.30.0) (2025-12-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* **style:** migrate from UnoCSS to Tailwind CSS v4
+
+### Bug Fixes
+
+* **config:** remove astro-icon import ([83944eb](https://github.com/tuyuritio/astro-theme-thought-lite/commit/83944eb66bcd7f5deaf52e27b19162075ef3ce8d))
+* **icon:** swap icon positions in theme toggle button ([34f25a9](https://github.com/tuyuritio/astro-theme-thought-lite/commit/34f25a9b201b5b68e7d09c4b014dbfac73519f0a))
+
+
+### Styles
+
+* relocate katex-display class ([5599543](https://github.com/tuyuritio/astro-theme-thought-lite/commit/5599543cfc6295a3a2eccc1e7f53a0500b6ce968))
+* update heading levels ([a0fa41d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/a0fa41d8503b347727f317fc28b3462203e23f9f))
+
+
+### Code Refactoring
+
+* **style:** migrate from UnoCSS to Tailwind CSS v4 ([c3e753b](https://github.com/tuyuritio/astro-theme-thought-lite/commit/c3e753b507138910a45e08f6b82f7969780a3821))
+
 ## [0.29.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.29.0...v0.29.1) (2025-12-01)
 
 
