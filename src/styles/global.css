@@ -254,11 +254,11 @@ input[type="checkbox"].switch {
 
 /* Medium zoom */
 .medium-zoom-overlay {
-	z-index: 2;
+	z-index: 5;
 }
 
 .medium-zoom-image--opened {
-	z-index: 2;
+	z-index: 5;
 }
 
 /* View transitions */
