@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.30.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.0...v0.30.1) (2025-12-03)
+
+
+### Bug Fixes
+
+* **style:** change utilities layer to components ([bf12932](https://github.com/tuyuritio/astro-theme-thought-lite/commit/bf12932f8942116a8fd406fe5729748bccbc8b97))
+
+
+### Styles
+
+* adjust sup element positioning ([a857390](https://github.com/tuyuritio/astro-theme-thought-lite/commit/a857390ac648b5fbf7a925197372b28b27dc9018))
+* increase font size for toc ([77f010f](https://github.com/tuyuritio/astro-theme-thought-lite/commit/77f010f306304f3ac2b8e5f84767987d0171c643))
+* simplify heading styles in markdown ([3e483a9](https://github.com/tuyuritio/astro-theme-thought-lite/commit/3e483a907cd55d17d24bba353fd2d39140442477))
+* update feed style ([b3bd753](https://github.com/tuyuritio/astro-theme-thought-lite/commit/b3bd753680f99168da76c26ba0660413063fbc9e))
+
 ## [0.30.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.29.1...v0.30.0) (2025-12-03)
 
 
