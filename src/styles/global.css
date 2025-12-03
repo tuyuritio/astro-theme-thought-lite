@@ -252,6 +252,15 @@ input[type="checkbox"].switch {
 	background: linear-gradient(to right, var(--block-color), var(--secondary-color));
 }
 
+/* Medium zoom */
+.medium-zoom-overlay {
+	z-index: 5;
+}
+
+.medium-zoom-image--opened {
+	z-index: 5;
+}
+
 /* View transitions */
 ::view-transition-old(root),
 ::view-transition-new(root) {

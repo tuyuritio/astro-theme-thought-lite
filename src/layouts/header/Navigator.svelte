@@ -85,7 +85,7 @@ onMount(() => {
 				{#snippet trigger()}<Icon name="lucide--earth" />{/snippet}
 				<div data-no-swup class="contents">
 					{#each config.i18n.locales as locale}
-						<a href={getRelativeLocaleUrl(locale as string, path)} lang={locale} aria-label={i18nit(locale)("language")} class="flex items-center gap-1 py-2 px-3 text-sm font-bold whitespace-nowrap transition-[color,background-color] duration-150 hover:text-background hover:bg-primary max-sm:py-1 max-sm:px-0 max-sm:font-normal">{i18nit(locale)("language")}</a>
+						<a href={getRelativeLocaleUrl(locale as string, path)} lang={locale} aria-label={i18nit(locale)("language")}>{i18nit(locale)("language")}</a>
 					{/each}
 				</div>
 			</Menu>
