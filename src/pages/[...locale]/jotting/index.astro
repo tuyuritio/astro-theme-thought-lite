@@ -3,7 +3,6 @@ import { getCollection } from "astro:content";
 import config, { monolocale } from "$config";
 import Base from "$layouts/Base.astro";
 import Jotting from "$components/Jotting.svelte";
-import Icon from "$components/Icon.astro";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
@@ -41,12 +40,6 @@ const tags = Array.from(new Set(jottings.flatMap(jotting => jotting.data.tags).f
 
 <Base title={t("navigation.jotting")} {locale}>
 	<main class="flex flex-col grow">
-		<Jotting client:load {locale} jottings={list} {tags}>
-			<Icon name="lucide:flag-triangle-right" slot="top" />
-			<Icon name="lucide:siren" title={t("sensitive.icon")} slot="sensitive" />
-			<Icon name="lucide:arrow-left" slot="left" />
-			<Icon name="lucide:arrow-right" slot="right" />
-			<Icon name="lucide:ellipsis" slot="dots" />
-		</Jotting>
+		<Jotting client:load {locale} jottings={list} {tags} />
 	</main>
 </Base>

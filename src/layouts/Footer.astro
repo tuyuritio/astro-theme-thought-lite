@@ -2,7 +2,7 @@
 import { getCollection, getEntry, render } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { monolocale } from "$config";
-import Icon from "$components/Icon.astro";
+import Icon from "$components/Icon.svelte";
 import i18nit from "$i18n";
 
 let { locale, author, copyright } = Astro.props;
@@ -52,16 +52,16 @@ switch (copyright.type) {
 
 // Build array of Creative Commons icons based on license type
 // Start with base CC icon, then add specific license component icons
-const ccIcons = ["fa6-brands:creative-commons"];
+const ccIcons = ["fa6-brands--creative-commons"];
 if (copyright.type === "CC0 1.0") {
 	// CC0 uses a special "zero" icon
-	ccIcons.push("fa6-brands:creative-commons-zero");
+	ccIcons.push("fa6-brands--creative-commons-zero");
 } else {
 	// For other licenses, add icons based on license components
-	if (copyright.type.includes("BY")) ccIcons.push("fa6-brands:creative-commons-by"); // Attribution required
-	if (copyright.type.includes("NC")) ccIcons.push("fa6-brands:creative-commons-nc"); // Non-commercial
-	if (copyright.type.includes("SA")) ccIcons.push("fa6-brands:creative-commons-sa"); // Share-alike
-	if (copyright.type.includes("ND")) ccIcons.push("fa6-brands:creative-commons-nd"); // No derivatives
+	if (copyright.type.includes("BY")) ccIcons.push("fa6-brands--creative-commons-by"); // Attribution required
+	if (copyright.type.includes("NC")) ccIcons.push("fa6-brands--creative-commons-nc"); // Non-commercial
+	if (copyright.type.includes("SA")) ccIcons.push("fa6-brands--creative-commons-sa"); // Share-alike
+	if (copyright.type.includes("ND")) ccIcons.push("fa6-brands--creative-commons-nd"); // No derivatives
 }
 
 // Fetch notes and jottings collections to calculate total word count
@@ -104,14 +104,7 @@ const policy = await getEntry("information", `${localePrefix}policy`);
 
 <footer class="flex flex-col sm:flex-row items-center justify-between gap-2 mt-8 mb-5 sm:mb-3 text-sm font-mono">
 	<div class="flex items-center gap-1">
-		{
-			copyright.type != "CC0 1.0" && [
-				<span>
-					<Icon name="lucide:copyright" />
-				</span>,
-				<span>{copyright.year}</span>
-			]
-		}
+		{copyright.type != "CC0 1.0" && [<Icon name="lucide--copyright" />, <span>{copyright.year}</span>]}
 		{
 			typeof author === "string" ? (
 				<span>{author}</span>
@@ -128,21 +121,21 @@ const policy = await getEntry("information", `${localePrefix}policy`);
 			{ccIcons.map(icon => <Icon name={icon} />)}
 		</a>
 		<span>·</span>
-		<span class="contents"><Icon name="lucide:activity" title={t("statistics", { words: totalWords })} /></span>
+		<Icon name="lucide--activity" title={t("statistics", { words: totalWords })} />
 		{
 			policy && [
 				<span>·</span>,
 				<a href={getRelativeLocaleUrl(locale, "/policy")} aria-label="Policy" class="inline-flex">
-					<Icon name="lucide:scale" title={t("navigation.policy")} />
+					<Icon name="lucide--scale" title={t("navigation.policy")} />
 				</a>
 			]
 		}
 	</div>
 	<code class="flex items-center gap-2.5">
 		<p>Powered by</p>
-		<a href="https://astro.build/" aria-label="Astro" target="_blank" class="inline-flex"><Icon name="simple-icons:astro" /></a>
-		<a href="https://svelte.dev/" aria-label="Svelte" target="_blank" class="inline-flex"><Icon name="simple-icons:svelte" /></a>
+		<a href="https://astro.build/" aria-label="Astro" target="_blank" class="inline-flex"><Icon name="simple-icons--astro" /></a>
+		<a href="https://svelte.dev/" aria-label="Svelte" target="_blank" class="inline-flex"><Icon name="simple-icons--svelte" /></a>
 		<span>·</span>
-		<a href="https://github.com/tuyuritio/astro-theme-thought-lite" aria-label="Theme" target="_blank" class="inline-flex"><Icon name="simple-icons:github" title={t("theme")} inline /></a>
+		<a href="https://github.com/tuyuritio/astro-theme-thought-lite" aria-label="Theme" target="_blank" class="inline-flex"><Icon name="simple-icons--github" title={t("theme")} /></a>
 	</code>
 </footer>

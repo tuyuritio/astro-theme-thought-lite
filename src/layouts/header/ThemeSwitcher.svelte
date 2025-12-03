@@ -1,7 +1,8 @@
 <script lang="ts">
 import { onMount } from "svelte";
+import Icon from "$components/Icon.svelte";
 
-let { sun, moon, dark = $bindable(false) } = $props();
+let { dark = $bindable(false) } = $props();
 
 /**
  * Apply theme to DOM and persist to localStorage
@@ -62,8 +63,8 @@ onMount(() => {
 
 <button class="items-center" aria-label="Toggle dark theme" onclick={triggerDark}>
 	{#if dark}
-		{@render moon()}
+		<Icon name="lucide--sun" />
 	{:else}
-		{@render sun()}
+		<Icon name="lucide--moon" />
 	{/if}
 </button>

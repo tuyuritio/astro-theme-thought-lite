@@ -3,7 +3,6 @@ import { getCollection } from "astro:content";
 import config, { monolocale } from "$config";
 import Base from "$layouts/Base.astro";
 import Note from "$components/Note.svelte";
-import Icon from "$components/Icon.astro";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
@@ -43,12 +42,6 @@ const tags = Array.from(new Set(notes.flatMap(note => note.data.tags).filter(Boo
 
 <Base title={t("navigation.note")} {locale}>
 	<main class="flex flex-col grow">
-		<Note client:load {locale} notes={list} {series} {tags}>
-			<Icon name="lucide:flag-triangle-right" slot="top" />
-			<Icon name="lucide:siren" title={t("sensitive.icon")} slot="sensitive" />
-			<Icon name="lucide:arrow-left" slot="left" />
-			<Icon name="lucide:arrow-right" slot="right" />
-			<Icon name="lucide:ellipsis" slot="dots" />
-		</Note>
+		<Note client:load {locale} notes={list} {series} {tags} />
 	</main>
 </Base>
