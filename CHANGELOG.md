@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.30.4](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.3...v0.30.4) (2025-12-03)
+
+
+### Bug Fixes
+
+* image zoom layer appearing under the header ([528bd2c](https://github.com/tuyuritio/astro-theme-thought-lite/commit/528bd2c3b3e613de664fc8216b98dd0660a63b01))
+
+
+### Styles
+
+* adjust z-index ([55215e8](https://github.com/tuyuritio/astro-theme-thought-lite/commit/55215e865b0ee3e1a432030723fe4ce60d2288bb))
+* fix to-top button overflow ([4bf5626](https://github.com/tuyuritio/astro-theme-thought-lite/commit/4bf562675aa25863a12181a49d855b3de371b0ae))
+* globalize menu item style ([f2ce384](https://github.com/tuyuritio/astro-theme-thought-lite/commit/f2ce3841673dce685f8bd7d794086a3246c7ec23))
+
 ## [0.30.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.2...v0.30.3) (2025-12-03)
 
 
