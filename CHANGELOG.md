@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.29.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.29.1...v0.29.2) (2025-12-03)
+
+
+### Bug Fixes
+
+* **config:** remove astro-icon import ([79b35ce](https://github.com/tuyuritio/astro-theme-thought-lite/commit/79b35ce8aa17b4295f261de5821ea12b9577126d))
+* **icon:** swap icon positions in theme toggle button ([9903190](https://github.com/tuyuritio/astro-theme-thought-lite/commit/99031908543362056bffa2c7ba40b4a9ba4cd0db))
+
+
+### Styles
+
+* relocate katex-display class ([62fa39b](https://github.com/tuyuritio/astro-theme-thought-lite/commit/62fa39b90e322da8f43f8f4b2697fde9722d7326))
+* update heading levels ([41ba4f0](https://github.com/tuyuritio/astro-theme-thought-lite/commit/41ba4f07d474a92fdc99b47ab834c1057e61ff6e))
+
 ## [0.29.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.29.0...v0.29.1) (2025-12-01)
 
 
