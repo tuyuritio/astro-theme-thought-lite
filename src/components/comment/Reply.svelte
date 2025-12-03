@@ -231,9 +231,9 @@ onMount(() => {
 			<li>{t("oauth.benefit.homepage")}</li>
 		</ul>
 
-		<hr class="b-b-1 b-b-dashed w-full" />
+		<hr class="border-b border-dashed w-full" />
 
-		<div class="flex flex-col items-center gap-2 [&>a]:(flex items-center justify-center gap-2 w-55 b-2 b-solid b-secondary p-1 rd-1 font-bold)">
+		<div class="flex flex-col items-center gap-2 [&>a]:flex [&>a]:items-center [&>a]:justify-center [&>a]:gap-2 [&>a]:w-55 [&>a]:border-2 [&>a]:border-solid [&>a]:border-secondary [&>a]:p-1 [&>a]:rounded [&>a]:font-bold">
 			{#if oauth.github}<a href="/drifter/anchor/GitHub">{@render icon.github()}<span>{t("oauth.github")}</span></a>{/if}
 			{#if oauth.google}<a href="/drifter/anchor/Google">{@render icon.google()}<span>{t("oauth.google")}</span></a>{/if}
 			{#if oauth.x}<a href="/drifter/anchor/X">{@render icon.x()}<span>{t("oauth.x")}</span></a>{/if}
@@ -248,13 +248,13 @@ onMount(() => {
 <main transition:slide={{ duration: 150 }} class="relative mt-5">
 	{#if !turnstile && !drifter}
 		<div class="absolute flex flex-col items-center justify-center gap-1 w-full h-full font-bold cursor-not-allowed">
-			<button onclick={() => (anchorView = true)} class="b-2 b-solid py-1 px-2 rd-1 font-bold">{t("comment.signin")}</button>
+			<button onclick={() => (anchorView = true)} class="border-2 py-1 px-2 rounded-sm font-bold">{t("comment.signin")}</button>
 		</div>
 	{/if}
-	<div class={!turnstile && !drifter ? "pointer-events-none filter-blur" : ""}>
-		<fieldset class="flex flex-col gap-2 p-2 b-2 b-solid b-weak rd-1">
+	<div class={!turnstile && !drifter ? "pointer-events-none blur" : ""}>
+		<fieldset class="flex flex-col gap-2 p-2 border-2 border-weak rounded-sm">
 			<article class="flex flex-col min-h-20 overflow-auto resize-y">
-				<textarea hidden={preview} placeholder="   {t('comment.placeholder')}" bind:this={textarea} bind:value={content} class="grow w-full bg-transparent text-4 outline-none resize-none"></textarea>
+				<textarea hidden={preview} placeholder="   {t('comment.placeholder')}" bind:this={textarea} bind:value={content} class="grow w-full bg-transparent text-base outline-none resize-none"></textarea>
 				{#if preview}
 					{#if content.trim()}
 						{#await remark.process(content)}
@@ -263,14 +263,14 @@ onMount(() => {
 							<div class="markdown comment">{@html html}</div>
 						{/await}
 					{:else}
-						<span class="grow flex items-center justify-center font-bold c-weak">&lt;{t("comment.preview.empty")}&gt;</span>
+						<span class="grow flex items-center justify-center font-bold text-weak">&lt;{t("comment.preview.empty")}&gt;</span>
 					{/if}
 				{/if}
 			</article>
 			<section class="flex items-center gap-2">
 				<figure class="relative flex items-center group">
 					<figcaption class="contents">{@render icon.emoji()}</figcaption>
-					<ul class="absolute bottom-full left--3 flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 mb-1 b-2 b-solid b-weak rd-1 py-2 px-3 bg-background shadow-md pop">
+					<ul class="absolute bottom-full -left-3 flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 mb-1 border-2 border-weak rounded-sm py-2 px-3 bg-background shadow-md pop">
 						{#each emojis as emoji}
 							<button onclick={() => insertEmoji(emoji.code)}>{emoji.icon}</button>
 						{/each}
@@ -281,18 +281,18 @@ onMount(() => {
 				<div class="grow"></div>
 				{#if nomad}
 					<div bind:this={turnstileElement}></div>
-					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input b-weak w-35" />
+					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35" />
 					<button onclick={() => (anchorView = true)}>{@render icon.signin()}</button>
 				{:else}
 					<button onclick={() => (dockerView = true)}>{@render icon.profile()}</button>
 				{/if}
 				<button id="submit" disabled={limit > 0 || (nomad && !captcha) || overlength} onclick={submitComment}>
 					{#if limit > 0}
-						<span class="flex gap-0.5">{@render icon.delay()}<span class="relative top-0.5 font-mono line-height-none">{Math.ceil(limit)}</span></span>
+						<span class="flex gap-0.5">{@render icon.delay()}<span class="relative top-0.5 font-mono leading-none">{Math.ceil(limit)}</span></span>
 					{:else if nomad && !captcha}
-						<span class="contents c-primary">{@render icon.verifying()}</span>
+						<span class="contents text-primary">{@render icon.verifying()}</span>
 					{:else if overlength}
-						<span class="contents c-orange-6">{@render icon.overlength()}</span>
+						<span class="contents text-orange-600">{@render icon.overlength()}</span>
 					{:else}
 						{@render (edit ? icon.edit : icon.submit)()}
 					{/if}

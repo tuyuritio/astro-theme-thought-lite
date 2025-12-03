@@ -149,7 +149,7 @@ onMount(async () => {
 	<div class="flex flex-col items-center justify-center gap-5">
 		<h2>{t("drifter.deactivate.title")}</h2>
 		<div class="flex flex-col gap-4">
-			<p class="self-center font-bold text-red-5">{t("drifter.deactivate.warning")}</p>
+			<p class="self-center font-bold text-red-500">{t("drifter.deactivate.warning")}</p>
 			<p>{t("drifter.deactivate.description")}</p>
 			<ul class="ml-5 space-y-1">
 				<li>{t("drifter.deactivate.consequences.data")}</li>
@@ -161,7 +161,7 @@ onMount(async () => {
 		</div>
 		<section class="flex gap-5">
 			<button class="form-button" onclick={() => (deactivateView = false)}>{t("drifter.deactivate.cancel")}</button>
-			<button class="form-button bg-red-5 text-white" onclick={deactivate}>{t("drifter.deactivate.confirm")}</button>
+			<button class="form-button bg-red-500 text-white" onclick={deactivate}>{t("drifter.deactivate.confirm")}</button>
 		</section>
 	</div>
 </Modal>
@@ -169,7 +169,7 @@ onMount(async () => {
 <Modal bind:open>
 	<main class="flex flex-col grow gap-5">
 		<header class="flex flex-col sm:flex-row gap-5">
-			<img src={drifter.image} alt={drifter.id} class="self-center w-20 b-2 b-solid b-weak rd-full" />
+			<img src={drifter.image} alt={drifter.id} class="self-center w-20 b-2 border-solid border-weak rounded-full" />
 			<aside class="flex flex-col justify-around gap-2 sm:gap-0">
 				<menu class="flex items-center gap-2 font-bold">
 					{#if drifter.platform == "GitHub"}
@@ -182,12 +182,12 @@ onMount(async () => {
 					{drifter.name}
 					<button onclick={synchronize}>{@render icon.sync()}</button>
 					<button onclick={() => (location.href = "/drifter/sail")}>{@render icon.signout()}</button>
-					<button onclick={() => (deactivateView = true)} class="ml-a c-red-5">{@render icon.deactivate()}</button>
+					<button onclick={() => (deactivateView = true)} class="ml-a text-red-500">{@render icon.deactivate()}</button>
 				</menu>
-				{#if drifter.description}<span class="text-3.5">{drifter.description}</span>{/if}
+				{#if drifter.description}<span class="text-sm">{drifter.description}</span>{/if}
 			</aside>
 		</header>
-		<hr class="b-b-1 b-b-solid b-weak" />
+		<hr class="border-b border-weak" />
 		<div class="flex flex-col items-start gap-5">
 			<section>
 				<label class="flex items-center">{t("notification.name")}：<input type="checkbox" class="switch" bind:checked={notification} onchange={toggleNotification} /></label>
@@ -198,10 +198,10 @@ onMount(async () => {
 		</div>
 		<div class="self-center flex gap-5">
 			<button onclick={() => (open = false)} class="form-button">{t("cancel")}</button>
-			<button disabled={updating} onclick={update} class:bg-weak={updating} class="relative form-button transition-background-color">
+			<button disabled={updating} onclick={update} class:bg-weak={updating} class="relative form-button transition-[background-color]">
 				<span class:opacity-0={updating} class="opacity-100 transition-[color,opacity]">{t("drifter.update.name")}</span>
 				{#if updating}
-					<span class="absolute inset-0 inline-flex items-center justify-center c-secondary">{@render icon.uploading()}</span>
+					<span class="absolute inset-0 inline-flex items-center justify-center text-secondary">{@render icon.uploading()}</span>
 				{/if}
 			</button>
 		</div>

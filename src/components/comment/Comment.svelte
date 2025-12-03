@@ -87,7 +87,7 @@ async function remove() {
 </Modal>
 
 <Modal bind:open={historyView}>
-	<div id="history" class="flex flex-col gap-5 max-h-80vh">
+	<div id="history" class="flex flex-col gap-5 max-h-[80vh]">
 		<h3>{t("comment.edit.history")}</h3>
 		<dl class="flex flex-col gap-2 overflow-y-auto">
 			{#await actions.comment.history({ id: comment.id })}
@@ -109,32 +109,32 @@ async function remove() {
 	</div>
 </Modal>
 
-<main id={comment.id} class:before:hidden={depth >= MIN_DEPTH} class:sm:before:block={depth < Math.max(MIN_DEPTH, MAX_DEPTH)} class="relative before:(absolute content-empty top-12 left-4 h-[calc(100%-2rem)] w-0.2rem bg-[linear-gradient(var(--shadow-color)calc(100%-2rem),transparent)])">
+<main id={comment.id} class:before:hidden={depth >= MIN_DEPTH} class:sm:before:block={depth < Math.max(MIN_DEPTH, MAX_DEPTH)} class="relative before:absolute before:content-[''] before:top-12 before:left-4 before:h-[calc(100%-2rem)] before:w-[0.2rem] before:bg-[linear-gradient(var(--shadow-color)_calc(100%-2rem),transparent)]">
 	<dl class="flex flex-col gap-2 mt-6">
 		<div class="flex items-center gap-2">
 			{#if comment.name !== null}
-				<img src={comment.image} alt="image-{comment.name}" class="w-9 h-9 border b-solid b-weak rd-full" onerror={e => (((e.currentTarget as HTMLImageElement).onerror = null), ((e.currentTarget as HTMLImageElement).src = "/akkarin.webp"))} />
+				<img src={comment.image} alt="image-{comment.name}" class="w-9 h-9 border border-solid border-weak rounded-full" onerror={e => (((e.currentTarget as HTMLImageElement).onerror = null), ((e.currentTarget as HTMLImageElement).src = "/akkarin.webp"))} />
 				<dt class="flex flex-col gap-0.5 min-w-0">
 					<p class="flex items-center gap-1">
 						<b>{comment.name}</b>
 						{#if comment.author}{@render icon.author()}{/if}
 						{#if comment.homepage}<a href={comment.homepage} target="_blank" class="inline-flex">{@render icon.home()}</a>{/if}
 						<span>·</span>
-						<time class="text-3">{Time(comment.updated ?? comment.timestamp, Time.userTimezone).replace("-", " ")}</time>
+						<time class="text-xs">{Time(comment.updated ?? comment.timestamp, Time.userTimezone).replace("-", " ")}</time>
 					</p>
-					{#if comment.description}<span title={comment.description} class="c-secondary text-3 line-height-normal truncate">{comment.description}</span>{/if}
+					{#if comment.description}<span title={comment.description} class="text-secondary text-xs leading-normal truncate">{comment.description}</span>{/if}
 				</dt>
 			{:else}
-				<img src={comment.nickname ? "/nomad.webp" : "/akkarin.webp"} alt="Default avatar" class="w-9 h-9 b b-solid b-weak rd-full" />
+				<img src={comment.nickname ? "/nomad.webp" : "/akkarin.webp"} alt="Default avatar" class="w-9 h-9 border border-solid border-weak rounded-full" />
 				<dt class="flex flex-col gap-0.5 min-w-0">
 					<p class="flex items-center gap-1">
 						{#if comment.nickname}
 							<b>{comment.nickname}</b>
 						{:else}
-							<b class="c-weak">{t("drifter.deactivate.done")}</b>
+							<b class="text-weak">{t("drifter.deactivate.done")}</b>
 						{/if}
 						<span>·</span>
-						<time class="text-3">{Time(comment.timestamp, Time.userTimezone).replace("-", " ")}</time>
+						<time class="text-xs">{Time(comment.timestamp, Time.userTimezone).replace("-", " ")}</time>
 					</p>
 				</dt>
 			{/if}
@@ -152,7 +152,7 @@ async function remove() {
 					{/if}
 				</dd>
 			{:else}
-				<div class="flex items-center gap-1 mt-1 font-bold line-height-none">{@render icon.alert()}{t("comment.removed")}{@render icon.alert()}</div>
+				<div class="flex items-center gap-1 mt-1 font-bold leading-none">{@render icon.alert()}{t("comment.removed")}{@render icon.alert()}</div>
 			{/if}
 		</blockquote>
 	</dl>
