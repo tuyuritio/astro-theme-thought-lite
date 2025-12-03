@@ -17,22 +17,15 @@
 
 		h1,
 		h2 {
-			&:not(:first-child) {
-				margin-top: 0.5em;
-			}
+			align-self: flex-start;
 		}
 
 		h1 {
-			align-self: flex-start;
 			border-bottom: 4px solid;
-			padding-bottom: 0.2em;
-			font-size: 1.75rem;
 		}
 
 		h2 {
-			align-self: flex-start;
 			border-bottom: 2px solid;
-			padding-bottom: 0.1em;
 		}
 
 		hr {
