@@ -379,14 +379,5 @@
 				text-align: inherit;
 			}
 		}
-
-		/* Medium zoom */
-		.medium-zoom-overlay {
-			z-index: 2;
-		}
-
-		.medium-zoom-image--opened {
-			z-index: 2;
-		}
 	}
 }
