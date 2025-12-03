@@ -280,7 +280,7 @@ onMount(() => {
 				<div class="grow"></div>
 				{#if nomad}
 					<div bind:this={turnstileElement}></div>
-					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35" />
+					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35 text-sm" />
 					<button onclick={() => (anchorView = true)}><Icon name="lucide--user-round" title={t("drifter.signin")} /></button>
 				{:else}
 					<button onclick={() => (dockerView = true)}><Icon name="lucide--user-round-pen" title={t("drifter.profile")} /></button>
