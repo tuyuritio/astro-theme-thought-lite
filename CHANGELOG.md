@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.2...v0.30.3) (2025-12-03)
+
+
+### Styles
+
+* **markdown:** recover list styling ([eb583cc](https://github.com/tuyuritio/astro-theme-thought-lite/commit/eb583cc30ba5f2a0aade0eab887f4da81d649849))
+
 ## [0.30.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.1...v0.30.2) (2025-12-03)
 
 
