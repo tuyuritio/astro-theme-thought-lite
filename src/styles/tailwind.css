@@ -67,7 +67,7 @@
 	}
 
 	.input {
-		@apply border-b-2 border-solid border-b-primary py-0.5 bg-transparent outline-none;
+		@apply border-b-2 border-b-primary py-0.5 bg-transparent outline-none;
 	}
 
 	.form-button {

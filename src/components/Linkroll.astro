@@ -46,7 +46,7 @@ const fallback = "/linkback.webp";
 <main class="grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-4 my-4">
 	{
 		links.map(link => (
-			<article class="flex gap-2 border-b border-b-solid border-weak pl-1 pr-2 pb-2">
+			<article class="flex gap-2 border-b border-weak pl-1 pr-2 pb-2">
 				<img src={link.image || fallback} alt={`Linkroll-${link.title}`} data-nozoom class="w-10 h-10 rounded-full" onerror={`this.onerror=null;this.src='${fallback}';`} />
 				<div class="grow min-w-0 flex flex-col justify-around">
 					<div class="flex items-center justify-between">
