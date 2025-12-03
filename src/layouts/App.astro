@@ -66,7 +66,7 @@ const notoFonts: Record<string, string> = {
 
 		{Astro.currentLocale && notoFonts[Astro.currentLocale] && <link rel="stylesheet" href={notoFonts[Astro.currentLocale]} />}
 
-		{nomad && <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback" async defer is:inline />}
+		{nomad && [<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback" async defer data-swup-ignore-script is:inline />]}
 
 		<script is:inline>
 			var theme = localStorage.getItem("theme");
