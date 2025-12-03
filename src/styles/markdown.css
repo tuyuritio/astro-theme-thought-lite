@@ -17,22 +17,15 @@
 
 		h1,
 		h2 {
-			&:not(:first-child) {
-				margin-top: 0.5em;
-			}
+			align-self: flex-start;
 		}
 
 		h1 {
-			align-self: flex-start;
 			border-bottom: 4px solid;
-			padding-bottom: 0.2em;
-			font-size: 1.75rem;
 		}
 
 		h2 {
-			align-self: flex-start;
 			border-bottom: 2px solid;
-			padding-bottom: 0.1em;
 		}
 
 		hr {
@@ -80,7 +73,7 @@
 				text-decoration: none;
 
 				&::after {
-					content: "󰌷";
+					content: "󰌷 ";
 					margin: 0 0.3em;
 					font-size: 0.8em;
 					font-weight: normal;
@@ -241,8 +234,9 @@
 		}
 
 		sup:has(a[data-footnote-ref]) {
+			top: 0;
+
 			padding: 0 0.05em;
-			vertical-align: baseline;
 			font-size: 1em;
 			transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
 

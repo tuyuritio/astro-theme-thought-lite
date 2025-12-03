@@ -61,7 +61,7 @@
 	--animate-shaky: shaky 0.6s infinite;
 }
 
-@layer utilities {
+@layer components {
 	.link {
 		@apply underline decoration-transparent decoration-[0.05em] underline-offset-[0.15em] transition-[text-decoration-color] hover:decoration-current;
 	}

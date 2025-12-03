@@ -74,10 +74,9 @@ blockquote {
 	flex-direction: column;
 	gap: 0.5rem;
 
-	border-radius: 0.5rem;
-	padding: 0.75rem 1rem;
-
-	background-color: var(--block-color);
+	border-left: 4px solid var(--shadow-color);
+	padding-left: 1rem;
+	padding-bottom: 0.5rem;
 }
 
 blockquote p code {
