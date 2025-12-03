@@ -1,5 +1,5 @@
 ---
-import Icon from "$components/Icon.astro";
+import Icon from "$components/Icon.svelte";
 import i18nit from "$i18n";
 
 export interface Props {
@@ -29,7 +29,7 @@ const t = i18nit(locale);
 
 <figure class="fixed right-[calc(20px+max(calc((100%-1100px)/2),0px))] bottom-5 sm:bottom-30 flex flex-col gap-2">
 	<button aria-label="Scroll to Top" class="border-weak" onclick="document.scrollingElement?.scrollTo({top: 0, behavior: 'smooth'})">
-		<Icon name="lucide:arrow-up-to-line" size={15} title={t("note.top")} />
+		<Icon name="lucide--arrow-up-to-line" size={15} title={t("note.top")} />
 		<svg class="absolute -top-0.5 -left-0.5 w-[calc(100%+4px)] h-[calc(100%+4px)] transform-origin-center pointer-events-none">
 			<circle id="progress-circle" cx="50%" cy="50%" r="calc(50% - 1px)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"></circle>
 		</svg>

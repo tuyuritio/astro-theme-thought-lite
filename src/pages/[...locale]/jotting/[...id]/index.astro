@@ -3,8 +3,8 @@ import { getCollection, render } from "astro:content";
 import config, { monolocale } from "$config";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
-import Icon from "$components/Icon.astro";
 import Position from "$components/Position.astro";
+import Icon from "$components/Icon.svelte";
 import Sensitive from "$components/Sensitive.svelte";
 import i18nit from "$i18n";
 
@@ -44,16 +44,16 @@ const t = i18nit(locale);
 		<header class="flex flex-col gap-4">
 			<h1>{jotting.data.title}</h1>
 			<div class="flex flex-col gap-3 sm:flex-row *:flex *:items-center *:gap-1 *:text-[0.875rem] *:text-secondary">
-				<time datetime={jotting.data.timestamp.toISOString()}><Icon name="lucide:calendar" />{Time(jotting.data.timestamp)}</time>
+				<time datetime={jotting.data.timestamp.toISOString()}><Icon name="lucide--calendar" />{Time(jotting.data.timestamp)}</time>
 				{
 					!!jotting.data.tags?.length && (
 						<span>
-							<Icon name="lucide:hash" />
+							<Icon name="lucide--hash" />
 							{jotting.data.tags?.join("; ")}
 						</span>
 					)
 				}
-				<span><Icon name="lucide:pilcrow" />{t("read.words", { words: frontmatter.words })}</span>
+				<span><Icon name="lucide--pilcrow" />{t("read.words", { words: frontmatter.words })}</span>
 			</div>
 			<hr class="border-b border-b-solid border-weak" />
 		</header>
