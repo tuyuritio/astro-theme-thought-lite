@@ -38,7 +38,7 @@ const entries = await Promise.all(prefaces.map(async preface => ({ ...preface, c
 		<ul class="flex flex-col list-none">
 			{
 				entries.map(preface => [
-					<hr class="my-5 border-b border-b-solid border-primary" />,
+					<hr class="my-5 border-b border-primary" />,
 					<li id={preface.id}>
 						<time datetime={preface.data.timestamp.toISOString()} class="block mb-5 font-bold text-xl">
 							{Time.locale(preface.data.timestamp, locale)}
