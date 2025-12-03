@@ -87,6 +87,14 @@
 			}
 		}
 
+		ul {
+			list-style: disc;
+		}
+
+		ol {
+			list-style: decimal;
+		}
+
 		ul,
 		ol {
 			padding-left: 1.2em;
@@ -157,7 +165,9 @@
 				color: var(--secondary-color);
 				opacity: 0;
 				visibility: hidden;
-				transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+				transition:
+					opacity 0.15s ease-in-out,
+					visibility 0.15s ease-in-out;
 
 				svg.done-icon {
 					display: none;
@@ -238,7 +248,9 @@
 
 			padding: 0 0.05em;
 			font-size: 1em;
-			transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+			transition:
+				color 0.15s ease-in-out,
+				background-color 0.15s ease-in-out;
 
 			&:hover {
 				color: var(--background-color);
@@ -284,7 +296,9 @@
 					a[data-footnote-backref] {
 						padding: 0 0.25em;
 						text-decoration: none;
-						transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+						transition:
+							color 0.15s ease-in-out,
+							background-color 0.15s ease-in-out;
 
 						&:hover {
 							color: var(--background-color);
