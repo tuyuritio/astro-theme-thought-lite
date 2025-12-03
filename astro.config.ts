@@ -6,7 +6,6 @@ import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwindcss from "@tailwindcss/vite";
 import swup from "@swup/astro";
-import icon from "astro-icon";
 import githubLight from "shiki/themes/github-light.mjs";
 
 import GFM from "remark-gfm";
@@ -121,7 +120,6 @@ export default defineConfig({
 			preload: false,
 			smoothScrolling: false,
 			progress: true
-		}),
-		icon()
+		})
 	]
 });
