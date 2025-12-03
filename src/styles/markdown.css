@@ -241,8 +241,9 @@
 		}
 
 		sup:has(a[data-footnote-ref]) {
+			top: 0;
+
 			padding: 0 0.05em;
-			vertical-align: baseline;
 			font-size: 1em;
 			transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
 
