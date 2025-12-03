@@ -55,33 +55,23 @@ description: Essential configuration guide for Astro theme sites, covering envir
 
 ## Icon Generation
 
-It is recommended to use [RealFaviconGenerator](https://realfavicongenerator.net/) to generate icons, and copy all the contents of the downloaded and extracted files to the `/public` directory.
+It is recommended to use [RealFaviconGenerator](https://realfavicongenerator.net/) to generate icons, download and extract the following files, and overwrite them to the `/public` directory:
 
-The generated file list is as follows:
-
-- `apple-touch-icon.png`
 - `favicon-96x96.png`
 - `favicon.ico`
 - `favicon.svg`
-- `site.webmanifest`
-- `web-app-manifest-192x192.png`
-- `web-app-manifest-512x512.png`
-
-The content in `<head>` has been adapted according to RealFaviconGenerator's prompts and can be modified as needed.
-
-After modification and deployment, you can use [Favicon checker](https://realfavicongenerator.net/favicon-checker) to verify.
 
 ### Homepage Logo
 
-The reference location is in `src/pages/[...locale]/index.astro`, which uses SVG format icons imported by the `astro-icon` library by default.
+The reference location is in `src/pages/[...locale]/index.astro`, imported using the `import Logo from "$icons/site-logo.svg"` statement.
 
 ```astro
-<Icon name="site-logo" size={100} is:inline />
+<Logo width={100} />
 ```
 
-Configuration can be done through the following three methods:
+Configuration can be done through the following methods:
 
-1. Replace `src/icons/site-logo.svg` with an SVG file, which will be [automatically read](https://www.astroicon.dev/guides/customization/#local-icons) and applied.
-    - It is recommended to use `stroke="currentColor"` to adapt to theme color changes.
-2. Use [Iconify icon sets](https://www.astroicon.dev/guides/customization/#open-source-icon-sets), referenced in the format `<PREFIX>:<ICON>`.
-3. Directly modify to image import or remove this part of the content.
+1. Replace `src/icons/site-logo.svg` with an SVG file.
+    - It is recommended to use `stroke="currentColor"` to adapt to light/dark theme changes.
+2. Modify to image import.
+3. Directly replace or remove this part of the content.

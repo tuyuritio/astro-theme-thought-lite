@@ -55,33 +55,23 @@ description: Astro 主题站点的基础配置说明，涵盖环境变量、站�
 
 ## 图标生成
 
-推荐使用 [RealFaviconGenerator](https://realfavicongenerator.net/) 生成图标，并将下载解压后的所有内容覆盖到 `/public` 目录下。
+推荐使用 [RealFaviconGenerator](https://realfavicongenerator.net/) 生成图标，下载解压提取以下文件，覆盖到 `/public` 目录下：
 
-生成的文件列表如下：
-
-- `apple-touch-icon.png`
 - `favicon-96x96.png`
 - `favicon.ico`
 - `favicon.svg`
-- `site.webmanifest`
-- `web-app-manifest-192x192.png`
-- `web-app-manifest-512x512.png`
-
-`<head>` 中的内容已根据 RealFaviconGenerator 的提示完成适配，也可根据需求自行更改。
-
-修改完成并部署后，可使用 [Favicon checker](https://realfavicongenerator.net/favicon-checker) 校验。
 
 ### 首页 Logo
 
-引用位置位于 `src/pages/[...locale]/index.astro`，默认使用由 `astro-icon` 库导入 SVG 格式图标。
+引用位置位于 `src/pages/[...locale]/index.astro`，使用 `import Logo from "$icons/site-logo.svg"` 语句导入。
 
 ```astro
-<Icon name="site-logo" size={100} is:inline />
+<Logo width={100} />
 ```
 
-可通过如下三种方式配置：
+可通过如下方式配置：
 
-1. 使用 SVG 文件替换 `src/icons/site-logo.svg`，将[自动读取](https://www.astroicon.dev/guides/customization/#local-icons)并应用。
-    - 建议使用 `stroke="currentColor"` 以适应主题色彩变化。
-2. 使用 [Iconify 图标集](https://www.astroicon.dev/guides/customization/#open-source-icon-sets)，以 `<PREFIX>:<ICON>` 形式引用。
-3. 直接修改为图片导入或删除该部分内容。
+1. 使用 SVG 文件替换 `src/icons/site-logo.svg`。
+    - 建议使用 `stroke="currentColor"` 以适应亮色/深色主题变化。
+2. 修改为图片导入。
+3. 直接替换或删除该部分内容。

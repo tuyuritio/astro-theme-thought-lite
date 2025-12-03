@@ -55,33 +55,23 @@ description: Astro テーマサイトの基本設定説明、環境変数、サ�
 
 ## アイコン生成
 
-[RealFaviconGenerator](https://realfavicongenerator.net/) を使用してアイコンを生成し、ダウンロードして解凍したすべてのコンテンツを `/public` ディレクトリに上書きすることをお勧めします。
+[RealFaviconGenerator](https://realfavicongenerator.net/) を使用してアイコンを生成し、ダウンロードして解凍した以下のファイルを `/public` ディレクトリに上書きすることをお勧めします：
 
-生成されるファイルリストは以下の通りです：
-
-- `apple-touch-icon.png`
 - `favicon-96x96.png`
 - `favicon.ico`
 - `favicon.svg`
-- `site.webmanifest`
-- `web-app-manifest-192x192.png`
-- `web-app-manifest-512x512.png`
-
-`<head>` 内のコンテンツは RealFaviconGenerator のプロンプトに従って適応されており、必要に応じて変更することもできます。
-
-修正と展開が完了した後、[Favicon checker](https://realfavicongenerator.net/favicon-checker) を使用して検証できます。
 
 ### ホームページロゴ
 
-参照位置は `src/pages/[...locale]/index.astro` にあり、デフォルトでは `astro-icon` ライブラリによってインポートされる SVG 形式のアイコンを使用します。
+参照位置は `src/pages/[...locale]/index.astro` にあり、`import Logo from "$icons/site-logo.svg"` 文でインポートします。
 
 ```astro
-<Icon name="site-logo" size={100} is:inline />
+<Logo width={100} />
 ```
 
-以下の3つの方法で設定できます：
+以下の方法で設定できます：
 
-1. SVG ファイルで `src/icons/site-logo.svg` を置き換えると、[自動的に読み取られ](https://www.astroicon.dev/guides/customization/#local-icons)適用されます。
-    - テーマカラーの変化に適応するため、`stroke="currentColor"` の使用をお勧めします。
-2. [Iconify アイコンセット](https://www.astroicon.dev/guides/customization/#open-source-icon-sets)を使用し、`<PREFIX>:<ICON>` 形式で参照します。
-3. 画像インポートに直接修正するか、この部分のコンテンツを削除します。
+1. SVG ファイルで `src/icons/site-logo.svg` を置き換えます。
+    - ライト/ダークテーマの変化に適応するため、`stroke="currentColor"` の使用をお勧めします。
+2. 画像インポートに変更します。
+3. この部分のコンテンツを直接置き換えるか削除します。
