@@ -63,8 +63,8 @@ onMount(() => {
 
 <button class="items-center" aria-label="Toggle dark theme" onclick={triggerDark}>
 	{#if dark}
-		<Icon name="lucide--sun" />
-	{:else}
 		<Icon name="lucide--moon" />
+	{:else}
+		<Icon name="lucide--sun" />
 	{/if}
 </button>
