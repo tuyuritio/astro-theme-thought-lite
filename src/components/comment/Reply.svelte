@@ -230,7 +230,7 @@ onMount(() => {
 			<li>{t("oauth.benefit.homepage")}</li>
 		</ul>
 
-		<hr class="border-b border-dashed w-full" />
+		<hr class="border-0 border-b border-dashed w-full" />
 
 		<div class="flex flex-col items-center gap-2 [&>a]:flex [&>a]:items-center [&>a]:justify-center [&>a]:gap-2 [&>a]:w-55 [&>a]:border-2 [&>a]:border-solid [&>a]:border-secondary [&>a]:p-1 [&>a]:rounded [&>a]:font-bold">
 			{#if oauth.github}<a href="/drifter/anchor/GitHub"><Icon name="simple-icons--github" /><span>{t("oauth.github")}</span></a>{/if}
