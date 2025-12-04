@@ -56,14 +56,14 @@ const chronicles = Object.entries<string[]>(chronicle ?? {})
 		{
 			chronicles.length > 0 && (
 				<aside class="flex flex-col justify-between basis-60 shrink-0">
-					<ul class="list-none relative before:absolute before:content-[''] before:h-full before:top-2 before:border-l-2 before:border-primary after:absolute after:content-[''] after:w-3 after:h-3 after:-bottom-2 after:-left-[0.325rem] after:border-2 after:border-primary after:rounded-full after:bg-primary">
+					<ul class="list-none relative before:absolute before:content-[''] before:h-full before:top-2 before:border-s-2 before:border-primary after:absolute after:content-[''] after:w-3 after:h-3 after:-bottom-2 after:-start-[0.325rem] after:border-2 after:border-primary after:rounded-full after:bg-primary">
 						{chronicles.map(chronicle => (
-							<li class="relative mb-2 pb-2 pl-3 before:absolute before:content-[''] before:w-3 before:h-3 before:top-2 before:-left-[0.325rem] before:border-2 before:border-primary before:rounded-full before:bg-background">
+							<li class="relative mb-2 pb-2 ps-3 before:absolute before:content-[''] before:w-3 before:h-3 before:top-2 before:-start-[0.325rem] before:border-2 before:border-primary before:rounded-full before:bg-background">
 								<span class="relative font-mono">{Time.date(chronicle.date)}</span>
-								<ul class="my-2 pl-3.5 list-none">
+								<ul class="my-2 ps-3.5 list-none">
 									{chronicle.events.map(event => {
 										const remove = event?.match(/^~(?!~)(.*)$/);
-										return <li class="relative before:absolute before:content-[''] before:top-2.5 before:-left-3 before:w-1.75 before:h-1.75 before:border before:border-primary before:rounded-full">{remove ? <del>{remove[1]}</del> : event}</li>;
+										return <li class="relative before:absolute before:content-[''] before:top-2.5 before:-start-3 before:w-1.75 before:h-1.75 before:border before:border-primary before:rounded-full">{remove ? <del>{remove[1]}</del> : event}</li>;
 									})}
 								</ul>
 							</li>

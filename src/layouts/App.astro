@@ -21,7 +21,7 @@ const notoFonts: Record<string, string> = {
 };
 ---
 
-<html lang={Astro.currentLocale}>
+<html lang={Astro.currentLocale} dir={["ar", "he", "fa", "ur"].includes(Astro.currentLocale!) ? "rtl" : "ltr"}>
 	<head>
 		<title>{subtitle && `${subtitle} |`} {title}</title>
 		<meta name="description" content={description} />

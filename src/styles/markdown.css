@@ -97,7 +97,7 @@
 
 		ul,
 		ol {
-			padding-left: 1.2em;
+			padding-inline-start: 1.2em;
 		}
 
 		ul.contains-task-list {
@@ -108,7 +108,7 @@
 
 				&::before {
 					content: "";
-					margin-right: 5px;
+					margin-inline-end: 5px;
 					font-family: var(--font-monospace);
 					font-weight: 900;
 					font-size: 1.2em;
@@ -121,8 +121,8 @@
 		}
 
 		blockquote {
-			border-left: 4px solid var(--shadow-color);
-			padding-left: 1em;
+			border-inline-start: 4px solid var(--shadow-color);
+			padding-inline-start: 1em;
 
 			p {
 				margin: 0;
@@ -159,7 +159,7 @@
 			> button.code-copy-button {
 				position: absolute;
 				top: 0.75em;
-				right: 0.75em;
+				inset-inline-end: 0.75em;
 				width: 1em;
 				height: 1em;
 				color: var(--secondary-color);
@@ -285,11 +285,11 @@
 				li {
 					position: relative;
 					counter-increment: footnote;
-					padding-left: 1.5em;
+					padding-inline-start: 1.5em;
 
 					&::before {
 						position: absolute;
-						left: 0;
+						inset-inline-start: 0;
 						content: "[" counter(footnote) "]";
 					}
 
@@ -335,7 +335,7 @@
 		.markdown-alert-important,
 		.markdown-alert-warning,
 		.markdown-alert-caution {
-			border-left: 4px solid var(--alert-color);
+			border-inline-start: 4px solid var(--alert-color);
 			padding: 0px 1em 5px;
 		}
 
@@ -346,7 +346,7 @@
 			font-weight: bold;
 
 			svg {
-				margin-right: 8px;
+				margin-inline-end: 8px;
 			}
 		}
 

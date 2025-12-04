@@ -62,9 +62,9 @@ onMount(() => {
 <button onclick={() => (menu = true)} class="sm:hidden"><Icon name="lucide--align-justify" /></button>
 
 <!-- svelte-ignore a11y_consider_explicit_label -->
-<button onclick={() => (menu = false)} class:pointer-events-none={!menu} class:bg-transparent={!menu} class="fixed top-0 left-0 w-screen h-screen pointer-events-auto bg-[#aaaaaa88] transition-[background-color] sm:hidden"></button>
+<button onclick={() => (menu = false)} class:pointer-events-none={!menu} class:bg-transparent={!menu} class="fixed top-0 start-0 w-screen h-screen pointer-events-auto bg-[#aaaaaa88] transition-[background-color] sm:hidden"></button>
 
-<nav bind:this={navigator} class:translate-x-full={!menu} class="fixed top-0 right-0 flex flex-col justify-between items-start gap-5 p-5 bg-background h-full sm:contents overflow-hidden transition-transform">
+<nav bind:this={navigator} class:translate-x-full={!menu} class:rtl:-translate-x-full={!menu} class="fixed top-0 end-0 flex flex-col justify-between items-start gap-5 p-5 bg-background h-full sm:contents overflow-hidden transition-transform">
 	<header class="grid gap-5 text-secondary grid-rows-[repeat(5,1fr)] sm:grid-rows-none sm:grid-cols-[repeat(4,1fr)]">
 		<button onclick={() => (menu = false)} class="sm:hidden"><Icon name="lucide--x" /></button>
 
@@ -72,7 +72,7 @@ onMount(() => {
 			{@const isActive = active(item.path, item.extra)}
 			<a href={item.path} class="relative inline-flex items-center group" class:max-sm:font-bold={isActive}>
 				<span class="sm:absolute sm:w-full h-full inline-flex items-center sm:justify-center sm:border-b-2 sm:py-1 transition-[border-color] duration-150 ease-linear" class:border-transparent={!isActive} class:border-secondary={isActive}><Icon name={item.icon} /></span>
-				<p class="w-full sm:py-1 px-2.5 sm:text-center sm:text-background sm:bg-primary sm:clip-path-hidden transition-[clip-path] duration-150 ease-linear group-hover:clip-path-visible">{item.label}</p>
+				<p class="w-full sm:py-1 px-2.5 sm:text-center sm:text-background sm:bg-primary sm:clip-path-hidden transition-[clip-path] group-hover:clip-path-visible">{item.label}</p>
 			</a>
 		{/each}
 	</header>

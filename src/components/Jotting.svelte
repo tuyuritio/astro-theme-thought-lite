@@ -78,7 +78,7 @@ onMount(() => {
 			{#each list as jotting (jotting.id)}
 				<section animate:flip={{ duration: 150 }} class="flex flex-col justify-center border-b border-dashed border-b-weak pb-1">
 					<span class="flex items-center gap-1">
-						{#if jotting.data.top > 0}<Icon name="lucide--flag-triangle-right" />{/if}
+						{#if jotting.data.top > 0}<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100"/>{/if}
 						{#if jotting.data.sensitive}<Icon name="lucide--siren" title={t("sensitive.icon")} />{/if}
 						<a href={getRelativeLocaleUrl(locale, `/jotting/${monolocale ? jotting.id : jotting.id.split("/").slice(1).join("/")}`)} class="leading-normal text-primary font-semibold link truncate">{jotting.data.title}</a>
 					</span>
@@ -95,7 +95,7 @@ onMount(() => {
 
 		{#if pages > 1}
 			<footer class="sticky bottom-0 flex items-center justify-center gap-3 mt-auto pb-1 text-weak bg-background font-mono">
-				<button onclick={() => (page = Math.max(1, page - 1))}><Icon name="lucide--arrow-left" /></button>
+				<button onclick={() => (page = Math.max(1, page - 1))}><Icon name="lucide--arrow-left" class="rtl:-scale-x-100" /></button>
 				<button class:location={1 == page} onclick={() => (page = 1)}>{1}</button>
 
 				{#if pages > 7 && page > 4}<Icon name="lucide--ellipsis" />{/if}
@@ -107,7 +107,7 @@ onMount(() => {
 				{#if pages > 7 && page < pages - 3}<Icon name="lucide--ellipsis" />{/if}
 
 				<button class:location={pages == page} onclick={() => (page = pages)}>{pages}</button>
-				<button onclick={() => (page = Math.min(pages, page + 1))}><Icon name="lucide--arrow-right" /></button>
+				<button onclick={() => (page = Math.min(pages, page + 1))}><Icon name="lucide--arrow-right" class="rtl:-scale-x-100" /></button>
 			</footer>
 		{/if}
 	</article>
