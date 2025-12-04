@@ -1,22 +1,68 @@
 ---
-const Self = Astro.self;
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+	headings: Heading[];
+}
 
 const { headings } = Astro.props;
+
+// Extended heading type with additional properties for tree rendering
+// - last: indicates if this heading is the last child in its parent group
+// - lines: array of booleans indicating which vertical connector lines should be drawn
+type Heading = MarkdownHeading & { last?: boolean; lines?: boolean[] };
+
+// Determine which headings are the last in their sibling group
+const stack: Heading[] = [];
+headings.forEach(heading => {
+	// Pop headings from the stack that are at the same or deeper level
+	while (stack[stack.length - 1]?.depth >= heading.depth) {
+		const top = stack.pop();
+		// Mark as last if popped due to a shallower heading (not a sibling)
+		if (top && top.depth !== heading.depth) top.last = true;
+	}
+
+	stack.push(heading);
+});
+
+// Mark all remaining headings in the stack as last (they have no following siblings)
+while (stack.length > 0) stack.pop()!.last = true;
+
+// Calculate which vertical connector lines to show for each heading
+const actives: boolean[] = [];
+
+headings.forEach(heading => {
+	// For each depth level above this heading, record whether a vertical line should be drawn
+	for (let depth = 2; depth < heading.depth; depth++) {
+		heading.lines ??= [];
+		heading.lines[depth - 2] = actives[depth - 2];
+	}
+
+	// Update the active state for this heading's depth level
+	actives[heading.depth - 2] = !heading.last;
+});
 ---
 
-<ul class="ml-4 text-base list-none in-[ul]:mt-0.5">
+<ul class="flex flex-col text-base list-none">
 	{
-		headings.map((heading: any) => (
-			<li
-				id={`indicator-${heading.slug}`}
-				class="group relative
-				before:content-[''] before:absolute before:-top-0.75 before:-left-2 before:h-full before:border-l before:border-remark last:before:h-4
-				after:content-[''] after:absolute after:top-3.25 after:-left-2 after:border-b after:border-remark after:w-1.5
-				[&.indicate>a]:font-bold [&.indicate>a]:text-primary">
-				<a href={`#${heading.slug}`} class="text-weak hover:font-bold hover:text-primary transition-[color,font-weight]">
-					{heading.text}
+		headings.map((heading: Heading) => (
+			<li id={`indicator-${heading.slug}`} class="group relative flex items-stretch h-6 [&.indicate>a]:font-bold [&.indicate>a]:text-primary">
+				<div class="flex select-none" aria-hidden="true">
+					{heading.lines?.map(line => (
+						<div class="w-4 relative flex justify-center">{line && <span class="absolute top-0 bottom-0 border-l border-remark" />}</div>
+					))}
+
+					{heading.depth > 1 && (
+						<div class="w-4 relative flex justify-center">
+							<span class:list={["absolute top-0 border-l border-remark", heading.last ? "h-[calc(50%+1px)]" : "h-full"]} />
+							<span class="absolute top-1/2 left-1/2 w-2 border-b border-remark" />
+						</div>
+					)}
+				</div>
+
+				<a href={`#${heading.slug}`} title={heading.text} class="grow min-w-0 inline-flex items-center pl-1 text-weak hover:font-bold hover:text-primary transition-[color,font-weight]">
+					<span class="truncate">{heading.text}</span>
 				</a>
-				{heading.subheadings?.length > 0 && <Self headings={heading.subheadings} />}
 			</li>
 		))
 	}
@@ -49,13 +95,14 @@ const { headings } = Astro.props;
 
 		// Create new IntersectionObserver to detect when headings enter/leave viewport
 		observer = new IntersectionObserver(entries =>
-			entries.forEach(
-				({ target, isIntersecting }) =>
-					// Toggle "indicate" class on corresponding TOC item based on visibility
-					indicators
-						.get(target.getAttribute("aria-labelledby")!) // Get heading slug from aria-labelledby
-						?.classList.toggle("indicate", isIntersecting) // Add/remove highlight class
-			)
+			entries.forEach(({ target, isIntersecting }) => {
+				// Get heading slug from `aria-labelledby` attribute
+				const slug = target.getAttribute("aria-labelledby");
+				if (!slug) return;
+
+				// Toggle "indicate" class on corresponding TOC item based on visibility
+				indicators.get(slug)?.classList.toggle("indicate", isIntersecting);
+			})
 		);
 
 		// Find all heading sections in the markdown content and observe them

@@ -40,27 +40,6 @@ const { note } = Astro.props;
 // Render markdown content and extract headings for TOC
 const { Content, headings, remarkPluginFrontmatter: frontmatter } = await render(note);
 
-// Build hierarchical table of contents from flat heading list
-type Heading = MarkdownHeading & { subheadings: Heading[] };
-const tableOfContents: Heading[] = [];
-const stack: Heading[] = [];
-for (const item of headings) {
-	// Pop headings from stack that are at same or deeper level
-	while (stack[stack.length - 1]?.depth >= item.depth) stack.pop();
-	const heading: Heading = { ...item, subheadings: [] };
-
-	if (stack.length > 0) {
-		// Add as subheading to current parent
-		const parent = stack[stack.length - 1];
-		parent.subheadings.push(heading);
-	} else {
-		// Add as top-level heading
-		tableOfContents.push(heading);
-	}
-
-	stack.push(heading);
-}
-
 const t = i18nit(locale);
 ---
 
@@ -97,10 +76,10 @@ const t = i18nit(locale);
 				{
 					note.data.toc && (
 						<aside class="hidden sm:block sm:shrink-0 sm:w-[200px]">
-							<div class="sticky top-3 flex flex-col gap-2">
+							<div class="sticky top-3 flex flex-col gap-1">
 								<h4>{t("note.contents")}</h4>
 								<nav class="overflow-y-auto">
-									<TOC headings={tableOfContents} />
+									<TOC {headings} />
 								</nav>
 							</div>
 						</aside>
