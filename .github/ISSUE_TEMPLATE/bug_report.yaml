@@ -68,6 +68,6 @@ body:
     id: contribution
     attributes:
       label: Contribution
-      description: Would you be willing to help implement this feature?
+      description: Would you be willing to help fix this bug?
       options:
-        - label: I am willing to submit a PR to implement this feature
+        - label: I am willing to submit a PR to fix this bug
