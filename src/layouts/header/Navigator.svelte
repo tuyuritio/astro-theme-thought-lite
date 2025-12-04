@@ -59,6 +59,8 @@ onMount(() => {
 });
 </script>
 
+<button onclick={() => (menu = true)} class="sm:hidden"><Icon name="lucide--align-justify" /></button>
+
 <!-- svelte-ignore a11y_consider_explicit_label -->
 <button onclick={() => (menu = false)} class:pointer-events-none={!menu} class:bg-transparent={!menu} class="fixed top-0 left-0 w-screen h-screen pointer-events-auto bg-[#aaaaaa88] transition-[background-color] sm:hidden"></button>
 
@@ -92,5 +94,3 @@ onMount(() => {
 		{/if}
 	</footer>
 </nav>
-
-<button onclick={() => (menu = true)} class="sm:hidden"><Icon name="lucide--align-justify" /></button>
