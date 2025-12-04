@@ -4,69 +4,18 @@ const Self = Astro.self;
 const { headings } = Astro.props;
 ---
 
-<style>
-	ul {
-		margin-left: 1rem;
-
-		font-size: 1rem;
-		list-style: none;
-
-		a {
-			color: var(--weak-color);
-			line-height: 1.5;
-
-			transition:
-				color 0.15s ease-in-out,
-				font-weight 0.15s ease-in-out;
-
-			&:hover {
-				font-weight: bold;
-				color: var(--primary-color);
-			}
-		}
-
-		li {
-			position: relative;
-
-			&::before {
-				content: "";
-				position: absolute;
-				top: -0.2rem;
-				left: -0.5rem;
-				height: 100%;
-				border-left: 1px solid var(--remark-color);
-			}
-
-			&:last-child::before {
-				height: 1rem;
-			}
-
-			&::after {
-				content: "";
-				position: absolute;
-				top: 0.8rem;
-				left: -0.5rem;
-				border-bottom: 1px solid var(--remark-color);
-				width: 5px;
-			}
-
-			&.indicate > a {
-				font-weight: bold;
-				color: var(--primary-color);
-			}
-		}
-
-		ul {
-			margin-top: 0.2rem;
-		}
-	}
-</style>
-
-<ul>
+<ul class="ml-4 text-base list-none in-[ul]:mt-0.5">
 	{
 		headings.map((heading: any) => (
-			<li id={`indicator-${heading.slug}`}>
-				<a href={`#${heading.slug}`}>{heading.text}</a>
+			<li
+				id={`indicator-${heading.slug}`}
+				class="group relative
+				before:content-[''] before:absolute before:-top-0.75 before:-left-2 before:h-full before:border-l before:border-remark last:before:h-4
+				after:content-[''] after:absolute after:top-3.25 after:-left-2 after:border-b after:border-remark after:w-1.5
+				[&.indicate>a]:font-bold [&.indicate>a]:text-primary">
+				<a href={`#${heading.slug}`} class="text-weak hover:font-bold hover:text-primary transition-[color,font-weight]">
+					{heading.text}
+				</a>
 				{heading.subheadings?.length > 0 && <Self headings={heading.subheadings} />}
 			</li>
 		))
