@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.30.5](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.4...v0.30.5) (2025-12-04)
+
+
+### Bug Fixes
+
+* adjust layer of menu button ([5f44a7a](https://github.com/tuyuritio/astro-theme-thought-lite/commit/5f44a7a8a3d9a57c6810b636990996f13c2b9339))
+* flatten toc component structure ([4bfad8f](https://github.com/tuyuritio/astro-theme-thought-lite/commit/4bfad8f2a5b653a891e41c4a27ea0d320b074552))
+* move menu ID to class attribute ([2d45979](https://github.com/tuyuritio/astro-theme-thought-lite/commit/2d459791f11c20ef10129b4981a5357966095482))
+
+
+### Styles
+
+* increase z-index of tip component ([1474b6a](https://github.com/tuyuritio/astro-theme-thought-lite/commit/1474b6a3e1f61a72bf7114a48acbf912630f871f)), closes [#73](https://github.com/tuyuritio/astro-theme-thought-lite/issues/73)
+
 ## [0.30.4](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.3...v0.30.4) (2025-12-03)
 
 
