@@ -49,18 +49,18 @@ headings.forEach(heading => {
 			<li id={`indicator-${heading.slug}`} class="group relative flex items-stretch h-6 [&.indicate>a]:font-bold [&.indicate>a]:text-primary">
 				<div class="flex select-none" aria-hidden="true">
 					{heading.lines?.map(line => (
-						<div class="w-4 relative flex justify-center">{line && <span class="absolute top-0 bottom-0 border-l border-remark" />}</div>
+						<div class="w-4 relative flex justify-center">{line && <span class="absolute top-0 bottom-0 border-s border-remark" />}</div>
 					))}
 
 					{heading.depth > 1 && (
 						<div class="w-4 relative flex justify-center">
-							<span class:list={["absolute top-0 border-l border-remark", heading.last ? "h-[calc(50%+1px)]" : "h-full"]} />
-							<span class="absolute top-1/2 left-1/2 w-2 border-b border-remark" />
+							<span class:list={["absolute top-0 border-s border-remark", heading.last ? "h-[calc(50%+1px)]" : "h-full"]} />
+							<span class="absolute top-1/2 start-1/2 w-2 border-b border-remark" />
 						</div>
 					)}
 				</div>
 
-				<a href={`#${heading.slug}`} title={heading.text} class="grow min-w-0 inline-flex items-center pl-1 text-weak hover:font-bold hover:text-primary transition-[color,font-weight]">
+				<a href={`#${heading.slug}`} title={heading.text} class="grow min-w-0 inline-flex items-center ps-1 text-weak hover:font-bold hover:text-primary transition-[color,font-weight]">
 					<span class="truncate">{heading.text}</span>
 				</a>
 			</li>

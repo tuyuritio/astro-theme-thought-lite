@@ -220,7 +220,7 @@ input[type="checkbox"].switch {
 		content: "F";
 		align-items: center;
 		justify-content: center;
-		left: 0;
+		inset-inline-start: 0;
 		height: 1rem;
 		width: 1rem;
 		font-family: var(--font-monospace);
@@ -229,7 +229,7 @@ input[type="checkbox"].switch {
 		color: var(--background-color);
 		background-color: var(--primary-color);
 		z-index: 1;
-		transition: left 0.15s ease-in;
+		transition: inset-inline-start 0.15s ease-in;
 	}
 
 	&::after {
@@ -242,14 +242,21 @@ input[type="checkbox"].switch {
 
 	&:checked::before {
 		content: "T";
-		left: 1rem;
+		inset-inline-start: 1rem;
 	}
 }
 
 /* Swup progress bar */
 .swup-progress-bar {
+	--direction: to right;
+
 	height: 0.15rem;
-	background: linear-gradient(to right, var(--block-color), var(--secondary-color));
+	background: linear-gradient(var(--direction), var(--block-color), var(--secondary-color));
+
+	&:is(html[dir="rtl"] *) {
+		--direction: to left;
+		transform-origin: right center;
+	}
 }
 
 /* Medium zoom */

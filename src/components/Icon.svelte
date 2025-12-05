@@ -8,19 +8,22 @@ interface Props {
 
 	/** Tooltip text to display on hover (optional) - enhances accessibility */
 	title?: string;
+
+	/** Additional CSS classes for custom styling (optional) */
+	class?: string;
 }
 
-let { name, size, title }: Props = $props();
+let { name, size, title, class: className }: Props = $props();
 
 let value = size !== undefined ? (typeof size === "number" ? `${size}px` : size) : undefined;
 let dimensions = value ? `width: ${value}; height: ${value}` : "";
 </script>
 
 <figure aria-label={title} class="relative inline-flex items-center leading-none group">
-	<span class="iconify {name}" style={dimensions} aria-hidden="true"></span>
+	<span class="iconify {name} {className}" style={dimensions} aria-hidden="true"></span>
 
 	{#if title}
-		<span class="absolute bottom-full left-1/2 w-max h-max mb-1 py-1 px-1.5 rounded-sm text-background bg-primary text-xs font-serif font-normal leading-tight whitespace-pre-line z-2 opacity-0 invisible -translate-x-1/2 translate-y-1 pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-[opacity,visibility,translate] duration-150">
+		<span class="absolute bottom-full start-1/2 w-max h-max mb-1 py-1 px-1.5 rounded-sm text-background bg-primary text-xs font-serif font-normal leading-tight whitespace-pre-line z-2 opacity-0 invisible -translate-x-1/2 rtl:translate-x-1/2 translate-y-1 pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-[opacity,visibility,translate] duration-150">
 			{title}
 		</span>
 	{/if}

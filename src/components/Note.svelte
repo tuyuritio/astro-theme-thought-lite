@@ -101,14 +101,14 @@ onMount(() => {
 			<section animate:flip={{ duration: 150 }} class="flex flex-col sm:flex-row">
 				<div class="flex flex-col gap-1">
 					<div class="flex gap-1 items-center">
-						{#if note.data.top > 0}<Icon name="lucide--flag-triangle-right" />{/if}
+						{#if note.data.top > 0}<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100" />{/if}
 						{#if note.data.sensitive}<Icon name="lucide--siren" title={t("sensitive.icon")} />{/if}
 						{#if note.data.series}<button onclick={() => chooseSeries(note.data.series, true)}>{note.data.series}</button><b>|</b>{/if}
 						<a href={getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)} class="link">{note.data.title}</a>
 					</div>
 					<time datetime={note.data.timestamp.toISOString()} class="font-mono text-[0.65rem] leading-none text-remark">{Time(note.data.timestamp)}</time>
 				</div>
-				<span class="flex items-center gap-1 sm:ml-auto text-remark">
+				<span class="flex items-center gap-1 sm:ms-auto text-remark">
 					{#each note.data.tags as tag}
 						<button onclick={() => switchTag(tag, true)} class="text-[0.875rem] sm:text-sm">#{tag}</button>
 					{/each}
@@ -120,7 +120,7 @@ onMount(() => {
 
 		{#if pages > 1}
 			<footer class="sticky bottom-0 flex items-center justify-center gap-3 mt-auto pb-1 text-weak bg-background font-mono">
-				<button onclick={() => (page = Math.max(1, page - 1))}><Icon name="lucide--arrow-left" /></button>
+				<button onclick={() => (page = Math.max(1, page - 1))}><Icon name="lucide--arrow-left" class="rtl:-scale-x-100" /></button>
 				<button class:location={1 == page} onclick={() => (page = 1)}>{1}</button>
 
 				{#if pages > 7 && page > 4}<Icon name="lucide--ellipsis" />{/if}
@@ -132,7 +132,7 @@ onMount(() => {
 				{#if pages > 7 && page < pages - 3}<Icon name="lucide--ellipsis" />{/if}
 
 				<button class:location={pages == page} onclick={() => (page = pages)}>{pages}</button>
-				<button onclick={() => (page = Math.min(pages, page + 1))}><Icon name="lucide--arrow-right" /></button>
+				<button onclick={() => (page = Math.min(pages, page + 1))}><Icon name="lucide--arrow-right" class="rtl:-scale-x-100" /></button>
 			</footer>
 		{/if}
 	</article>

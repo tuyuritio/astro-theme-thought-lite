@@ -79,14 +79,18 @@
 	}
 }
 
-@utility clip-path-none {
-	clip-path: none;
-}
-
 @utility clip-path-hidden {
 	clip-path: inset(0 100% 0 0);
+
+	&:is(html[dir="rtl"] *) {
+		clip-path: inset(0 0 0 100%);
+	}
 }
 
 @utility clip-path-visible {
 	clip-path: inset(0 0 0 0);
+
+	&:is(html[dir="rtl"] *) {
+		clip-path: inset(0 0 0 0);
+	}
 }

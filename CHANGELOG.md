@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.30.6](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.5...v0.30.6) (2025-12-04)
+
+
+### Bug Fixes
+
+* **feed:** add direction to XSL ([66f0d00](https://github.com/tuyuritio/astro-theme-thought-lite/commit/66f0d00885da669cd9d37972b2290b866a7d4f4c))
+
+
+### Styles
+
+* update CSS for RTL support ([1ba3680](https://github.com/tuyuritio/astro-theme-thought-lite/commit/1ba368063dff9d96dcb716ac6a4acf241b54389c))
+
 ## [0.30.5](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.4...v0.30.5) (2025-12-04)
 
 

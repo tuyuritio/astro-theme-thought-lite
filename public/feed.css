@@ -60,7 +60,7 @@ header h1 a {
 	margin: 0.5rem 0;
 	border-bottom: 2px solid var(--primary-color);
 	padding-bottom: 0.5rem;
-	padding-right: 0.5rem;
+	padding-inline-end: 0.5rem;
 
 	font-size: 1.5rem;
 }
@@ -74,13 +74,13 @@ blockquote {
 	flex-direction: column;
 	gap: 0.5rem;
 
-	border-left: 4px solid var(--shadow-color);
-	padding-left: 1rem;
+	border-inline-start: 4px solid var(--shadow-color);
+	padding-inline-start: 1rem;
 	padding-bottom: 0.5rem;
 }
 
 blockquote p code {
-	margin-right: 0.5rem;
+	margin-inline-end: 0.5rem;
 	border-radius: 0.25rem;
 	padding: 0.2rem 0.4rem;
 

@@ -49,14 +49,14 @@ jottings.forEach(jotting => {
 		<figure class="relative group">
 			<i class="block w-2.5 h-2.5 bg-primary {number > 2 ? 'opacity-100' : number > 1 ? 'opacity-70' : number > 0 ? 'opacity-40' : 'opacity-10'}"></i>
 
-			<div class="absolute left-0 bottom-full w-max -translate-x-1/2 flex flex-col mb-1 rounded-sm px-2 py-2 text-xs text-background bg-primary pop">
+			<div class="absolute start-0 bottom-full w-max -translate-x-1/2 rtl:translate-x-1/2 flex flex-col mb-1 rounded-sm px-2 py-2 text-xs text-background bg-primary pop">
 				<time class="font-bold">{Time.date.locale(day.date, locale)}</time>
 				{#if number > 0}
 					{#if day.notes.length > 0}
 						<p class="my-1">{t("home.heatmap.note", { count: day.notes.length })}：</p>
 						<ul class="flex flex-col gap-0.5">
 							{#each day.notes as note}
-								<a href={getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)} aria-label={note.data.title} class="ml-1 link">{note.data.title}</a>
+								<a href={getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)} aria-label={note.data.title} class="ms-1 link">{note.data.title}</a>
 							{/each}
 						</ul>
 					{/if}
@@ -64,7 +64,7 @@ jottings.forEach(jotting => {
 						<p class="my-1">{t("home.heatmap.jotting", { count: day.jottings.length })}：</p>
 						<ul class="flex flex-col gap-0.5">
 							{#each day.jottings as jotting}
-								<a href={getRelativeLocaleUrl(locale, `/jotting/${monolocale ? jotting.id : jotting.id.split("/").slice(1).join("/")}`)} aria-label={jotting.data.title} class="ml-1 link">{jotting.data.title}</a>
+								<a href={getRelativeLocaleUrl(locale, `/jotting/${monolocale ? jotting.id : jotting.id.split("/").slice(1).join("/")}`)} aria-label={jotting.data.title} class="ms-1 link">{jotting.data.title}</a>
 							{/each}
 						</ul>
 					{/if}
