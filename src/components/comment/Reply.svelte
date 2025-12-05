@@ -269,7 +269,7 @@ onMount(() => {
 			<section class="flex items-center gap-2">
 				<figure class="relative flex items-center group">
 					<figcaption class="contents"><Icon name="lucide--smile" /></figcaption>
-					<ul class="absolute bottom-full -left-3 flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 mb-1 border-2 border-weak rounded-sm py-2 px-3 bg-background shadow-md pop">
+					<ul class="absolute bottom-full -start-3 flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 mb-1 border-2 border-weak rounded-sm py-2 px-3 bg-background shadow-md pop">
 						{#each emojis as emoji}
 							<button onclick={() => insertEmoji(emoji.code)}>{emoji.icon}</button>
 						{/each}

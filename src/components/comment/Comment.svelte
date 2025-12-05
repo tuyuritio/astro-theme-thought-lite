@@ -108,7 +108,7 @@ async function remove() {
 	</div>
 </Modal>
 
-<main id={comment.id} class:before:hidden={depth >= MIN_DEPTH} class:sm:before:block={depth < Math.max(MIN_DEPTH, MAX_DEPTH)} class="relative before:absolute before:content-[''] before:top-12 before:left-4 before:h-[calc(100%-2rem)] before:w-[0.2rem] before:bg-[linear-gradient(var(--shadow-color)_calc(100%-2rem),transparent)]">
+<main id={comment.id} class:before:hidden={depth >= MIN_DEPTH} class:sm:before:block={depth < Math.max(MIN_DEPTH, MAX_DEPTH)} class="relative before:absolute before:content-[''] before:top-12 before:start-4 before:h-[calc(100%-2rem)] before:w-[0.2rem] before:bg-[linear-gradient(var(--shadow-color)_calc(100%-2rem),transparent)]">
 	<dl class="flex flex-col gap-2 mt-6">
 		<div class="flex items-center gap-2">
 			{#if comment.name !== null}
@@ -138,7 +138,7 @@ async function remove() {
 				</dt>
 			{/if}
 		</div>
-		<blockquote class="ml-11">
+		<blockquote class="ms-11">
 			{#if comment.content}
 				<div class="markdown comment">{#await remark.process(comment.content) then html}{@html html}{/await}</div>
 				<dd class="flex items-center gap-4 mt-2">
@@ -155,7 +155,7 @@ async function remove() {
 			{/if}
 		</blockquote>
 	</dl>
-	<div class:ml-7={depth < MIN_DEPTH} class:sm:ml-7={depth < Math.max(MIN_DEPTH, MAX_DEPTH)}>
+	<div class:ms-7={depth < MIN_DEPTH} class:sm:ms-7={depth < Math.max(MIN_DEPTH, MAX_DEPTH)}>
 		{#if replyView && !editView}
 			<Reply {locale} {link} {oauth} {turnstile} {drifter} section={comment.section} item={comment.item} reply={comment.id} {refresh} bind:view={replyView} bind:limit />
 		{:else if editView && !replyView}

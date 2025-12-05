@@ -152,7 +152,7 @@ onMount(async () => {
 		<div class="flex flex-col gap-4">
 			<p class="self-center font-bold text-red-500">{t("drifter.deactivate.warning")}</p>
 			<p>{t("drifter.deactivate.description")}</p>
-			<ul class="ml-5 space-y-1">
+			<ul class="ms-5 space-y-1">
 				<li>{t("drifter.deactivate.consequences.data")}</li>
 				<li>{t("drifter.deactivate.consequences.comments")}</li>
 				<li>{t("drifter.deactivate.consequences.comment")}</li>
@@ -183,7 +183,7 @@ onMount(async () => {
 					{drifter.name}
 					<button onclick={synchronize}><Icon name="lucide--refresh-cw" title={t("drifter.sync.name")} /></button>
 					<button onclick={() => (location.href = "/drifter/sail")}><Icon name="lucide--log-out" title={t("drifter.signout")} /></button>
-					<button onclick={() => (deactivateView = true)} class="ml-auto text-red-500"><Icon name="lucide--user-round-x" title={t("drifter.deactivate.name")} /></button>
+					<button onclick={() => (deactivateView = true)} class="ms-auto text-red-500"><Icon name="lucide--user-round-x" title={t("drifter.deactivate.name")} /></button>
 				</menu>
 				{#if drifter.description}<span class="text-sm">{drifter.description}</span>{/if}
 			</aside>
