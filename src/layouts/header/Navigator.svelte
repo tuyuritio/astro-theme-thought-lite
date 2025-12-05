@@ -3,6 +3,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { onMount } from "svelte";
 import config, { monolocale } from "$config";
 import Icon from "$components/Icon.svelte";
+import Search from "$components/Search.svelte";
 import i18nit from "$i18n";
 import ThemeSwitcher from "./ThemeSwitcher.svelte";
 import Menu from "./Menu.svelte";
@@ -10,6 +11,8 @@ import Menu from "./Menu.svelte";
 let { locale, route }: { locale: string; route: string } = $props();
 
 const t = i18nit(locale);
+
+let searchView: boolean = $state(false);
 
 // Define home route and navigation routes configuration
 const homeRoute = getRelativeLocaleUrl(locale);
@@ -48,7 +51,11 @@ onMount(() => {
 	}
 
 	// Set up route tracking for page navigation with Swup integration
-	const updateRoute = () => (route = window.location.pathname);
+	const updateRoute = () => {
+		route = window.location.pathname;
+		menu = false;
+	};
+
 	if (window.swup) {
 		// Register route update hook if Swup is already available
 		window.swup.hooks.on("page:load", updateRoute);
@@ -56,6 +63,17 @@ onMount(() => {
 		// Wait for Swup to be enabled and then register the hook
 		document.addEventListener("swup:enable", () => window.swup?.hooks.on("page:load", updateRoute));
 	}
+
+	// Register keyboard shortcut
+	const handleKeydown = (event: KeyboardEvent) => {
+		if ((event.ctrlKey || event.metaKey) && event.key === "k") {
+			event.preventDefault();
+			searchView = !searchView;
+		}
+	};
+
+	document.addEventListener("keydown", handleKeydown);
+	return () => document.removeEventListener("keydown", handleKeydown);
 });
 </script>
 
@@ -78,6 +96,8 @@ onMount(() => {
 	</header>
 
 	<footer class="flex flex-col gap-2 sm:flex-row sm:gap-7">
+		<button onclick={() => (searchView = true)}><Icon name="lucide--search" /></button>
+
 		<ThemeSwitcher />
 
 		<a href={getRelativeLocaleUrl(locale, "/feed.xml")} target="_blank" aria-label="Subscription" class="inline-flex"><Icon name="lucide--rss" /></a>
@@ -94,3 +114,5 @@ onMount(() => {
 		{/if}
 	</footer>
 </nav>
+
+<Search {locale} bind:open={searchView} />

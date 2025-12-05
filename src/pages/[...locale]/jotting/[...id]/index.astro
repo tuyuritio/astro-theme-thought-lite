@@ -59,7 +59,7 @@ const t = i18nit(locale);
 		</header>
 
 		<Sensitive {locale} back="/jotting" sensitive={jotting.data.sensitive} client:load>
-			<section id="markdown-content" class="markdown"><Content /></section>
+			<section id="markdown-content" class="markdown" data-pagefind-body><Content /></section>
 		</Sensitive>
 
 		<Position {locale} />

@@ -48,5 +48,8 @@ sensitive:
   icon: 包含敏感内容
   title: 内容警告
   warning: 若这些内容可能影响您的心理健康，请立即离开！
+search:
+  empty: 暂无结果
+  placeholder: 搜索...
 statistics: 写下 {words} 字
 theme: '主题: ThoughtLite'
