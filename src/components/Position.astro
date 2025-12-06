@@ -45,11 +45,21 @@ const t = i18nit(locale);
 
 <script>
 	function updateProgress() {
-		const content = document.querySelector("#markdown-content") as HTMLElement;
-		if (content) {
-			const progress = Math.min(1, Math.max(0, window.scrollY - content.offsetTop) / content.clientHeight);
+		const el = document.querySelector("#markdown-content");
+		if (el instanceof HTMLElement) {
+			const contentTop = el.offsetTop;
+			const contentHeight = el.scrollHeight;
+			const viewportHeight = window.innerHeight;
+
+			const scrolled = window.scrollY - contentTop;
+			const scrollable = contentHeight - viewportHeight;
+
+			const progress = Math.min(1, Math.max(0, scrolled / scrollable));
+
 			const circle = document.getElementById("progress-circle");
-			if (circle) circle.style.strokeDashoffset = `${100 * (1 - progress)}`;
+			if (circle instanceof SVGCircleElement) {
+				circle.style.strokeDashoffset = `${100 * (1 - progress)}`;
+			}
 		}
 	}
 
