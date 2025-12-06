@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.30.7](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.6...v0.30.7) (2025-12-06)
+
+
+### Miscellaneous Chores
+
+* remove workaround for picocolors dependency ([a2661cc](https://github.com/tuyuritio/astro-theme-thought-lite/commit/a2661cc65b094c86314fb95f671b3ab02e0a89d6))
+
+
+### Styles
+
+* refactor color tokens for light and dark themes ([796d7b8](https://github.com/tuyuritio/astro-theme-thought-lite/commit/796d7b85a987164a53e3d127e885eeb747aaf1a0))
+
 ## [0.30.6](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.5...v0.30.6) (2025-12-04)
 
 
