@@ -24,7 +24,7 @@ export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, re
 		if (escort?.state !== state) return new Response("Unauthorized", { status: 401 });
 
 		// Exchange authorization code for user account information
-		const user: OAuthAccount = await new OAuth(platform).validate(code, escort.code_verifier);
+		const user: OAuthAccount = await new OAuth(platform).validate(code, escort.codeVerifier);
 
 		const db = drizzle(locals.runtime.env.DB);
 		// Insert or update user account in database with conflict resolution
