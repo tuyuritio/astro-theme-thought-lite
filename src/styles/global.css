@@ -1,15 +1,36 @@
 /** biome-ignore-all lint/correctness/noUnknownTypeSelector: https://github.com/biomejs/biome/issues/8338 */
 
-/* Light theme colors */
+/* Design tokens: light & dark values, then current tokens (default to light) */
 :root {
-	--primary-color: #2a2a28;
-	--secondary-color: #50504d;
-	--remark-color: #757575;
-	--weak-color: #9f9f9c;
-	--background-color: #fffffd;
-	--block-color: #eeeeee;
-	--shadow-color: #cdcdcc;
-	--selection-color: #adadacc3;
+	/* Light theme colors */
+	--primary-color-light: #2a2a28;
+	--secondary-color-light: #50504d;
+	--remark-color-light: #757575;
+	--weak-color-light: #9f9f9c;
+	--background-color-light: #fffffd;
+	--block-color-light: #eeeeee;
+	--shadow-color-light: #cdcdcc;
+	--selection-color-light: #adadacc3;
+
+	/* Dark theme colors */
+	--primary-color-dark: #dddddb;
+	--secondary-color-dark: #aaaaa8;
+	--remark-color-dark: #a5a5a5;
+	--weak-color-dark: #5d5d5a;
+	--background-color-dark: #0e0e0c;
+	--block-color-dark: #1e1e1e;
+	--shadow-color-dark: #323231;
+	--selection-color-dark: #adadacc3;
+
+	/* Default to light values */
+	--primary-color: var(--primary-color-light);
+	--secondary-color: var(--secondary-color-light);
+	--remark-color: var(--remark-color-light);
+	--weak-color: var(--weak-color-light);
+	--background-color: var(--background-color-light);
+	--block-color: var(--block-color-light);
+	--shadow-color: var(--shadow-color-light);
+	--selection-color: var(--selection-color-light);
 
 	--font-serif: "Noto Serif", serif;
 	--font-monospace: "Maple Mono NF CN", monospace;
@@ -21,14 +42,15 @@
 /* Dark theme colors */
 @media (prefers-color-scheme: dark) {
 	:root {
-		--primary-color: #dddddb;
-		--secondary-color: #aaaaa8;
-		--remark-color: #a5a5a5;
-		--weak-color: #5d5d5a;
-		--background-color: #0e0e0c;
-		--block-color: #1e1e1e;
-		--shadow-color: #323231;
-		--selection-color: #adadacc3;
+		/* Switch the tokens to reference the dark source values */
+		--primary-color: var(--primary-color-dark);
+		--secondary-color: var(--secondary-color-dark);
+		--remark-color: var(--remark-color-dark);
+		--weak-color: var(--weak-color-dark);
+		--background-color: var(--background-color-dark);
+		--block-color: var(--block-color-dark);
+		--shadow-color: var(--shadow-color-dark);
+		--selection-color: var(--selection-color-dark);
 	}
 
 	.astro-code,
@@ -49,25 +71,25 @@
 
 /* Manual theme overrides */
 [data-theme="light"] {
-	--primary-color: #2a2a28;
-	--secondary-color: #50504d;
-	--remark-color: #757575;
-	--weak-color: #9f9f9c;
-	--background-color: #fffffd;
-	--block-color: #eeeeee;
-	--shadow-color: #cdcdcc;
-	--selection-color: #adadacc3;
+	--primary-color: var(--primary-color-light);
+	--secondary-color: var(--secondary-color-light);
+	--remark-color: var(--remark-color-light);
+	--weak-color: var(--weak-color-light);
+	--background-color: var(--background-color-light);
+	--block-color: var(--block-color-light);
+	--shadow-color: var(--shadow-color-light);
+	--selection-color: var(--selection-color-light);
 }
 
 [data-theme="dark"] {
-	--primary-color: #dddddb;
-	--secondary-color: #aaaaa8;
-	--remark-color: #a5a5a5;
-	--weak-color: #5d5d5a;
-	--background-color: #0e0e0c;
-	--block-color: #1e1e1e;
-	--shadow-color: #323231;
-	--selection-color: #adadacc3;
+	--primary-color: var(--primary-color-dark);
+	--secondary-color: var(--secondary-color-dark);
+	--remark-color: var(--remark-color-dark);
+	--weak-color: var(--weak-color-dark);
+	--background-color: var(--background-color-dark);
+	--block-color: var(--block-color-dark);
+	--shadow-color: var(--shadow-color-dark);
+	--selection-color: var(--selection-color-dark);
 }
 
 [data-theme="dark"] .astro-code,

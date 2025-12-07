@@ -3,7 +3,7 @@
 @plugin "@iconify/tailwind4" {
 	/* biome-ignore lint/correctness/noUnknownProperty: https://iconify.design/docs/usage/css/tailwind/tailwind4/#clean-selectors */
 	prefixes: lucide, simple-icons, fa6-brands, svg-spinners;
-};
+}
 
 @theme {
 	/* Colors - using CSS variables for theme switching */
