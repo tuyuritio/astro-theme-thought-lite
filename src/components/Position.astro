@@ -45,16 +45,38 @@ const t = i18nit(locale);
 
 <script>
 	function updateProgress() {
-		const el = document.querySelector("#markdown-content");
-		if (el instanceof HTMLElement) {
-			const contentTop = el.offsetTop;
-			const contentHeight = el.scrollHeight;
+		const content = document.getElementById("markdown-content");
+		if (content) {
+			// Retrieve key metrics: content height, top position, viewport height, and current scroll
+			const contentHeight = content.scrollHeight;
+			const contentTop = content.offsetTop;
 			const viewportHeight = window.innerHeight;
+			const scrollTop = window.scrollY;
 
-			const scrolled = window.scrollY - contentTop;
-			const scrollable = contentHeight - viewportHeight;
+			let scrolled, scrollable;
 
-			const progress = Math.min(1, Math.max(0, scrolled / scrollable));
+			// Determine if the content is taller than the viewport
+			if (viewportHeight < contentHeight) {
+				// Long Article
+
+				// Distance scrolled past the top of the content
+				scrolled = Math.max(0, scrollTop - contentTop);
+
+				// Total distance required to align the bottom of the content with the viewport bottom
+				scrollable = contentHeight - viewportHeight;
+			} else {
+				// Short Article
+
+				// Absolute scroll position from the top of the page
+				scrolled = scrollTop;
+
+				// Distance required for the content's bottom to touch the viewport's bottom
+				scrollable = Math.max(0, contentHeight + contentTop - viewportHeight);
+			}
+
+			// Calculate progress ratio
+			// Note: If scrollable is 0, result is Infinity/NaN, which CSS ignores, effectively defaulting to 100% (full circle).
+			const progress = Math.min(1, scrolled / scrollable);
 
 			const circle = document.getElementById("progress-circle");
 			if (circle instanceof SVGCircleElement) {
