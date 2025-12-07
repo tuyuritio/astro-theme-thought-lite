@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.30.7](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.6...v0.30.7) (2025-12-07)
+
+
+### Bug Fixes
+
+* correct scroll progress percentage and type error ([18cf89b](https://github.com/tuyuritio/astro-theme-thought-lite/commit/18cf89b979be754f5dd67bc4463a9dc1c00a3871))
+* handle progress bar edge cases for short content ([ab57ea3](https://github.com/tuyuritio/astro-theme-thought-lite/commit/ab57ea3f147db6aa96d76184f396303f699ea60f))
+
+
+### Miscellaneous Chores
+
+* remove workaround for picocolors dependency ([a2661cc](https://github.com/tuyuritio/astro-theme-thought-lite/commit/a2661cc65b094c86314fb95f671b3ab02e0a89d6))
+
+
+### Styles
+
+* refactor color tokens for light and dark themes ([796d7b8](https://github.com/tuyuritio/astro-theme-thought-lite/commit/796d7b85a987164a53e3d127e885eeb747aaf1a0))
+
 ## [0.30.6](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.5...v0.30.6) (2025-12-04)
 
 
