@@ -108,7 +108,7 @@
 		"tsx": "^4.21.0"
 	},
 	"lint-staged": {
-		"*.{js,ts,json,jsonc,svelte,astro}": [
+		"*.{js,ts,json,jsonc,css,svelte,astro}": [
 			"biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
 		]
 	}
