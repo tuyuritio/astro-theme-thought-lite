@@ -1,4 +1,6 @@
-import siteConfig from "./src/utils/config";
+import siteConfig, { providers } from "./src/utils/config";
+
+const env = import.meta.env;
 
 const config = siteConfig({
 	title: "ThoughtLite",
@@ -29,6 +31,16 @@ const config = siteConfig({
 	latest: "*"
 });
 
-export const monolocale = Number(config.i18n.locales.length) === 1;
+const monolocale = Number(config.i18n.locales.length) === 1;
+
+const turnstile = env.CLOUDFLARE_TURNSTILE_SECRET_KEY ? env.CLOUDFLARE_TURNSTILE_SITE_KEY : null;
+
+const oauth = providers([
+	{ name: "GitHub", logo: "simple-icons--github", clientID: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET },
+	{ name: "Google", logo: "simple-icons--google", clientID: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET },
+	{ name: "X", logo: "simple-icons--x", clientID: env.TWITTER_CLIENT_ID, clientSecret: env.TWITTER_CLIENT_SECRET }
+]);
+
+export { turnstile, oauth, monolocale };
 
 export default config;

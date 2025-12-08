@@ -84,3 +84,16 @@ interface SiteConfigOptions<Locales extends readonly string[] = readonly string[
 export default function siteConfig<const Locales extends string[]>(config: SiteConfigOptions<Locales>): SiteConfigOptions<Locales> {
 	return config;
 }
+
+/**
+ * Processes the list of clients and returns valid authentication providers.
+ * It filters out any clients missing a `clientID` or `clientSecret`.
+ *
+ * @param clients - The raw array of client configuration objects.
+ * @returns An array of sanitized provider objects.
+ */
+export function providers(
+	clients: Array<{ name: string; logo: string; clientID: string; clientSecret: string }>
+): Array<{ name: string; logo: string }> {
+	return clients.filter(client => client.clientID && client.clientSecret).map(({ name, logo }) => ({ name, logo }));
+}
