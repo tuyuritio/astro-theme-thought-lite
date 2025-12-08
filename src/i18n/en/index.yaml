@@ -142,9 +142,7 @@ oauth:
     comment: Edit and delete your own thoughts
     homepage: Display your personal homepage
     notification: Receive desktop notifications for thought replies
-  github: Sign in with GitHub
-  google: Sign in with Google
-  x: Sign in with X
+  signin: Sign in with {platform}
 read:
   words: '{words} words'
 sensitive:

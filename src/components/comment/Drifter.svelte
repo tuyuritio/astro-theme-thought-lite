@@ -6,7 +6,7 @@ import Modal from "$components/Modal.svelte";
 import { pushTip } from "$components/Tip.svelte";
 import i18nit from "$i18n";
 
-let { open = $bindable(), locale, drifter }: { open: boolean; locale: string; drifter: any } = $props();
+let { open = $bindable(), locale, oauth, drifter }: { open: boolean; locale: string; oauth: any[]; drifter: any } = $props();
 
 const t = i18nit(locale);
 
@@ -171,15 +171,13 @@ onMount(async () => {
 	<main class="flex flex-col grow gap-5">
 		<header class="flex flex-col sm:flex-row gap-5">
 			<img src={drifter.image} alt={drifter.id} class="self-center w-20 b-2 border-solid border-weak rounded-full" />
-			<aside class="flex flex-col justify-around gap-2 sm:gap-0">
+			<aside class="grow flex flex-col justify-center gap-2">
 				<menu class="flex items-center gap-2 font-bold">
-					{#if drifter.platform == "GitHub"}
-						<Icon name="simple-icons--github" />
-					{:else if drifter.platform == "Google"}
-						<Icon name="simple-icons--google" />
-					{:else if drifter.platform == "X"}
-						<Icon name="simple-icons--x" />
-					{/if}
+					{#each oauth as provider}
+						{#if provider.name === drifter.platform}
+							<Icon name={provider.logo} />
+						{/if}
+					{/each}
 					{drifter.name}
 					<button onclick={synchronize}><Icon name="lucide--refresh-cw" title={t("drifter.sync.name")} /></button>
 					<button onclick={() => (location.href = "/drifter/sail")}><Icon name="lucide--log-out" title={t("drifter.signout")} /></button>

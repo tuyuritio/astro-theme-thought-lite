@@ -1,5 +1,4 @@
 ---
-import i18nit from "$i18n";
 import Comments from "./Section.svelte";
 
 interface Props {
@@ -11,19 +10,34 @@ interface Props {
 }
 
 const { locale, link, section, item, compact } = Astro.props;
-const t = i18nit(locale);
 
 const env = import.meta.env;
 
-// Check which OAuth providers are configured for comment authentication
-const oauth = {
-	github: env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET,
-	google: env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET,
-	x: env.TWITTER_CLIENT_ID && env.TWITTER_CLIENT_SECRET
-};
+/**
+ * Helper function to create an OAuth provider object if credentials are available
+ *
+ * @param clientID OAuth client ID for authentication
+ * @param clientSecret OAuth client secret for authentication
+ * @param name Display label for the OAuth provider
+ * @param logo Logo identifier for the provider
+ * @returns OAuth provider configuration object if credentials exist
+ */
+function provider(clientID: string, clientSecret: string, name: string, logo: string) {
+	if (clientID && clientSecret) {
+		return { name, logo };
+	}
+}
+
+// Prepare OAuth providers based on available environment variables
+const oauth = [
+	provider(env.GITHUB_CLIENT_ID, env.GITHUB_CLIENT_SECRET, "GitHub", "simple-icons--github"),
+	provider(env.GOOGLE_CLIENT_ID, env.GOOGLE_CLIENT_SECRET, "Google", "simple-icons--google"),
+	provider(env.TWITTER_CLIENT_ID, env.TWITTER_CLIENT_SECRET, "X", "simple-icons--x")
+].filter(Boolean);
 
 // Get the Turnstile site key if unauthenticated comments are allowed
 const turnstile = env.CLOUDFLARE_TURNSTILE_SECRET_KEY ? env.CLOUDFLARE_TURNSTILE_SITE_KEY : null;
 ---
 
+<!-- Wrapping component to inject server-side environment variables -->
 <Comments client:visible {locale} {link} {section} {item} {oauth} {turnstile} {compact} />

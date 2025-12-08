@@ -140,9 +140,7 @@ oauth:
     comment: 编辑和删除自己的想法
     homepage: 展示自己的个人主页
     notification: 接收想法回复的桌面通知
-  github: GitHub 登录
-  google: Google 登录
-  x: X 登录
+  signin: 使用 {platform} 登录
 read:
   words: '{words} 字'
 sensitive:

@@ -232,17 +232,20 @@ onMount(() => {
 
 		<hr class="border-0 border-b border-dashed w-full" />
 
-		<div class="flex flex-col items-center gap-2 [&>a]:flex [&>a]:items-center [&>a]:justify-center [&>a]:gap-2 [&>a]:w-55 [&>a]:border-2 [&>a]:border-solid [&>a]:border-secondary [&>a]:p-1 [&>a]:rounded [&>a]:font-bold">
-			{#if oauth.github}<a href="/drifter/anchor/GitHub"><Icon name="simple-icons--github" /><span>{t("oauth.github")}</span></a>{/if}
-			{#if oauth.google}<a href="/drifter/anchor/Google"><Icon name="simple-icons--google" /><span>{t("oauth.google")}</span></a>{/if}
-			{#if oauth.x}<a href="/drifter/anchor/X"><Icon name="simple-icons--x" /><span>{t("oauth.x")}</span></a>{/if}
+		<div class="flex flex-col items-center gap-2">
+			{#each oauth as provider}
+				<a href={`/drifter/anchor/${provider.name}`} class="flex items-center justify-center gap-2 w-full border-2 border-secondary py-1 px-2 rounded">
+					<Icon size="0.95rem" name={provider.logo} />
+					<span class="font-bold text-sm">{t("oauth.signin", { platform: provider.name })}</span>
+				</a>
+			{/each}
 		</div>
 
 		<button class="form-button" onclick={() => (anchorView = false)}>{t("cancel")}</button>
 	</div>
 </Modal>
 
-<Drifter bind:open={dockerView} {locale} {drifter} />
+<Drifter bind:open={dockerView} {locale} {oauth} {drifter} />
 
 <main transition:slide={{ duration: 150 }} class="relative mt-5">
 	{#if !turnstile && !drifter}
