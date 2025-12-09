@@ -20,6 +20,9 @@ OAuth 2.0 認証を使用して訪問者のログインとコメントをサポ�
 | `TWITTER_CLIENT_ID` | X Developer APP を作成, https://developer.x.com/en/portal/dashboard |
 | `TWITTER_CLIENT_SECRET` | User authentication settings でシークレットを作成 |
 
+> [!TIP]
+> 任意のサードパーティ認証プロバイダを有効にする場合、そのプロバイダの `*_CLIENT_ID` と `*_CLIENT_SECRET` の両方を設定する必要があります；いずれかが欠けている場合、そのプロバイダは自動的に**無効**になります。
+
 プロバイダー設定では、`Website URL` にサイト URL を、`Callback URI` に `<サイト URL>/drifter/anchor/<プロバイダー>` を記入してください。
 
 ## OAuth プロバイダーの拡張
@@ -149,6 +152,17 @@ async revoke(token: string): Promise<void> {
 
     // ...
 }
+```
+
+### 7. 統合の設定
+
+サイト設定（`site.config.ts`）でプロバイダを有効化し、情報を追加します：
+
+```ts
+const oauth = providers([
+    // ...
+    { name: "PLATFORM", logo: "simple-icons--PLATFORM", clientID: env.PLATFORM_CLIENT_ID, clientSecret: env.PLATFORM_CLIENT_SECRET }
+]);
 ```
 
 ### テスト

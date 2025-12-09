@@ -5,12 +5,13 @@ cancel: Cancel
 comment:
   author: Author
   collapse: Fold away thoughts
+  disabled: Ideas archived. Closed for now.
   edit:
     history: Edit History
     name: Edit
   empty: Thought is empty
-  failure: Sorry, your thoughts couldn't be sent
   expand: Unfurl thoughts
+  failure: Sorry, your thoughts couldn't be sent
   fetch:
     failure: Error loading thoughts
   history: History
@@ -24,8 +25,8 @@ comment:
     Continue in a reply
   placeholder: Leave your thoughts here
   preview:
-    name: Markdown Preview
     empty: Waiting for your Markdown inspiration
+    name: Markdown Preview
   reload:
     increase: Get new thoughts!
     name: Refresh comments

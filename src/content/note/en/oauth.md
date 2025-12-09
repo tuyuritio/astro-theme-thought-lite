@@ -20,6 +20,9 @@ Please add corresponding variables for the providers you need to add in the `.en
 | `TWITTER_CLIENT_ID` | Create X Developer APP, https://developer.x.com/en/portal/dashboard |
 | `TWITTER_CLIENT_SECRET` | Create secret in User authentication settings |
 
+> [!TIP]
+> When enabling any third-party auth provider, you must configure both the `*_CLIENT_ID` and `*_CLIENT_SECRET` for that provider; if either variable is missing, the provider will remain **disabled**.
+
 In provider configuration, fill in the site URL for `Website URL`, and fill in `<SITE_URL>/drifter/anchor/<PROVIDER>` for `Callback URI`.
 
 ## Extend OAuth Providers
@@ -149,6 +152,17 @@ async revoke(token: string): Promise<void> {
 
     // ...
 }
+```
+
+### 7. Configure integration
+
+Enable and add the provider in your site configuration (`site.config.ts`):
+
+```ts
+const oauth = providers([
+    // ...
+    { name: "PLATFORM", logo: "simple-icons--PLATFORM", clientID: env.PLATFORM_CLIENT_ID, clientSecret: env.PLATFORM_CLIENT_SECRET }
+]);
 ```
 
 ### Testing

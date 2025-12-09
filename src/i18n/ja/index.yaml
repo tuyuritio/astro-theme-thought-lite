@@ -5,12 +5,13 @@ cancel: 取消
 comment:
   author: 筆者
   collapse: 思いをたたむ
+  disabled: アイデア保存中・投稿不可
   edit:
     history: 編集歴史
     name: 編集
   empty: 感想内容が空です
-  failure: 申し訳ありませんが、感想を送信できませんでした
   expand: 思いをひらく
+  failure: 申し訳ありませんが、感想を送信できませんでした
   fetch:
     failure: 感想取得に失敗しました
   history: 履歴
@@ -24,8 +25,8 @@ comment:
     続きは返信で
   placeholder: 感想をここに刻印しましょう
   preview:
-    name: Markdown 試写
     empty: Markdown のインスピレーションをお待ちしています
+    name: Markdown 試写
   reload:
     increase: 新しい感想があります！
     name: 感想を更新します

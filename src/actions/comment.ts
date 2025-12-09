@@ -5,13 +5,10 @@ import { drizzle } from "drizzle-orm/d1";
 import { Comment, CommentHistory, Drifter, Notification } from "$db/schema";
 import { enhash, Token } from "$utils/token";
 import notify from "$utils/notify";
-import config from "$config";
+import config, { turnstile, oauth } from "$config";
 import i18nit from "$i18n";
 
 const env = import.meta.env;
-
-// If unauthenticated comments are allowed
-const nomad = env.CLOUDFLARE_TURNSTILE_SITE_KEY && env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
 
 /**
  * Define the CommentItem structure
@@ -42,15 +39,17 @@ export const comment = {
 			captcha: z.string().nullish() // CAPTCHA token for nomad users
 		}),
 		handler: async ({ section, item, reply, content, link, nickname, captcha }, { cookies, request, locals }) => {
-			// Verify user authentication
-			const drifter = (await Token.check(cookies, "passport"))?.visa;
+			// Check if commenting is enabled
+			if (!oauth.length && !turnstile) throw new ActionError({ code: "CONFLICT" });
 
 			// Get the client IP address from Cloudflare headers
 			const ip = request.headers.get("CF-Connecting-IP");
 
+			// Verify user authentication if OAuth providers are configured
+			const drifter: string | undefined = oauth.length ? (await Token.check(cookies, "passport"))?.visa : undefined;
+
 			if (!drifter) {
-				if (nomad && nickname?.trim() && captcha) {
-					// If nomad is enabled, verify captcha
+				if (turnstile && captcha && nickname?.trim()) {
 					const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
@@ -64,14 +63,14 @@ export const comment = {
 					const result = await response.json();
 					if (!result.success) throw new ActionError({ code: "FORBIDDEN" });
 				} else {
-					// If unauthenticated and nomad is unavailable, throw unauthorized error
+					// If unauthenticated and Turnstile is unavailable, throw unauthorized error
 					throw new ActionError({ code: "UNAUTHORIZED" });
 				}
 			}
 
 			// Apply rate limiting to prevent spam
 			// Use drifter ID for authenticated users, clientAddress for unauthenticated users
-			const { success } = await locals.runtime.env.COMMENT_LIMIT.limit({ key: drifter ?? ip ?? nickname });
+			const { success } = await locals.runtime.env.COMMENT_LIMIT.limit({ key: drifter ?? ip ?? "unknown" });
 			if (!success) throw new ActionError({ code: "TOO_MANY_REQUESTS" });
 
 			if (content.length > Number(config.comment?.["max-length"])) throw new ActionError({ code: "CONTENT_TOO_LARGE" });
@@ -146,6 +145,9 @@ export const comment = {
 			content: z.string() // New content for the comment
 		}),
 		handler: async ({ id, content }, { cookies, locals }) => {
+			// Check if authenticated commenting is enabled
+			if (!oauth.length) throw new ActionError({ code: "CONFLICT" });
+
 			// Verify user authentication
 			const drifter = (await Token.check(cookies, "passport")).visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
@@ -189,6 +191,9 @@ export const comment = {
 			id: z.string() // The comment ID to delete
 		}),
 		handler: async ({ id }, { cookies, locals }) => {
+			// Check if authenticated commenting is enabled
+			if (!oauth.length) throw new ActionError({ code: "CONFLICT" });
+
 			// Verify user authentication
 			const drifter = (await Token.check(cookies, "passport")).visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });

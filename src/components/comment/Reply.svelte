@@ -1,5 +1,5 @@
 <script lang="ts">
-import { actions } from "astro:actions";
+import { ActionError, actions } from "astro:actions";
 import { slide } from "svelte/transition";
 import { onMount } from "svelte";
 import remark from "$utils/remark";
@@ -42,16 +42,21 @@ let {
 
 const t = i18nit(locale);
 
+/** Determine authentication status */
+const authenticated: boolean = Boolean(oauth.length && drifter);
+
+/** Comment input is enabled only when it's authenticated or Turnstile is configured */
+const enabled: boolean = Boolean(turnstile || authenticated);
+
 let anchorView: boolean = $state(false); // OAuth signin view state
 let dockerView: boolean = $state(false); // User profile view state
 let content: string = $state(""); // Comment content, will be initialized in onMount
 let preview: boolean = $state(false); // Toggle between edit and preview mode
-let nomad: boolean = $state(!!turnstile && !drifter); // Check if unauthenticated comments are allowed
-let nickname: string | null = $state(null);
-let captcha: string | undefined = $state();
-let turnstileElement: HTMLElement | undefined = $state();
-let turnstileID: string | undefined = $state();
-let overlength: boolean = $derived(content.length > Number(config.comment?.["max-length"]));
+let nickname: string | null = $state(null); // Nickname for unauthenticated users
+let captcha: string | undefined = $state(); // Captcha token for unauthenticated users
+let turnstileElement: HTMLElement | undefined = $state(); // Element to render Turnstile widget
+let turnstileID: string | undefined = $state(); // ID of the rendered Turnstile widget
+let overlength: boolean = $derived(content.length > Number(config.comment?.["max-length"])); // Content length check
 
 // Generate storage key
 const DRAFT_PREFIX = "comment-draft:";
@@ -116,22 +121,24 @@ function insertEmoji(emoji: string) {
 /**
  * Create or edit comment with validation and rate limiting
  */
-async function submitComment() {
+async function submit() {
+	// Ensure comment input is enabled
+	if (!enabled) return pushTip("warning", t("comment.disabled"));
+
+	// Enforce rate limiting
+	if (limit > 0) return pushTip("warning", t("comment.limit"));
+
 	// Validate content is not empty
 	if (!content.trim()) return pushTip("warning", t("comment.empty"));
 
-	// If nomad mode is enabled, validate CAPTCHA and nickname
-	if (nomad) {
+	let error: ActionError | undefined;
+	if (!authenticated) {
+		// For unauthenticated users, validate captcha and nickname
 		if (!captcha) return pushTip("error", t("comment.verify.failure"));
 		if (!nickname?.trim()) return pushTip("warning", t("comment.nickname.empty"));
-	}
 
-	// Call appropriate API action based on whether editing or creating
-	const { data, error } = edit
-		? await actions.comment.edit({ id: edit, content })
-		: await actions.comment.create({ section, item, reply, content, link, nickname, captcha: captcha });
+		({ error } = await actions.comment.create({ section, item, reply, content, link, nickname, captcha }));
 
-	if (nomad) {
 		// Only reset turnstile for top-level comments (when reply is undefined) or if there was an error
 		if (!reply || error) {
 			window.turnstile.reset(turnstileID);
@@ -139,6 +146,12 @@ async function submitComment() {
 		}
 
 		localStorage.setItem("nickname", nickname!);
+	} else if (edit) {
+		// For authenticated users editing a comment
+		({ error } = await actions.comment.edit({ id: edit, content }));
+	} else {
+		// For authenticated users creating a new comment or reply
+		({ error } = await actions.comment.create({ section, item, reply, content, link }));
 	}
 
 	if (!error) {
@@ -178,6 +191,9 @@ async function submitComment() {
 }
 
 onMount(() => {
+	// Do nothing if comment input is disabled
+	if (!enabled) return;
+
 	// Restore draft from localStorage
 	const savedDraft = localStorage.getItem(draftKey);
 	if (savedDraft) {
@@ -187,8 +203,8 @@ onMount(() => {
 		content = text;
 	}
 
-	// If nomad is enabled and user is not authenticated, show nickname input and Turnstile widget
-	if (nomad) {
+	// If unauthenticated, setup nickname and Turnstile
+	if (!authenticated) {
 		nickname = localStorage.getItem("nickname");
 
 		/**
@@ -248,13 +264,17 @@ onMount(() => {
 <Drifter bind:open={dockerView} {locale} {oauth} {drifter} />
 
 <main transition:slide={{ duration: 150 }} class="relative mt-5">
-	{#if !turnstile && !drifter}
+	{#if !enabled}
 		<div class="absolute flex flex-col items-center justify-center gap-1 w-full h-full font-bold cursor-not-allowed">
-			<button onclick={() => (anchorView = true)} class="border-2 py-1 px-2 rounded-sm font-bold">{t("comment.signin")}</button>
+			{#if !oauth.length}
+				<span class="text-xl font-bold">{t("comment.disabled")}</span>
+			{:else}
+				<button onclick={() => (anchorView = true)} class="border-2 py-1 px-2 rounded-sm font-bold">{t("comment.signin")}</button>
+			{/if}
 		</div>
 	{/if}
-	<div class={!turnstile && !drifter ? "pointer-events-none blur" : ""}>
-		<fieldset class="flex flex-col gap-2 p-2 border-2 border-weak rounded-sm">
+	<div class:pointer-events-none={!enabled} class:blur={!enabled}>
+		<fieldset disabled={!enabled} class="flex flex-col gap-2 p-2 border-2 border-weak rounded-sm">
 			<article class="flex flex-col min-h-20 overflow-auto resize-y">
 				<textarea hidden={preview} placeholder="   {t('comment.placeholder')}" bind:this={textarea} bind:value={content} class="grow w-full bg-transparent text-base outline-none resize-none"></textarea>
 				{#if preview}
@@ -281,17 +301,23 @@ onMount(() => {
 				</figure>
 				<label class="flex items-center cursor-pointer"><Icon name="lucide--file-search" title={t("comment.preview.name")} /><input type="checkbox" class="switch" bind:checked={preview} /></label>
 				<div class="grow"></div>
-				{#if nomad}
+
+				<!-- When comment input is enabled, either the it's authenticated or Turnstile is configured -->
+				{#if authenticated}
+					<button onclick={() => (dockerView = true)}><Icon name="lucide--user-round-pen" title={t("drifter.profile")} /></button>
+				{:else}
 					<div bind:this={turnstileElement}></div>
 					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35 text-sm" />
-					<button onclick={() => (anchorView = true)}><Icon name="lucide--user-round" title={t("drifter.signin")} /></button>
-				{:else}
-					<button onclick={() => (dockerView = true)}><Icon name="lucide--user-round-pen" title={t("drifter.profile")} /></button>
+					{#if oauth.length}
+						<!-- Shown only when OAuth is configured -->
+						<button onclick={() => (anchorView = true)}><Icon name="lucide--user-round" title={t("drifter.signin")} /></button>
+					{/if}
 				{/if}
-				<button id="submit" disabled={limit > 0 || (nomad && !captcha) || overlength} onclick={submitComment}>
+
+				<button id="submit" disabled={limit > 0 || (!authenticated && !captcha) || overlength} onclick={submit}>
 					{#if limit > 0}
 						<span class="flex gap-0.5"><Icon name="lucide--timer" /><span class="relative top-0.5 font-mono leading-none">{Math.ceil(limit)}</span></span>
-					{:else if nomad && !captcha}
+					{:else if !authenticated && !captcha}
 						<span class="contents text-primary"><Icon name="svg-spinners--pulse-rings-3" title={t("comment.verify.progress")} /></span>
 					{:else if overlength}
 						<span class="contents text-orange-600"><Icon name="lucide--rectangle-ellipsis" title={t("comment.overlength")} /></span>

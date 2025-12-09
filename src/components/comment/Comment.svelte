@@ -34,10 +34,10 @@ let {
 
 const t = i18nit(locale);
 
-// Minimum nesting depth for comment threads to ensure proper display
+/** Minimum nesting depth for comment threads to ensure proper display */
 const MIN_DEPTH = 1;
 
-// Maximum nesting depth for comment threads to prevent infinite recursion
+/** Maximum nesting depth for comment threads to prevent infinite recursion */
 const MAX_DEPTH = 4;
 
 // Control visibility of reply and edit forms (mutually exclusive)
@@ -60,7 +60,7 @@ async function share() {
  * Delete comment after confirmation
  */
 async function remove() {
-	const { data, error } = await actions.comment.delete({ id: comment.id });
+	const { error } = await actions.comment.delete({ id: comment.id });
 	if (!error) {
 		// Refresh comment list and close modal on successful deletion
 		refresh();
@@ -142,10 +142,12 @@ async function remove() {
 			{#if comment.content}
 				<div class="markdown comment">{#await remark.process(comment.content) then html}{@html html}{/await}</div>
 				<dd class="flex items-center gap-4 mt-2">
-					<button onclick={() => ((replyView = !replyView), (editView = false))} disabled={!turnstile && !drifter}><Icon name="lucide--reply" title={t("comment.reply")} /></button>
+					<button onclick={() => ((replyView = !replyView), (editView = false))} disabled={!turnstile && !(oauth.length && drifter)}><Icon name="lucide--reply" title={t("comment.reply")} /></button>
 					{#if comment.updated && config.comment?.history}<button onclick={() => (historyView = true)}><Icon name="lucide--history" title={t("comment.history")} /></button>{/if}
 					<button onclick={share}><Icon name="lucide--share-2" title={t("comment.share.name")} /></button>
-					{#if comment.drifter === drifter?.id}
+
+					<!-- Show edit and delete buttons only if it's authenticated -->
+					{#if oauth.length && comment.drifter === drifter?.id}
 						<button onclick={() => ((editView = !editView), (replyView = false))}><Icon name="lucide--pencil" title={t("comment.edit.name")} /></button>
 						<button onclick={() => (deleteView = true)}><Icon name="lucide--trash" title={t("delete")} /></button>
 					{/if}

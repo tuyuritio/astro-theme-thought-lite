@@ -5,6 +5,7 @@ cancel: 取消
 comment:
   author: 笔者
   collapse: 合上笔谈
+  disabled: 想法归档，暂不新增
   edit:
     history: 编辑历史
     name: 编辑
@@ -24,8 +25,8 @@ comment:
     可于回复中续写
   placeholder: 于此留下想法
   preview:
-    name: Markdown 预览
     empty: 等待您的 Markdown 灵感
+    name: Markdown 预览
   reload:
     increase: 获取到新的想法！
     name: 刷新想法
