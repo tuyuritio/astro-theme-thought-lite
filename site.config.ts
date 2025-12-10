@@ -1,6 +1,6 @@
 import siteConfig, { providers } from "./src/utils/config";
 
-const env = import.meta.env;
+const env = import.meta.env ?? {};
 
 const config = siteConfig({
 	title: "ThoughtLite",
