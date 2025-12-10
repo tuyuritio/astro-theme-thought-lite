@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.9](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.8...v0.30.9) (2025-12-10)
+
+
+### Styles
+
+* resolve layout issue with note list on mobile ([74ee8b0](https://github.com/tuyuritio/astro-theme-thought-lite/commit/74ee8b0fa472e5474df2e7ef5a9dddd27039ad86))
+
 ## [0.30.8](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.7...v0.30.8) (2025-12-10)
 
 
