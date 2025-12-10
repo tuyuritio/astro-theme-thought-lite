@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.8](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.7...v0.30.8) (2025-12-10)
+
+
+### Styles
+
+* improve layout for long note title ([37d4eb4](https://github.com/tuyuritio/astro-theme-thought-lite/commit/37d4eb45f8bddd04985a55dc3a5a57f6c348e605))
+
 ## [0.30.7](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.6...v0.30.7) (2025-12-07)
 
 
