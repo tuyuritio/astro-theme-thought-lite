@@ -98,17 +98,20 @@ onMount(() => {
 <main class="flex flex-col-reverse sm:flex-row gap-10 grow">
 	<article class="flex flex-col gap-4 grow">
 		{#each list as note (note.id)}
-			<section animate:flip={{ duration: 150 }} class="flex flex-col sm:flex-row">
+			<section animate:flip={{ duration: 150 }} class="flex flex-col gap-2 sm:flex-row">
 				<div class="flex flex-col gap-1">
 					<div class="flex gap-1 items-center">
-						{#if note.data.top > 0}<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100" />{/if}
-						{#if note.data.sensitive}<Icon name="lucide--siren" title={t("sensitive.icon")} />{/if}
-						{#if note.data.series}<button onclick={() => chooseSeries(note.data.series, true)}>{note.data.series}</button><b>|</b>{/if}
+						<div class="inline-flex gap-1 items-center justify-center flex-wrap [&:not(:has(*))]:hidden">
+							{#if note.data.top > 0}<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100" />{/if}
+							{#if note.data.sensitive}<Icon name="lucide--siren" title={t("sensitive.icon")} />{/if}
+							{#if note.data.series}<button onclick={() => chooseSeries(note.data.series, true)}>{note.data.series}</button>{/if}
+						</div>
+						{#if note.data.series}<span class="mx-1 border-e-2 h-[calc(100%-0.25rem)]"></span>{/if}
 						<a href={getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)} class="link">{note.data.title}</a>
 					</div>
 					<time datetime={note.data.timestamp.toISOString()} class="font-mono text-[0.65rem] leading-none text-remark">{Time(note.data.timestamp)}</time>
 				</div>
-				<span class="flex items-center gap-1 sm:ms-auto text-remark">
+				<span class="inline-flex items-center justify-end gap-1 flex-wrap content-start sm:ms-auto text-remark">
 					{#each note.data.tags as tag}
 						<button onclick={() => switchTag(tag, true)} class="text-[0.875rem] sm:text-sm">#{tag}</button>
 					{/each}
@@ -137,7 +140,7 @@ onMount(() => {
 		{/if}
 	</article>
 
-	<aside class="sm:basis-[200px] flex flex-col gap-5">
+	<aside class="sm:basis-[200px] shrink-0 flex flex-col gap-5">
 		<section>
 			<h4>{t("note.series")}</h4>
 			<p>
