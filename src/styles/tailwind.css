@@ -75,7 +75,7 @@
 	}
 
 	.pop {
-		@apply opacity-0 invisible z-1 transition-[opacity,visibility] group-hover:opacity-100 group-hover:visible;
+		@apply opacity-0 invisible z-1 transition-[opacity,visibility] group-hover/pop:opacity-100 group-hover/pop:visible;
 	}
 }
 
