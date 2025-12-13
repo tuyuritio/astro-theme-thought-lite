@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.30.10](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.9...v0.30.10) (2025-12-13)
+
+
+### Styles
+
+* add group name for utilities ([7b1d7b4](https://github.com/tuyuritio/astro-theme-thought-lite/commit/7b1d7b40fec3aeb7a2f07c4b596229a34fcafb25))
+* adjust border thickness ([94db398](https://github.com/tuyuritio/astro-theme-thought-lite/commit/94db398aa905e76876cc5906d4a880454c7898ee))
+
 ## [0.30.9](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.8...v0.30.9) (2025-12-10)
 
 

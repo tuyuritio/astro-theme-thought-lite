@@ -62,7 +62,6 @@ const notoFonts: Record<string, string> = {
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playwrite+MX:wght@100&display=block" />
 		<link rel="stylesheet" href="https://fontsapi.zeoseven.com/442/main/result.css" crossorigin />
 		<link rel="stylesheet" href="https://fontsapi.zeoseven.com/556/main/result.css" crossorigin />
-		<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.4/katex.min.css" onload="this.onload=null;this.rel='stylesheet'" />
 
 		{Astro.currentLocale && notoFonts[Astro.currentLocale] && <link rel="stylesheet" href={notoFonts[Astro.currentLocale]} />}
 
