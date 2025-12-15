@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.30.11](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.10...v0.30.11) (2025-12-15)
+
+
+### Bug Fixes
+
+* **feed:** use absolute path for stylesheet reference ([cccde9c](https://github.com/tuyuritio/astro-theme-thought-lite/commit/cccde9cdcd54745128588fb1c92097b181555e30))
+
 ## [0.30.10](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.9...v0.30.10) (2025-12-13)
 
 
