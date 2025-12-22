@@ -1,4 +1,11 @@
 {
-	"recommendations": ["astro-build.astro-vscode", "tamasfe.even-better-toml", "lokalise.i18n-ally", "bradlc.vscode-tailwindcss"],
+	"recommendations": [
+		"astro-build.astro-vscode",
+		"tamasfe.even-better-toml",
+		"lokalise.i18n-ally",
+		"bradlc.vscode-tailwindcss",
+		"svelte.svelte-vscode",
+		"biomejs.biome"
+	],
 	"unwantedRecommendations": []
 }

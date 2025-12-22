@@ -46,9 +46,9 @@ const { title, subtitle, description, author, article } = Astro.props;
 		<link rel="shortcut icon" href="/favicon.ico" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 
-		<Font cssVariable="--font-playwrite-mx" preload />
-		<Font cssVariable="--font-maple-mono-nf-cn"	 />
+		<Font cssVariable="--font-playwrite-mx" />
 		<Font cssVariable="--font-the-peak-font-plus" />
+		<Font cssVariable="--font-maple-mono-nf-cn"	 />
 
 		{Astro.currentLocale === "en" && <Font cssVariable="--font-noto-serif" />}
 		{Astro.currentLocale === "zh-cn" && <Font cssVariable="--font-noto-serif-sc" />}
