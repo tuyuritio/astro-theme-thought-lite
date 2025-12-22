@@ -168,6 +168,9 @@ importers:
       '@rollup/plugin-yaml':
         specifier: ^4.1.2
         version: 4.1.2(rollup@2.79.2)
+      '@types/css-tree':
+        specifier: ^2.3.11
+        version: 2.3.11
       '@types/hast':
         specifier: ^3.0.4
         version: 3.0.4
@@ -180,6 +183,9 @@ importers:
       '@types/unist':
         specifier: ^3.0.3
         version: 3.0.3
+      css-tree:
+        specifier: ^3.1.0
+        version: 3.1.0
       esm-loader-yaml:
         specifier: ^1.0.2
         version: 1.0.2
@@ -210,6 +216,9 @@ importers:
       tsx:
         specifier: ^4.21.0
         version: 4.21.0
+      unifont:
+        specifier: ^0.6.0
+        version: 0.6.0
 
 packages:
 
@@ -1889,6 +1898,9 @@ packages:
 
   '@types/babel__traverse@7.28.0':
     resolution: {integrity: sha512-8PvcXf70gTDZBgt9ptxJ8elBeBjcLOAcOtoO/mPJjtji1+CdGbHgm77om1GrsPxsiE+uXIpNSK64UYaIwQXd4Q==}
+
+  '@types/css-tree@2.3.11':
+    resolution: {integrity: sha512-aEokibJOI77uIlqoBOkVbaQGC9zII0A+JH1kcTNKW2CwyYWD8KM6qdo+4c77wD3wZOQfJuNWAr9M4hdk+YhDIg==}
 
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
@@ -7347,6 +7359,8 @@ snapshots:
     dependencies:
       '@babel/types': 7.28.5
     optional: true
+
+  '@types/css-tree@2.3.11': {}
 
   '@types/debug@4.1.12':
     dependencies:

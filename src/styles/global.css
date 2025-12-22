@@ -32,9 +32,9 @@
 	--shadow-color: var(--shadow-color-light);
 	--selection-color: var(--selection-color-light);
 
-	--font-serif: "Noto Serif", serif;
-	--font-monospace: "Maple Mono NF CN", monospace;
-	--font-cursive: "Playwrite MX", "The Peak Font Plus", serif;
+	--font-serif: var(--font-noto-serif), serif;
+	--font-monospace: var(--font-maple-mono-nf-cn), monospace;
+	--font-cursive: var(--font-playwrite-mx), var(--font-the-peak-font-plus), serif;
 
 	--swup-fade-theme-duration: 0.15s;
 }
@@ -62,11 +62,11 @@
 
 /* Language-specific fonts */
 :lang(zh-cn) {
-	--font-serif: "Noto Serif SC", serif;
+	--font-serif: var(--font-noto-serif-sc), serif;
 }
 
 :lang(ja) {
-	--font-serif: "Noto Serif JP", serif;
+	--font-serif: var(--font-noto-serif-jp), serif;
 }
 
 /* Manual theme overrides */

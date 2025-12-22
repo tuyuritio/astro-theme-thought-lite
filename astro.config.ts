@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 import yaml from "@rollup/plugin-yaml";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
@@ -35,6 +35,7 @@ import reading from "./src/utils/remark/reading";
 import figure from "./src/utils/remark/figure";
 
 import siteConfig from "./site.config";
+import { ZeoSevenFonts } from "./src/fonts/config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -117,5 +118,44 @@ export default defineConfig({
 			smoothScrolling: false,
 			progress: true
 		})
-	]
+	],
+	experimental: {
+		fonts: [
+			{
+				name: "Noto Serif",
+				provider: fontProviders.google(),
+				weights: [400, 700],
+				cssVariable: "--font-noto-serif"
+			},
+			{
+				name: "Noto Serif SC",
+				provider: fontProviders.google(),
+				weights: [400, 700],
+				cssVariable: "--font-noto-serif-sc"
+			},
+			{
+				name: "Noto Serif JP",
+				provider: fontProviders.google(),
+				weights: [400, 700],
+				cssVariable: "--font-noto-serif-jp"
+			},
+			{
+				name: "Playwrite MX",
+				provider: fontProviders.google(),
+				cssVariable: "--font-playwrite-mx",
+				weights: [100],
+				display: "block"
+			},
+			{
+				name: "Maple Mono NF CN",
+				provider: ZeoSevenFonts(),
+				cssVariable: "--font-maple-mono-nf-cn"
+			},
+			{
+				name: "The Peak Font Plus",
+				provider: ZeoSevenFonts(),
+				cssVariable: "--font-the-peak-font-plus"
+			}
+		]
+	}
 });
