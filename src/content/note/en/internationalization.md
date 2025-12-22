@@ -61,13 +61,39 @@ const translations = {
 };
 ```
 
-If the new language requires specific font support, you can add a font mapping in the `notoFonts` object in `src/layouts/App.astro`:
+If the new language requires specific font support, please register the new font in `experimental.fonts` in `astro.config.ts`:
+
+```ts
+{
+    name: "Noto Serif TLH",
+    provider: SpecificFontProvider(),
+    weights: [400, 700],
+    fallbacks: ["serif"],
+    cssVariable: "--font-noto-serif-tlh"
+}
+```
+
+And import the font:
+
+```astro
+<!-- src/layouts/App.astro -->
+{Astro.currentLocale === "tlh" && <Font cssVariable="--font-noto-serif-tlh" />}
+```
+
+```css
+/* src/styles/global.css */
+:lang(tlh) {
+    --font-serif: var(--font-noto-serif-tlh);
+}
+```
+
+If you need to support Open Graph image generation for the language, add a mapping in the `notoFonts` object in `src/graph/default.ts` and `src/graph/content.ts`:
 
 ```ts
 const notoFonts: Record<string, string> = {
     "zh-cn": "Noto+Serif+SC",
     ja: "Noto+Serif+JP",
-    tlh: "Noto+Serif+..."
+    tlh: "Noto+Serif+TLH"
 };
 ```
 

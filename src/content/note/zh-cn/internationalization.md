@@ -61,13 +61,39 @@ const translations = {
 };
 ```
 
-如果新语言需要使用特定字体，可在 `src/layouts/App.astro` 中的 `notoFonts` 对象中添加字体映射：
+如果新语言需要使用特定字体，请在 `astro.config.ts` 的 `experimental.fonts` 中注册新字体：
+
+```ts
+{
+    name: "Noto Serif TLH",
+    provider: SpecificFontProvider(),
+    weights: [400, 700],
+    fallbacks: ["serif"],
+    cssVariable: "--font-noto-serif-tlh"
+}
+```
+
+并引入该字体：
+
+```astro
+<!-- src/layouts/App.astro -->
+{Astro.currentLocale === "tlh" && <Font cssVariable="--font-noto-serif-tlh" />}
+```
+
+```css
+/* src/styles/global.css */
+:lang(tlh) {
+    --font-serif: var(--font-noto-serif-tlh);
+}
+```
+
+若需支持生成该语言的 Open Graph 图片，需在 `src/graph/default.ts` 及 `src/graph/content.ts` 的 `notoFonts` 对象中添加映射：
 
 ```ts
 const notoFonts: Record<string, string> = {
     "zh-cn": "Noto+Serif+SC",
     ja: "Noto+Serif+JP",
-    tlh: "Noto+Serif+..."
+    tlh: "Noto+Serif+TLH"
 };
 ```
 
