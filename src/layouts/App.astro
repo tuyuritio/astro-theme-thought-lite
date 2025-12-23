@@ -1,22 +1,18 @@
 ---
-import { Font } from "astro:assets";
+import { Font, type CssVariable } from "astro:assets";
 
-interface Props {
-	title: string;
-	subtitle?: string;
-	description: string;
-	author?: string;
-	article?: {
-		timestamp: Date;
-		section?: string;
-		tags?: string[];
-	};
-}
+const { locale, title, subtitle, description, author, article } = Astro.props;
 
-const { title, subtitle, description, author, article } = Astro.props;
+const mainFonts: Record<string, CssVariable> = {
+	en: "--font-noto-serif",
+	"zh-cn": "--font-noto-serif-sc",
+	ja: "--font-noto-serif-jp"
+};
+
+const localedMainFont = mainFonts[locale];
 ---
 
-<html lang={Astro.currentLocale} dir={["ar", "he", "fa", "ur"].includes(Astro.currentLocale!) ? "rtl" : "ltr"}>
+<html lang={locale} dir={["ar", "he", "fa", "ur"].includes(locale) ? "rtl" : "ltr"}>
 	<head>
 		<title>{subtitle && `${subtitle} |`} {title}</title>
 		<meta name="description" content={description} />
@@ -30,7 +26,7 @@ const { title, subtitle, description, author, article } = Astro.props;
 		<meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
 		<meta property="og:description" content={description} />
 		<meta property="og:site_name" content={title} />
-		<meta property="og:locale" content={Astro.currentLocale?.replace(/-(\w+)/, (_, region) => `_${region.toUpperCase()}`)} />
+		<meta property="og:locale" content={locale.replace(/-(\w+)/, (_: any, region: string) => `_${region.toUpperCase()}`)} />
 
 		<meta property="og:image" content={article ? new URL(`${Astro.url.pathname}/graph.png`, Astro.site) : new URL("graph.png", Astro.site)} />
 		<meta property="og:image:alt" content={title} />
@@ -48,11 +44,8 @@ const { title, subtitle, description, author, article } = Astro.props;
 
 		<Font cssVariable="--font-playwrite-mx" />
 		<Font cssVariable="--font-the-peak-font-plus" />
-		<Font cssVariable="--font-maple-mono-nf-cn"	 />
-
-		{Astro.currentLocale === "en" && <Font cssVariable="--font-noto-serif" />}
-		{Astro.currentLocale === "zh-cn" && <Font cssVariable="--font-noto-serif-sc" />}
-		{Astro.currentLocale === "ja" && <Font cssVariable="--font-noto-serif-jp" />}
+		<Font cssVariable="--font-maple-mono-nf-cn" />
+		<Font cssVariable={localedMainFont} />
 
 		<script is:inline>
 			var theme = localStorage.getItem("theme");

@@ -73,11 +73,16 @@ If the new language requires specific font support, please register the new font
 }
 ```
 
-And import the font:
+And add the font mapping in `src/layouts/App.astro`:
 
-```astro
-<!-- src/layouts/App.astro -->
-{Astro.currentLocale === "tlh" && <Font cssVariable="--font-noto-serif-tlh" />}
+```ts
+// src/layouts/App.astro
+const serifFonts: Record<string, CssVariable> = {
+    en: "--font-noto-serif",
+    "zh-cn": "--font-noto-serif-sc",
+    ja: "--font-noto-serif-jp",
+    tlh: "--font-noto-serif-tlh"
+};
 ```
 
 ```css

@@ -39,7 +39,7 @@ const title = config.title;
 	document.addEventListener("astro:page-load", initialize);
 </script>
 
-<App {title} {subtitle} {description} {article} author={config.author.name}>
+<App {locale} {title} {subtitle} {description} {article} author={config.author.name}>
 	<Tip client:load />
 	<div class="flex flex-col mx-auto px-3 w-[min(100%,1000px)]">
 		<div id="body" class="flex flex-col min-h-screen">

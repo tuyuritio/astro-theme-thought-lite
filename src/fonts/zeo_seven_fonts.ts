@@ -60,7 +60,7 @@ export const provider = defineFontProvider("ZeoSeven Fonts", async () => ({
 							case "unicode-range":
 								font.unicodeRange = generate(declaration.value)
 									.split(",")
-									.map(s => s.trim());
+									.map(range => range.trim());
 								break;
 						}
 					}

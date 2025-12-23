@@ -44,7 +44,7 @@
 		"@astrojs/svelte": "^7.2.4",
 		"@hbsnow/rehype-sectionize": "^1.0.7",
 		"@iconify-json/fa6-brands": "^1.2.6",
-		"@iconify-json/lucide": "^1.2.81",
+		"@iconify-json/lucide": "^1.2.82",
 		"@iconify-json/simple-icons": "^1.2.63",
 		"@iconify-json/svg-spinners": "^1.2.4",
 		"@iconify/tailwind4": "^1.2.0",
@@ -90,7 +90,7 @@
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.6",
-		"@biomejs/biome": "2.3.9",
+		"@biomejs/biome": "2.3.10",
 		"@clack/prompts": "^0.11.0",
 		"@rollup/plugin-yaml": "^4.1.2",
 		"@types/css-tree": "^2.3.11",
@@ -109,7 +109,7 @@
 		"satori": "^0.18.3",
 		"sharp": "^0.34.5",
 		"tsx": "^4.21.0",
-		"unifont": "^0.6.0"
+		"unifont": "^0.7.1"
 	},
 	"lint-staged": {
 		"*.{js,ts,json,jsonc,css,svelte,astro}": [
