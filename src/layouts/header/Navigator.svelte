@@ -87,7 +87,7 @@ onMount(() => {
 				{#snippet trigger()}<Icon name="lucide--earth" />{/snippet}
 				<div data-no-swup class="contents">
 					{#each config.i18n.locales as target}
-						<a href={locale === target ? undefined : getRelativeLocaleUrl(target as string, path)} lang={target} class={locale === target ? "bg-primary text-background" : ""}>{i18nit(target)("language")}</a>
+						<a href={locale === target ? undefined : getRelativeLocaleUrl(target as string, path)} lang={target} class={locale === target ? "font-bold sm:bg-primary sm:text-background" : ""}>{i18nit(target)("language")}</a>
 					{/each}
 				</div>
 			</Menu>
