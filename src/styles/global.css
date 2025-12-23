@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @plugin "@iconify/tailwind4" {
-	prefixes: lucide, simple-icons, fa6-brands;
+	prefixes: lucide, simple-icons, fa6-brands, svg-spinners;
 }
 
 :root {
