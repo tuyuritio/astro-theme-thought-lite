@@ -106,7 +106,7 @@ onMount(() => {
 							{#if note.data.sensitive}<Icon name="lucide--siren" title={t("sensitive.icon")} />{/if}
 							{#if note.data.series}<button onclick={() => chooseSeries(note.data.series, true)}>{note.data.series}</button>{/if}
 						</div>
-						{#if note.data.series}<span class="my-0.5 mx-1 border-e-[1.75px] self-stretch"></span>{/if}
+						{#if note.data.series}<span class="my-0.5 mx-1 border-e-[1.5px] self-stretch"></span>{/if}
 						<a href={getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)} class="link">{note.data.title}</a>
 					</div>
 					<time datetime={note.data.timestamp.toISOString()} class="font-mono text-[0.65rem] leading-none text-remark">{Time(note.data.timestamp)}</time>

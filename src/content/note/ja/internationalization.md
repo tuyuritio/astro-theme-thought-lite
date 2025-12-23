@@ -61,13 +61,45 @@ const translations = {
 };
 ```
 
-新しい言語に特定のフォントが必要な場合は、`src/layouts/App.astro` の `notoFonts` オブジェクトにフォントマッピングを追加できます：
+新しい言語に特定のフォントが必要な場合は、`astro.config.ts` の `experimental.fonts` に新しいフォントを登録してください：
+
+```ts
+{
+    name: "Noto Serif TLH",
+    provider: SpecificFontProvider(),
+    weights: [400, 700],
+    fallbacks: ["serif"],
+    cssVariable: "--font-noto-serif-tlh"
+}
+```
+
+そして、`src/layouts/App.astro` でフォントのマッピングを追加します：
+
+```ts
+// src/layouts/App.astro
+const serifFonts: Record<string, CssVariable> = {
+    en: "--font-noto-serif",
+    "zh-cn": "--font-noto-serif-sc",
+    ja: "--font-noto-serif-jp",
+    tlh: "--font-noto-serif-tlh"
+};
+```
+
+```css
+/* src/styles/global.css */
+:lang(tlh) {
+    --font-serif: var(--font-noto-serif-tlh);
+}
+```
+
+その言語の Open Graph 画像生成をサポートする必要がある場合は、`src/graph/default.ts` および `src/graph/content.ts` の `notoFonts` オブジェクトにマッピングを追加してください：
 
 ```ts
 const notoFonts: Record<string, string> = {
-    "zh-cn": "Noto+Serif+SC",
-    ja: "Noto+Serif+JP",
-    tlh: "Noto+Serif+..."
+	  en: "Noto Serif",
+    "zh-cn": "Noto Serif SC",
+    ja: "Noto Serif JP",
+    tlh: "Noto+Serif+TLH"
 };
 ```
 

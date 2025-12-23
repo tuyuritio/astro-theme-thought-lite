@@ -5,9 +5,9 @@ import icon from "$public/favicon.svg?raw";
 
 // Locale-specific Noto Serif font mappings for Google Fonts
 const notoFonts: Record<string, string> = {
-	en: "Noto+Serif",
-	"zh-cn": "Noto+Serif+SC",
-	ja: "Noto+Serif+JP"
+	en: "Noto Serif",
+	"zh-cn": "Noto Serif SC",
+	ja: "Noto Serif JP"
 };
 
 /*
@@ -251,7 +251,7 @@ export default async ({
  * @throws Error if the font URL cannot be extracted from Google Fonts CSS
  */
 async function loadGoogleFont(locale: string, text: string) {
-	const url = `https://fonts.googleapis.com/css2?family=${notoFonts[locale]}:wght@900&text=${encodeURIComponent(text)}`;
+	const url = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(notoFonts[locale])}:wght@900&text=${encodeURIComponent(text)}`;
 	const css = await (await fetch(url)).text();
 	const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype|woff2?)'\)/);
 

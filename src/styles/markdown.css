@@ -109,7 +109,7 @@
 				&::before {
 					content: "";
 					margin-inline-end: 5px;
-					font-family: var(--font-monospace);
+					font-family: var(--font-mono);
 					font-weight: 900;
 					font-size: 1.2em;
 				}
@@ -135,7 +135,7 @@
 			padding: 0.25em 0.5em;
 			font-size: 0.8em;
 			-webkit-user-drag: none;
-			font-family: var(--font-monospace);
+			font-family: var(--font-mono);
 		}
 
 		:not(pre) > code {
@@ -363,8 +363,7 @@
 		/* KaTeX math */
 		.katex {
 			* {
-				/* biome-ignore lint/a11y/useGenericFontNames: https://github.com/biomejs/biome/issues/8339 */
-				font-family: "KaTeX_Main", var(--serif);
+				font-family: "KaTeX_Main", var(--font-serif);
 			}
 		}
 

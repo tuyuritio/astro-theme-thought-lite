@@ -1,6 +1,10 @@
 {
 	"i18n-ally.localesPaths": ["src/i18n"],
+	"i18n-ally.sourceLanguage": "en",
+	"i18n-ally.extract.autoDetect": false,
+	"i18n-ally.namespace": true,
+	"i18n-ally.defaultNamespace": "index",
 	"files.associations": {
-		"tailwind.css": "tailwindcss"
+		"global.css": "tailwindcss"
 	}
 }
