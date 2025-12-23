@@ -54,12 +54,7 @@ export const provider = defineFontProvider("ZeoSeven Fonts", async () => ({
 
 							case "font-weight":
 								value = declaration.value.children.first;
-								if (value?.type === "Number") font.weight = value.value; // 注意：font-weight 有时也是 Identifier (如 "bold")，这里只处理了 Number
-								break;
-
-							case "font-display":
-								value = declaration.value.children.first;
-								if (value?.type === "Identifier") font.display = value.name as any;
+								if (value?.type === "Number") font.weight = value.value;
 								break;
 
 							case "unicode-range":
