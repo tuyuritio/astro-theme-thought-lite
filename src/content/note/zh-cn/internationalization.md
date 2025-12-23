@@ -96,9 +96,10 @@ const serifFonts: Record<string, CssVariable> = {
 
 ```ts
 const notoFonts: Record<string, string> = {
-    "zh-cn": "Noto+Serif+SC",
-    ja: "Noto+Serif+JP",
-    tlh: "Noto+Serif+TLH"
+	  en: "Noto Serif",
+    "zh-cn": "Noto Serif SC",
+    ja: "Noto Serif JP",
+    tlh: "Noto Serif TLH"
 };
 ```
 

@@ -96,9 +96,10 @@ If you need to support Open Graph image generation for the language, add a mappi
 
 ```ts
 const notoFonts: Record<string, string> = {
-    "zh-cn": "Noto+Serif+SC",
-    ja: "Noto+Serif+JP",
-    tlh: "Noto+Serif+TLH"
+	  en: "Noto Serif",
+    "zh-cn": "Noto Serif SC",
+    ja: "Noto Serif JP",
+    tlh: "Noto Serif TLH"
 };
 ```
 
