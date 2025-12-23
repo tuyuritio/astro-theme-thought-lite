@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.31.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.31.0...v0.31.1) (2025-12-23)
+
+
+### Bug Fixes
+
+* regenerate pnpm-lock to resolve CI git URL error ([2fb4a1c](https://github.com/tuyuritio/astro-theme-thought-lite/commit/2fb4a1c94739924afa15aa8bea3768ef2811aa0e))
+
 ## [0.31.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.30.11...v0.31.0) (2025-12-23)
 
 
