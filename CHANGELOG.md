@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.31.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.31.1...v0.31.2) (2025-12-23)
+
+
+### Styles
+
+* bold active language link in menu ([b26702d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/b26702df094913a40c882493f6b047e1416c833f))
+
 ## [0.31.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.31.0...v0.31.1) (2025-12-23)
 
 
