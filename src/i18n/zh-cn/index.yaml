@@ -63,16 +63,16 @@ drifter:
       new: 重新授权登录将创建全新账号
       notification: 无法再接收任何通知
     description: 若确认注销，您的账号将会：
-    done: 离港旅人
+    done: 归隐旅人
     failure: 注销失败
     name: 注销
     success: 账号已注销
     title: 您确定要注销账号吗？
     warning: 这是不可逆的操作！
   fetch:
-    failure: 获取旅人配置出错
+    failure: 获取旅人档案出错
   homepage: 个人主页
-  profile: 旅人配置
+  profile: 旅人档案
   signin: 登录
   signout: 登出
   sync:

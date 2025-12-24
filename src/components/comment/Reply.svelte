@@ -48,8 +48,8 @@ const authenticated: boolean = Boolean(oauth.length && drifter);
 /** Comment input is enabled only when it's authenticated or Turnstile is configured */
 const enabled: boolean = Boolean(turnstile || authenticated);
 
-let anchorView: boolean = $state(false); // OAuth signin view state
-let dockerView: boolean = $state(false); // User profile view state
+let reachView: boolean = $state(false); // OAuth signin view state
+let profileView: boolean = $state(false); // User profile view state
 let content: string = $state(""); // Comment content, will be initialized in onMount
 let preview: boolean = $state(false); // Toggle between edit and preview mode
 let nickname: string | null = $state(null); // Nickname for unauthenticated users
@@ -242,7 +242,7 @@ onMount(() => {
 });
 </script>
 
-<Modal bind:open={anchorView}>
+<Modal bind:open={reachView}>
 	<div class="flex flex-col items-center gap-5">
 		<h2>{t("drifter.signin")}</h2>
 
@@ -257,18 +257,18 @@ onMount(() => {
 
 		<div class="flex flex-col items-center gap-2">
 			{#each oauth as provider}
-				<a href={`/drifter/anchor/${provider.name}`} class="flex items-center justify-center gap-2 w-full border-2 border-secondary py-1 px-2 rounded">
+				<a href={`/@/reach/${provider.name}`} class="flex items-center justify-center gap-2 w-full border-2 border-secondary py-1 px-2 rounded">
 					<Icon size="0.95rem" name={provider.logo} />
 					<span class="font-bold text-sm">{t("oauth.signin", { provider: provider.name })}</span>
 				</a>
 			{/each}
 		</div>
 
-		<button class="form-button" onclick={() => (anchorView = false)}>{t("cancel")}</button>
+		<button class="form-button" onclick={() => (reachView = false)}>{t("cancel")}</button>
 	</div>
 </Modal>
 
-<Drifter bind:open={dockerView} {locale} {oauth} {drifter} />
+<Drifter bind:open={profileView} {locale} {oauth} {drifter} />
 
 <main transition:slide={{ duration: 150 }} class="relative mt-5">
 	{#if !enabled}
@@ -276,7 +276,7 @@ onMount(() => {
 			{#if !oauth.length}
 				<span class="text-xl font-bold">{t("comment.disabled")}</span>
 			{:else}
-				<button onclick={() => (anchorView = true)} class="border-2 py-1 px-2 rounded-sm font-bold">{t("comment.signin")}</button>
+				<button onclick={() => (reachView = true)} class="border-2 py-1 px-2 rounded-sm font-bold">{t("comment.signin")}</button>
 			{/if}
 		</div>
 	{/if}
@@ -316,13 +316,13 @@ onMount(() => {
 
 				<!-- When comment input is enabled, either the it's authenticated or Turnstile is configured -->
 				{#if authenticated}
-					<button onclick={() => (dockerView = true)}><Icon name="lucide--user-round-pen" title={t("drifter.profile")} /></button>
+					<button onclick={() => (profileView = true)}><Icon name="lucide--user-round-pen" title={t("drifter.profile")} /></button>
 				{:else}
 					<div bind:this={turnstileElement}></div>
 					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35 text-sm" />
 					{#if oauth.length}
 						<!-- Shown only when OAuth is configured -->
-						<button onclick={() => (anchorView = true)}><Icon name="lucide--user-round" title={t("drifter.signin")} /></button>
+						<button onclick={() => (reachView = true)}><Icon name="lucide--user-round" title={t("drifter.signin")} /></button>
 					{/if}
 				{/if}
 

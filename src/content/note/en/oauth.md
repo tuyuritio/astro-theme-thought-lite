@@ -23,7 +23,7 @@ Please add corresponding variables for the providers you need to add in the `.en
 > [!TIP]
 > When enabling any third-party auth provider, you must configure both the `*_CLIENT_ID` and `*_CLIENT_SECRET` for that provider; if either variable is missing, the provider will remain **disabled**.
 
-In provider configuration, fill in the site URL for `Website URL`, and fill in `<SITE_URL>/drifter/anchor/<PROVIDER>` for `Callback URI`.
+In provider configuration, fill in the site URL for `Website URL`, and fill in `<SITE_URL>/@/reach/<PROVIDER>` for `Callback URI`.
 
 ## Extend OAuth Providers
 

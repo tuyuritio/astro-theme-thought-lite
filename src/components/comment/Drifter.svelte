@@ -180,7 +180,7 @@ onMount(async () => {
 					{/each}
 					{drifter.name}
 					<button onclick={synchronize}><Icon name="lucide--refresh-cw" title={t("drifter.sync.name")} /></button>
-					<button onclick={() => (location.href = "/drifter/sail")}><Icon name="lucide--log-out" title={t("drifter.signout")} /></button>
+					<button onclick={() => (location.href = "/@/depart")}><Icon name="lucide--log-out" title={t("drifter.signout")} /></button>
 					<button onclick={() => (deactivateView = true)} class="ms-auto text-red-500"><Icon name="lucide--user-round-x" title={t("drifter.deactivate.name")} /></button>
 				</menu>
 				{#if drifter.description}<span class="text-sm">{drifter.description}</span>{/if}

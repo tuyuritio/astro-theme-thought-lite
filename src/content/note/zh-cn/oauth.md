@@ -23,7 +23,7 @@ description: 详细介绍如何配置 OAuth 2.0 认证，支持 GitHub、Google�
 > [!TIP]
 > 启用任一第三方认证提供商，必须确保同时配置了其对应的 `*_CLIENT_ID` 和 `*_CLIENT_SECRET`；任一变量缺失或未配置，该提供商将自动保持**禁用**状态。
 
-提供商配置中，`Website URL` 填写站点 URL，`Callback URI` 填写 `<站点 URL>/drifter/anchor/<提供商>`。
+提供商配置中，`Website URL` 填写站点 URL，`Callback URI` 填写 `<站点 URL>/@/reach/<提供商>`。
 
 ## 扩展 OAuth 提供商
 

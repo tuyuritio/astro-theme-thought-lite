@@ -17,7 +17,7 @@ export interface OAuthAccount {
 }
 
 // OAuth redirect URI for all providers
-const REDIRECT_URI = new URL("/drifter/anchor", site).toString();
+const REDIRECT_URI = new URL("/@/reach", site).toString();
 
 /**
  * User-Agent header required by GitHub API
