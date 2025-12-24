@@ -35,8 +35,8 @@ export const comment = {
 			reply: z.string().nullish(), // ID of replied comment if this is a reply
 			content: z.string(), // The comment content
 			link: z.string().url(), // URL link for notifications
-			nickname: z.string().nullish(), // Nickname for nomad users
-			captcha: z.string().nullish() // CAPTCHA token for nomad users
+			nickname: z.string().nullish(), // Nickname for unauthenticated users
+			captcha: z.string().nullish() // CAPTCHA token for unauthenticated users
 		}),
 		handler: async ({ section, item, reply, content, link, nickname, captcha }, { cookies, request, locals }) => {
 			// Check if commenting is enabled

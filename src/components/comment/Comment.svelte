@@ -124,7 +124,7 @@ async function remove() {
 					{#if comment.description}<span title={comment.description} class="text-secondary text-xs leading-normal truncate">{comment.description}</span>{/if}
 				</dt>
 			{:else}
-				<img src={comment.nickname ? "/nomad.webp" : "/akkarin.webp"} alt="Default avatar" class="w-9 h-9 border border-solid border-weak rounded-full" />
+				<img src={comment.nickname ? "/scribe.webp" : "/akkarin.webp"} alt="Default avatar" class="w-9 h-9 border border-solid border-weak rounded-full" />
 				<dt class="flex flex-col gap-0.5 min-w-0">
 					<p class="flex items-center gap-1">
 						{#if comment.nickname}

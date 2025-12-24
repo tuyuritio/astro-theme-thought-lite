@@ -4,7 +4,7 @@ import { Font, type CssVariable } from "astro:assets";
 const { locale, title, subtitle, description, author, article } = Astro.props;
 
 const env = import.meta.env;
-const nomad = env.CLOUDFLARE_TURNSTILE_SITE_KEY && env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
+const turnstile = env.CLOUDFLARE_TURNSTILE_SITE_KEY && env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
 
 const mainFonts: Record<string, CssVariable> = {
 	en: "--font-noto-serif",
@@ -50,7 +50,7 @@ const localedMainFont = mainFonts[locale];
 		<Font cssVariable="--font-maple-mono-nf-cn" />
 		<Font cssVariable={localedMainFont} />
 
-		{nomad && [<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback" async defer data-swup-ignore-script is:inline />]}
+		{turnstile && [<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback" async defer data-swup-ignore-script is:inline />]}
 
 		<script is:inline>
 			var theme = localStorage.getItem("theme");

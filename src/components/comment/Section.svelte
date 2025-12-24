@@ -18,7 +18,7 @@ let {
 	oauth,
 	turnstile,
 	compact = false
-}: { locale: string; link: string; nomad: boolean; section: string; item: string; oauth: any; turnstile?: string; compact?: boolean } = $props();
+}: { locale: string; link: string; section: string; item: string; oauth: any; turnstile?: string; compact?: boolean } = $props();
 
 const t = i18nit(locale);
 
