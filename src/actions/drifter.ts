@@ -22,7 +22,7 @@ export const drifter = {
 				await db
 					.select({
 						id: Drifter.id,
-						platform: Drifter.platform,
+						provider: Drifter.provider,
 						name: sql`CASE WHEN ${Drifter.name} IS NULL THEN ${Drifter.handle} ELSE ${Drifter.name} END`,
 						description: Drifter.description,
 						image: Drifter.image,
@@ -47,11 +47,11 @@ export const drifter = {
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
 
-			// Get current OAuth tokens and platform info
+			// Get current OAuth tokens and provider info
 			const drifter = (
 				await db
 					.select({
-						platform: Drifter.platform,
+						provider: Drifter.provider,
 						access: Drifter.access,
 						expire: Drifter.expire,
 						refresh: Drifter.refresh
@@ -65,7 +65,7 @@ export const drifter = {
 
 			// Fetch updated profile from OAuth provider
 			// Use refresh token if access token expired, otherwise use access token
-			const profile: OAuthAccount = await new OAuth(drifter.platform).update(expire ? drifter.refresh! : drifter.access, expire);
+			const profile: OAuthAccount = await new OAuth(drifter.provider).update(expire ? drifter.refresh! : drifter.access, expire);
 
 			// Update user profile in database with latest OAuth data
 			const newProfile = (
@@ -118,11 +118,11 @@ export const drifter = {
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
 
-			// Get user's OAuth platform and access token for revocation
-			const drifter = (await db.select({ platform: Drifter.platform, access: Drifter.access }).from(Drifter).where(eq(Drifter.id, id)))[0];
+			// Get user's OAuth provider and access token for revocation
+			const drifter = (await db.select({ provider: Drifter.provider, access: Drifter.access }).from(Drifter).where(eq(Drifter.id, id)))[0];
 
 			// Revoke OAuth access token with the provider
-			await new OAuth(drifter.platform).revoke(drifter.access);
+			await new OAuth(drifter.provider).revoke(drifter.access);
 
 			// Delete user record from database
 			await db.delete(Drifter).where(eq(Drifter.id, id));

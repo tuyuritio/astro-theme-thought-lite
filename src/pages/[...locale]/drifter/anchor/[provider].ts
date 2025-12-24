@@ -9,7 +9,7 @@ import { Drifter } from "$db/schema";
 export const prerender = false;
 
 export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, request }) => {
-	const { platform } = params;
+	const { provider } = params;
 
 	const code = url.searchParams.get("code");
 	const state = url.searchParams.get("state");
@@ -24,7 +24,7 @@ export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, re
 		if (escort?.state !== state) return new Response("Unauthorized", { status: 401 });
 
 		// Exchange authorization code for user account information
-		const user: OAuthAccount = await new OAuth(platform).validate(code, escort.codeVerifier);
+		const user: OAuthAccount = await new OAuth(provider).validate(code, escort.codeVerifier);
 
 		const db = drizzle(locals.runtime.env.DB);
 		// Insert or update user account in database with conflict resolution
@@ -33,7 +33,7 @@ export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, re
 				.insert(Drifter)
 				.values({
 					id: random(16),
-					platform: user.platform,
+					provider: user.provider,
 					account: user.account,
 					refresh: user.refresh,
 					access: user.access,
@@ -44,8 +44,8 @@ export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, re
 					image: user.image
 				})
 				.onConflictDoUpdate({
-					// Update existing user if platform+account combination exists
-					target: [Drifter.platform, Drifter.account],
+					// Update existing user if provider+account combination exists
+					target: [Drifter.provider, Drifter.account],
 					set: {
 						access: sql`excluded.access`,
 						expire: sql`excluded.expire`,
@@ -88,7 +88,7 @@ export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, re
 		await Token.issue(cookies, "escort", { state, codeVerifier, referrer: request.headers.get("referer") ?? "/" }, "5 minutes");
 
 		// Generate OAuth authorization URL and redirect user
-		const link: URL = new OAuth(platform).url(state, codeVerifier);
+		const link: URL = new OAuth(provider).url(state, codeVerifier);
 		return redirect(link.toString(), 302);
 	}
 };

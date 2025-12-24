@@ -4,7 +4,7 @@ export const Drifter = sqliteTable(
 	"drifter",
 	{
 		id: text().primaryKey().notNull(),
-		platform: text().notNull(),
+		provider: text().notNull(),
 		account: text().notNull(),
 		access: text().notNull(),
 		expire: integer(),
@@ -18,7 +18,7 @@ export const Drifter = sqliteTable(
 		notify: integer(),
 		lock: integer()
 	},
-	table => [unique("platform_account").on(table.platform, table.account)]
+	table => [unique("provider_account").on(table.provider, table.account)]
 );
 
 export const Comment = sqliteTable(

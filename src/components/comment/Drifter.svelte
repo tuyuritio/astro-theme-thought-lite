@@ -174,7 +174,7 @@ onMount(async () => {
 			<aside class="grow flex flex-col justify-center gap-2">
 				<menu class="flex items-center gap-2 font-bold">
 					{#each oauth as provider}
-						{#if provider.name === drifter.platform}
+						{#if provider.name === drifter.provider}
 							<Icon name={provider.logo} />
 						{/if}
 					{/each}

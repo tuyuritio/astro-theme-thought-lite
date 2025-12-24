@@ -34,8 +34,8 @@ If you need to add a new OAuth provider, please refer to the following steps or 
 First, add the new provider's client credentials to the environment variables:
 
 ```sh
-PLATFORM_CLIENT_ID=client_id
-PLATFORM_CLIENT_SECRET=client_secret
+PROVIDER_CLIENT_ID=client_id
+PROVIDER_CLIENT_SECRET=client_secret
 ```
 
 ### 2. Extend OAuth Class Constructor
@@ -43,15 +43,15 @@ PLATFORM_CLIENT_SECRET=client_secret
 Add new provider support in the `OAuth` class constructor:
 
 ```ts
-import { PLATFORM } from "arctic";   // Ensure Arctic library supports this provider
+import { PROVIDER } from "arctic";   // Ensure Arctic library supports this provider
 
-constructor(platform?: string) {
+constructor(provider?: string) {
     // ...
 
     // Add new provider
-    else if (platform == "PLATFORM") {
-        if (!(env.PLATFORM_CLIENT_ID && env.PLATFORM_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
-        this.provider = new PLATFORM(env.PLATFORM_CLIENT_ID, env.PLATFORM_CLIENT_SECRET, `${REDIRECT_URI}/PLATFORM`);
+    else if (provider == "PROVIDER") {
+        if (!(env.PROVIDER_CLIENT_ID && env.PROVIDER_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
+        this.provider = new PROVIDER(env.PROVIDER_CLIENT_ID, env.PROVIDER_CLIENT_SECRET, `${REDIRECT_URI}/PROVIDER`);
     }
 
     // ...
@@ -66,7 +66,7 @@ Add authorization link generation logic for the new provider in the `URL` method
 url(state: string, codeVerifier: string): URL {
     // ...
 
-    else if (this.provider instanceof PLATFORM) {
+    else if (this.provider instanceof PROVIDER) {
         // Submit authorization request scope
         return this.provider.createAuthorizationURL(state, code_verifier, ["identify"]);
     }
@@ -86,22 +86,22 @@ async validate(code: string, verifier: string): Promise<OAuthAccount> {
 
     // ...
 
-    else if (this.provider instanceof PLATFORM) {
+    else if (this.provider instanceof PROVIDER) {
         // If token has expiration, get expiration time and refresh token
         const expire_at = tokens.hasRefreshToken() ? tokens.accessTokenExpiresAt() : undefined;
         const refresh_token = tokens.hasRefreshToken() ? tokens.refreshToken() : undefined;
 
         // Some providers need to get user info through API
-        const response = await fetch("https://platform.com/api/user", { headers: { Authorization: `Bearer ${access_token}`,"User-Agent": USER_AGENT } });
+        const response = await fetch("https://provider.com/api/user", { headers: { Authorization: `Bearer ${access_token}`,"User-Agent": USER_AGENT } });
         const user = await response.json();
 
         // Return information adjusted according to actual situation
-        return { platform: "PLATFORM", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
-    } else if (this.provider instanceof PLATFORM) {
+        return { provider: "PROVIDER", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
+    } else if (this.provider instanceof PROVIDER) {
         // Some providers embed user info in tokens
         const user: any = decodeIdToken(tokens.idToken());
 
-        return { platform: "PLATFORM", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
+        return { provider: "PROVIDER", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
     }
 
     // ...
@@ -116,7 +116,7 @@ Add user information update logic for the new provider in the `update` method:
 async update(token: string, expire: boolean): Promise<OAuthAccount> {
     // ...
 
-    else if (this.provider instanceof PLATFORM) {
+    else if (this.provider instanceof PROVIDER) {
         let expire_at: Date | undefined = undefined;
 
         // If token expired, refresh it
@@ -127,10 +127,10 @@ async update(token: string, expire: boolean): Promise<OAuthAccount> {
         }
 
         // Get latest user info
-        const response = await fetch("https://platform.com/api/user", { headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT } });
+        const response = await fetch("https://provider.com/api/user", { headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT } });
         const user = await response.json();
 
-        return { platform: "PLATFORM", access: token, expire: expire_at, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
+        return { provider: "PROVIDER", access: token, expire: expire_at, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
     }
 
     // ...
@@ -145,7 +145,7 @@ Add token revocation logic for the new provider in the `revoke` method:
 async revoke(token: string): Promise<void> {
     // ...
 
-    else if (this.provider instanceof PLATFORM) {
+    else if (this.provider instanceof PROVIDER) {
         // If provider supports token revocation, call corresponding API
         await this.provider.revokeToken(token);
     }
@@ -161,7 +161,7 @@ Enable and add the provider in your site configuration (`site.config.ts`):
 ```ts
 const oauth = providers([
     // ...
-    { name: "PLATFORM", logo: "simple-icons--PLATFORM", clientID: env.PLATFORM_CLIENT_ID, clientSecret: env.PLATFORM_CLIENT_SECRET }
+    { name: "PROVIDER", logo: "simple-icons--PROVIDER", clientID: env.PROVIDER_CLIENT_ID, clientSecret: env.PROVIDER_CLIENT_SECRET }
 ]);
 ```
 

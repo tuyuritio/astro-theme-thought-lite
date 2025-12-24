@@ -34,8 +34,8 @@ description: 详细介绍如何配置 OAuth 2.0 认证，支持 GitHub、Google�
 首先，在环境变量中添加新提供商的客户端凭证：
 
 ```sh
-PLATFORM_CLIENT_ID=client_id
-PLATFORM_CLIENT_SECRET=client_secret
+PROVIDER_CLIENT_ID=client_id
+PROVIDER_CLIENT_SECRET=client_secret
 ```
 
 ### 2. 扩展 OAuth 类构造函数
@@ -43,15 +43,15 @@ PLATFORM_CLIENT_SECRET=client_secret
 在 `OAuth` 类的构造函数中添加新的提供商支持：
 
 ```ts
-import { PLATFORM } from "arctic";   // 确保 Arctic 库支持该提供商
+import { PROVIDER } from "arctic";   // 确保 Arctic 库支持该提供商
 
-constructor(platform?: string) {
+constructor(provider?: string) {
     // ...
 
     // 添加新提供商
-    else if (platform == "PLATFORM") {
-        if (!(env.PLATFORM_CLIENT_ID && env.PLATFORM_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
-        this.provider = new PLATFORM(env.PLATFORM_CLIENT_ID, env.PLATFORM_CLIENT_SECRET, `${REDIRECT_URI}/PLATFORM`);
+    else if (provider == "PROVIDER") {
+        if (!(env.PROVIDER_CLIENT_ID && env.PROVIDER_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
+        this.provider = new PROVIDER(env.PROVIDER_CLIENT_ID, env.PROVIDER_CLIENT_SECRET, `${REDIRECT_URI}/PROVIDER`);
     }
 
     // ...
@@ -66,7 +66,7 @@ constructor(platform?: string) {
 url(state: string, codeVerifier: string): URL {
     // ...
 
-    else if (this.provider instanceof PLATFORM) {
+    else if (this.provider instanceof PROVIDER) {
         // 提交授权请求范围
         return this.provider.createAuthorizationURL(state, code_verifier, ["identify"]);
     }
@@ -86,22 +86,22 @@ async validate(code: string, verifier: string): Promise<OAuthAccount> {
 
     // ...
 
-    else if (this.provider instanceof PLATFORM) {
+    else if (this.provider instanceof PROVIDER) {
         // 如果令牌存在有效期，获取过期时间和刷新令牌
         const expire_at = tokens.hasRefreshToken() ? tokens.accessTokenExpiresAt() : undefined;
         const refresh_token = tokens.hasRefreshToken() ? tokens.refreshToken() : undefined;
 
         // 有些提供商需要通过 API 获取用户信息
-        const response = await fetch("https://platform.com/api/user", { headers: { Authorization: `Bearer ${access_token}`,"User-Agent": USER_AGENT } });
+        const response = await fetch("https://provider.com/api/user", { headers: { Authorization: `Bearer ${access_token}`,"User-Agent": USER_AGENT } });
         const user = await response.json();
 
         // 返回信息根据实际情况调整
-        return { platform: "PLATFORM", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
-    } else if (this.provider instanceof PLATFORM) {
+        return { provider: "PROVIDER", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
+    } else if (this.provider instanceof PROVIDER) {
         // 有些提供商将用户信息嵌入在令牌中
         const user: any = decodeIdToken(tokens.idToken());
 
-        return { platform: "PLATFORM", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
+        return { provider: "PROVIDER", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
     }
 
     // ...
@@ -116,7 +116,7 @@ async validate(code: string, verifier: string): Promise<OAuthAccount> {
 async update(token: string, expire: boolean): Promise<OAuthAccount> {
     // ...
 
-    else if (this.provider instanceof PLATFORM) {
+    else if (this.provider instanceof PROVIDER) {
         let expire_at: Date | undefined = undefined;
 
         // 如果令牌过期，进行刷新
@@ -127,10 +127,10 @@ async update(token: string, expire: boolean): Promise<OAuthAccount> {
         }
 
         // 获取最新用户信息
-        const response = await fetch("https://platform.com/api/user", { headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT } });
+        const response = await fetch("https://provider.com/api/user", { headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT } });
         const user = await response.json();
 
-        return { platform: "PLATFORM", access: token, expire: expire_at, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
+        return { provider: "PROVIDER", access: token, expire: expire_at, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
     }
 
     // ...
@@ -145,7 +145,7 @@ async update(token: string, expire: boolean): Promise<OAuthAccount> {
 async revoke(token: string): Promise<void> {
     // ...
 
-    else if (this.provider instanceof PLATFORM) {
+    else if (this.provider instanceof PROVIDER) {
         // 如果提供商支持令牌撤销，调用相应的 API
         await this.provider.revokeToken(token);
     }
@@ -161,7 +161,7 @@ async revoke(token: string): Promise<void> {
 ```ts
 const oauth = providers([
     // ...
-	{ name: "PLATFORM", logo: "simple-icons--PLATFORM", clientID: env.PLATFORM_CLIENT_ID, clientSecret: env.PLATFORM_CLIENT_SECRET }
+	{ name: "PROVIDER", logo: "simple-icons--PROVIDER", clientID: env.PROVIDER_CLIENT_ID, clientSecret: env.PROVIDER_CLIENT_SECRET }
 ]);
 ```
 

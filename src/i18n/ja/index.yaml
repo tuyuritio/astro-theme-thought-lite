@@ -141,7 +141,7 @@ oauth:
     comment: 自分の感想を編集・削除できます
     homepage: 自分の公式本頁を表示できます
     notification: 感想返信の机上通知を受信できます
-  signin: '{platform} でログイン'
+  signin: '{provider} でログイン'
 read:
   words: '{words} 字'
 sensitive:

@@ -5,7 +5,7 @@ const env = import.meta.env;
 
 // Interface defining the structure of OAuth account information
 export interface OAuthAccount {
-	platform: string; // OAuth provider name (GitHub, Google, X)
+	provider: string; // OAuth provider name (GitHub, Google, X)
 	access: string; // Access token for API calls
 	expire?: Date; // Token expiration date (if applicable)
 	refresh?: string; // Refresh token for token renewal (if applicable)
@@ -33,18 +33,18 @@ export class OAuth {
 	private provider;
 
 	/**
-	 * Initialize OAuth provider based on platform name
-	 * @param platform - OAuth provider name ("GitHub", "Google", or "X")
-	 * @throws Error if platform is invalid or required environment variables are missing
+	 * Initialize OAuth provider
+	 * @param provider - OAuth provider name ("GitHub", "Google", or "X")
+	 * @throws Error if provider is invalid or required environment variables are missing
 	 */
-	constructor(platform?: string) {
-		if (platform === "GitHub") {
+	constructor(provider?: string) {
+		if (provider === "GitHub") {
 			if (!(env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
 			this.provider = new GitHub(env.GITHUB_CLIENT_ID, env.GITHUB_CLIENT_SECRET, `${REDIRECT_URI}/GitHub`);
-		} else if (platform === "Google") {
+		} else if (provider === "Google") {
 			if (!(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
 			this.provider = new Google(env.GOOGLE_CLIENT_ID, env.GOOGLE_CLIENT_SECRET, `${REDIRECT_URI}/Google`);
-		} else if (platform === "X") {
+		} else if (provider === "X") {
 			if (!(env.TWITTER_CLIENT_ID && env.TWITTER_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
 			this.provider = new Twitter(env.TWITTER_CLIENT_ID, env.TWITTER_CLIENT_SECRET, `${REDIRECT_URI}/X`);
 		} else {
@@ -92,7 +92,7 @@ export class OAuth {
 			const user = await response.json();
 
 			return {
-				platform: "GitHub",
+				provider: "GitHub",
 				access: accessToken,
 				account: user.id.toString(),
 				handle: user.login,
@@ -107,7 +107,7 @@ export class OAuth {
 			const user: any = decodeIdToken(tokens.idToken());
 
 			return {
-				platform: "Google",
+				provider: "Google",
 				access: accessToken,
 				expire: expireAt,
 				refresh: refreshToken,
@@ -127,7 +127,7 @@ export class OAuth {
 
 			// Remove "_normal" suffix from Twitter profile image for higher resolution
 			return {
-				platform: "X",
+				provider: "X",
 				access: accessToken,
 				expire: expireAt,
 				refresh: refreshToken,
@@ -153,11 +153,13 @@ export class OAuth {
 	async update(token: string, expire: boolean): Promise<OAuthAccount> {
 		if (this.provider instanceof GitHub) {
 			// GitHub tokens don't expire, fetch fresh profile data
-			const response = await fetch("https://api.github.com/user", { headers: { authorization: `Bearer ${token}`, "user-agent": USER_AGENT } });
+			const response = await fetch("https://api.github.com/user", {
+				headers: { authorization: `Bearer ${token}`, "user-agent": USER_AGENT }
+			});
 			const user = await response.json();
 
 			return {
-				platform: "GitHub",
+				provider: "GitHub",
 				access: token,
 				account: user.id.toString(),
 				handle: user.login,
@@ -180,7 +182,7 @@ export class OAuth {
 			});
 			const user = await response.json();
 
-			return { platform: "Google", access: token, expire: expireAt, account: user.sub, name: user.name, image: user.picture };
+			return { provider: "Google", access: token, expire: expireAt, account: user.sub, name: user.name, image: user.picture };
 		} else if (this.provider instanceof Twitter) {
 			let expireAt: Date | undefined;
 			// Refresh access token if expired
@@ -198,7 +200,7 @@ export class OAuth {
 
 			// Remove "_normal" suffix from Twitter profile image for higher resolution
 			return {
-				platform: "X",
+				provider: "X",
 				access: token,
 				expire: expireAt,
 				account: user.id,

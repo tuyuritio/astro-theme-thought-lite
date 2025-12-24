@@ -34,8 +34,8 @@ OAuth 2.0 認証を使用して訪問者のログインとコメントをサポ�
 まず、環境変数に新しいプロバイダーのクライアント認証情報を追加します：
 
 ```sh
-PLATFORM_CLIENT_ID=client_id
-PLATFORM_CLIENT_SECRET=client_secret
+PROVIDER_CLIENT_ID=client_id
+PROVIDER_CLIENT_SECRET=client_secret
 ```
 
 ### 2. OAuth クラスコンストラクタの拡張
@@ -43,15 +43,15 @@ PLATFORM_CLIENT_SECRET=client_secret
 `OAuth` クラスのコンストラクタに新しいプロバイダーのサポートを追加します：
 
 ```ts
-import { PLATFORM } from "arctic";   // Arctic ライブラリがこのプロバイダーをサポートしていることを確認
+import { PROVIDER } from "arctic";   // Arctic ライブラリがこのプロバイダーをサポートしていることを確認
 
-constructor(platform?: string) {
+constructor(provider?: string) {
     // ...
 
     // 新しいプロバイダーを追加
-    else if (platform == "PLATFORM") {
-        if (!(env.PLATFORM_CLIENT_ID && env.PLATFORM_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
-        this.provider = new PLATFORM(env.PLATFORM_CLIENT_ID, env.PLATFORM_CLIENT_SECRET, `${REDIRECT_URI}/PLATFORM`);
+    else if (provider == "PROVIDER") {
+        if (!(env.PROVIDER_CLIENT_ID && env.PROVIDER_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
+        this.provider = new PROVIDER(env.PROVIDER_CLIENT_ID, env.PROVIDER_CLIENT_SECRET, `${REDIRECT_URI}/PROVIDER`);
     }
 
     // ...
@@ -66,7 +66,7 @@ constructor(platform?: string) {
 url(state: string, codeVerifier: string): URL {
     // ...
 
-    else if (this.provider instanceof PLATFORM) {
+    else if (this.provider instanceof PROVIDER) {
         // 認証リクエストスコープを提出
         return this.provider.createAuthorizationURL(state, code_verifier, ["identify"]);
     }
@@ -86,22 +86,22 @@ async validate(code: string, verifier: string): Promise<OAuthAccount> {
 
     // ...
 
-    else if (this.provider instanceof PLATFORM) {
+    else if (this.provider instanceof PROVIDER) {
         // トークンに有効期限がある場合、有効期限とリフレッシュトークンを取得
         const expire_at = tokens.hasRefreshToken() ? tokens.accessTokenExpiresAt() : undefined;
         const refresh_token = tokens.hasRefreshToken() ? tokens.refreshToken() : undefined;
 
         // 一部のプロバイダーは API を通じてユーザー情報を取得する必要がある
-        const response = await fetch("https://platform.com/api/user", { headers: { Authorization: `Bearer ${access_token}`,"User-Agent": USER_AGENT } });
+        const response = await fetch("https://provider.com/api/user", { headers: { Authorization: `Bearer ${access_token}`,"User-Agent": USER_AGENT } });
         const user = await response.json();
 
         // 実際の状況に応じて情報を調整して返す
-        return { platform: "PLATFORM", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
-    } else if (this.provider instanceof PLATFORM) {
+        return { provider: "PROVIDER", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
+    } else if (this.provider instanceof PROVIDER) {
         // 一部のプロバイダーはトークンにユーザー情報を埋め込む
         const user: any = decodeIdToken(tokens.idToken());
 
-        return { platform: "PLATFORM", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
+        return { provider: "PROVIDER", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
     }
 
     // ...
@@ -116,7 +116,7 @@ async validate(code: string, verifier: string): Promise<OAuthAccount> {
 async update(token: string, expire: boolean): Promise<OAuthAccount> {
     // ...
 
-    else if (this.provider instanceof PLATFORM) {
+    else if (this.provider instanceof PROVIDER) {
         let expire_at: Date | undefined = undefined;
 
         // トークンが期限切れの場合、更新する
@@ -127,10 +127,10 @@ async update(token: string, expire: boolean): Promise<OAuthAccount> {
         }
 
         // 最新のユーザー情報を取得
-        const response = await fetch("https://platform.com/api/user", { headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT } });
+        const response = await fetch("https://provider.com/api/user", { headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT } });
         const user = await response.json();
 
-        return { platform: "PLATFORM", access: token, expire: expire_at, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
+        return { provider: "PROVIDER", access: token, expire: expire_at, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
     }
 
     // ...
@@ -145,7 +145,7 @@ async update(token: string, expire: boolean): Promise<OAuthAccount> {
 async revoke(token: string): Promise<void> {
     // ...
 
-    else if (this.provider instanceof PLATFORM) {
+    else if (this.provider instanceof PROVIDER) {
         // プロバイダーがトークン失効をサポートしている場合、対応する API を呼び出す
         await this.provider.revokeToken(token);
     }
@@ -161,7 +161,7 @@ async revoke(token: string): Promise<void> {
 ```ts
 const oauth = providers([
     // ...
-    { name: "PLATFORM", logo: "simple-icons--PLATFORM", clientID: env.PLATFORM_CLIENT_ID, clientSecret: env.PLATFORM_CLIENT_SECRET }
+    { name: "PROVIDER", logo: "simple-icons--PROVIDER", clientID: env.PROVIDER_CLIENT_ID, clientSecret: env.PROVIDER_CLIENT_SECRET }
 ]);
 ```
 

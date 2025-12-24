@@ -259,7 +259,7 @@ onMount(() => {
 			{#each oauth as provider}
 				<a href={`/drifter/anchor/${provider.name}`} class="flex items-center justify-center gap-2 w-full border-2 border-secondary py-1 px-2 rounded">
 					<Icon size="0.95rem" name={provider.logo} />
-					<span class="font-bold text-sm">{t("oauth.signin", { platform: provider.name })}</span>
+					<span class="font-bold text-sm">{t("oauth.signin", { provider: provider.name })}</span>
 				</a>
 			{/each}
 		</div>
