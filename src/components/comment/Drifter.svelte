@@ -170,7 +170,7 @@ onMount(async () => {
 <Modal bind:open>
 	<main class="flex flex-col grow gap-5">
 		<header class="flex flex-col sm:flex-row gap-5">
-			<img src={drifter.image} alt={drifter.id} class="self-center w-20 b-2 border-solid border-weak rounded-full" />
+			<img src={drifter.image} alt={drifter.id} class="self-center w-20 h-20 border-2 border-solid border-weak rounded-full" />
 			<aside class="grow flex flex-col justify-center gap-2">
 				<menu class="flex items-center gap-2 font-bold">
 					{#each oauth as provider}
