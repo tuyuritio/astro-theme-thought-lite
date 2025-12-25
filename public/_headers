@@ -1,0 +1,5 @@
+# See https://developers.cloudflare.com/pages/configuration/headers/
+
+# Cache rules for Astro assets
+/_astro/*
+  Cache-Control: public, max-age=31556952, immutable
