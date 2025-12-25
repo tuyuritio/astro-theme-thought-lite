@@ -98,24 +98,24 @@ onMount(() => {
 <main class="flex flex-col-reverse sm:flex-row gap-10 grow">
 	<article class="flex flex-col gap-4 grow">
 		{#each list as note (note.id)}
-			<section animate:flip={{ duration: 150 }} class="flex flex-col gap-2 sm:flex-row">
-				<div class="flex flex-col gap-1">
-					<div class="flex gap-1 items-center">
-						<div class="inline-flex gap-1 items-center justify-center flex-wrap [&:not(:has(*))]:hidden">
-							{#if note.data.top > 0}<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100" />{/if}
-							{#if note.data.sensitive}<Icon name="lucide--siren" title={t("sensitive.icon")} />{/if}
-							{#if note.data.series}<button onclick={() => chooseSeries(note.data.series, true)}>{note.data.series}</button>{/if}
-						</div>
-						{#if note.data.series}<span class="my-0.5 mx-1 border-e-[1.5px] self-stretch"></span>{/if}
+			<section animate:flip={{ duration: 150 }} class="flex flex-col">
+				<div class="flex max-sm:flex-col">
+					<div class="leading-[1.55] *:inline *:align-middle">
+						{#if note.data.top > 0}<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100" />{/if}
+						{#if note.data.sensitive}<Icon name="lucide--siren" title={t("sensitive.icon")} />{/if}
+						{#if note.data.series}
+							<button onclick={() => chooseSeries(note.data.series, true)}>{note.data.series}</button>
+							<span aria-hidden="true">|</span>
+						{/if}
 						<a href={getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)} class="link">{note.data.title}</a>
 					</div>
-					<time datetime={note.data.timestamp.toISOString()} class="font-mono text-[0.65rem] leading-none text-remark">{Time(note.data.timestamp)}</time>
+					<span class="inline-flex items-center sm:justify-end gap-1 flex-wrap content-start sm:ms-auto">
+						{#each note.data.tags as tag}
+							<button onclick={() => switchTag(tag, true)} class="text-[0.875rem] text-remark sm:text-sm">#{tag}</button>
+						{/each}
+					</span>
 				</div>
-				<span class="inline-flex items-center sm:justify-end gap-1 flex-wrap content-start sm:ms-auto text-remark">
-					{#each note.data.tags as tag}
-						<button onclick={() => switchTag(tag, true)} class="text-[0.875rem] sm:text-sm">#{tag}</button>
-					{/each}
-				</span>
+				<time datetime={note.data.timestamp.toISOString()} class="font-mono text-[0.65rem] text-remark">{Time(note.data.timestamp)}</time>
 			</section>
 		{:else}
 			<div class="pt-[10vh] text-center text-secondary font-bold text-xl">{t("note.empty")}</div>
@@ -140,7 +140,7 @@ onMount(() => {
 		{/if}
 	</article>
 
-	<aside class="sm:basis-[200px] shrink-0 flex flex-col gap-5">
+	<aside class="sm:basis-50 shrink-0 flex flex-col gap-5">
 		<section>
 			<h4>{t("note.series")}</h4>
 			<p>

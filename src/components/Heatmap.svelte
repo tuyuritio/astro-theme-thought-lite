@@ -4,7 +4,7 @@ import { monolocale } from "$config";
 import Time from "$utils/time";
 import i18nit from "$i18n";
 
-let { locale, notes, jottings, weeks = 20 }: { locale: string; notes: any[]; jottings: any[]; weeks: number } = $props();
+let { locale, notes, jottings, weeks = 20 }: { locale: string; notes: any[]; jottings: any[]; weeks?: number } = $props();
 
 const days = weeks * 7; // Convert weeks to days for heatmap
 
