@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.31.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.31.2...v0.31.3) (2025-12-25)
+
+
+### Styles
+
+* set min-width for images to prevent flickering ([6415d02](https://github.com/tuyuritio/astro-theme-thought-lite/commit/6415d02cca760c4b1d05e00b4ad4a33fc2532f4a))
+
 ## [0.31.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.31.1...v0.31.2) (2025-12-23)
 
 
