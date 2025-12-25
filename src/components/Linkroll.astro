@@ -47,7 +47,7 @@ const fallback = "/linkback.webp";
 	{
 		links.map(link => (
 			<article class="flex gap-2 border-b border-weak ps-1 pe-2 pb-2">
-				<img src={link.image || fallback} alt={`Linkroll-${link.title}`} data-nozoom class="w-10 h-10 rounded-full" onerror={`this.onerror=null;this.src='${fallback}';`} />
+				<img src={link.image || fallback} alt={`Linkroll-${link.title}`} data-nozoom class="min-w-10 h-10 rounded-full" onerror={`this.onerror=null;this.src='${fallback}';`} />
 				<div class="grow min-w-0 flex flex-col justify-around">
 					<div class="flex items-center justify-between">
 						<a href={link.url} target="_blank" rel="noopener noreferrer" class="font-bold after:hidden link truncate">
