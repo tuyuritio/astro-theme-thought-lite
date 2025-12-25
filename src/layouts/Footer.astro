@@ -52,7 +52,7 @@ switch (copyright.type) {
 
 // Build array of Creative Commons icons based on license type
 // Start with base CC icon, then add specific license component icons
-const ccIcons = ["fa6-brands--creative-commons"];
+const ccIcons: `${string}--${string}`[] = ["fa6-brands--creative-commons"];
 if (copyright.type === "CC0 1.0") {
 	// CC0 uses a special "zero" icon
 	ccIcons.push("fa6-brands--creative-commons-zero");
