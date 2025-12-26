@@ -1,10 +1,8 @@
 ---
 import { Font, type CssVariable } from "astro:assets";
+import { turnstile } from "$config";
 
 const { locale, title, subtitle, description, author, article } = Astro.props;
-
-const env = import.meta.env;
-const turnstile = env.CLOUDFLARE_TURNSTILE_SITE_KEY && env.CLOUDFLARE_TURNSTILE_SECRET_KEY;
 
 const mainFonts: Record<string, CssVariable> = {
 	en: "--font-noto-serif",
