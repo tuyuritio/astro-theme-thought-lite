@@ -125,15 +125,15 @@ note:
 notification:
   denied: You have denied desktop notification permission
   disable:
-    failure: Failed to disable desktop notifications
+    name: Desktop notifications disabled
     success: Desktop notifications are disabled
   enable:
     failure: Failed to enable desktop notifications
+    name: Desktop notifications enabled
     success: Desktop notifications are enabled
   fresh:
     body: Click to see the thought
     title: A quiet new voice beneath your words
-  name: Desktop Notification
   reply:
     body: Click to trace back the communication
     title: A fragment speaks, and the echo has come

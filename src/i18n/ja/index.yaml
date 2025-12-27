@@ -123,15 +123,15 @@ note:
 notification:
   denied: 机上通知の許可を拒否しました
   disable:
-    failure: 机上通知の無効化に失敗しました
+    name: 机上通知は無効です
     success: 机上通知を無効にしました
   enable:
     failure: 机上通知の有効化に失敗した
+    name: 机上通知は有効です
     success: 机上通知を有効にしました
   fresh:
     body: 押して感想を確認しましょう
     title: 文の下に、そっと新しい声
-  name: 机上通知
   reply:
     body: 押して交流記録を辿りましょう
     title: 片言が響きとなって返ってきました

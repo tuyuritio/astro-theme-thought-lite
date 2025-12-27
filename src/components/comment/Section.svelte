@@ -27,6 +27,7 @@ let limit: number = $state(0);
 let loaded: boolean = $state(false);
 let expanded: boolean = $state(!compact);
 let drifter: any | undefined = $state();
+let notification: number | undefined = $state(); // Track push notification subscription state
 
 let count: number = $state(0);
 let comments: CommentItem[] = $state([]);
@@ -80,13 +81,29 @@ onMount(async () => {
 		pushTip("error", t("drifter.fetch.failure"));
 	}
 
+	// Initial load of notification subscription status
+	// Register service worker for push notifications
+	const registration = await navigator.serviceWorker.register("/sw.js");
+	const subscription = await registration.pushManager.getSubscription();
+
+	if (subscription) {
+		// Verify subscription is still valid on server
+		const { data } = await actions.notification.check({ endpoint: subscription.endpoint });
+		if (data) {
+			notification = data;
+		} else {
+			// Clean up invalid subscription
+			await subscription.unsubscribe();
+		}
+	}
+
 	loaded = loadComments && loadDrifter;
 });
 </script>
 
 <main>
 	{#if (!compact || expanded) && loaded}
-		<Reply {locale} {link} {oauth} {turnstile} {section} {item} {drifter} {refresh} bind:limit />
+		<Reply {locale} {link} {oauth} {turnstile} {section} {item} {drifter} bind:notification {refresh} bind:limit />
 	{/if}
 
 	{#if loaded}
@@ -123,7 +140,7 @@ onMount(async () => {
 		{#each list as comment (comment.id)}
 			<div animate:flip={{ duration: 150 }}>
 				{#if !comment.deleted || comment.subcomments.length || !config.comment?.["hide-deleted"]}
-					<CommentBlock {locale} {link} {oauth} {turnstile} {drifter} {comment} {refresh} bind:limit />
+					<CommentBlock {locale} {link} {oauth} {turnstile} {drifter} bind:notification {comment} {refresh} bind:limit />
 				{/if}
 			</div>
 		{/each}
