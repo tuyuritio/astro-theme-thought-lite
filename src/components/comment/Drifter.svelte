@@ -1,6 +1,5 @@
 <script lang="ts">
 import { actions } from "astro:actions";
-import { onMount } from "svelte";
 import Icon from "$components/Icon.svelte";
 import Modal from "$components/Modal.svelte";
 import { pushTip } from "$components/Tip.svelte";
@@ -24,57 +23,6 @@ async function synchronize() {
 		pushTip("success", t("drifter.sync.success"));
 	} else {
 		pushTip("error", t("drifter.sync.failure"));
-	}
-}
-
-/**
- * Toggle push notification subscription on/off
- */
-async function toggleNotification() {
-	const registration = await navigator.serviceWorker.ready;
-
-	// Check for existing subscription to determine current state
-	let subscription = await registration.pushManager.getSubscription();
-	if (subscription) {
-		// Unsubscribe from push notifications
-		await subscription.unsubscribe();
-		const { data, error } = await actions.push.unsubscribe({ endpoint: subscription.endpoint });
-		if (!error) {
-			notification = false;
-			pushTip("success", t("notification.disable.success"));
-		} else {
-			pushTip("error", t("notification.disable.failure"));
-		}
-	} else {
-		// Request notification permission before subscribing
-		const permission = await Notification.requestPermission();
-		if (permission !== "granted") {
-			notification = false;
-			return pushTip("information", t("notification.denied"));
-		}
-
-		// Create push subscription with VAPID key
-		const subscription = (
-			await registration.pushManager.subscribe({
-				userVisibleOnly: true,
-				applicationServerKey: push
-			})
-		).toJSON();
-
-		// Register subscription with server
-		const { data, error } = await actions.push.subscribe({
-			locale,
-			endpoint: subscription.endpoint!,
-			p256dh: subscription.keys!.p256dh,
-			auth: subscription.keys!.auth
-		});
-		if (!error) {
-			notification = true;
-			pushTip("success", t("notification.enable.success"));
-		} else {
-			notification = false;
-			pushTip("error", t("notification.enable.failure"));
-		}
 	}
 }
 
@@ -117,26 +65,6 @@ async function deactivate() {
 
 	deactivateView = false;
 }
-
-// Track push notification subscription state
-let notification: boolean = $state(false);
-onMount(async () => {
-	// Register service worker for push notifications
-	const registration = await navigator.serviceWorker.register("/sw.js");
-	const subscription = await registration.pushManager.getSubscription();
-	// Set initial notification state based on existing subscription
-	notification = !!subscription;
-
-	if (subscription) {
-		// Verify subscription is still valid on server
-		const { data, error } = await actions.push.check({ endpoint: subscription.endpoint });
-		if (error || !data) {
-			// Clean up invalid subscription
-			await subscription.unsubscribe();
-			notification = false;
-		}
-	}
-});
 </script>
 
 <Modal bind:open={deactivateView}>
@@ -181,9 +109,6 @@ onMount(async () => {
 		</header>
 		<hr class="border-b border-weak" />
 		<div class="flex flex-col items-start gap-5">
-			<section>
-				<label class="flex items-center">{t("notification.name")}：<input type="checkbox" class="switch" bind:checked={notification} onchange={toggleNotification} /></label>
-			</section>
 			<section class="flex flex-col gap-2">
 				<label>{t("drifter.homepage")}：<input type="url" class="input" bind:value={drifter.homepage} /></label>
 			</section>

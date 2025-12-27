@@ -123,15 +123,15 @@ note:
 notification:
   denied: 您已拒绝桌面通知权限
   disable:
-    failure: 禁用桌面通知失败
+    name: 桌面通知已禁用
     success: 桌面通知已禁用
   enable:
-    failure: 启用桌面通知失败
+    failure: 桌面通知启用失败
+    name: 桌面通知已启用
     success: 桌面通知已启用
   fresh:
     body: 点击前往共织灵光
     title: 新声悄至，文下有言
-  name: 桌面通知
   reply:
     body: 点击回溯交流轨迹
     title: 片语有声，回响已至

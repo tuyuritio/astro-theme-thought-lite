@@ -1,11 +1,11 @@
 import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq, lt, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { Comment, CommentHistory, Drifter, Notification } from "$db/schema";
+import { Comment, CommentHistory, Drifter, Notification, PushSubscription } from "$db/schema";
 import { enhash, Token } from "$utils/token";
 import notify from "$utils/notify";
-import config, { turnstile, oauth } from "$config";
+import config, { turnstile, oauth, push } from "$config";
 import i18nit from "$i18n";
 
 const env = import.meta.env;
@@ -30,15 +30,21 @@ export const comment = {
 	// Action to create a new comment or edit an existing one
 	create: defineAction({
 		input: z.object({
+			locale: z.string(), // Current locale for notifications
 			section: z.string(), // The section this comment belongs to
 			item: z.string(), // The item ID this comment belongs to
 			reply: z.string().nullish(), // ID of replied comment if this is a reply
 			content: z.string(), // The comment content
 			link: z.string().url(), // URL link for notifications
-			nickname: z.string().nullish(), // Nickname for unauthenticated users
-			captcha: z.string().nullish() // CAPTCHA token for unauthenticated users
+			notification: z.number().optional(), // Notification subscription ID
+			passer: z
+				.object({
+					nickname: z.string().nullish(), // Nickname for unauthenticated users
+					captcha: z.string().nullish() // CAPTCHA token for unauthenticated users
+				})
+				.optional()
 		}),
-		handler: async ({ section, item, reply, content, link, nickname, captcha }, { cookies, request, locals }) => {
+		handler: async ({ locale, section, item, reply, content, link, notification, passer }, { cookies, request, locals }) => {
 			// Check if commenting is enabled
 			if (!oauth.length && !turnstile) throw new ActionError({ code: "CONFLICT" });
 
@@ -49,13 +55,13 @@ export const comment = {
 			const drifter: string | undefined = oauth.length ? (await Token.check(cookies, "passport"))?.visa : undefined;
 
 			if (!drifter) {
-				if (turnstile && captcha && nickname?.trim()) {
+				if (turnstile && passer?.captcha && passer.nickname?.trim()) {
 					const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({
 							secret: env.CLOUDFLARE_TURNSTILE_SECRET_KEY,
-							response: captcha,
+							response: passer.captcha,
 							remoteip: ip
 						})
 					});
@@ -75,9 +81,8 @@ export const comment = {
 
 			if (content.length > Number(config.comment?.["max-length"])) throw new ActionError({ code: "CONTENT_TOO_LARGE" });
 
-			// Generate unique comment ID and timestamp
-			const now = new Date();
-			const id = enhash(content + reply + now).substring(0, 8);
+			// Generate unique comment ID
+			const id = enhash(content + reply).substring(0, 8);
 
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
@@ -89,53 +94,60 @@ export const comment = {
 				item,
 				reply,
 				drifter,
-				nickname,
-				timestamp: now,
+				nickname: passer?.nickname,
+				timestamp: new Date(),
 				content
 			});
 
+			// If push notifications are not configured, skip notification process
+			if (!push) return;
+
+			// Store notification subscription for future notifications
+			if (notification) await db.insert(Notification).values({ comment: id, subscription: notification, timestamp: new Date() });
+
 			// Prepare notification subscriptions array
-			let subscriptions: { locale: string; endpoint: string; p256dh: string; auth: string }[] = [];
+			let subscriptions: { endpoint: string; p256dh: string; auth: string }[] = [];
 
 			if (reply) {
 				// Notify the original commenter when someone replies to their comment
 				subscriptions = await db
-					.select({ locale: Notification.locale, endpoint: Notification.endpoint, p256dh: Notification.p256dh, auth: Notification.auth })
-					.from(Comment)
-					.innerJoin(Notification, eq(Notification.drifter, Comment.drifter))
-					.where(eq(Comment.id, reply));
+					.select({ endpoint: PushSubscription.endpoint, p256dh: PushSubscription.p256dh, auth: PushSubscription.auth })
+					.from(PushSubscription)
+					.innerJoin(Notification, eq(Notification.comment, reply));
 			} else if (env.AUTHOR_ID) {
-				// Notify the site author when there's a new top-level comment
-				subscriptions = await db
-					.select({ locale: Notification.locale, endpoint: Notification.endpoint, p256dh: Notification.p256dh, auth: Notification.auth })
-					.from(Notification)
-					.where(eq(Notification.drifter, env.AUTHOR_ID));
+			}
+
+			const t = i18nit(locale);
+			const message = { title: "", body: "", url: link };
+
+			if (reply) {
+				// Notification for reply to comment
+				message.title = t("notification.reply.title");
+				message.body = t("notification.reply.body");
+			} else if (env.AUTHOR_ID) {
+				// Notification for new comment to author
+				message.title = t("notification.fresh.title");
+				message.body = t("notification.fresh.body");
 			}
 
 			// Send push notifications to subscribers
 			subscriptions.forEach(subscription => {
-				const t = i18nit(subscription.locale);
-				const message = { title: "", body: "", url: link };
-
-				if (reply) {
-					// Notification for reply to comment
-					message.title = t("notification.reply.title");
-					message.body = t("notification.reply.body");
-				} else if (env.AUTHOR_ID) {
-					// Notification for new comment to author
-					message.title = t("notification.fresh.title");
-					message.body = t("notification.fresh.body");
-				}
-
 				// Send notification in the background
 				// The `ctx.waitUntil()` method is specific to Cloudflare Workers.
 				// Remove failed notification endpoints from database
 				locals.runtime.ctx.waitUntil(
 					notify({ endpoint: subscription.endpoint, p256dh: subscription.p256dh, auth: subscription.auth }, message).then(
-						success => success || db.delete(Notification).where(and(eq(Notification.endpoint, subscription.endpoint)))
+						success => success || db.delete(PushSubscription).where(and(eq(PushSubscription.endpoint, subscription.endpoint)))
 					)
 				);
 			});
+
+			// Cleanup old notifications
+			const ExpirationDays = 15;
+			const expiration = new Date();
+			expiration.setDate(expiration.getDate() - ExpirationDays);
+
+			await db.delete(Notification).where(lt(Notification.timestamp, expiration));
 		}
 	}),
 

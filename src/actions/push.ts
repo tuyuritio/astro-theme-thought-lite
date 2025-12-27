@@ -1,58 +1,49 @@
-import { ActionError, defineAction } from "astro:actions";
+import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
-import { drizzle } from "drizzle-orm/d1";
-import { Token } from "$utils/token";
-import { Notification } from "$db/schema";
 import { and, eq } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/d1";
+import { PushSubscription } from "$db/schema";
 
 export const push = {
-	// Action to subscribe a user to push notifications
+	// Action to subscribe to push notifications
 	subscribe: defineAction({
 		input: z.object({
-			locale: z.string(), // User's language preference for notifications
 			endpoint: z.string().url(), // Push service endpoint URL
 			p256dh: z.string(), // Public key for encryption
 			auth: z.string() // Authentication secret for encryption
 		}),
-		handler: async ({ locale, endpoint, p256dh, auth }, { cookies, locals }) => {
-			// Verify user authentication
-			const drifter = (await Token.check(cookies, "passport"))?.visa;
-			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
-
+		handler: async ({ endpoint, p256dh, auth }, { locals }) => {
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
 
-			// Insert new notification subscription
+			// Insert new push subscription
 			// Use onConflictDoNothing to handle duplicate subscriptions gracefully
-			await db
-				.insert(Notification)
+			const subscription = await db
+				.insert(PushSubscription)
 				.values({
-					locale,
-					drifter,
 					endpoint,
 					p256dh,
 					auth
 				})
-				.onConflictDoNothing();
+				.onConflictDoNothing()
+				.returning({ id: PushSubscription.id });
+
+			// Return the subscription ID
+			return subscription[0].id;
 		}
 	}),
 
-	// Action to unsubscribe a user from push notifications
+	// Action to unsubscribe a push notification
 	unsubscribe: defineAction({
 		input: z.object({
 			endpoint: z.string().url() // Push service endpoint URL to remove
 		}),
-		handler: async ({ endpoint }, { cookies, locals }) => {
-			// Verify user authentication
-			const drifter = (await Token.check(cookies, "passport"))?.visa;
-			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
-
+		handler: async ({ endpoint }, { locals }) => {
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
 
 			// Delete the specific notification subscription
-			// Match both user ID and endpoint to ensure user can only remove their own subscriptions
-			await db.delete(Notification).where(and(eq(Notification.drifter, drifter), eq(Notification.endpoint, endpoint)));
+			await db.delete(PushSubscription).where(eq(PushSubscription.endpoint, endpoint));
 		}
 	}),
 
@@ -61,22 +52,18 @@ export const push = {
 		input: z.object({
 			endpoint: z.string().url() // Push service endpoint URL to check
 		}),
-		handler: async ({ endpoint }, { cookies, locals }) => {
-			// Verify user authentication
-			const drifter = (await Token.check(cookies, "passport"))?.visa;
-			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
-
+		handler: async ({ endpoint }, { locals }) => {
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
 
 			// Query for existing subscription matching user and endpoint
 			const subscription = await db
-				.select()
-				.from(Notification)
-				.where(and(eq(Notification.drifter, drifter), eq(Notification.endpoint, endpoint)));
+				.select({ id: PushSubscription.id })
+				.from(PushSubscription)
+				.where(and(eq(PushSubscription.endpoint, endpoint)));
 
-			// Return true if subscription exists, false otherwise
-			return subscription.length > 0;
+			// Return the subscription ID if found, otherwise undefined
+			return subscription[0]?.id;
 		}
 	})
 };

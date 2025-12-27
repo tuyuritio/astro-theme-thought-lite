@@ -17,6 +17,7 @@ let {
 	turnstile,
 	push,
 	drifter,
+	notification = $bindable(),
 	section,
 	item,
 	reply,
@@ -32,6 +33,7 @@ let {
 	turnstile?: string;
 	push?: string;
 	drifter?: any;
+	notification?: number;
 	section: string;
 	item: string;
 	reply?: string;
@@ -146,7 +148,7 @@ async function submit() {
 		if (!captcha) return pushTip("error", t("comment.verify.failure"));
 		if (!nickname?.trim()) return pushTip("warning", t("comment.nickname.empty"));
 
-		({ error } = await actions.comment.create({ section, item, reply, content, link, nickname, captcha }));
+		({ error } = await actions.comment.create({ locale, section, item, reply, content, link, notification, passer: { nickname, captcha } }));
 
 		// Only reset turnstile for top-level comments (when reply is undefined) or if there was an error
 		if (!reply || error) {
@@ -159,8 +161,8 @@ async function submit() {
 		// For authenticated users editing a comment
 		({ error } = await actions.comment.edit({ id: edit, content }));
 	} else {
-		// For authenticated users creating a new comment or reply
-		({ error } = await actions.comment.create({ section, item, reply, content, link }));
+		// For authenticated users creating a comment
+		({ error } = await actions.comment.create({ locale, section, item, reply, content, link, notification }));
 	}
 
 	if (!error) {
@@ -195,6 +197,60 @@ async function submit() {
 
 			default:
 				return pushTip("error", t("comment.failure"));
+		}
+	}
+}
+
+/**
+ * Toggle push notification subscription on/off
+ */
+async function toggleNotification() {
+	notification = undefined;
+
+	const registration = await navigator.serviceWorker.getRegistration();
+	if (!registration) return pushTip("error", t("notification.enable.failure"));
+
+	let subscription = await registration.pushManager.getSubscription();
+	if (subscription) {
+		// Unsubscribe from existing push subscription
+		await subscription.unsubscribe();
+
+		// Wether unsubscription succeeded or not, clear local state
+		pushTip("success", t("notification.disable.success"));
+
+		// Notify server to remove subscription
+		await actions.push.unsubscribe({ endpoint: subscription.endpoint });
+	} else if (push) {
+		// Request notification permission before subscribing
+		const permission = await Notification.requestPermission();
+		if (permission !== "granted") return pushTip("information", t("notification.denied"));
+
+		try {
+			// Create push subscription with VAPID key
+			subscription = await registration.pushManager.subscribe({
+				userVisibleOnly: true,
+				applicationServerKey: push
+			});
+
+			// Extract keys from subscription
+			const keys = subscription.toJSON().keys;
+
+			// Register subscription with server
+			const { data } = await actions.push.subscribe({
+				endpoint: subscription.endpoint!,
+				p256dh: keys!.p256dh,
+				auth: keys!.auth
+			});
+			if (data) {
+				notification = data;
+				pushTip("success", t("notification.enable.success"));
+			} else {
+				// Rollback on failure
+				await subscription.unsubscribe();
+				pushTip("error", t("notification.enable.failure"));
+			}
+		} catch (error) {
+			pushTip("error", t("notification.enable.failure"));
 		}
 	}
 }
@@ -326,6 +382,16 @@ onMount(() => {
 						<!-- Shown only when OAuth is configured -->
 						<button onclick={() => (reachView = true)}><Icon name="lucide--user-round" title={t("drifter.signin")} /></button>
 					{/if}
+				{/if}
+
+				{#if push}
+					<button onclick={toggleNotification}>
+						{#if notification !== undefined}
+							<Icon name="lucide--bell" title={t("notification.enable.name")} />
+						{:else}
+							<Icon name="lucide--bell-off" title={t("notification.disable.name")} />
+						{/if}
+					</button>
 				{/if}
 
 				<button id="submit" disabled={limit > 0 || (!authenticated && !captcha) || overlength} onclick={submit}>
