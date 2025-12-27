@@ -53,18 +53,11 @@ async function toggleNotification() {
 			return pushTip("information", t("notification.denied"));
 		}
 
-		// Get VAPID public key for push subscription
-		const { data: publicKey, error: keyError } = await actions.notification.key();
-		if (keyError) {
-			notification = false;
-			return pushTip("error", t("notification.enable.failure"));
-		}
-
 		// Create push subscription with VAPID key
 		const subscription = (
 			await registration.pushManager.subscribe({
 				userVisibleOnly: true,
-				applicationServerKey: publicKey
+				applicationServerKey: import.meta.env.PUBLIC_VAPID_KEY
 			})
 		).toJSON();
 
