@@ -17,8 +17,9 @@ let {
 	item,
 	oauth,
 	turnstile,
+	push,
 	compact = false
-}: { locale: string; link: string; section: string; item: string; oauth: any; turnstile?: string; compact?: boolean } = $props();
+}: { locale: string; link: string; section: string; item: string; oauth: any; turnstile?: string; push?: string; compact?: boolean } = $props();
 
 const t = i18nit(locale);
 
@@ -86,7 +87,7 @@ onMount(async () => {
 
 <main>
 	{#if (!compact || expanded) && loaded}
-		<Reply {locale} {link} {oauth} {turnstile} {section} {item} {drifter} {refresh} bind:limit />
+		<Reply {locale} {link} {oauth} {turnstile} {push} {section} {item} {drifter} {refresh} bind:limit />
 	{/if}
 
 	{#if loaded}
@@ -123,7 +124,7 @@ onMount(async () => {
 		{#each list as comment (comment.id)}
 			<div animate:flip={{ duration: 150 }}>
 				{#if !comment.deleted || comment.subcomments.length || !config.comment?.["hide-deleted"]}
-					<CommentBlock {locale} {link} {oauth} {turnstile} {drifter} {comment} {refresh} bind:limit />
+					<CommentBlock {locale} {link} {oauth} {turnstile} {push} {drifter} {comment} {refresh} bind:limit />
 				{/if}
 			</div>
 		{/each}

@@ -7,8 +7,8 @@ const env = import.meta.env;
 // These keys are used to identify the application server to push services
 const VAPID: VapidKeys = {
 	subject: config.author.email, // Contact email for the application server
-	publicKey: env.NOTIFY_PUBLIC_KEY, // Public key for VAPID authentication
-	privateKey: env.NOTIFY_PRIVATE_KEY // Private key for VAPID authentication
+	publicKey: env.VAPID_PUBLIC_KEY, // Public key for VAPID authentication
+	privateKey: env.VAPID_PRIVATE_KEY // Private key for VAPID authentication
 };
 
 /**

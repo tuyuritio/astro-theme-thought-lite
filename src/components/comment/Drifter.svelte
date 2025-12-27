@@ -6,7 +6,7 @@ import Modal from "$components/Modal.svelte";
 import { pushTip } from "$components/Tip.svelte";
 import i18nit from "$i18n";
 
-let { open = $bindable(), locale, oauth, drifter }: { open: boolean; locale: string; oauth: any[]; drifter: any } = $props();
+let { open = $bindable(), locale, oauth, drifter, push }: { open: boolean; locale: string; oauth: any[]; drifter: any; push?: string } = $props();
 
 const t = i18nit(locale);
 
@@ -38,7 +38,7 @@ async function toggleNotification() {
 	if (subscription) {
 		// Unsubscribe from push notifications
 		await subscription.unsubscribe();
-		const { data, error } = await actions.notification.unsubscribe({ endpoint: subscription.endpoint });
+		const { data, error } = await actions.push.unsubscribe({ endpoint: subscription.endpoint });
 		if (!error) {
 			notification = false;
 			pushTip("success", t("notification.disable.success"));
@@ -53,23 +53,16 @@ async function toggleNotification() {
 			return pushTip("information", t("notification.denied"));
 		}
 
-		// Get VAPID public key for push subscription
-		const { data: publicKey, error: keyError } = await actions.notification.key();
-		if (keyError) {
-			notification = false;
-			return pushTip("error", t("notification.enable.failure"));
-		}
-
 		// Create push subscription with VAPID key
 		const subscription = (
 			await registration.pushManager.subscribe({
 				userVisibleOnly: true,
-				applicationServerKey: publicKey
+				applicationServerKey: push
 			})
 		).toJSON();
 
 		// Register subscription with server
-		const { data, error } = await actions.notification.subscribe({
+		const { data, error } = await actions.push.subscribe({
 			locale,
 			endpoint: subscription.endpoint!,
 			p256dh: subscription.keys!.p256dh,
@@ -136,7 +129,7 @@ onMount(async () => {
 
 	if (subscription) {
 		// Verify subscription is still valid on server
-		const { data, error } = await actions.notification.check({ endpoint: subscription.endpoint });
+		const { data, error } = await actions.push.check({ endpoint: subscription.endpoint });
 		if (error || !data) {
 			// Clean up invalid subscription
 			await subscription.unsubscribe();

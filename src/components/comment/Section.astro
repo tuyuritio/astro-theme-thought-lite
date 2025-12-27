@@ -1,5 +1,5 @@
 ---
-import { oauth, turnstile } from "$config";
+import { oauth, turnstile, push } from "$config";
 import Comments from "./Section.svelte";
 
 interface Props {
@@ -14,4 +14,4 @@ const { locale, link, section, item, compact } = Astro.props;
 ---
 
 <!-- Wrapping component to inject server-side environment variables -->
-<Comments client:visible {locale} {link} {section} {item} {oauth} {turnstile} {compact} />
+<Comments client:visible {locale} {link} {section} {item} {oauth} {turnstile} {push} {compact} />

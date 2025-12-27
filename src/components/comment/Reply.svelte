@@ -15,6 +15,7 @@ let {
 	link,
 	oauth,
 	turnstile,
+	push,
 	drifter,
 	section,
 	item,
@@ -29,6 +30,7 @@ let {
 	link: string;
 	oauth: any;
 	turnstile?: string;
+	push?: string;
 	drifter?: any;
 	section: string;
 	item: string;

@@ -5,21 +5,7 @@ import { Token } from "$utils/token";
 import { Notification } from "$db/schema";
 import { and, eq } from "drizzle-orm";
 
-const env = import.meta.env;
-
-export const notification = {
-	// Action to retrieve the public key for push notifications
-	key: defineAction({
-		handler: async (_, { cookies }) => {
-			// Verify user authentication
-			const drifter = (await Token.check(cookies, "passport"))?.visa;
-			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
-
-			// Return the public key for web push notifications (VAPID key)
-			return env.NOTIFY_PUBLIC_KEY;
-		}
-	}),
-
+export const push = {
 	// Action to subscribe a user to push notifications
 	subscribe: defineAction({
 		input: z.object({
