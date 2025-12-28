@@ -60,8 +60,10 @@ const t = i18nit(locale);
 		</header>
 
 		<Sensitive {locale} back="/jotting" sensitive={jotting.data.sensitive} client:load>
-			<section id="markdown-content" class="markdown"><Content /></section>
-			<blockquote id="comment-section"><Comments {locale} link={`${Astro.url.origin}${Astro.url.pathname}`} section="jotting" item={jotting.id} /></blockquote>
+			<div class="contents">
+				<section id="markdown-content" class="markdown"><Content /></section>
+				<blockquote id="comment-section"><Comments {locale} link={`${Astro.url.origin}${Astro.url.pathname}`} section="jotting" item={jotting.id} /></blockquote>
+			</div>
 		</Sensitive>
 
 		<Position {locale} />
