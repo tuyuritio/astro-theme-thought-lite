@@ -35,7 +35,7 @@ let list = jottings.map(jotting => ({
 }));
 
 // Extract all unique tags from the filtered notes
-const tags = Array.from(new Set(jottings.flatMap(jotting => jotting.data.tags).filter(Boolean))).sort();
+const tags = Array.from(new Set(jottings.flatMap(jotting => jotting.data.tags).filter((tag): tag is string => Boolean(tag)))).sort();
 ---
 
 <Base title={t("navigation.jotting")} {locale}>
