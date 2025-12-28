@@ -4,10 +4,14 @@ import Icon from "$components/Icon.svelte";
 import Modal from "$components/Modal.svelte";
 import { pushTip } from "$components/Tip.svelte";
 import i18nit from "$i18n";
+import Email from "./Email.svelte";
+import context from "./context.svelte";
 
-let { open = $bindable(), locale, oauth, drifter, push }: { open: boolean; locale: string; oauth: any[]; drifter: any; push?: string } = $props();
+let { open = $bindable() }: { open: boolean } = $props();
 
-const t = i18nit(locale);
+const t = i18nit(context.locale);
+
+const drifter = $derived(context.drifter!);
 
 /**
  * Fetch and update user profile data from OAuth provider
@@ -32,7 +36,7 @@ let updating: boolean = $state(false);
 // Update user information
 async function update() {
 	updating = true;
-	const { data, error } = await actions.drifter.update({ homepage: drifter.homepage });
+	const { error } = await actions.drifter.update({ homepage: drifter.homepage });
 	updating = false;
 
 	if (!error) {
@@ -49,7 +53,7 @@ let deactivateView = $state(false);
  * Permanently deactivate user account and clean up data
  */
 async function deactivate() {
-	const { data, error } = await actions.drifter.deactivate();
+	const { error } = await actions.drifter.deactivate();
 	if (!error) {
 		// Clean up push notification subscription before account deletion
 		const registration = await navigator.serviceWorker.ready;
@@ -94,7 +98,7 @@ async function deactivate() {
 			<img src={drifter.image} alt={drifter.id} class="self-center w-20 h-20 border-2 border-solid border-weak rounded-full" />
 			<aside class="grow flex flex-col justify-center gap-2">
 				<menu class="flex items-center gap-2 font-bold">
-					{#each oauth as provider}
+					{#each context.oauth as provider}
 						{#if provider.name === drifter.provider}
 							<Icon name={provider.logo} />
 						{/if}
@@ -109,9 +113,8 @@ async function deactivate() {
 		</header>
 		<hr class="border-b border-weak" />
 		<div class="flex flex-col items-start gap-5">
-			<section class="flex flex-col gap-2">
-				<label>{t("drifter.homepage")}：<input type="url" class="input" bind:value={drifter.homepage} /></label>
-			</section>
+			<label class="flex items-center gap-1 flex-wrap">{t("drifter.homepage")}: <input type="url" class="input" bind:value={drifter.homepage} /></label>
+			<Email />
 		</div>
 		<div class="self-center flex gap-5">
 			<button onclick={() => (open = false)} class="form-button">{t("cancel")}</button>

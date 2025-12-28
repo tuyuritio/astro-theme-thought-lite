@@ -112,40 +112,46 @@ export namespace AESEncryption {
 	const key = crypto.createHash("sha256").update(PASS_KEY).digest();
 
 	/**
-	 * Encrypt text using AES-256-CBC encryption
-	 * @param text - Plain text to encrypt
-	 * @returns Encrypted text in base64url format (includes IV) or null if encryption fails
+	 * Encrypt data using AES-256-GCM encryption
+	 * @param data - Data to encrypt
+	 * @returns Encrypted data (IV + AuthTag + Ciphertext) or null if encryption fails
 	 */
-	export function encrypt(text: string): string | null {
+	export function encrypt(data: Uint8Array): Uint8Array | null {
 		try {
-			// Generate random 16-byte initialization vector
-			const iv = crypto.randomBytes(16);
-			const cipher = crypto.createCipheriv("aes-256-cbc", new Uint8Array(key), new Uint8Array(iv));
-			// Prepend IV to encrypted data for decryption
-			const encrypted = cipher.update(text, "utf8");
+			// Generate random 12-byte initialization vector
+			const iv = crypto.randomBytes(12);
+			const cipher = crypto.createCipheriv("aes-256-gcm", new Uint8Array(key), new Uint8Array(iv));
+
+			const encrypted = cipher.update(data);
 			const final = cipher.final();
-			return Buffer.concat([new Uint8Array(iv), new Uint8Array(encrypted), new Uint8Array(final)]).toString("base64url");
+			const tag = cipher.getAuthTag();
+
+			return new Uint8Array(Buffer.concat([new Uint8Array(iv), new Uint8Array(tag), new Uint8Array(encrypted), new Uint8Array(final)]));
 		} catch (_) {
 			return null;
 		}
 	}
 
 	/**
-	 * Decrypt text using AES-256-CBC decryption
-	 * @param base64url - Encrypted text in base64url format (with IV prepended)
-	 * @returns Decrypted plain text or null if decryption fails
+	 * Decrypt data using AES-256-GCM decryption
+	 * @param data - Encrypted data (IV + AuthTag + Ciphertext)
+	 * @returns Decrypted data or null if decryption fails
 	 */
-	export function decrypt(base64url: string): string | null {
+	export function decrypt(data: Uint8Array): Uint8Array | null {
 		try {
-			const buffer = Buffer.from(base64url, "base64url");
-			// Extract IV from first 16 bytes
-			const iv = buffer.subarray(0, 16);
-			// Extract encrypted data from remaining bytes
-			const encryptedText = buffer.subarray(16);
-			const decipher = crypto.createDecipheriv("aes-256-cbc", new Uint8Array(key), new Uint8Array(iv));
-			const decrypted = decipher.update(new Uint8Array(encryptedText));
+			const buffer = Buffer.from(data);
+
+			const iv = buffer.subarray(0, 12); // Extract IV
+			const tag = buffer.subarray(12, 28); // Extract Auth Tag
+			const encrypted = buffer.subarray(28); // Extract Encrypted Data
+
+			const decipher = crypto.createDecipheriv("aes-256-gcm", new Uint8Array(key), new Uint8Array(iv));
+			decipher.setAuthTag(new Uint8Array(tag));
+
+			const decrypted = decipher.update(new Uint8Array(encrypted));
 			const final = decipher.final();
-			return Buffer.concat([new Uint8Array(decrypted), new Uint8Array(final)]).toString("utf8");
+
+			return new Uint8Array(Buffer.concat([new Uint8Array(decrypted), new Uint8Array(final)]));
 		} catch (_) {
 			return null;
 		}

@@ -21,3 +21,8 @@ migrations_dir = "drizzle"
 name = "COMMENT_LIMIT"
 namespace_id = "0001"
 simple = { limit = 2, period = 10 }
+
+[[ratelimits]]
+name = "EMAIL_LIMIT"
+namespace_id = "0002"
+simple = { limit = 1, period = 60 }

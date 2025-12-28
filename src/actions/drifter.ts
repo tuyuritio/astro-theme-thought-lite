@@ -4,7 +4,7 @@ import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { OAuth, type OAuthAccount } from "$utils/oauth";
 import { Token } from "$utils/token";
-import { Drifter } from "$db/schema";
+import { Drifter, Email } from "$db/schema";
 
 export const drifter = {
 	// Action to retrieve the current user's profile information
@@ -27,10 +27,13 @@ export const drifter = {
 						description: Drifter.description,
 						image: Drifter.image,
 						homepage: Drifter.homepage,
-						notify: Drifter.notify
+						email: Email.address,
+						emailState: Email.state,
+						notify: Email.notify
 					})
 					.from(Drifter)
 					.where(eq(Drifter.id, id))
+					.leftJoin(Email, eq(Email.drifter, Drifter.id))
 			)[0];
 
 			return drifter;

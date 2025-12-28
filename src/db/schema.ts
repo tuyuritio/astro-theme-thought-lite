@@ -13,10 +13,7 @@ export const Drifter = sqliteTable(
 		name: text(),
 		description: text(),
 		image: text(),
-		email: text(),
-		homepage: text(),
-		notify: integer(),
-		lock: integer()
+		homepage: text()
 	},
 	table => [unique().on(table.provider, table.account)]
 );
@@ -64,3 +61,13 @@ export const Notification = sqliteTable(
 	},
 	table => [primaryKey({ columns: [table.comment, table.subscription] })]
 );
+
+export const Email = sqliteTable("email", {
+	drifter: text()
+		.primaryKey()
+		.notNull()
+		.references(() => Drifter.id, { onUpdate: "cascade", onDelete: "cascade" }),
+	address: text().notNull().unique(),
+	state: text({ enum: ["pending", "verified", "banned"] }).notNull(),
+	notify: integer({ mode: "boolean" }).notNull().default(false)
+});

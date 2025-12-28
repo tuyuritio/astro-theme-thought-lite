@@ -33,7 +33,7 @@ const config = siteConfig({
 
 const monolocale = Number(config.i18n.locales.length) === 1;
 
-const turnstile = env.CLOUDFLARE_TURNSTILE_SECRET_KEY ? env.CLOUDFLARE_TURNSTILE_SITE_KEY : null;
+const turnstile = env.CLOUDFLARE_TURNSTILE_SECRET_KEY ? env.CLOUDFLARE_TURNSTILE_SITE_KEY : undefined;
 
 const push = env.VAPID_PRIVATE_KEY ? env.VAPID_PUBLIC_KEY : undefined;
 

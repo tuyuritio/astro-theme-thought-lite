@@ -9,6 +9,7 @@ import { pushTip } from "$components/Tip.svelte";
 import i18nit from "$i18n";
 import CommentBlock from "./Comment.svelte";
 import Reply from "./Reply.svelte";
+import context from "./context.svelte";
 
 let {
 	locale,
@@ -21,14 +22,19 @@ let {
 	compact = false
 }: { locale: string; link: string; section: string; item: string; oauth: any; turnstile?: string; push?: string; compact?: boolean } = $props();
 
+context.locale = locale;
+context.link = link;
+context.section = section;
+context.item = item;
+context.oauth = oauth;
+context.turnstile = turnstile;
+context.push = push;
+context.refresh = refresh;
+
 const t = i18nit(locale);
 
-// Track rate limiting state across comment operations
-let limit: number = $state(0);
 let loaded: boolean = $state(false);
 let expanded: boolean = $state(!compact);
-let drifter: any | undefined = $state();
-let notification: number | undefined = $state(); // Track push notification subscription state
 
 let count: number = $state(0);
 let comments: CommentItem[] = $state([]);
@@ -75,7 +81,7 @@ onMount(async () => {
 	// Initial load of user authentication status
 	const { data: drifterProfile, error: drifterError } = await actions.drifter.profile();
 	if (!drifterError) {
-		drifter = drifterProfile;
+		context.drifter = drifterProfile;
 
 		loadDrifter = true;
 	} else {
@@ -91,7 +97,7 @@ onMount(async () => {
 		// Verify subscription is still valid on server
 		const { data } = await actions.push.check({ endpoint: subscription.endpoint });
 		if (data) {
-			notification = data;
+			context.notification = data;
 		} else {
 			// Clean up invalid subscription
 			await subscription.unsubscribe();
@@ -104,7 +110,7 @@ onMount(async () => {
 
 <main>
 	{#if (!compact || expanded) && loaded}
-		<Reply {locale} {link} {oauth} {turnstile} {push} {section} {item} {drifter} bind:notification {refresh} bind:limit />
+		<Reply />
 	{/if}
 
 	{#if loaded}
@@ -141,7 +147,7 @@ onMount(async () => {
 		{#each list as comment (comment.id)}
 			<div animate:flip={{ duration: 150 }}>
 				{#if !comment.deleted || comment.subcomments.length || !config.comment?.["hide-deleted"]}
-					<CommentBlock {locale} {link} {oauth} {turnstile} {push} {drifter} bind:notification {comment} {refresh} bind:limit />
+					<CommentBlock {comment} />
 				{/if}
 			</div>
 		{/each}

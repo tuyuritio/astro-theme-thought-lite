@@ -9,34 +9,10 @@ import { pushTip } from "$components/Tip.svelte";
 import i18nit from "$i18n";
 import Self from "./Comment.svelte";
 import Reply from "./Reply.svelte";
+import context from "./context.svelte";
 
-let {
-	locale,
-	link,
-	oauth,
-	turnstile,
-	push,
-	drifter,
-	notification = $bindable(),
-	comment,
-	refresh,
-	depth = 0,
-	limit = $bindable(0)
-}: {
-	locale: string;
-	link: string;
-	oauth: any;
-	turnstile?: string;
-	push?: string;
-	drifter?: any;
-	notification?: number;
-	comment: any;
-	refresh: any;
-	depth?: number;
-	limit?: number;
-} = $props();
-
-const t = i18nit(locale);
+let { comment, depth = 0 }: { comment: any; depth?: number } = $props();
+const t = i18nit(context.locale);
 
 /** Minimum nesting depth for comment threads to ensure proper display */
 const MIN_DEPTH = 1;
@@ -67,7 +43,7 @@ async function remove() {
 	const { error } = await actions.comment.delete({ id: comment.id });
 	if (!error) {
 		// Refresh comment list and close modal on successful deletion
-		refresh();
+		context.refresh();
 		deleteView = false;
 
 		pushTip("success", t("comment.remove.success"));
@@ -146,12 +122,12 @@ async function remove() {
 			{#if comment.content}
 				<div class="markdown comment">{#await remark.process(comment.content) then html}{@html html}{/await}</div>
 				<dd class="flex items-center gap-4 mt-2">
-					<button onclick={() => ((replyView = !replyView), (editView = false))} disabled={!turnstile && !(oauth.length && drifter)}><Icon name="lucide--reply" title={t("comment.reply")} /></button>
+					<button onclick={() => ((replyView = !replyView), (editView = false))} disabled={!context.turnstile && !(context.oauth.length && context.drifter)}><Icon name="lucide--reply" title={t("comment.reply")} /></button>
 					{#if comment.updated && config.comment?.history}<button onclick={() => (historyView = true)}><Icon name="lucide--history" title={t("comment.history")} /></button>{/if}
 					<button onclick={share}><Icon name="lucide--share-2" title={t("comment.share.name")} /></button>
 
 					<!-- Show edit and delete buttons only if it's authenticated -->
-					{#if oauth.length && comment.drifter === drifter?.id}
+					{#if context.oauth.length && comment.drifter === context.drifter?.id}
 						<button onclick={() => ((editView = !editView), (replyView = false))}><Icon name="lucide--pencil" title={t("comment.edit.name")} /></button>
 						<button onclick={() => (deleteView = true)}><Icon name="lucide--trash" title={t("delete")} /></button>
 					{/if}
@@ -163,13 +139,13 @@ async function remove() {
 	</dl>
 	<div class:ms-7={depth < MIN_DEPTH} class:sm:ms-7={depth < Math.max(MIN_DEPTH, MAX_DEPTH)}>
 		{#if replyView && !editView}
-			<Reply {locale} {link} {oauth} {turnstile} {push} {drifter} bind:notification section={comment.section} item={comment.item} reply={comment.id} {refresh} bind:view={replyView} bind:limit />
+			<Reply reply={comment.id} bind:view={replyView} />
 		{:else if editView && !replyView}
-			<Reply {locale} {link} {oauth} {turnstile} {push} {drifter} bind:notification section={comment.section} item={comment.item} reply={comment.reply} edit={comment.id} text={comment.content} {refresh} bind:view={editView} bind:limit />
+			<Reply reply={comment.reply} edit={comment.id} text={comment.content} bind:view={editView} />
 		{/if}
 
 		{#each comment.subcomments as subcomment}
-			<Self {locale} {link} {oauth} {turnstile} {push} {drifter} bind:notification comment={subcomment} {refresh} depth={depth + 1} bind:limit />
+			<Self comment={subcomment} depth={depth + 1} />
 		{/each}
 	</div>
 </main>

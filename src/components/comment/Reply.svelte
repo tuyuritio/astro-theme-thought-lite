@@ -9,48 +9,19 @@ import { pushTip } from "$components/Tip.svelte";
 import config from "$config";
 import i18nit from "$i18n";
 import Drifter from "./Drifter.svelte";
+import context, { countdownComment } from "./context.svelte";
 
-let {
-	locale,
-	link,
-	oauth,
-	turnstile,
-	push,
-	drifter,
-	notification = $bindable(),
-	section,
-	item,
-	reply,
-	edit,
-	text,
-	refresh,
-	view = $bindable(),
-	limit = $bindable(0)
-}: {
-	locale: string;
-	link: string;
-	oauth: any;
-	turnstile?: string;
-	push?: string;
-	drifter?: any;
-	notification?: number;
-	section: string;
-	item: string;
-	reply?: string;
-	edit?: string;
-	text?: string;
-	refresh: any;
-	view?: boolean;
-	limit?: number;
-} = $props();
+let { reply, edit, text, view = $bindable() }: { reply?: string; edit?: string; text?: string; view?: boolean } = $props();
 
-const t = i18nit(locale);
+const t = i18nit(context.locale);
+
+let limit = $derived(context.limitComment);
 
 /** Determine authentication status */
-const authenticated: boolean = Boolean(oauth.length && drifter);
+const authenticated: boolean = Boolean(context.oauth.length && context.drifter);
 
 /** Comment input is enabled only when it's authenticated or Turnstile is configured */
-const enabled: boolean = Boolean(turnstile || authenticated);
+const enabled: boolean = Boolean(context.turnstile || authenticated);
 
 let reachView: boolean = $state(false); // OAuth signin view state
 let profileView: boolean = $state(false); // User profile view state
@@ -66,7 +37,7 @@ let overlength: boolean = $derived(content.length > Number(config.comment?.["max
 const DRAFT_PREFIX = "comment-draft:";
 const DRAFT_SAVE_DELAY = 500;
 
-let draftKey = `${DRAFT_PREFIX}${section}:${item}`;
+let draftKey = `${DRAFT_PREFIX}${context.section}:${context.item}`;
 if (reply) draftKey += `:reply-${reply}`;
 if (edit) draftKey += `:edit-${edit}`;
 
@@ -148,7 +119,16 @@ async function submit() {
 		if (!captcha) return pushTip("error", t("comment.verify.failure"));
 		if (!nickname?.trim()) return pushTip("warning", t("comment.nickname.empty"));
 
-		({ error } = await actions.comment.create({ locale, section, item, reply, content, link, notification, passer: { nickname, captcha } }));
+		({ error } = await actions.comment.create({
+			locale: context.locale,
+			section: context.section,
+			item: context.item,
+			reply,
+			content,
+			link: context.link,
+			notification: context.notification,
+			passer: { nickname, captcha }
+		}));
 
 		// Only reset turnstile for top-level comments (when reply is undefined) or if there was an error
 		if (!reply || error) {
@@ -162,17 +142,23 @@ async function submit() {
 		({ error } = await actions.comment.edit({ id: edit, content }));
 	} else {
 		// For authenticated users creating a comment
-		({ error } = await actions.comment.create({ locale, section, item, reply, content, link, notification }));
+		({ error } = await actions.comment.create({
+			locale: context.locale,
+			section: context.section,
+			item: context.item,
+			reply,
+			content,
+			link: context.link,
+			notification: context.notification
+		}));
 	}
 
 	if (!error) {
 		// Refresh comment list to show updated comment
-		refresh();
+		context.refresh();
 
 		// Implement rate limiting: 5-second cooldown
-		limit = 5;
-		let end = Date.now() + 1000 * limit;
-		const interval = setInterval(() => (limit = (end - Date.now()) / 1000) <= 0 && clearInterval(interval), 100);
+		countdownComment();
 
 		// Reset form state after successful submission
 		view = false;
@@ -205,7 +191,7 @@ async function submit() {
  * Toggle push notification subscription on/off
  */
 async function toggleNotification() {
-	notification = undefined;
+	context.notification = undefined;
 
 	const registration = await navigator.serviceWorker.getRegistration();
 	if (!registration) return pushTip("error", t("notification.enable.failure"));
@@ -220,7 +206,7 @@ async function toggleNotification() {
 
 		// Notify server to remove subscription
 		await actions.push.unsubscribe({ endpoint: subscription.endpoint });
-	} else if (push) {
+	} else if (context.push) {
 		// Request notification permission before subscribing
 		const permission = await Notification.requestPermission();
 		if (permission !== "granted") return pushTip("information", t("notification.denied"));
@@ -229,7 +215,7 @@ async function toggleNotification() {
 			// Create push subscription with VAPID key
 			subscription = await registration.pushManager.subscribe({
 				userVisibleOnly: true,
-				applicationServerKey: push
+				applicationServerKey: context.push
 			});
 
 			// Extract keys from subscription
@@ -242,7 +228,7 @@ async function toggleNotification() {
 				auth: keys!.auth
 			});
 			if (data) {
-				notification = data;
+				context.notification = data;
 				pushTip("success", t("notification.enable.success"));
 			} else {
 				// Rollback on failure
@@ -277,7 +263,7 @@ onMount(() => {
 		 */
 		function initTurnstile() {
 			turnstileID = window.turnstile.render(turnstileElement, {
-				sitekey: turnstile,
+				sitekey: context.turnstile,
 				callback: (token: string) => {
 					captcha = token;
 				},
@@ -314,7 +300,7 @@ onMount(() => {
 		<hr class="border-0 border-b border-dashed w-full" />
 
 		<div class="flex flex-col items-center gap-2">
-			{#each oauth as provider}
+			{#each context.oauth as provider}
 				<a href={`/@/reach/${provider.name}`} class="flex items-center justify-center gap-2 w-full border-2 border-secondary py-1 px-2 rounded">
 					<Icon size="0.95rem" name={provider.logo} />
 					<span class="font-bold text-sm">{t("oauth.signin", { provider: provider.name })}</span>
@@ -326,12 +312,12 @@ onMount(() => {
 	</div>
 </Modal>
 
-<Drifter bind:open={profileView} {locale} {oauth} {drifter} />
+<Drifter bind:open={profileView} />
 
 <main transition:slide={{ duration: 150 }} class="relative mt-5">
 	{#if !enabled}
 		<div class="absolute flex flex-col items-center justify-center gap-1 w-full h-full font-bold cursor-not-allowed">
-			{#if !oauth.length}
+			{#if !context.oauth.length}
 				<span class="text-xl font-bold">{t("comment.disabled")}</span>
 			{:else}
 				<button onclick={() => (reachView = true)} class="border-2 py-1 px-2 rounded-sm font-bold">{t("comment.signin")}</button>
@@ -378,15 +364,15 @@ onMount(() => {
 				{:else}
 					<div bind:this={turnstileElement}></div>
 					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35 text-sm" />
-					{#if oauth.length}
+					{#if context.oauth.length}
 						<!-- Shown only when OAuth is configured -->
 						<button onclick={() => (reachView = true)}><Icon name="lucide--user-round" title={t("drifter.signin")} /></button>
 					{/if}
 				{/if}
 
-				{#if push}
+				{#if context.push}
 					<button onclick={toggleNotification}>
-						{#if notification !== undefined}
+						{#if context.notification !== undefined}
 							<Icon name="lucide--bell" title={t("notification.enable.name")} />
 						{:else}
 							<Icon name="lucide--bell-off" title={t("notification.disable.name")} />

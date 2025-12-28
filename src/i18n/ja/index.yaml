@@ -84,6 +84,25 @@ drifter:
     failure: 更新に失敗しました
     name: 更新
     success: 更新しました
+email:
+  empty: 電子書簡は必須です
+  name: 電子書簡
+  remove:
+    failure: 電子書簡の削除に失敗しました
+    name: 電子書簡を削除
+    success: 電子書簡を削除しました
+  verify:
+    already: 既に認証済みです
+    conflict: 旧電子書簡アドレスと同じです
+    done: 電子書簡認証済み
+    expired: 認証リンクの期限が切れました
+    invalid: 無効な認証リンクです
+    limit: しばらくしてからもう一度お試しください
+    resend: 認証電書を再送
+    send:
+      failure: 認証電書を送信できませんでした
+      success: 認証電書を送信しました。リンクは 5 分以内に期限切れになりますので、お早めにご確認ください。
+    success: 電子書簡の認証に成功しました！
 feed:
   address: 購読アドレス
   copy:
@@ -107,6 +126,7 @@ jotting:
 language: 日本語
 navigation:
   about: 情報
+  email: 電書
   home: 玄関
   jotting: 随筆
   note: 文記

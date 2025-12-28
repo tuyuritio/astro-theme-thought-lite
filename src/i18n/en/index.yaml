@@ -84,6 +84,27 @@ drifter:
     failure: Update failed
     name: Update
     success: Update successful
+email:
+  empty: Email address cannot be empty
+  name: Email
+  remove:
+    failure: Email deletion failed
+    name: Delete Email
+    success: Email deleted successfully
+  verify:
+    already: You have already completed verification
+    conflict: Duplicate with the old email address
+    done: Email verified
+    expired: Verification link has expired
+    invalid: Invalid verification link
+    limit: Please try again later
+    resend: Resend verification email
+    send:
+      failure: Unable to send verification email
+      success: >-
+        Verification email sent. The link will expire in 5 minutes, please check
+        it as soon as possible.
+    success: Email verification successful!
 feed:
   address: Subscription address
   copy:
@@ -109,6 +130,7 @@ jotting:
 language: English
 navigation:
   about: About
+  email: Email
   home: Home
   jotting: Jotting
   note: Note

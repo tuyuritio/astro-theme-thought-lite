@@ -84,6 +84,25 @@ drifter:
     failure: 更新失败
     name: 更新
     success: 更新成功
+email:
+  empty: 邮箱地址不能为空
+  name: 电子邮箱
+  remove:
+    failure: 邮箱删除失败
+    name: 删除邮箱
+    success: 邮箱删除成功
+  verify:
+    already: 您已完成验证
+    conflict: 与旧邮箱地址重复
+    done: 邮箱已验证
+    expired: 验证链接已过期
+    invalid: 验证链接无效
+    limit: 请稍后重试
+    resend: 重新发送验证邮件
+    send:
+      failure: 无法发送验证邮件
+      success: 验证邮件已发送，链接将在 5 分钟后过期，请尽快查收
+    success: 邮箱验证成功！
 feed:
   address: 订阅地址
   copy:
@@ -107,6 +126,7 @@ jotting:
 language: 简体中文
 navigation:
   about: 絮述
+  email: 邮箱
   home: 序章
   jotting: 随笔
   note: 文记
