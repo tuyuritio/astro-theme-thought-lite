@@ -105,17 +105,7 @@ const policy = await getEntry("information", `${localePrefix}policy`);
 <footer class="flex flex-col sm:flex-row items-center justify-between gap-2 mt-8 mb-5 sm:mb-3 text-sm font-mono">
 	<div class="flex items-center gap-1">
 		{copyright.type != "CC0 1.0" && [<Icon name="lucide--copyright" />, <span>{copyright.year}</span>]}
-		{
-			typeof author === "string" ? (
-				<span>{author}</span>
-			) : !author.link ? (
-				<span>{author.name}</span>
-			) : (
-				<a href={author.link} target="_blank" rel="noopener noreferrer">
-					{author.name}
-				</a>
-			)
-		}
+		<a href={author.link} target="_blank" rel="noopener noreferrer">{author.name}</a>
 		<span>|</span>
 		<a target="_blank" href={ccURL} aria-label={ccLabel} class="flex items-center gap-1">
 			{ccIcons.map(icon => <Icon name={icon} />)}

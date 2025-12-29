@@ -36,8 +36,8 @@ let list = notes.map(note => ({
 }));
 
 // Extract all unique series and tags from the filtered notes
-const series = Array.from(new Set(notes.map(note => note.data.series).filter(Boolean))).sort();
-const tags = Array.from(new Set(notes.flatMap(note => note.data.tags).filter(Boolean))).sort();
+const series = Array.from(new Set(notes.map(note => note.data.series).filter((series): series is string => Boolean(series)))).sort();
+const tags = Array.from(new Set(notes.flatMap(note => note.data.tags).filter((tag): tag is string => Boolean(tag)))).sort();
 ---
 
 <Base title={t("navigation.note")} {locale}>
