@@ -12,17 +12,17 @@ import jaLinkroll from "./ja/linkroll.yaml";
 // Translation object mapping locale codes to their respective translation data
 const translations = {
 	en: {
-		...en,
+		index: en,
 		script: enScript,
 		linkroll: enLinkroll
 	},
 	"zh-cn": {
-		...zhCN,
+		index: zhCN,
 		script: zhCNScript,
 		linkroll: zhLinkroll
 	},
 	ja: {
-		...ja,
+		index: ja,
 		script: jaScript,
 		linkroll: jaLinkroll
 	}
@@ -56,8 +56,7 @@ export default function i18nit(
 	// Ensure the provided language is valid
 	validateLanguage(language);
 
-	let translation: Record<string, any> = translations[language];
-	if (namespace) translation = translation[namespace];
+	const translation = translations[language][namespace ?? "index"];
 
 	/**
 	 * Main translation function with parameter interpolation
