@@ -17,11 +17,8 @@ const t = i18nit(context.locale);
 
 let limit = $derived(context.limitComment);
 
-/** Determine authentication status */
-const authenticated: boolean = Boolean(context.oauth.length && context.drifter);
-
 /** Comment input is enabled only when it's authenticated or Turnstile is configured */
-const enabled: boolean = Boolean(context.turnstile || authenticated);
+const enabled: boolean = Boolean(context.turnstile || context.drifter);
 
 let reachView: boolean = $state(false); // OAuth signin view state
 let profileView: boolean = $state(false); // User profile view state
@@ -114,7 +111,7 @@ async function submit() {
 	if (!content.trim()) return pushTip("warning", t("comment.empty"));
 
 	let error: ActionError | undefined;
-	if (!authenticated) {
+	if (!context.drifter) {
 		// For unauthenticated users, validate captcha and nickname
 		if (!captcha) return pushTip("error", t("comment.verify.failure"));
 		if (!nickname?.trim()) return pushTip("warning", t("comment.nickname.empty"));
@@ -255,7 +252,7 @@ onMount(() => {
 	}
 
 	// If unauthenticated, setup nickname and Turnstile
-	if (!authenticated) {
+	if (!context.drifter) {
 		nickname = localStorage.getItem("nickname");
 
 		/**
@@ -329,7 +326,7 @@ onMount(() => {
 			<span aria-hidden="true" class="absolute -z-1 top-0 start-0 w-5 h-5 border-t-2 border-s-2 border-weak group-focus-within:w-1/2 group-focus-within:h-1/2"></span>
 			<span aria-hidden="true" class="absolute -z-1 top-0 end-0 w-5 h-5 border-t-2 border-e-2 border-weak group-focus-within:w-1/2 group-focus-within:h-1/2"></span>
 			<span aria-hidden="true" class="absolute -z-1 bottom-0 start-0 w-26 h-8 border-b-2 border-s-2 border-weak group-focus-within:w-1/2 group-focus-within:h-1/2"></span>
-			<span aria-hidden="true" class="absolute -z-1 bottom-0 end-0 {authenticated ? 'w-16' : 'w-54'} h-8 border-b-2 border-e-2 border-weak group-focus-within:w-1/2 group-focus-within:h-1/2"></span>
+			<span aria-hidden="true" class="absolute -z-1 bottom-0 end-0 {context.drifter ? 'w-16' : 'w-54'} h-8 border-b-2 border-e-2 border-weak group-focus-within:w-1/2 group-focus-within:h-1/2"></span>
 
 			<article class="flex flex-col min-h-20 py-2 px-3 overflow-auto">
 				<textarea hidden={preview} placeholder="   {t('comment.placeholder')}" bind:this={textarea} bind:value={content} class="grow w-full bg-transparent text-base outline-none resize-none transition-[height]"></textarea>
@@ -358,14 +355,12 @@ onMount(() => {
 				<label class="flex items-center cursor-pointer"><Icon name="lucide--file-search" title={t("comment.preview.name")} /><input type="checkbox" class="switch" bind:checked={preview} /></label>
 				<div class="grow"></div>
 
-				<!-- When comment input is enabled, either the it's authenticated or Turnstile is configured -->
-				{#if authenticated}
+				{#if context.drifter}
 					<button onclick={() => (profileView = true)}><Icon name="lucide--user-round-pen" title={t("drifter.profile")} /></button>
 				{:else}
 					<div bind:this={turnstileElement}></div>
 					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35 text-sm" />
 					{#if context.oauth.length}
-						<!-- Shown only when OAuth is configured -->
 						<button onclick={() => (reachView = true)}><Icon name="lucide--user-round" title={t("drifter.signin")} /></button>
 					{/if}
 				{/if}
@@ -380,10 +375,10 @@ onMount(() => {
 					</button>
 				{/if}
 
-				<button id="submit" disabled={limit > 0 || (!authenticated && !captcha) || overlength} onclick={submit}>
+				<button id="submit" disabled={limit > 0 || (!context.drifter && !captcha) || overlength} onclick={submit}>
 					{#if limit > 0}
 						<span class="flex gap-0.5"><Icon name="lucide--timer" /><span class="relative top-0.5 font-mono leading-none">{Math.ceil(limit)}</span></span>
-					{:else if !authenticated && !captcha}
+					{:else if !context.drifter && !captcha}
 						<span class="contents text-primary"><Icon name="svg-spinners--pulse-rings-3" title={t("comment.verify.progress")} /></span>
 					{:else if overlength}
 						<span class="contents text-orange-600"><Icon name="lucide--rectangle-ellipsis" title={t("comment.overlength")} /></span>

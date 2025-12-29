@@ -5,6 +5,7 @@ import { drizzle } from "drizzle-orm/d1";
 import { OAuth, type OAuthAccount } from "$utils/oauth";
 import { Token } from "$utils/token";
 import { Drifter, Email } from "$db/schema";
+import { oauth } from "$config";
 
 export const drifter = {
 	// Action to retrieve the current user's profile information
@@ -13,6 +14,12 @@ export const drifter = {
 			// Verify user authentication
 			const id = (await Token.check(cookies, "passport"))?.visa;
 			if (!id) return;
+
+			// Clean up invalid passport if OAuth providers are disabled
+			if (!oauth.length) {
+				await Token.revoke("passport", cookies);
+				return;
+			}
 
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);

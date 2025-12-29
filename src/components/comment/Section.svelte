@@ -64,8 +64,18 @@ async function refresh(auto: boolean = true) {
 }
 
 onMount(async () => {
-	let loadComments = false;
 	let loadDrifter = false;
+	let loadComments = false;
+
+	// Initial load of user authentication status
+	const { data: drifterProfile, error: drifterError } = await actions.drifter.profile();
+	if (!drifterError) {
+		context.drifter = drifterProfile;
+
+		loadDrifter = true;
+	} else {
+		pushTip("error", t("drifter.fetch.failure"));
+	}
 
 	// Initial load of comments
 	const { data: commentList, error: commentError } = await actions.comment.list({ section, item });
@@ -76,16 +86,6 @@ onMount(async () => {
 		loadComments = true;
 	} else {
 		pushTip("error", t("comment.fetch.failure"));
-	}
-
-	// Initial load of user authentication status
-	const { data: drifterProfile, error: drifterError } = await actions.drifter.profile();
-	if (!drifterError) {
-		context.drifter = drifterProfile;
-
-		loadDrifter = true;
-	} else {
-		pushTip("error", t("drifter.fetch.failure"));
 	}
 
 	// Initial load of notification subscription status

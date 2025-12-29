@@ -122,12 +122,11 @@ async function remove() {
 			{#if comment.content}
 				<div class="markdown comment">{#await remark.process(comment.content) then html}{@html html}{/await}</div>
 				<dd class="flex items-center gap-4 mt-2">
-					<button onclick={() => ((replyView = !replyView), (editView = false))} disabled={!context.turnstile && !(context.oauth.length && context.drifter)}><Icon name="lucide--reply" title={t("comment.reply")} /></button>
+					<button onclick={() => ((replyView = !replyView), (editView = false))} disabled={!context.turnstile && !context.drifter}><Icon name="lucide--reply" title={t("comment.reply")} /></button>
 					{#if comment.updated && config.comment?.history}<button onclick={() => (historyView = true)}><Icon name="lucide--history" title={t("comment.history")} /></button>{/if}
 					<button onclick={share}><Icon name="lucide--share-2" title={t("comment.share.name")} /></button>
 
-					<!-- Show edit and delete buttons only if it's authenticated -->
-					{#if context.oauth.length && comment.drifter === context.drifter?.id}
+					{#if comment.drifter === context.drifter?.id}
 						<button onclick={() => ((editView = !editView), (replyView = false))}><Icon name="lucide--pencil" title={t("comment.edit.name")} /></button>
 						<button onclick={() => (deleteView = true)}><Icon name="lucide--trash" title={t("delete")} /></button>
 					{/if}
