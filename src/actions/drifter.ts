@@ -30,7 +30,7 @@ export const drifter = {
 					.select({
 						id: Drifter.id,
 						provider: Drifter.provider,
-						name: sql`CASE WHEN ${Drifter.name} IS NULL THEN ${Drifter.handle} ELSE ${Drifter.name} END`,
+						name: sql<string>`COALESCE(${Drifter.name}, ${Drifter.handle})`,
 						description: Drifter.description,
 						image: Drifter.image,
 						homepage: Drifter.homepage,
@@ -98,9 +98,10 @@ export const drifter = {
 	// Action to update user profile settings
 	update: defineAction({
 		input: z.object({
-			homepage: z.string().nullish() // User's personal homepage URL
+			homepage: z.string().nullish(), // User's personal homepage URL
+			notify: z.boolean().nullish() // Whether to notify user via email
 		}),
-		handler: async ({ homepage }, { cookies, locals }) => {
+		handler: async ({ homepage, notify }, { cookies, locals }) => {
 			// Verify user authentication
 			const id = (await Token.check(cookies, "passport"))?.visa;
 			if (!id) throw new ActionError({ code: "UNAUTHORIZED" });
@@ -109,12 +110,10 @@ export const drifter = {
 			const db = drizzle(locals.runtime.env.DB);
 
 			// Update user settings in database
-			await db
-				.update(Drifter)
-				.set({
-					homepage
-				})
-				.where(eq(Drifter.id, id));
+			await db.update(Drifter).set({ homepage }).where(eq(Drifter.id, id));
+
+			// Update email notification preference if provided
+			if (notify != null) await db.update(Email).set({ notify }).where(eq(Email.drifter, id));
 		}
 	}),
 

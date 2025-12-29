@@ -36,7 +36,7 @@ let updating: boolean = $state(false);
 // Update user information
 async function update() {
 	updating = true;
-	const { error } = await actions.drifter.update({ homepage: drifter.homepage });
+	const { error } = await actions.drifter.update({ homepage: drifter.homepage, notify: drifter.notify });
 	updating = false;
 
 	if (!error) {
@@ -115,6 +115,9 @@ async function deactivate() {
 		<div class="flex flex-col items-start gap-5">
 			<label class="flex items-center gap-1 flex-wrap">{t("drifter.homepage")}: <input type="url" class="input" bind:value={drifter.homepage} /></label>
 			<Email />
+			{#if drifter.emailState === "verified"}
+				<label class="flex items-center gap-1 flex-wrap">{t("email.notify")}: <input type="checkbox" class="switch" bind:checked={drifter.notify} /></label>
+			{/if}
 		</div>
 		<div class="self-center flex gap-5">
 			<button onclick={() => (open = false)} class="form-button">{t("cancel")}</button>
