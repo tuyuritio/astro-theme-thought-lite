@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="%language%">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="x-apple-disable-message-reformatting">
+	<meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+	<title>%title%</title>
+</head>
+
+<body style="margin: 0; padding: 0; font-family: serif; -webkit-text-size-adjust: 100%;">
+	<div style="max-width: 650px; margin: 0 auto; padding: 40px 20px;">
+		<div style="border-bottom: 2px solid; padding-bottom: 24px; text-align: center;">
+			<img src="%logo%" width="64" height="64">
+		</div>
+		<div style="padding: 32px 0px; font-size: 16px; line-height: 1.6; border-bottom: 2px solid;">%body%</div>
+		<div style="padding-top: 24px; text-align: center; font-size: 13px; color: #888888;">
+			<span>&copy; %year% %author%</span>
+			<span style="margin: 0 8px;">&middot;</span>
+			<a href="%site%" style="color: #888888;">%title%</a>
+		</div>
+		<div style="text-align: center; font-size: 13px; color: #888888;">
+			%if unsubscribe%
+			<a href="%unsubscribe.url%" style="color: #888888;">%unsubscribe.button%</a>
+			<span style="margin: 0 8px;">&ndash;</span>
+			%endif%
+			<a href="%policy.url%" style="color: #888888;">%policy.button%</a>
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+---
+import { and, eq } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/d1";
+import config from "$config";
+import { Email as EmailTable } from "$db/schema";
+import { AESEncryption } from "$utils/token";
+import Base from "$layouts/Base.astro";
+import i18nit from "$i18n";
+
+export const prerender = false;
+
+export async function getStaticPaths() {
+	// Create path for each locale, omitting default locale from URL
+	return config.i18n.locales.map(locale => ({ params: { locale: config.i18n.defaultLocale === locale ? undefined : locale } }));
+}
+
+const { locale = config.i18n.defaultLocale } = Astro.params;
+
+const t = i18nit(locale);
+
+// Throw Not Found if pass is missing
+const pass = Astro.url.searchParams.get("pass");
+if (!pass) return new Response(null, { status: 404, statusText: "Not Found" });
+
+/**
+ * Unsubscribe the email address associated with the given pass token.
+ * @param pass encrypted token containing drifter and email address
+ */
+async function unsubscribe(pass: string) {
+	// Decrypt pass
+	const claim = AESEncryption.decrypt(new Uint8Array(Buffer.from(pass, "base64url")));
+	if (!claim) return t("email.unsubscribe.invalid");
+
+	// Initialize database connection
+	const db = drizzle(Astro.locals.runtime.env.DB);
+
+	// Parse drifter and address from claim
+	const identity = new TextDecoder().decode(claim);
+	const [drifter, address] = identity.split("|");
+	if (!drifter || !address) return t("email.unsubscribe.invalid");
+
+	// Turn off notifications for the email address
+	const result = await db
+		.update(EmailTable)
+		.set({ notify: false })
+		.where(and(eq(EmailTable.drifter, drifter), eq(EmailTable.address, address), eq(EmailTable.notify, true)))
+		.returning();
+
+	if (result.length === 0) return t("email.unsubscribe.invalid");
+
+	return t("email.unsubscribe.success");
+}
+---
+
+<Base {locale} title={t("navigation.email")}>
+	<main class="grow-[0.25] flex items-center justify-center font-bold text-2xl">{unsubscribe(pass)}</main>
+</Base>

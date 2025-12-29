@@ -2,29 +2,35 @@
 import en from "./en/index.yaml";
 import enScript from "./en/script.yaml";
 import enLinkroll from "./en/linkroll.yaml";
+import enEmail from "./en/email.yaml";
 import zhCN from "./zh-cn/index.yaml";
 import zhCNScript from "./zh-cn/script.yaml";
-import zhLinkroll from "./zh-cn/linkroll.yaml";
+import zhCNLinkroll from "./zh-cn/linkroll.yaml";
+import zhCNEmail from "./zh-cn/email.yaml";
 import ja from "./ja/index.yaml";
 import jaScript from "./ja/script.yaml";
 import jaLinkroll from "./ja/linkroll.yaml";
+import jaEmail from "./ja/email.yaml";
 
 // Translation object mapping locale codes to their respective translation data
 const translations = {
 	en: {
 		index: en,
 		script: enScript,
-		linkroll: enLinkroll
+		linkroll: enLinkroll,
+		email: enEmail
 	},
 	"zh-cn": {
 		index: zhCN,
 		script: zhCNScript,
-		linkroll: zhLinkroll
+		linkroll: zhCNLinkroll,
+		email: zhCNEmail
 	},
 	ja: {
 		index: ja,
 		script: jaScript,
-		linkroll: jaLinkroll
+		linkroll: jaLinkroll,
+		email: jaEmail
 	}
 };
 

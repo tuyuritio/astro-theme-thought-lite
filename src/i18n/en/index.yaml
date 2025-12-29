@@ -87,10 +87,14 @@ drifter:
 email:
   empty: Email address cannot be empty
   name: Email
+  notify: Email Notifications
   remove:
     failure: Email deletion failed
     name: Delete Email
     success: Email deleted successfully
+  unsubscribe:
+    invalid: Unsubscribe link is invalid
+    success: You have successfully unsubscribed!
   verify:
     already: You have already completed verification
     conflict: Duplicate with the old email address

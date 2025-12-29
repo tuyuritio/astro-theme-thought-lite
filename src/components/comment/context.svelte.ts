@@ -6,6 +6,7 @@ const context: {
 	oauth: any[];
 	turnstile?: string;
 	push?: string;
+	email: boolean;
 	limitComment: number;
 	limitEmail: number;
 	drifter?: {
@@ -27,6 +28,7 @@ const context: {
 	section: "",
 	item: "",
 	oauth: [],
+	email: false,
 	limitComment: 0,
 	limitEmail: 0,
 	refresh: async () => {}

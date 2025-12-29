@@ -4,7 +4,10 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { and, eq, ne } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { Email } from "$db/schema";
+import { render } from "$utils/email";
+import sendEmail from "$utils/email/util";
 import { AESEncryption, Token } from "$utils/token";
+import i18nit from "$i18n";
 
 export const email = {
 	// Action to initiate email verification process
@@ -67,8 +70,21 @@ export const email = {
 			const link = new URL(getRelativeLocaleUrl(locale, "/email"), site);
 			link.searchParams.set("ticket", Buffer.from(ticket).toString("base64url"));
 
-			// TODO: Send verification email with the link
-			console.log(link);
+			const t = i18nit(locale, "email");
+
+			// Send verification email
+			locals.runtime.ctx.waitUntil(
+				sendEmail(locale, drifter, address, {
+					subject: t("verification.subject"),
+					html: render("verification", {
+						title: t("verification.html.title"),
+						instruction: t("verification.html.instruction"),
+						button: t("verification.html.button"),
+						link
+					}),
+					text: t("verification.text", { link: link.toString() })
+				})
+			);
 		}
 	}),
 

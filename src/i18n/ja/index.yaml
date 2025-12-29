@@ -87,10 +87,14 @@ drifter:
 email:
   empty: 電子書簡は必須です
   name: 電子書簡
+  notify: 電書通知
   remove:
     failure: 電子書簡の削除に失敗しました
     name: 電子書簡を削除
     success: 電子書簡を削除しました
+  unsubscribe:
+    invalid: 配信停止連結が無効です
+    success: 配信停止が完了しました！
   verify:
     already: 既に認証済みです
     conflict: 旧電子書簡アドレスと同じです

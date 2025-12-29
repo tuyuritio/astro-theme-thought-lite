@@ -87,10 +87,14 @@ drifter:
 email:
   empty: 邮箱地址不能为空
   name: 电子邮箱
+  notify: 邮件通知
   remove:
     failure: 邮箱删除失败
     name: 删除邮箱
     success: 邮箱删除成功
+  unsubscribe:
+    invalid: 取消订阅链接无效
+    success: 您已成功取消订阅！
   verify:
     already: 您已完成验证
     conflict: 与旧邮箱地址重复

@@ -1,0 +1,30 @@
+comment:
+  html:
+    button: 点击前往共织灵光
+    comment: '{name} 说道：'
+    greeting: 嗨，{name}！
+    notify: 「{content}」下，正有新声悄然落笔。
+  subject: 新声悄至，文下有言
+  text: |-
+    「{content}」下，正有新声悄然落笔：{comment}
+    共织灵光：{link}
+policy: 政策
+reply:
+  html:
+    button: 点击回溯交流轨迹
+    greeting: 嗨，{name}！
+    notify: 您在「{content}」下的想法激起了回响。
+    reply: '{name} 回复：'
+    yours: 您的想法：
+  subject: 片语有声，回响已至
+  text: |-
+    您在「{content}」下的想法激起了回响：{reply}
+    交流轨迹：{link}
+unsubscribe: 取消订阅
+verification:
+  html:
+    button: 确认邮箱
+    instruction: 点击下方按钮以完成邮箱验证：
+    title: 确认您的邮箱
+  subject: 确认您的电子邮箱
+  text: 请点击链接完成邮箱验证：{link}
