@@ -32,8 +32,8 @@ export const drifter = {
 						notify: Email.notify
 					})
 					.from(Drifter)
-					.where(eq(Drifter.id, id))
 					.leftJoin(Email, eq(Email.drifter, Drifter.id))
+					.where(eq(Drifter.id, id))
 			)[0];
 
 			return drifter;

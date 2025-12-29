@@ -284,9 +284,9 @@ export const comment = {
 					author: sql`CASE WHEN ${Drifter.id} = ${author} THEN 1 ELSE 0 END`
 				})
 				.from(Comment)
+				.leftJoin(Drifter, eq(Comment.drifter, Drifter.id))
 				.where(and(eq(Comment.section, section), eq(Comment.item, item)))
-				.orderBy(Comment.timestamp)
-				.leftJoin(Drifter, eq(Comment.drifter, Drifter.id));
+				.orderBy(Comment.timestamp);
 
 			// Create a map for efficient comment lookup and initialize subcomments arrays
 			const map = new Map<string, any>();
