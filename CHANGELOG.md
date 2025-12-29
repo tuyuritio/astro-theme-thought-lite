@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.31.5](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.31.4...v0.31.5) (2025-12-29)
+
+
+### Bug Fixes
+
+* **i18n:** declare default translation namespace to `index` ([f417801](https://github.com/tuyuritio/astro-theme-thought-lite/commit/f4178014233bc84cc3047db99d83b894b187454f))
+* **i18n:** improve translation retrieval ([77780ec](https://github.com/tuyuritio/astro-theme-thought-lite/commit/77780ec4394008127e81cfa71ff43c759ca0ebb2))
+
+
+### Miscellaneous Chores
+
+* simplify author display ([3731653](https://github.com/tuyuritio/astro-theme-thought-lite/commit/37316539667112067638fca5bfb78dd28efaffd5))
+
 ## [0.31.4](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.31.3...v0.31.4) (2025-12-25)
 
 
