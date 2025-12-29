@@ -32,7 +32,7 @@ const translations = {
 type Language = keyof typeof translations;
 
 // Define Namespace type based on keys in the translation objects
-export type TranslationNamespace = keyof (typeof translations)[Language];
+type TranslationNamespace = keyof (typeof translations)[Language];
 
 /**
  * Validate if the provided language is supported
@@ -40,7 +40,7 @@ export type TranslationNamespace = keyof (typeof translations)[Language];
  * @throws Error if the language is not supported
  */
 function validateLanguage(language: string): asserts language is Language {
-	if (!Object.keys(translations).includes(language)) throw new Error(`Unsupported language: ${language}`);
+	if (!(language in translations)) throw new Error(`Unsupported language: ${language}. Available: ${Object.keys(translations).join(", ")}`);
 }
 
 /**
@@ -56,7 +56,8 @@ export default function i18nit(
 	// Ensure the provided language is valid
 	validateLanguage(language);
 
-	const translation = translations[language][namespace ?? "index"];
+	// Select the appropriate translation dictionary based on language and namespace
+	const dictionary = translations[language][namespace ?? "index"];
 
 	/**
 	 * Main translation function with parameter interpolation
@@ -65,11 +66,23 @@ export default function i18nit(
 	 * @param params - Optional parameters for string interpolation (replaces {paramName} placeholders)
 	 * @returns Translated and interpolated string, or the original key if translation not found
 	 */
-	function t(key: string, params?: Record<string, string | number>) {
+	function t(key: string, params?: Record<string, string | number>): string {
 		const keys = key.split(".");
-		const value: string | undefined = keys.reduce((translation: any, key) => translation[key], translation);
+		let value: any = dictionary;
 
-		return value?.replace(/\{(\w+)\}/g, (_, param) => String(params?.[param] ?? param)) ?? key;
+		// Navigate through the nested translation object
+		for (const key of keys) {
+			if (value === undefined || value === null) break;
+			value = value[key];
+		}
+
+		// Return the original key if translation not found
+		if (value === undefined || typeof value !== "string") return key;
+
+		// Perform parameter interpolation
+		if (params) return value.replace(/\{(\w+)\}/g, (_, param) => String(params[param] ?? `{${param}}`));
+
+		return value;
 	}
 
 	return t;
