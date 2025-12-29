@@ -19,6 +19,7 @@ let removeView = $state(false);
  * Verify new email address
  */
 async function verify() {
+	if (limit > 0) return pushTip("warning", t("email.verify.limit"));
 	if (!address?.trim()) return pushTip("error", t("email.empty"));
 
 	const { error } = await actions.email.verify({ locale: context.locale, address });
@@ -51,6 +52,8 @@ async function verify() {
  * Resend verification email
  */
 async function resend() {
+	if (limit > 0) return pushTip("warning", t("email.verify.limit"));
+
 	const { error } = await actions.email.verify({ locale: context.locale });
 	if (!error) {
 		countdownEmail();
