@@ -46,7 +46,7 @@ Private Key:
 ## 电子邮件
 
 > [!NOTE]
-> 由于 Cloudflare Workers 环境下的 SMTP（[cloudflare:sockets](https://developers.cloudflare.com/workers/runtime-apis/tcp-sockets/)）及 Email Workers（[cloudflare:email](https://developers.cloudflare.com/email-routing/email-workers/send-email-workers/)）依赖其**内置原生模块**，这些模块目前无法在 Astro 本地开发环境中模拟运行。
+> 由于 Cloudflare Workers 环境下的 SMTP（[cloudflare\:sockets](https://developers.cloudflare.com/workers/runtime-apis/tcp-sockets/)）及 Email Workers（[cloudflare\:email](https://developers.cloudflare.com/email-routing/email-workers/send-email-workers/)）依赖其**内置原生模块**，这些模块目前无法在 Astro 本地开发环境中模拟运行。
 > 
 > 为了确保开发与生产环境的一致性，主题采用 RESTful API 方式实现邮件发送功能。
 

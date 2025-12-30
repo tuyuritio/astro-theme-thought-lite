@@ -46,7 +46,7 @@ Add the public and private keys to `.env`.
 ## Email
 
 > [!NOTE]
-> Since SMTP ([cloudflare:sockets](https://developers.cloudflare.com/workers/runtime-apis/tcp-sockets/)) and Email Workers ([cloudflare:email](https://developers.cloudflare.com/email-routing/email-workers/send-email-workers/)) in the Cloudflare Workers environment rely on their **built-in native modules**, these modules currently cannot be simulated in the Astro local development environment.
+> Since SMTP ([cloudflare\:sockets](https://developers.cloudflare.com/workers/runtime-apis/tcp-sockets/)) and Email Workers ([cloudflare\:email](https://developers.cloudflare.com/email-routing/email-workers/send-email-workers/)) in the Cloudflare Workers environment rely on their **built-in native modules**, these modules currently cannot be simulated in the Astro local development environment.
 > 
 > To ensure consistency between development and production environments, the theme uses a RESTful API approach to implement email sending functionality.
 

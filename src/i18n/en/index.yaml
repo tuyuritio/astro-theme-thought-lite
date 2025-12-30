@@ -168,7 +168,7 @@ oauth:
     captcha: No need to resolve CAPTCHA
     comment: Edit and delete your own thoughts
     homepage: Display your personal homepage
-    notification: Receive desktop notifications for thought replies
+    notification: Receive email notifications for thought replies
   signin: Sign in with {provider}
 read:
   words: '{words} words'

@@ -164,7 +164,7 @@ oauth:
     captcha: 无需进行人机验证
     comment: 编辑和删除自己的想法
     homepage: 展示自己的个人主页
-    notification: 接收想法回复的桌面通知
+    notification: 接收想法回复的邮件通知
   signin: 使用 {provider} 登录
 read:
   words: '{words} 字'

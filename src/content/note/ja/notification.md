@@ -46,7 +46,7 @@ Private Key:
 ## 電子書簡
 
 > [!NOTE]
-> Cloudflare Workers 環境下の SMTP（[cloudflare:sockets](https://developers.cloudflare.com/workers/runtime-apis/tcp-sockets/)）および Email Workers（[cloudflare:email](https://developers.cloudflare.com/email-routing/email-workers/send-email-workers/)）は**組み込みのネイティブモジュール**に依存しているため、これらのモジュールは現在 Astro のローカル開発環境ではシミュレートできません。
+> Cloudflare Workers 環境下の SMTP（[cloudflare\:sockets](https://developers.cloudflare.com/workers/runtime-apis/tcp-sockets/)）および Email Workers（[cloudflare\:email](https://developers.cloudflare.com/email-routing/email-workers/send-email-workers/)）は**組み込みのネイティブモジュール**に依存しているため、これらのモジュールは現在 Astro のローカル開発環境ではシミュレートできません。
 > 
 > 開発環境と本番環境の一貫性を確保するため、テーマは RESTful API 方式を採用して電書送信機能を実装しています。
 
