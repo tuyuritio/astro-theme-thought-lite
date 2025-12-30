@@ -377,7 +377,7 @@ onMount(() => {
 
 				<button id="submit" disabled={limit > 0 || (!context.drifter && !captcha) || overlength} onclick={submit}>
 					{#if limit > 0}
-						<span class="flex gap-0.5"><Icon name="lucide--timer" /><span class="relative top-0.5 font-mono leading-none">{Math.ceil(limit)}</span></span>
+						<span class="flex gap-0.5"><Icon name="lucide--timer" /><span class="relative top-0.5 text-sm font-mono leading-none">{Math.ceil(limit)}</span></span>
 					{:else if !context.drifter && !captcha}
 						<span class="contents text-primary"><Icon name="svg-spinners--pulse-rings-3" title={t("comment.verify.progress")} /></span>
 					{:else if overlength}
