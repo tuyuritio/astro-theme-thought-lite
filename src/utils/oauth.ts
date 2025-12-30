@@ -14,6 +14,7 @@ export interface OAuthAccount {
 	name: string; // Display name
 	description?: string; // User bio/description (if applicable)
 	image: string; // Profile image URL
+	email?: string; // User email address (if available)
 }
 
 // OAuth redirect URI for all providers
@@ -61,13 +62,16 @@ export class OAuth {
 	 */
 	url(state: string, codeVerifier: string): URL {
 		if (this.provider instanceof GitHub) {
-			return this.provider.createAuthorizationURL(state, []);
+			// https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
+			return this.provider.createAuthorizationURL(state, ["user:email"]);
 		} else if (this.provider instanceof Google) {
-			const url = this.provider.createAuthorizationURL(state, codeVerifier, ["openid", "profile"]);
+			// https://developers.google.com/identity/protocols/oauth2/scopes#google-sign-in
+			const url = this.provider.createAuthorizationURL(state, codeVerifier, ["email", "openid", "profile"]);
 			url.searchParams.set("access_type", "offline"); // Request refresh token
 			return url;
 		} else if (this.provider instanceof Twitter) {
-			return this.provider.createAuthorizationURL(state, codeVerifier, ["users.read", "tweet.read", "offline.access"]);
+			// https://docs.x.com/fundamentals/authentication/guides/v2-authentication-mapping
+			return this.provider.createAuthorizationURL(state, codeVerifier, ["tweet.read", "users.read", "users.email", "offline.access"]);
 		} else {
 			throw new Error("Invalid Provider");
 		}
@@ -86,10 +90,19 @@ export class OAuth {
 
 		if (this.provider instanceof GitHub) {
 			// Fetch user profile from GitHub API
+			// https://docs.github.com/en/rest/users/users#get-the-authenticated-user
 			const response = await fetch("https://api.github.com/user", {
 				headers: { authorization: `Bearer ${accessToken}`, "user-agent": USER_AGENT }
 			});
 			const user = await response.json();
+
+			// Fetch user email addresses to find primary verified email
+			// https://docs.github.com/en/rest/users/emails#list-email-addresses-for-the-authenticated-user
+			const responseEmail = await fetch("https://api.github.com/user/emails", {
+				headers: { authorization: `Bearer ${accessToken}`, "user-agent": USER_AGENT }
+			});
+			const emails: any[] = await responseEmail.json();
+			const email = emails.find(email => email.primary && email.verified)?.email;
 
 			return {
 				provider: "GitHub",
@@ -98,7 +111,8 @@ export class OAuth {
 				handle: user.login,
 				name: user.name,
 				description: user.bio,
-				image: user.avatar_url
+				image: user.avatar_url,
+				email: email
 			};
 		} else if (this.provider instanceof Google) {
 			// Extract token information and decode ID token
@@ -113,14 +127,16 @@ export class OAuth {
 				refresh: refreshToken,
 				account: user.sub,
 				name: user.name,
-				image: user.picture
+				image: user.picture,
+				email: user.email
 			};
 		} else if (this.provider instanceof Twitter) {
 			// Extract token information and fetch user profile from Twitter API
 			const expireAt = tokens.accessTokenExpiresAt();
 			const refreshToken = tokens.refreshToken();
 
-			const response = await fetch("https://api.twitter.com/2/users/me?user.fields=description,profile_image_url", {
+			// https://docs.x.com/x-api/users/get-my-user
+			const response = await fetch("https://api.twitter.com/2/users/me?user.fields=confirmed_email,description,profile_image_url", {
 				headers: { authorization: `Bearer ${accessToken}`, "user-agent": USER_AGENT }
 			});
 			const user = (await response.json()).data;
@@ -135,7 +151,8 @@ export class OAuth {
 				handle: user.username,
 				name: user.name,
 				description: user.description,
-				image: user.profile_image_url.replace("_normal", "")
+				image: user.profile_image_url.replace("_normal", ""),
+				email: user.confirmed_email
 			};
 		} else {
 			throw new Error("Invalid Provider");
