@@ -111,7 +111,7 @@ const policy = await getEntry("information", `${localePrefix}policy`);
 			{ccIcons.map(icon => <Icon name={icon} />)}
 		</a>
 		<span>·</span>
-		<Icon name="lucide--activity" title={t("statistics", { words: totalWords })} />
+		<Icon name="lucide--activity" title={t("statistics", { count: totalWords })} />
 		{
 			policy && [
 				<span>·</span>,
