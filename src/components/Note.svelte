@@ -175,7 +175,7 @@ onMount(() => {
 				margin-top: 0.25rem 0rem 0.5rem;
 				border-bottom: 2px solid;
 
-				font-style: var(--font-monospace);
+				font-style: var(--font-mono);
 				font-size: 0.875rem;
 
 				transition: color 0.15s ease-in-out;
