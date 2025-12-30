@@ -57,11 +57,12 @@ async function validate(ticket: string) {
 		const result = await db
 			.select({ state: EmailTable.state })
 			.from(EmailTable)
-			.where(and(eq(EmailTable.drifter, drifter), eq(EmailTable.address, address)));
+			.where(and(eq(EmailTable.drifter, drifter), eq(EmailTable.address, address)))
+			.get();
 
-		if (result.length === 0) return t("email.verify.invalid");
+		if (!result) return t("email.verify.invalid");
 
-		switch (result[0].state) {
+		switch (result.state) {
 			case "verified":
 				return t("email.verify.already");
 

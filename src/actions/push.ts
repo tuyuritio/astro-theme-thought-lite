@@ -26,10 +26,11 @@ export const push = {
 					auth
 				})
 				.onConflictDoNothing()
-				.returning({ id: PushSubscription.id });
+				.returning({ id: PushSubscription.id })
+				.get();
 
 			// Return the subscription ID
-			return subscription[0].id;
+			return subscription.id;
 		}
 	}),
 
@@ -56,10 +57,11 @@ export const push = {
 			const subscription = await db
 				.select({ id: PushSubscription.id })
 				.from(PushSubscription)
-				.where(and(eq(PushSubscription.endpoint, endpoint)));
+				.where(and(eq(PushSubscription.endpoint, endpoint)))
+				.get();
 
 			// Return the subscription ID if found, otherwise undefined
-			return subscription[0]?.id;
+			return subscription?.id;
 		}
 	})
 };

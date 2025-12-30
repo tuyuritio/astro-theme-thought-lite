@@ -28,35 +28,34 @@ export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, re
 
 		const db = drizzle(locals.runtime.env.DB);
 		// Insert or update user account in database with conflict resolution
-		const drifter = (
-			await db
-				.insert(Drifter)
-				.values({
-					id: random(16),
-					provider: user.provider,
-					account: user.account,
-					refresh: user.refresh,
-					access: user.access,
-					expire: user.expire?.getTime(),
-					handle: user.handle,
-					name: user.name,
-					description: user.description,
-					image: user.image
-				})
-				.onConflictDoUpdate({
-					// Update existing user if provider+account combination exists
-					target: [Drifter.provider, Drifter.account],
-					set: {
-						access: sql`excluded.access`,
-						expire: sql`excluded.expire`,
-						handle: sql`excluded.handle`,
-						name: sql`excluded.name`,
-						description: sql`excluded.description`,
-						image: sql`excluded.image`
-					}
-				})
-				.returning({ id: Drifter.id })
-		)[0];
+		const drifter = await db
+			.insert(Drifter)
+			.values({
+				id: random(16),
+				provider: user.provider,
+				account: user.account,
+				refresh: user.refresh,
+				access: user.access,
+				expire: user.expire?.getTime(),
+				handle: user.handle,
+				name: user.name,
+				description: user.description,
+				image: user.image
+			})
+			.onConflictDoUpdate({
+				// Update existing user if provider+account combination exists
+				target: [Drifter.provider, Drifter.account],
+				set: {
+					access: sql`excluded.access`,
+					expire: sql`excluded.expire`,
+					handle: sql`excluded.handle`,
+					name: sql`excluded.name`,
+					description: sql`excluded.description`,
+					image: sql`excluded.image`
+				}
+			})
+			.returning({ id: Drifter.id })
+			.get();
 
 		// Issue passport token with user visa for authentication
 		await Token.issue(cookies, "passport", { visa: drifter.id });

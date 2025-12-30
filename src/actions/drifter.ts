@@ -25,23 +25,22 @@ export const drifter = {
 			const db = drizzle(locals.runtime.env.DB);
 
 			// Fetch user profile data from database
-			const drifter = (
-				await db
-					.select({
-						id: Drifter.id,
-						provider: Drifter.provider,
-						name: sql<string>`COALESCE(${Drifter.name}, ${Drifter.handle})`,
-						description: Drifter.description,
-						image: Drifter.image,
-						homepage: Drifter.homepage,
-						email: Email.address,
-						emailState: Email.state,
-						notify: Email.notify
-					})
-					.from(Drifter)
-					.leftJoin(Email, eq(Email.drifter, Drifter.id))
-					.where(eq(Drifter.id, id))
-			)[0];
+			const drifter = await db
+				.select({
+					id: Drifter.id,
+					provider: Drifter.provider,
+					name: sql<string>`COALESCE(${Drifter.name}, ${Drifter.handle})`,
+					description: Drifter.description,
+					image: Drifter.image,
+					homepage: Drifter.homepage,
+					email: Email.address,
+					emailState: Email.state,
+					notify: Email.notify
+				})
+				.from(Drifter)
+				.leftJoin(Email, eq(Email.drifter, Drifter.id))
+				.where(eq(Drifter.id, id))
+				.get();
 
 			return drifter;
 		}
@@ -58,17 +57,18 @@ export const drifter = {
 			const db = drizzle(locals.runtime.env.DB);
 
 			// Get current OAuth tokens and provider info
-			const drifter = (
-				await db
-					.select({
-						provider: Drifter.provider,
-						access: Drifter.access,
-						expire: Drifter.expire,
-						refresh: Drifter.refresh
-					})
-					.from(Drifter)
-					.where(eq(Drifter.id, id))
-			)[0];
+			const drifter = await db
+				.select({
+					provider: Drifter.provider,
+					access: Drifter.access,
+					expire: Drifter.expire,
+					refresh: Drifter.refresh
+				})
+				.from(Drifter)
+				.where(eq(Drifter.id, id))
+				.get();
+
+			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Check if access token has expired
 			const expire = drifter.expire ? drifter.expire < Date.now() : false;
@@ -78,18 +78,17 @@ export const drifter = {
 			const profile: OAuthAccount = await new OAuth(drifter.provider).update(expire ? drifter.refresh! : drifter.access, expire);
 
 			// Update user profile in database with latest OAuth data
-			const newProfile = (
-				await db
-					.update(Drifter)
-					.set({
-						handle: profile.handle,
-						name: profile.name,
-						description: profile.description,
-						image: profile.image
-					})
-					.where(eq(Drifter.id, id))
-					.returning({ name: Drifter.name, description: Drifter.description })
-			)[0];
+			const newProfile = await db
+				.update(Drifter)
+				.set({
+					handle: profile.handle,
+					name: profile.name,
+					description: profile.description,
+					image: profile.image
+				})
+				.where(eq(Drifter.id, id))
+				.returning({ name: Drifter.name, description: Drifter.description })
+				.get();
 
 			return newProfile;
 		}
@@ -128,7 +127,8 @@ export const drifter = {
 			const db = drizzle(locals.runtime.env.DB);
 
 			// Get user's OAuth provider and access token for revocation
-			const drifter = (await db.select({ provider: Drifter.provider, access: Drifter.access }).from(Drifter).where(eq(Drifter.id, id)))[0];
+			const drifter = await db.select({ provider: Drifter.provider, access: Drifter.access }).from(Drifter).where(eq(Drifter.id, id)).get();
+			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Revoke OAuth access token with the provider
 			await new OAuth(drifter.provider).revoke(drifter.access);
