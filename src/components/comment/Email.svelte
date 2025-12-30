@@ -19,6 +19,7 @@ let removeView = $state(false);
  * Verify new email address
  */
 async function verify() {
+	if (!context.email) return pushTip("error", t("email.verify.send.failure"));
 	if (limit > 0) return pushTip("warning", t("email.verify.limit"));
 	if (!address?.trim()) return pushTip("error", t("email.empty"));
 

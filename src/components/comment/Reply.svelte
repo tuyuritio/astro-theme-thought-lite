@@ -175,7 +175,7 @@ async function submit() {
 			case "CONTENT_TOO_LARGE":
 				return pushTip("error", t("comment.overlength"));
 
-			case "FORBIDDEN":
+			case "BAD_REQUEST":
 				return pushTip("error", t("comment.verify.failure"));
 
 			default:

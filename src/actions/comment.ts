@@ -59,7 +59,7 @@ export const comment = {
 			const tIndex = i18nit(locale);
 
 			// Check if commenting is enabled
-			if (!oauth.length && !turnstile) throw new ActionError({ code: "CONFLICT" });
+			if (!oauth.length && !turnstile) throw new ActionError({ code: "FORBIDDEN" });
 
 			// Get the client IP address from Cloudflare headers
 			const ip = request.headers.get("CF-Connecting-IP");
@@ -80,7 +80,7 @@ export const comment = {
 					});
 
 					const result = await response.json();
-					if (!result.success) throw new ActionError({ code: "FORBIDDEN" });
+					if (!result.success) throw new ActionError({ code: "BAD_REQUEST" });
 				} else {
 					// If unauthenticated and Turnstile is unavailable, throw unauthorized error
 					throw new ActionError({ code: "UNAUTHORIZED" });
@@ -267,7 +267,7 @@ export const comment = {
 		}),
 		handler: async ({ id, content }, { cookies, locals }) => {
 			// Check if authenticated commenting is enabled
-			if (!oauth.length) throw new ActionError({ code: "CONFLICT" });
+			if (!oauth.length) throw new ActionError({ code: "FORBIDDEN" });
 
 			// Verify user authentication
 			const drifter = (await Token.check(cookies, "passport")).visa;
@@ -311,7 +311,7 @@ export const comment = {
 		input: z.string(), // The comment ID to delete
 		handler: async (id, { cookies, locals }) => {
 			// Check if authenticated commenting is enabled
-			if (!oauth.length) throw new ActionError({ code: "CONFLICT" });
+			if (!oauth.length) throw new ActionError({ code: "FORBIDDEN" });
 
 			// Verify user authentication
 			const drifter = (await Token.check(cookies, "passport")).visa;

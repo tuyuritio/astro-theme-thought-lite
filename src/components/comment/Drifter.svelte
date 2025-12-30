@@ -95,7 +95,7 @@ async function deactivate() {
 <Modal bind:open>
 	<main class="flex flex-col grow gap-5">
 		<header class="flex flex-col sm:flex-row gap-5">
-			<img src={drifter.image} alt={drifter.id} class="self-center w-20 h-20 border-2 border-solid border-weak rounded-full" />
+			<img src={drifter.image} alt={drifter.id} class="self-center w-20 h-20 border-2 border-solid border-weak rounded-full" onerror={e => (((e.currentTarget as HTMLImageElement).onerror = null), ((e.currentTarget as HTMLImageElement).src = "/akkarin.webp"))} />
 			<aside class="grow flex flex-col justify-center gap-2">
 				<menu class="flex items-center gap-2 font-bold">
 					{#each context.oauth as provider}
@@ -114,9 +114,11 @@ async function deactivate() {
 		<hr class="border-b border-weak" />
 		<div class="flex flex-col items-start gap-5">
 			<label class="flex items-center gap-1 flex-wrap">{t("drifter.homepage")}: <input type="url" class="input" bind:value={drifter.homepage} /></label>
-			<Email />
-			{#if drifter.emailState === "verified"}
-				<label class="flex items-center gap-1 flex-wrap">{t("email.notify")}: <input type="checkbox" class="switch" bind:checked={drifter.notify} /></label>
+			{#if context.email}
+				<Email />
+				{#if drifter.emailState === "verified"}
+					<label class="flex items-center gap-1 flex-wrap">{t("email.notify")}: <input type="checkbox" class="switch" bind:checked={drifter.notify} /></label>
+				{/if}
 			{/if}
 		</div>
 		<div class="self-center flex gap-5">

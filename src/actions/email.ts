@@ -3,6 +3,7 @@ import { z } from "astro:schema";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { and, eq, ne } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
+import { email as enabled } from "$config";
 import { Email } from "$db/schema";
 import { render } from "$utils/email";
 import sendEmail from "$utils/email/util";
@@ -17,6 +18,9 @@ export const email = {
 			address: z.string().email().optional() // email address to verify, left empty to resend
 		}),
 		handler: async ({ locale, address }, { cookies, locals, site }) => {
+			// Check if email feature is enabled
+			if (!enabled) throw new ActionError({ code: "FORBIDDEN" });
+
 			// Verify user authentication
 			const drifter = (await Token.check(cookies, "passport"))?.visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
@@ -91,6 +95,9 @@ export const email = {
 	// Action to remove email record
 	remove: defineAction({
 		handler: async (_, { cookies, locals }) => {
+			// Check if email feature is enabled
+			if (!enabled) throw new ActionError({ code: "FORBIDDEN" });
+
 			// Verify user authentication
 			const drifter = (await Token.check(cookies, "passport"))?.visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
