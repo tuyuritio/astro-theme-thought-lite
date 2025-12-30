@@ -308,10 +308,8 @@ export const comment = {
 
 	// Action to delete a comment (marks it as edited by itself)
 	delete: defineAction({
-		input: z.object({
-			id: z.string() // The comment ID to delete
-		}),
-		handler: async ({ id }, { cookies, locals }) => {
+		input: z.string(), // The comment ID to delete
+		handler: async (id, { cookies, locals }) => {
 			// Check if authenticated commenting is enabled
 			if (!oauth.length) throw new ActionError({ code: "CONFLICT" });
 
@@ -333,10 +331,8 @@ export const comment = {
 
 	// Action to retrieve the edit history of a comment
 	history: defineAction({
-		input: z.object({
-			id: z.string() // The comment ID to get history for
-		}),
-		handler: async ({ id }, { locals }) => {
+		input: z.string(), // The comment ID to get history for
+		handler: async (id, { locals }) => {
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
 

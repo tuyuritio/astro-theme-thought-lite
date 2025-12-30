@@ -202,7 +202,7 @@ async function toggleNotification() {
 		pushTip("success", t("notification.disable.success"));
 
 		// Notify server to remove subscription
-		await actions.push.unsubscribe({ endpoint: subscription.endpoint });
+		await actions.push.unsubscribe(subscription.endpoint);
 	} else if (context.push) {
 		// Request notification permission before subscribing
 		const permission = await Notification.requestPermission();

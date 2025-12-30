@@ -40,7 +40,7 @@ async function share() {
  * Delete comment after confirmation
  */
 async function remove() {
-	const { error } = await actions.comment.delete({ id: comment.id });
+	const { error } = await actions.comment.delete(comment.id);
 	if (!error) {
 		// Refresh comment list and close modal on successful deletion
 		context.refresh();
@@ -69,7 +69,7 @@ async function remove() {
 	<div id="history" class="flex flex-col gap-5 max-h-[80vh]">
 		<h3>{t("comment.edit.history")}</h3>
 		<dl class="flex flex-col gap-2 overflow-y-auto">
-			{#await actions.comment.history({ id: comment.id })}
+			{#await actions.comment.history(comment.id)}
 				<div class="flex justify-center p-4"><Icon name="svg-spinners--3-dots-move" size={25} /></div>
 			{:then response}
 				{#if !response.error}

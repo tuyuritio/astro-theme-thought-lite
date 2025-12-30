@@ -35,10 +35,8 @@ export const push = {
 
 	// Action to unsubscribe a push notification
 	unsubscribe: defineAction({
-		input: z.object({
-			endpoint: z.string().url() // Push service endpoint URL to remove
-		}),
-		handler: async ({ endpoint }, { locals }) => {
+		input: z.string().url(), // Push service endpoint URL to remove
+		handler: async (endpoint, { locals }) => {
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
 
@@ -49,10 +47,8 @@ export const push = {
 
 	// Action to check if a user is subscribed to notifications for a specific endpoint
 	check: defineAction({
-		input: z.object({
-			endpoint: z.string().url() // Push service endpoint URL to check
-		}),
-		handler: async ({ endpoint }, { locals }) => {
+		input: z.string().url(), // Push service endpoint URL to check
+		handler: async (endpoint, { locals }) => {
 			// Initialize database connection
 			const db = drizzle(locals.runtime.env.DB);
 

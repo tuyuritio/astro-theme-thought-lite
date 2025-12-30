@@ -107,7 +107,7 @@ onMount(async () => {
 
 	if (subscription) {
 		// Verify subscription is still valid on server
-		const { data } = await actions.push.check({ endpoint: subscription.endpoint });
+		const { data } = await actions.push.check(subscription.endpoint);
 		if (data) {
 			context.notification = data;
 		} else {
