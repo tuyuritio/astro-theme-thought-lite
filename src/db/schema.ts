@@ -67,7 +67,7 @@ export const Email = sqliteTable("email", {
 		.primaryKey()
 		.notNull()
 		.references(() => Drifter.id, { onUpdate: "cascade", onDelete: "cascade" }),
-	address: text().notNull().unique(),
-	state: text({ enum: ["pending", "verified", "banned"] }).notNull(),
+	address: text().notNull(),
+	state: text({ enum: ["pending", "verified", "bounced", "suspended"] }).notNull(),
 	notify: integer({ mode: "boolean" }).notNull().default(false)
 });

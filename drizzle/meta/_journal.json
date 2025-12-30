@@ -43,6 +43,13 @@
       "when": 1766930259603,
       "tag": "0005_omniscient_randall",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1767086617949,
+      "tag": "0006_clean_karen_page",
+      "breakpoints": true
     }
   ]
 }

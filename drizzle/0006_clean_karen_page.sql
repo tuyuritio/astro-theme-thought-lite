@@ -1,0 +1,1 @@
+DROP INDEX `email_address_unique`;
