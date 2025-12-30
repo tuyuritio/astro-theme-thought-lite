@@ -197,6 +197,7 @@ input[type="checkbox"].switch {
 	margin: 0px 5px;
 	width: 2rem;
 	height: 1rem;
+	color: inherit;
 
 	&::before {
 		position: absolute;
@@ -210,10 +211,11 @@ input[type="checkbox"].switch {
 		font-family: var(--font-mono);
 		font-size: 0.8rem;
 		text-align: center;
-		color: var(--background-color);
-		background-color: var(--primary-color);
+		color: inherit;
+		-webkit-text-fill-color: var(--background-color);
+		background-color: currentColor;
 		z-index: 1;
-		transition: inset-inline-start 0.15s ease-in;
+		transition: inset-inline-start 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
 	&::after {
@@ -221,7 +223,7 @@ input[type="checkbox"].switch {
 		content: "";
 		bottom: 0.4rem;
 		width: 100%;
-		border-bottom: 2px solid var(--primary-color);
+		border-bottom: 2px solid currentColor;
 	}
 
 	&:checked::before {

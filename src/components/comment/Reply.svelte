@@ -322,13 +322,14 @@ onMount(() => {
 		</div>
 	{/if}
 	<div class:pointer-events-none={!enabled} class:blur={!enabled}>
-		<fieldset disabled={!enabled} class="group relative flex flex-col focus-within:*:border-remark *:transition-[border,width,height]">
-			<span aria-hidden="true" class="absolute -z-1 top-0 start-0 w-5 h-5 border-t-2 border-s-2 border-weak group-focus-within:w-1/2 group-focus-within:h-1/2"></span>
-			<span aria-hidden="true" class="absolute -z-1 top-0 end-0 w-5 h-5 border-t-2 border-e-2 border-weak group-focus-within:w-1/2 group-focus-within:h-1/2"></span>
-			<span aria-hidden="true" class="absolute -z-1 bottom-0 start-0 w-26 h-8 border-b-2 border-s-2 border-weak group-focus-within:w-1/2 group-focus-within:h-1/2"></span>
-			<span aria-hidden="true" class="absolute -z-1 bottom-0 end-0 {context.drifter ? 'w-24' : 'w-60'} h-8 border-b-2 border-e-2 border-weak group-focus-within:w-1/2 group-focus-within:h-1/2"></span>
+		<fieldset disabled={!enabled} class="group relative flex flex-col py-3 px-4 *:text-remark focus-within:*:text-primary focus-within:*:border-remark *:transition-[color,backgroud,border,width,height] *:duration-200 *:ease-out">
+			{#snippet corner(top: boolean, start: boolean)}
+				<span aria-hidden="true" class="absolute -z-1 w-2 h-2 border-shadow group-focus-within:w-1/2 group-focus-within:h-1/2" class:top-0={top} class:bottom-0={!top} class:start-0={start} class:end-0={!start} class:border-t-2={top} class:border-b-2={!top} class:border-s-2={start} class:border-e-2={!start}></span>
+			{/snippet}
 
-			<article class="flex flex-col min-h-20 py-2 px-3 overflow-auto">
+			{@render corner(true, true)}{@render corner(true, false)}{@render corner(false, true)}{@render corner(false, false)}
+
+			<article class="flex flex-col min-h-20 overflow-auto">
 				<textarea hidden={preview} placeholder="   {t('comment.placeholder')}" bind:this={textarea} bind:value={content} class="grow w-full bg-transparent text-base outline-none resize-none transition-[height]"></textarea>
 				{#if preview}
 					{#if content.trim()}
@@ -342,7 +343,7 @@ onMount(() => {
 					{/if}
 				{/if}
 			</article>
-			<section class="flex items-center gap-2 pb-2 px-3">
+			<section class="flex items-center gap-2">
 				<figure class="relative flex items-center group/pop">
 					<figcaption class="contents"><Icon name="lucide--smile" /></figcaption>
 					<ul class="absolute bottom-full -start-3 flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 mb-1 border-2 border-weak rounded-sm py-2 px-3 bg-background shadow-md pop">
