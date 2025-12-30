@@ -120,8 +120,10 @@ feed:
 home:
   heatmap:
     empty: 無字
-    jotting: 随筆 {count} 件
-    note: 文記 {count} 件
+    jotting:
+      other: 随筆 {count} 葉
+    note:
+      other: 文記 {count} 篇
   latest: 最新記事
   prefaces: 序文歴史
 jotting:
@@ -167,7 +169,8 @@ oauth:
     notification: 感想返信の電書通知を受信できます
   signin: '{provider} でログイン'
 read:
-  words: '{words} 字'
+  words:
+    other: '{count} 文字'
 sensitive:
   back: リストに戻ります
   continue: 承知いたしました、読み続けます
@@ -178,5 +181,6 @@ sensitive:
   icon: 敏感内容を含む
   title: 内容警告
   warning: この記事があなたの精神的健康に影響を与える可能性がある場合は、すぐに離れてください！
-statistics: '{words} 文字を書いた'
+statistics:
+  other: '{count} 文字を書いた'
 theme: 'テーマ: ThoughtLite'

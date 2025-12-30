@@ -120,8 +120,10 @@ feed:
 home:
   heatmap:
     empty: 无字
-    jotting: 随笔 {count} 则
-    note: 文记 {count} 篇
+    jotting:
+      other: 随笔 {count} 则
+    note:
+      other: 文记 {count} 篇
   latest: 最新内容
   prefaces: 序文一览
 jotting:
@@ -167,7 +169,8 @@ oauth:
     notification: 接收想法回复的邮件通知
   signin: 使用 {provider} 登录
 read:
-  words: '{words} 字'
+  words:
+    other: '{count} 字'
 sensitive:
   back: 返回列表
   continue: 我已知晓，继续阅读
@@ -178,5 +181,6 @@ sensitive:
   icon: 包含敏感内容
   title: 内容警告
   warning: 若这些内容可能影响您的心理健康，请立即离开！
-statistics: 写下 {words} 字
+statistics:
+  other: 写下 {count} 字
 theme: '主题: ThoughtLite'

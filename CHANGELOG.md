@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.32.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.31.5...v0.32.0) (2025-12-30)
+
+
+### Features
+
+* **i18n:** implement pluralization for translations ([de54f15](https://github.com/tuyuritio/astro-theme-thought-lite/commit/de54f15beea3a236b2a3c309c4c5d7e53ea2b93c))
+
+
+### Bug Fixes
+
+* **style:** correct monospace font family variable ([4b52b13](https://github.com/tuyuritio/astro-theme-thought-lite/commit/4b52b13bf3233c68f1c848f0def57a300c0bd912))
+
 ## [0.31.5](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.31.4...v0.31.5) (2025-12-29)
 
 

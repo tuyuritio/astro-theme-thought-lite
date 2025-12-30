@@ -124,8 +124,12 @@ feed:
 home:
   heatmap:
     empty: No words
-    jotting: '{count} jottings'
-    note: '{count} notes'
+    jotting:
+      one: '{count} jotting'
+      other: '{count} jottings'
+    note: 
+      one: '{count} note'
+      other: '{count} notes'
   latest: Latest
   prefaces: Prefaces
 jotting:
@@ -171,7 +175,9 @@ oauth:
     notification: Receive email notifications for thought replies
   signin: Sign in with {provider}
 read:
-  words: '{words} words'
+  words:
+    one: '{count} word'
+    other: '{count} words'
 sensitive:
   back: Return to list
   continue: I understand, continue reading
@@ -186,5 +192,7 @@ sensitive:
   icon: Contains sensitive content
   title: Content Warning
   warning: If this content might affect your mental health, please leave immediately!
-statistics: Wrote {words} words
+statistics:
+  one: Wrote {count} word
+  other: Wrote {count} words
 theme: 'Theme: ThoughtLite'

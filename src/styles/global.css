@@ -207,7 +207,7 @@ input[type="checkbox"].switch {
 		inset-inline-start: 0;
 		height: 1rem;
 		width: 1rem;
-		font-family: var(--font-monospace);
+		font-family: var(--font-mono);
 		font-size: 0.8rem;
 		text-align: center;
 		color: var(--background-color);

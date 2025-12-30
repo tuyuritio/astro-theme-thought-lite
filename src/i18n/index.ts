@@ -65,6 +65,9 @@ export default function i18nit(
 	// Select the appropriate translation dictionary based on language and namespace
 	const dictionary = translations[language][namespace ?? "index"];
 
+	// Initialize pluralization rules for the specified language
+	const rules = new Intl.PluralRules(language);
+
 	/**
 	 * Main translation function with parameter interpolation
 	 * Navigates through nested translation object using dot notation and supports parameter substitution
@@ -80,6 +83,16 @@ export default function i18nit(
 		for (const key of keys) {
 			if (value === undefined || value === null) break;
 			value = value[key];
+		}
+
+		// Handle pluralization if value is an object and 'count' parameter is provided
+		if (value && typeof value === "object" && params?.count !== undefined && typeof params.count === "number") {
+			// Determine the pluralization rule for the given count
+			const rule = rules.select(params.count);
+
+			// Select the appropriate plural form or fallback to 'other'
+			const plural = value[rule] || value.other;
+			if (typeof plural === "string") value = plural;
 		}
 
 		// Return the original key if translation not found
