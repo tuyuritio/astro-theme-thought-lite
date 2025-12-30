@@ -50,13 +50,13 @@ export const comment = {
 				.optional()
 		}),
 		handler: async ({ locale, section, item, reply, content, link, push: subscription, passer }, { cookies, request, locals, site }) => {
+			const t = i18nit(locale, "email");
+			const tIndex = i18nit(locale);
+
 			// Check if the target entry exists
 			const entry = await getEntry(section as any, item);
 			if (!entry) throw new ActionError({ code: "NOT_FOUND" });
-			const title = entry.data.title;
-
-			const t = i18nit(locale, "email");
-			const tIndex = i18nit(locale);
+			const title = section === "preface" ? tIndex("navigation.preface") : entry.data.title;
 
 			// Check if commenting is enabled
 			if (!oauth.length && !turnstile) throw new ActionError({ code: "FORBIDDEN" });

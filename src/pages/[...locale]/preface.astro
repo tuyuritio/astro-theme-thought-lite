@@ -21,8 +21,7 @@ const prefaces = (
 		if (monolocale) return true;
 
 		// Extract language and ID from file path structure
-		const [language, id] = preface.id.split("/");
-		preface.id = id;
+		const [language] = preface.id.split("/");
 
 		return language === locale;
 	})
@@ -47,7 +46,7 @@ const entries = await Promise.all(prefaces.map(async preface => ({ ...preface, c
 							<preface.content />
 						</article>
 						<blockquote class="mb-4">
-							<Comments compact={true} {locale} link={`${Astro.url.origin}${Astro.url.pathname}#${preface.id}`} section="preface" item={preface.data.timestamp.toISOString()} />
+							<Comments compact={true} {locale} link={`${Astro.url.origin}${Astro.url.pathname}#${preface.id}`} section="preface" item={preface.id} />
 						</blockquote>
 					</li>
 				])
