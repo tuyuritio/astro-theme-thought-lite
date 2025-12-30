@@ -17,10 +17,10 @@ const context: {
 		image: string | null;
 		homepage: string | null;
 		email: string | null;
-		emailState: "pending" | "verified" | "banned" | null;
+		emailState: "pending" | "verified" | "bounced" | "suspended" | null;
 		notify: boolean | null;
 	};
-	notification?: number;
+	subscription?: number;
 	refresh: (auto?: boolean) => Promise<void>;
 } = $state({
 	locale: "",

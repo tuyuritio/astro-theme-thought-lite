@@ -61,7 +61,7 @@ drifter:
       comments: All thoughts will be retained but anonymized
       data: All personal information will be deleted
       new: Re-authorization will create a new account
-      notification: No longer receive any notifications
+      notification: No longer receive email notifications
     description: 'If you confirm deactivation, your account will:'
     done: Departed Voyager
     failure: Deactivation failed
@@ -127,7 +127,7 @@ home:
     jotting:
       one: '{count} jotting'
       other: '{count} jottings'
-    note: 
+    note:
       one: '{count} note'
       other: '{count} notes'
   latest: Latest
@@ -152,7 +152,14 @@ note:
   series: Series
   tag: Tag
   top: To Top
-notification:
+oauth:
+  benefit:
+    captcha: No need to resolve CAPTCHA
+    comment: Edit and delete your own thoughts
+    homepage: Display your personal homepage
+    notification: Receive email notifications for thought replies
+  signin: Sign in with {provider}
+push:
   denied: You have denied desktop notification permission
   disable:
     name: Desktop notifications disabled
@@ -161,19 +168,9 @@ notification:
     failure: Failed to enable desktop notifications
     name: Desktop notifications enabled
     success: Desktop notifications are enabled
-  fresh:
-    body: Click to see the thought
-    title: A quiet new voice beneath your words
   reply:
     body: Click to trace back the communication
     title: A fragment speaks, and the echo has come
-oauth:
-  benefit:
-    captcha: No need to resolve CAPTCHA
-    comment: Edit and delete your own thoughts
-    homepage: Display your personal homepage
-    notification: Receive email notifications for thought replies
-  signin: Sign in with {provider}
 read:
   words:
     one: '{count} word'

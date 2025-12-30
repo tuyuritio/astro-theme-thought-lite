@@ -61,7 +61,7 @@ drifter:
       comments: 所有想法都将保留但匿名化处理
       data: 所有个人信息将被清除
       new: 重新授权登录将创建全新账号
-      notification: 无法再接收任何通知
+      notification: 无法再接收邮件通知
     description: 若确认注销，您的账号将会：
     done: 归隐旅人
     failure: 注销失败
@@ -146,7 +146,14 @@ note:
   series: 系列
   tag: 标签
   top: 回到顶部
-notification:
+oauth:
+  benefit:
+    captcha: 无需进行人机验证
+    comment: 编辑和删除自己的想法
+    homepage: 展示自己的个人主页
+    notification: 接收想法回复的邮件通知
+  signin: 使用 {provider} 登录
+push:
   denied: 您已拒绝桌面通知权限
   disable:
     name: 桌面通知已禁用
@@ -155,19 +162,9 @@ notification:
     failure: 桌面通知启用失败
     name: 桌面通知已启用
     success: 桌面通知已启用
-  fresh:
-    body: 点击前往共织灵光
-    title: 新声悄至，文下有言
   reply:
     body: 点击回溯交流轨迹
     title: 片语有声，回响已至
-oauth:
-  benefit:
-    captcha: 无需进行人机验证
-    comment: 编辑和删除自己的想法
-    homepage: 展示自己的个人主页
-    notification: 接收想法回复的邮件通知
-  signin: 使用 {provider} 登录
 read:
   words:
     other: '{count} 字'

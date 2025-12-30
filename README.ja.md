@@ -34,6 +34,7 @@
 - [x] **OpenGraph サポート** - 組み込みの Open Graph メタタグでソーシャルメディア共有を最適化。
 - [x] **コメントシステム** - Cloudflare D1 ベース、デプロイが簡単でプライバシー制御可能；OAuth 認証とゲストコメントをサポート。
 - [x] **デスクトップ通知** - Web Push API を使用したリアルタイム通知。
+- [x] **メール通知** - Restful API を使用したメール通知の送信。
 
 ## 📋 前提条件
 
@@ -158,8 +159,8 @@ pnpm db:migrate:local
 - **画像ビューア** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
 - **SPA トランジション** - [Swup](https://swup.js.org/)
 - **時間処理** - [Luxon](https://moment.github.io/luxon/)
-- **コード品質** - [Biome](https://biomejs.dev/)
 - **OAuth 認証** - [Arctic](https://arcticjs.dev/)
+- **コード品質** - [Biome](https://biomejs.dev/)
 - **ORM** - [Drizzle ORM](https://orm.drizzle.team/)
 - **データベース** - [Cloudflare D1](https://developers.cloudflare.com/d1/)
 - **エッジ展開** - [Cloudflare Workers](https://workers.cloudflare.com/)

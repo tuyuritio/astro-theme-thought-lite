@@ -34,6 +34,7 @@
 - [x] **OpenGraph Support** - Built-in Open Graph meta tags for optimized social media sharing.
 - [x] **Comment System** - Based on Cloudflare D1, easy deployment with privacy control; supports OAuth authentication and guest comments.
 - [x] **Desktop Notifications** - Real-time notifications using Web Push API.
+- [x] **Email Notifications** - Send email notifications using Restful API.
 
 ## 📋 Prerequisites
 

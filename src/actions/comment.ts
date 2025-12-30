@@ -10,7 +10,7 @@ import remark from "$utils/remark";
 import { enhash, Token } from "$utils/token";
 import { render } from "$utils/email";
 import sendEmail from "$utils/email/util";
-import notify from "$utils/notify";
+import sendPush from "$utils/push";
 import i18nit from "$i18n";
 
 const env = import.meta.env;
@@ -41,7 +41,7 @@ export const comment = {
 			reply: z.string().nullish(), // ID of replied comment if this is a reply
 			content: z.string(), // The comment content
 			link: z.string().url(), // URL link for notifications
-			notification: z.number().optional(), // Notification subscription ID
+			push: z.number().optional(), // Push subscription ID for notifications
 			passer: z
 				.object({
 					nickname: z.string().nullish(), // Nickname for unauthenticated users
@@ -49,7 +49,7 @@ export const comment = {
 				})
 				.optional()
 		}),
-		handler: async ({ locale, section, item, reply, content, link, notification, passer }, { cookies, request, locals, site }) => {
+		handler: async ({ locale, section, item, reply, content, link, push: subscription, passer }, { cookies, request, locals, site }) => {
 			// Check if the target entry exists
 			const entry = await getEntry(section as any, item);
 			if (!entry) throw new ActionError({ code: "NOT_FOUND" });
@@ -106,11 +106,11 @@ export const comment = {
 			// The `ctx.waitUntil()` method is specific to Cloudflare Workers.
 			locals.runtime.ctx.waitUntil(
 				Promise.all([
-					// Store notification subscription for future notifications
+					// Store push subscription for future notifications
 					(async () => {
 						// If no subscription provided or push notifications are disabled, skip storage process
-						if (!push || !notification) return;
-						await db.insert(Notification).values({ comment: id, subscription: notification, timestamp: new Date() });
+						if (!push || !subscription) return;
+						await db.insert(Notification).values({ comment: id, subscription, timestamp: new Date() });
 					})(),
 
 					// Notifying original commenter of replies via Web Push API
@@ -119,7 +119,7 @@ export const comment = {
 						if (!push || !reply) return;
 
 						// Prepare the notification message
-						const message = { title: tIndex("notification.reply.title"), body: tIndex("notification.reply.body"), url: link };
+						const message = { title: tIndex("push.reply.title"), body: tIndex("push.reply.body"), url: link };
 
 						// Notify the original commenter when someone replies to their comment
 						const subscriptions = await db
@@ -131,7 +131,7 @@ export const comment = {
 						await Promise.all(
 							subscriptions.map(async subscription => {
 								try {
-									const success = await notify(
+									const success = await sendPush(
 										{ endpoint: subscription.endpoint, p256dh: subscription.p256dh, auth: subscription.auth },
 										message
 									);
@@ -199,7 +199,7 @@ export const comment = {
 
 							// Send email notification to the original commenter
 							await sendEmail(locale, result.id, result.email, {
-								subject: t("comment.subject"),
+								subject: t("reply.subject"),
 								html: render("reply", {
 									greeting: t("reply.html.greeting", { name: result.name }),
 									notify: t("reply.html.notify", { content: title }),

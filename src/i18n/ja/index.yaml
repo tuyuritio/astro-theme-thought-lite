@@ -61,7 +61,7 @@ drifter:
       comments: すべてのコメントは保持されますが匿名化されます
       data: すべての個人情報が削除されます
       new: 再認証すると新しいアカウントが作成されます
-      notification: 通知を受け取れなくなります
+      notification: 電子書簡通知を受け取れなくなります
     description: 無効化を確認すると、あなたのアカウントは：
     done: 旅立った人
     failure: 無効化に失敗しました
@@ -146,7 +146,14 @@ note:
   series: 系列
   tag: 付札
   top: 至頂
-notification:
+oauth:
+  benefit:
+    captcha: 人間判定が不要
+    comment: 自分の感想を編集・削除できます
+    homepage: 自分の公式本頁を表示できます
+    notification: 感想返信の電書通知を受信できます
+  signin: '{provider} でログイン'
+push:
   denied: 机上通知の許可を拒否しました
   disable:
     name: 机上通知は無効です
@@ -155,19 +162,9 @@ notification:
     failure: 机上通知の有効化に失敗した
     name: 机上通知は有効です
     success: 机上通知を有効にしました
-  fresh:
-    body: 押して感想を確認しましょう
-    title: 文の下に、そっと新しい声
   reply:
     body: 押して交流記録を辿りましょう
     title: 片言が響きとなって返ってきました
-oauth:
-  benefit:
-    captcha: 人間判定が不要
-    comment: 自分の感想を編集・削除できます
-    homepage: 自分の公式本頁を表示できます
-    notification: 感想返信の電書通知を受信できます
-  signin: '{provider} でログイン'
 read:
   words:
     other: '{count} 文字'

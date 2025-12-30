@@ -42,7 +42,7 @@ type TranslationNamespace = keyof (typeof translations)[Language];
 
 /**
  * Validate if the provided language is supported
- * @param language - The target language/locale code (e.g., "en", "zh-cn", "ja")
+ * @param language - The target language/locale code
  * @throws Error if the language is not supported
  */
 function validateLanguage(language: string): asserts language is Language {
@@ -51,8 +51,8 @@ function validateLanguage(language: string): asserts language is Language {
 
 /**
  * Create an internationalization function for a specific language
- * @param language - The target language/locale code (e.g., "en", "zh-cn", "ja")
- * @param namespace - Optional namespace prefix to prepend to all translation keys (e.g., "script")
+ * @param language - The target language/locale code
+ * @param namespace - Optional namespace prefix to prepend to all translation keys
  * @returns Translation function that can translate keys with parameter substitution
  */
 export default function i18nit(
@@ -71,7 +71,7 @@ export default function i18nit(
 	/**
 	 * Main translation function with parameter interpolation
 	 * Navigates through nested translation object using dot notation and supports parameter substitution
-	 * @param key - Dot-separated key path to look up translation (e.g., "notification.reply.title")
+	 * @param key - Dot-separated key path to look up translation
 	 * @param params - Optional parameters for string interpolation (replaces {paramName} placeholders)
 	 * @returns Translated and interpolated string, or the original key if translation not found
 	 */

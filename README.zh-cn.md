@@ -34,6 +34,7 @@
 - [x] **OpenGraph 支持** - 内置 Open Graph 元标签，优化社交媒体分享效果。
 - [x] **评论系统** - 基于 Cloudflare D1，部署便捷，隐私可控；支持 OAuth 身份认证和免登录评论。
 - [x] **桌面通知** - 使用 Web Push API 推送实时通知。
+- [x] **邮件通知** - 使用 Restful API 发送邮件通知。
 
 ## 📋 前期准备
 

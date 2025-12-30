@@ -11,7 +11,7 @@ const icons = {
 	error: "lucide--x-circle"
 } as const;
 
-/** Type definition for a tip/notification object */
+/** Type definition for a tip object */
 type Tip = { type: keyof typeof icons; content: string };
 
 /** Global reactive store containing array of active tips */
@@ -24,10 +24,10 @@ const tips = writable<Tip[]>([]);
 const Close = (tip: Tip) => tips.update(list => list.filter(item => (item !== tip ? item : undefined)));
 
 /**
- * Public API function to display a new tip/notification
+ * Public API function to display a new tip
  * This function can be imported and called from other components
- * @param type - Type of notification (determines icon and styling)
- * @param content - Text content to display in the notification
+ * @param type - Type of tip
+ * @param content - Text content to display in the tip
  */
 export function pushTip(type: keyof typeof icons, content: string): void {
 	const tip = { type, content };

@@ -23,7 +23,7 @@ const VAPID: VapidKeys = {
  * @param data.url - URL to open when notification is clicked (optional)
  * @returns Promise<boolean> - true if sent successfully, false if subscription is invalid/expired
  */
-export default async function notify(
+export default async function sendPush(
 	subscription: { endpoint: string; auth: string; p256dh: string },
 	data: { title: string; body?: string; url?: string }
 ): Promise<boolean> {

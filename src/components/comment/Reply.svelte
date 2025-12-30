@@ -123,7 +123,7 @@ async function submit() {
 			reply,
 			content,
 			link: context.link,
-			notification: context.notification,
+			push: context.subscription,
 			passer: { nickname, captcha }
 		}));
 
@@ -146,7 +146,7 @@ async function submit() {
 			reply,
 			content,
 			link: context.link,
-			notification: context.notification
+			push: context.subscription
 		}));
 	}
 
@@ -185,13 +185,13 @@ async function submit() {
 }
 
 /**
- * Toggle push notification subscription on/off
+ * Toggle push subscription on/off
  */
-async function toggleNotification() {
-	context.notification = undefined;
+async function toggleSubscription() {
+	context.subscription = undefined;
 
 	const registration = await navigator.serviceWorker.getRegistration();
-	if (!registration) return pushTip("error", t("notification.enable.failure"));
+	if (!registration) return pushTip("error", t("push.enable.failure"));
 
 	let subscription = await registration.pushManager.getSubscription();
 	if (subscription) {
@@ -199,14 +199,14 @@ async function toggleNotification() {
 		await subscription.unsubscribe();
 
 		// Wether unsubscription succeeded or not, clear local state
-		pushTip("success", t("notification.disable.success"));
+		pushTip("success", t("push.disable.success"));
 
 		// Notify server to remove subscription
 		await actions.push.unsubscribe(subscription.endpoint);
 	} else if (context.push) {
-		// Request notification permission before subscribing
+		// Request push notification permission before subscribing
 		const permission = await Notification.requestPermission();
-		if (permission !== "granted") return pushTip("information", t("notification.denied"));
+		if (permission !== "granted") return pushTip("information", t("push.denied"));
 
 		try {
 			// Create push subscription with VAPID key
@@ -225,15 +225,15 @@ async function toggleNotification() {
 				auth: keys!.auth
 			});
 			if (data) {
-				context.notification = data;
-				pushTip("success", t("notification.enable.success"));
+				context.subscription = data;
+				pushTip("success", t("push.enable.success"));
 			} else {
 				// Rollback on failure
 				await subscription.unsubscribe();
-				pushTip("error", t("notification.enable.failure"));
+				pushTip("error", t("push.enable.failure"));
 			}
 		} catch (error) {
-			pushTip("error", t("notification.enable.failure"));
+			pushTip("error", t("push.enable.failure"));
 		}
 	}
 }
@@ -366,11 +366,11 @@ onMount(() => {
 				{/if}
 
 				{#if context.push}
-					<button onclick={toggleNotification}>
-						{#if context.notification !== undefined}
-							<Icon name="lucide--bell" title={t("notification.enable.name")} />
+					<button onclick={toggleSubscription}>
+						{#if context.subscription !== undefined}
+							<Icon name="lucide--bell" title={t("push.enable.name")} />
 						{:else}
-							<Icon name="lucide--bell-off" title={t("notification.disable.name")} />
+							<Icon name="lucide--bell-off" title={t("push.disable.name")} />
 						{/if}
 					</button>
 				{/if}
