@@ -1,17 +1,15 @@
 export class Resend implements EmailProvider {
 	name: string = "Resend";
-	private apiKey: string;
-	private unsubscribeURL?: string | URL;
 
 	/**
 	 * Creates an instance of Resend email provider
 	 * @param apiKey Resend API key
 	 * @param unsubscribeURL optional unsubscribe URL to include in email headers
 	 */
-	constructor(apiKey: string, unsubscribeURL?: string | URL) {
-		this.apiKey = apiKey;
-		this.unsubscribeURL = unsubscribeURL;
-	}
+	constructor(
+		private apiKey: string,
+		private unsubscribeURL?: string | URL
+	) {}
 
 	async send({ from, to, replyTo, subject, html, text }: EmailPayload): Promise<void> {
 		await fetch("https://api.resend.com/emails", {
