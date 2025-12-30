@@ -16,9 +16,7 @@ description: Astro 主题站点的基础配置说明，涵盖环境变量、站�
     | - | - |
     | `PUBLIC_TIMEZONE`* | 默认显示时区，参考[时区列表](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) |
     | `PASS_KEY`* | 用于生成 Token，16 字节 Base64 格式密钥，使用命令 `openssl rand -base64 16` 生成<br>或 `node -e "console.log(require('crypto').randomBytes(16).toString('base64'))"` |
-    | `VAPID_PUBLIC_KEY`* | 桌面推送通知使用的 VAPID 公钥，使用命令 `pnpx web-push generate-vapid-keys` 生成 |
-    | `VAPID_PRIVATE_KEY`* | 桌面推送通知使用的 VAPID 私钥，在生成公钥时同时生成 |
-    | `AUTHOR_ID` | 作者 ID，用于在评论区中标识站点作者；需在 [Cloudflare D1 面板](https://dash.cloudflare.com/?to=/:account/workers/d1)中查询 |
+    | `AUTHOR_ID` | 作者 ID，用于在评论系统中标识站点作者；需在 [Cloudflare D1 面板](https://dash.cloudflare.com/?to=/:account/workers/d1)中查询 |
 
     `*` 表示必要选项。
 

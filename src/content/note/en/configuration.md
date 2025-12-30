@@ -16,8 +16,6 @@ description: Essential configuration guide for Astro theme sites, covering envir
     | - | - |
     | `PUBLIC_TIMEZONE`* | Default display timezone, refer to [Timezone List](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) |
     | `PASS_KEY`* | Used for generating tokens, 16-byte Base64 format key, generate with `openssl rand -base64 16`<br>or `node -e "console.log(require('crypto').randomBytes(16).toString('base64'))"` |
-    | `VAPID_PUBLIC_KEY`* | VAPID public key for desktop push notifications, generate with `pnpx web-push generate-vapid-keys` |
-    | `VAPID_PRIVATE_KEY`* | VAPID private key for desktop push notifications, generated along with public key |
     | `AUTHOR_ID` | Author ID for identifying site author in comment section; check in [Cloudflare D1 Panel](https://dash.cloudflare.com/?to=/:account/workers/d1) |
 
     `*` indicates required options.
