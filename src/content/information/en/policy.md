@@ -1,6 +1,6 @@
 ## Privacy Policy
 
-> **Last Updated**: December 27, 2025
+> **Last Updated**: December 30, 2025
 
 This site is deployed on the Cloudflare Workers platform. We highly value your privacy and only collect the minimal data necessary to provide basic services. This policy explains how we collect, use, and protect your data.
 
@@ -11,6 +11,7 @@ This site is deployed on the Cloudflare Workers platform. We highly value your p
     - Comment data: includes comment content and publication timestamps.
     - Comment drafts: unsent comment content that is saved in the browser's `localStorage` to allow restoring unfinished input.
     - Web Push subscription data: includes subscription endpoints information.
+    - Email address (optional for OAuth login users): User's personal email address.
     - OAuth login information (user-authorized login): includes username, display name, avatar, and token data provided by third-party platforms.
     - Personal homepage link (optional for OAuth login users)
 2. Automatically collected data
@@ -26,6 +27,7 @@ The following table provides an overview of the types of data collected, collect
 | Comment drafts | Browser write | Recovery unfinished comments | localStorage | Removed after submission or when the text is cleared |
 | Comment data | User input | Display comments | Cloudflare D1 database | |
 | Web Push subscription data | User authorization | Send desktop push notifications | Cloudflare D1 database | |
+| Email address | User input | Receive reply notifications | Cloudflare D1 database | Optional for OAuth login users |
 | OAuth verification data | Automatic collection | OAuth authorization verification | Cookies | Temporary storage |
 | OAuth login information | OAuth authorization | Display comments, comment editing permissions | Cloudflare D1 database | |
 | OAuth identity information | OAuth authorization | User identity verification | Cookies | |
@@ -38,13 +40,13 @@ The following table provides an overview of the types of data collected, collect
 
 - Provide comment services: Collect and process user comment data, including comment content, comment drafts, publication time, user nickname or OAuth account information, to display user comments and interactive content on the site. For OAuth login users, their authenticated platform username, display name, and avatar information will also be displayed.
 - Enhance user experience: Save user theme preference settings (light/dark mode) in localStorage to ensure users maintain their personalized interface settings on their next visit. For non-logged-in users, custom nickname is saved in localStorage for subsequent comments.
-- Communication and notifications: Use Web Push subscription data to send desktop push notifications to promptly inform users about replies to their comments or other relevant interaction information.
+- Communication and notifications: Use Web Push subscription data to send desktop push notifications, or use email address to send email notifications, to promptly inform users about replies to their comments or other relevant interaction information.
 - Security protection: Use Cloudflare Turnstile service to perform human verification for non-logged-in users, preventing comment abuse and malicious attacks.
 - Internal analysis and service improvement: Use basic access log data provided by Cloudflare for site performance analysis and security monitoring to improve service quality and user experience.
 
 ### Data Storage and Protection
 
-- Cloudflare D1: Comment data, OAuth login information, personal homepage links, and Web Push subscription data are all stored in the Cloudflare D1 database. This database provides enterprise-level security protection, including encrypted data storage, access control, and regular backups. All data transmission is conducted through encrypted connections.
+- Cloudflare D1: Comment data, OAuth login information, personal homepage links, email addresses, and Web Push subscription data are all stored in the Cloudflare D1 database. This database provides enterprise-level security protection, including encrypted data storage, access control, and regular backups. All data transmission is conducted through encrypted connections.
 - JWE Cookies: OAuth identity information and verification data during the authorization process are encrypted and stored in Cookies using JSON Web Encryption (JWE) technology. JWE provides end-to-end encryption protection, ensuring the security of sensitive authentication information during transmission and storage. Cookies are set with appropriate security flags (HttpOnly, Secure, SameSite).
 - localStorage: User custom nickname, theme preference settings and comment drafts are stored in the browser's localStorage. This data is only stored on the user's local device and is not transmitted to the server. Users can clear this local data at any time through browser settings.
 - HTTPS encryption: The entire site uses HTTPS encrypted transmission. All data transmitted between the client and server is protected by TLS/SSL encryption, preventing data from being stolen or tampered with during transmission.
@@ -81,7 +83,7 @@ As a data subject, you have the following rights regarding your personal data:
 
 ## Terms of Service
 
-> **Last Updated**: December 27, 2025
+> **Last Updated**: December 30, 2025
 
 ### Service Content
 
@@ -91,6 +93,7 @@ This site is a personal content creation platform based on open-source technolog
 - User commenting and interaction functionality.
 - Feed subscription service.
 - Desktop push notification service.
+- Email notification service.
 
 ### User Permission Description
 
@@ -107,6 +110,8 @@ This site is a personal content creation platform based on open-source technolog
 - OAuth 2.0 identity authentication.
 - Display authenticated platform user information in comments.
 - Edit and delete their own published comments.
+- Subscribe to email notifications (requires providing a valid email address).
+- Manage email notification settings.
 - Update and delete personal homepage link information.
 - Synchronously update personal profile information.
 - Deactivate account and delete related data.
