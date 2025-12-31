@@ -195,40 +195,40 @@ input[type="checkbox"].switch {
 	appearance: none;
 	cursor: pointer;
 	margin: 0px 5px;
-	width: 2rem;
-	height: 1rem;
+	width: 1.8rem;
+	height: 0.9rem;
 	color: inherit;
+	display: inline-flex;
+	align-items: center;
 
 	&::before {
 		position: absolute;
-		display: flex;
-		content: "F";
-		align-items: center;
-		justify-content: center;
+		content: "";
+		box-sizing: border-box;
 		inset-inline-start: 0;
-		height: 1rem;
-		width: 1rem;
-		font-family: var(--font-mono);
-		font-size: 0.8rem;
-		text-align: center;
-		color: inherit;
-		-webkit-text-fill-color: var(--background-color);
-		background-color: currentColor;
+		width: 0.9rem;
+		height: 0.9rem;
+		border: 2px solid currentColor;
+		border-radius: 50%;
+		background-color: var(--background-color);
 		z-index: 1;
-		transition: inset-inline-start 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+		transition:
+			inset-inline-start 0.15s ease-in,
+			border-width 0.15s ease-in,
+			background-color 0.15s ease-in;
 	}
 
 	&::after {
-		position: absolute;
 		content: "";
-		bottom: 0.4rem;
+		position: absolute;
 		width: 100%;
-		border-bottom: 2px solid currentColor;
+		border-top: 2px solid currentColor;
 	}
 
 	&:checked::before {
-		content: "T";
-		inset-inline-start: 1rem;
+		inset-inline-start: 0.9rem;
+		border-width: 0.45rem;
+		background-color: currentColor;
 	}
 }
 

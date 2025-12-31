@@ -353,7 +353,7 @@ onMount(() => {
 						<a href="https://github.com/ikatyang/emoji-cheat-sheet?tab=readme-ov-file#table-of-contents" target="_blank">…</a>
 					</ul>
 				</figure>
-				<label class="flex items-center cursor-pointer"><Icon name="lucide--file-search" title={t("comment.preview.name")} /><input type="checkbox" class="switch" bind:checked={preview} /></label>
+				<label class="flex items-center cursor-pointer group/icon" tabindex="-1"><Icon name="lucide--file-search" title={t("comment.preview.name")} /><input type="checkbox" class="switch" bind:checked={preview} /></label>
 				<div class="grow"></div>
 
 				{#if context.drifter}
