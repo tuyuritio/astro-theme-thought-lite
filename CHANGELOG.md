@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.32.0...v0.32.1) (2025-12-31)
+
+
+### Bug Fixes
+
+* **graph:** enhance Open Graph image generation with fonts caching ([693c9cd](https://github.com/tuyuritio/astro-theme-thought-lite/commit/693c9cd70471ffe8a81f5e15961e4aeee26b59c6))
+
 ## [0.32.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.31.5...v0.32.0) (2025-12-30)
 
 
