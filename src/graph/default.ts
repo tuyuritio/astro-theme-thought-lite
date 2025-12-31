@@ -2,12 +2,32 @@ import satori from "satori";
 import sharp from "sharp";
 import icon from "$public/favicon.svg?raw";
 
-// Locale-specific Noto Serif font mappings for Google Fonts
-const notoFonts: Record<string, string> = {
+// Locale-specific font mappings for Google Fonts
+const fonts: Record<string, string> = {
 	en: "Noto Serif",
 	"zh-cn": "Noto Serif SC",
 	ja: "Noto Serif JP"
 };
+
+/**
+ * Dynamically loads a Google Font subset containing only the required characters.
+ * This optimization reduces font file size by requesting only the glyphs needed for rendering.
+ *
+ * @param locale - The locale code to determine which Noto Serif variant to load
+ * @param text - The text content to extract required characters from
+ * @returns ArrayBuffer containing the font data
+ * @throws Error if the font URL cannot be extracted from Google Fonts CSS
+ */
+async function loadGoogleFont(locale: string, text: string) {
+	const url = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fonts[locale])}:wght@900&text=${encodeURIComponent(text)}`;
+	const css = await (await fetch(url)).text();
+	const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype|woff2?)'\)/);
+
+	if (!resource) throw new Error("Failed to load font url");
+
+	const response = await fetch(resource[1]);
+	return response.arrayBuffer();
+}
 
 /*
 <div style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1.5rem", background: "#fffffd" }}>
@@ -97,23 +117,3 @@ export default async ({ locale, title, description, author }: { locale: string; 
 
 	return sharp(Buffer.from(svg)).resize(1200).png().toBuffer();
 };
-
-/**
- * Dynamically loads a Google Font subset containing only the required characters.
- * This optimization reduces font file size by requesting only the glyphs needed for rendering.
- *
- * @param locale - The locale code to determine which Noto Serif variant to load
- * @param text - The text content to extract required characters from
- * @returns ArrayBuffer containing the font data
- * @throws Error if the font URL cannot be extracted from Google Fonts CSS
- */
-async function loadGoogleFont(locale: string, text: string) {
-	const url = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(notoFonts[locale])}:wght@900&text=${encodeURIComponent(text)}`;
-	const css = await (await fetch(url)).text();
-	const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype|woff2?)'\)/);
-
-	if (!resource) throw new Error("Failed to load font url");
-
-	const response = await fetch(resource[1]);
-	return response.arrayBuffer();
-}
