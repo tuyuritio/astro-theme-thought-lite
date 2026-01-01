@@ -166,15 +166,6 @@
 		cursor: not-allowed;
 	}
 
-	input,
-	textarea {
-		color: var(--primary-color);
-	}
-
-	textarea {
-		line-height: 1.5;
-	}
-
 	img {
 		max-width: 100%;
 		height: auto;
@@ -187,46 +178,6 @@
 
 	hr {
 		border: none;
-	}
-}
-
-input[type="checkbox"].switch {
-	position: relative;
-	appearance: none;
-	cursor: pointer;
-	margin: 0px 5px;
-	width: 2rem;
-	height: 1rem;
-
-	&::before {
-		position: absolute;
-		display: flex;
-		content: "F";
-		align-items: center;
-		justify-content: center;
-		inset-inline-start: 0;
-		height: 1rem;
-		width: 1rem;
-		font-family: var(--font-mono);
-		font-size: 0.8rem;
-		text-align: center;
-		color: var(--background-color);
-		background-color: var(--primary-color);
-		z-index: 1;
-		transition: inset-inline-start 0.15s ease-in;
-	}
-
-	&::after {
-		position: absolute;
-		content: "";
-		bottom: 0.4rem;
-		width: 100%;
-		border-bottom: 2px solid var(--primary-color);
-	}
-
-	&:checked::before {
-		content: "T";
-		inset-inline-start: 1rem;
 	}
 }
 
@@ -334,14 +285,6 @@ input[type="checkbox"].switch {
 @layer components {
 	.link {
 		@apply underline decoration-transparent decoration-[0.05em] underline-offset-[0.15em] transition-[text-decoration-color] hover:decoration-current;
-	}
-
-	.input {
-		@apply border-b-2 border-b-primary py-0.5 bg-transparent outline-none;
-	}
-
-	.form-button {
-		@apply m-auto rounded py-1 px-2 text-background bg-secondary;
 	}
 
 	.pop {
