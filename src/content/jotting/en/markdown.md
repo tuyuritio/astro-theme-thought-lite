@@ -176,11 +176,11 @@ ABBR abbr xABBRx
 > Warning information
 
 ```
-> [!NOTE/(･ρ･)ﾉ]
+> [!NOTE] (･ρ･)ﾉ
 > Custom title text
 ```
 
-> [!NOTE/(･ρ･)ﾉ]
+> [!NOTE] (･ρ･)ﾉ
 > Custom title text
 
 ## Extended Tables

@@ -110,9 +110,6 @@ importers:
       remark-gfm:
         specifier: ^4.0.1
         version: 4.0.1
-      remark-github-blockquote-alert:
-        specifier: ^2.0.1
-        version: 2.0.1
       remark-ins:
         specifier: ^1.2.2
         version: 1.2.2(unified@11.0.5)
@@ -4509,10 +4506,6 @@ packages:
 
   remark-gfm@4.0.1:
     resolution: {integrity: sha512-1quofZ2RQ9EWdeN34S79+KExV1764+wCUGop5CPL1WGdD0ocPpu91lzPGbwWMECpEpd42kJGQwzRfyov9j4yNg==}
-
-  remark-github-blockquote-alert@2.0.1:
-    resolution: {integrity: sha512-0w0u3/wjBEK555yzm5UUnDCWO38Qk60laA5FvJrnES+YA/+r3hvvLgE/5SpMjaVpPOpVzunXk9caob1NTheM0g==}
-    engines: {node: '>=16'}
 
   remark-ins@1.2.2:
     resolution: {integrity: sha512-FI8wSo4w+lmQ4fTPL7oFlenVuQ9SweA7LQP9eGsTNCfWjv1jP2qBMkiVjvD3OI91b+D2ttF2otxPuUk+wkbCBQ==}
@@ -10730,10 +10723,6 @@ snapshots:
       unified: 11.0.5
     transitivePeerDependencies:
       - supports-color
-
-  remark-github-blockquote-alert@2.0.1:
-    dependencies:
-      unist-util-visit: 5.0.0
 
   remark-ins@1.2.2(unified@11.0.5):
     dependencies:
