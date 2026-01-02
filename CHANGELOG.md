@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.33.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.32.1...v0.33.0) (2026-01-02)
+
+
+### Features
+
+* **markdown:** replace directive ruby syntax with new custom ruby syntax ([974828b](https://github.com/tuyuritio/astro-theme-thought-lite/commit/974828be8578868df2ea051c4e20e76f63838048))
+
+
+### Styles
+
+* remove unused styles ([27cb4d9](https://github.com/tuyuritio/astro-theme-thought-lite/commit/27cb4d9f0f9000b178b551b435c23fb9b5a0cd61))
+
 ## [0.32.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.32.0...v0.32.1) (2025-12-31)
 
 
