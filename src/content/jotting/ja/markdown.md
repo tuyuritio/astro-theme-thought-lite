@@ -43,19 +43,19 @@ description: テーマで拡張されたMarkdown構文機能の詳細ガイド�
 
 ## Ruby
 
-> プラグイン：[`remark-ruby-directive`](https://github.com/brklntmhwk/remark-ruby-directive)
+> 自作実装
 
 ```
-:ruby[拼音(pīn yīn)]
+{拼音}(pīn|yīn)
 ```
 
-:ruby[拼音(pīn yīn)]
+{拼音}(pīn|yīn)
 
 ```
-:ruby[振り仮名（ふ　がな）]
+{振り仮名}(ふ||が|な)
 ```
 
-:ruby[振り仮名（ふ　がな）]
+{振り仮名}(ふ||が|な)
 
 ## マスク
 

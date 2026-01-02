@@ -59,6 +59,9 @@ importers:
       luxon:
         specifier: ^3.7.2
         version: 3.7.2
+      mdast-util-find-and-replace:
+        specifier: ^3.0.2
+        version: 3.0.2
       mdast-util-to-string:
         specifier: ^4.0.0
         version: 4.0.0
@@ -92,9 +95,6 @@ importers:
       remark-cjk-friendly-gfm-strikethrough:
         specifier: ^1.2.3
         version: 1.2.3(@types/mdast@4.0.4)(micromark-util-types@2.0.2)(micromark@4.0.2)(unified@11.0.5)
-      remark-directive:
-        specifier: ^4.0.0
-        version: 4.0.0
       remark-extended-table:
         specifier: ^2.0.3
         version: 2.0.3(mdast-util-gfm-table@2.0.0)(micromark-extension-gfm-table@2.1.1)(micromark@4.0.2)(remark-gfm@4.0.1)(remark-parse@11.0.0)(unified@11.0.5)
@@ -119,9 +119,6 @@ importers:
       remark-math:
         specifier: ^6.0.0
         version: 6.0.0
-      remark-ruby-directive:
-        specifier: ^0.3.0
-        version: 0.3.0
       shiki:
         specifier: ^3.20.0
         version: 3.20.0
@@ -3546,9 +3543,6 @@ packages:
   mdast-util-definitions@6.0.0:
     resolution: {integrity: sha512-scTllyX6pnYNZH/AIp/0ePz6s4cZtARxImwoPJ7kS42n+MnVsI4XbnG6d4ibehRIldYMWM2LD7ImQblVhUejVQ==}
 
-  mdast-util-directive@3.1.0:
-    resolution: {integrity: sha512-I3fNFt+DHmpWCYAT7quoM6lHf9wuqtI+oCOfvILnoicNIqjh5E3dEJWiXuYME2gNe8vl1iMQwyUHa7bgFmak6Q==}
-
   mdast-util-extended-table@2.0.3:
     resolution: {integrity: sha512-0iI/BQt2EhzBDmg1NBxA/PfQVIej//csZVbHlrQzZkIpf0acaMzafKhkYcL0jSkkzT0456dxFKs4mo6w6s6lhg==}
     peerDependencies:
@@ -3669,9 +3663,6 @@ packages:
     peerDependenciesMeta:
       micromark-util-types:
         optional: true
-
-  micromark-extension-directive@4.0.0:
-    resolution: {integrity: sha512-/C2nqVmXXmiseSSuCdItCMho7ybwwop6RrrRPk0KbOHW21JKoCldC+8rFOaundDoRBUWBnJJcxeA/Kvi34WQXg==}
 
   micromark-extension-extended-table@2.0.3:
     resolution: {integrity: sha512-EiY5KVzlamDZ+7rYJIOHiBLJdPLi0RYz7/EF26EYr9IGFVkQQIDNZVfIdwiDqRsUnac3lElg3JvjMTsluP69tQ==}
@@ -4498,9 +4489,6 @@ packages:
       '@types/mdast':
         optional: true
 
-  remark-directive@4.0.0:
-    resolution: {integrity: sha512-7sxn4RfF1o3izevPV1DheyGDD6X4c9hrGpfdUpm7uC++dqrnJxIZVkk7CoKqcLm0VUMAuOol7Mno3m6g8cfMuA==}
-
   remark-extended-table@2.0.3:
     resolution: {integrity: sha512-XjdccSpz/SmKLkrNi4KD8Nl20mfMk9KwUiD2m5HLjkS8bowxxS+Vq1mz5J9V/ZnHCtUiJ0pHr/gEC2HUopcI1A==}
     peerDependencies:
@@ -4542,9 +4530,6 @@ packages:
 
   remark-rehype@11.1.2:
     resolution: {integrity: sha512-Dh7l57ianaEoIpzbp0PC9UKAdCSVklD8E5Rpw7ETfbTl3FqcOOgq5q2LVDhgGCkaBv7p24JXikPdvhhmHvKMsw==}
-
-  remark-ruby-directive@0.3.0:
-    resolution: {integrity: sha512-m5C0ThHZ1JB6NhI6ufNUnHwMyIAydMbnqabRrS4z4iCiOcPFZ8gnwXaTjInxyiCZ3ud7CTUripY3aAA7DXcCmw==}
 
   remark-smartypants@3.0.2:
     resolution: {integrity: sha512-ILTWeOriIluwEvPjv67v7Blgrcx+LZOkAUVtKI3putuhlZm84FnqDORNXPPm+HY3NdZOMhyDwZ1E+eZB/Df5dA==}
@@ -9360,20 +9345,6 @@ snapshots:
       '@types/unist': 3.0.3
       unist-util-visit: 5.0.0
 
-  mdast-util-directive@3.1.0:
-    dependencies:
-      '@types/mdast': 4.0.4
-      '@types/unist': 3.0.3
-      ccount: 2.0.1
-      devlop: 1.1.0
-      mdast-util-from-markdown: 2.0.2
-      mdast-util-to-markdown: 2.1.2
-      parse-entities: 4.0.2
-      stringify-entities: 4.0.4
-      unist-util-visit-parents: 6.0.1
-    transitivePeerDependencies:
-      - supports-color
-
   mdast-util-extended-table@2.0.3(mdast-util-gfm-table@2.0.0)(micromark-extension-gfm-table@2.1.1)(micromark@4.0.2):
     dependencies:
       '@types/hast': 3.0.4
@@ -9397,7 +9368,7 @@ snapshots:
       '@types/mdast': 4.0.4
       escape-string-regexp: 5.0.0
       unist-util-is: 6.0.1
-      unist-util-visit-parents: 6.0.1
+      unist-util-visit-parents: 6.0.2
 
   mdast-util-from-markdown@2.0.2:
     dependencies:
@@ -9698,16 +9669,6 @@ snapshots:
       micromark-util-symbol: 2.0.1
     optionalDependencies:
       micromark-util-types: 2.0.2
-
-  micromark-extension-directive@4.0.0:
-    dependencies:
-      devlop: 1.1.0
-      micromark-factory-space: 2.0.1
-      micromark-factory-whitespace: 2.0.1
-      micromark-util-character: 2.1.1
-      micromark-util-symbol: 2.0.1
-      micromark-util-types: 2.0.2
-      parse-entities: 4.0.2
 
   micromark-extension-extended-table@2.0.3(micromark-extension-gfm-table@2.1.1)(micromark@4.0.2):
     dependencies:
@@ -10725,15 +10686,6 @@ snapshots:
       - micromark
       - micromark-util-types
 
-  remark-directive@4.0.0:
-    dependencies:
-      '@types/mdast': 4.0.4
-      mdast-util-directive: 3.1.0
-      micromark-extension-directive: 4.0.0
-      unified: 11.0.5
-    transitivePeerDependencies:
-      - supports-color
-
   remark-extended-table@2.0.3(mdast-util-gfm-table@2.0.0)(micromark-extension-gfm-table@2.1.1)(micromark@4.0.2)(remark-gfm@4.0.1)(remark-parse@11.0.0)(unified@11.0.5):
     dependencies:
       mdast-util-extended-table: 2.0.3(mdast-util-gfm-table@2.0.0)(micromark-extension-gfm-table@2.1.1)(micromark@4.0.2)
@@ -10826,11 +10778,6 @@ snapshots:
       mdast-util-to-hast: 13.2.1
       unified: 11.0.5
       vfile: 6.0.3
-
-  remark-ruby-directive@0.3.0:
-    dependencies:
-      unified: 11.0.5
-      unist-util-visit: 5.0.0
 
   remark-smartypants@3.0.2:
     dependencies:
