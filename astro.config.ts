@@ -18,9 +18,6 @@ import math from "remark-math";
 import gemoji from "remark-gemoji";
 import footnote from "remark-footnotes-extra";
 import { remarkExtendedTable as table, extendedTableHandlers as tableHandler } from "remark-extended-table";
-import directive from "remark-directive";
-import ruby from "remark-ruby-directive";
-import alerts from "remark-github-blockquote-alert";
 import { rehypeHeadingIds as ids } from "@astrojs/markdown-remark";
 import anchor from "rehype-autolink-headings";
 import links from "rehype-external-links";
@@ -30,6 +27,8 @@ import sectionize from "@hbsnow/rehype-sectionize";
 import spoiler from "./src/utils/remark/spoiler";
 import attr from "./src/utils/remark/attr";
 import abbr from "./src/utils/remark/abbr";
+import ruby from "./src/utils/remark/ruby";
+import alerts from "./src/utils/remark/github-alert";
 import wrapper from "./src/utils/remark/table-wrapper";
 import copy from "./src/utils/code-copy";
 import reading from "./src/utils/remark/reading";
@@ -70,9 +69,8 @@ export default defineConfig({
 			abbr,
 			[table, { colspanWithEmpty: true }],
 			wrapper,
-			directive,
 			ruby,
-			[alerts, { legacyTitle: true }],
+			[alerts, { typeFormat: "capitalize" }],
 			reading
 		],
 		remarkRehype: {

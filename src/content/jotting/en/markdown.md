@@ -43,19 +43,19 @@ Out of personal usage habits, I added some plugins to implement syntax extension
 
 ## Ruby
 
-> Plugin: [`remark-ruby-directive`](https://github.com/brklntmhwk/remark-ruby-directive)
+> Self-implemented
 
 ```
-:ruby[拼音(pīn yīn)]
+{拼音}(pīn|yīn)
 ```
 
-:ruby[拼音(pīn yīn)]
+{拼音}(pīn|yīn)
 
 ```
-:ruby[振り仮名（ふ　がな）]
+{振り仮名}(ふ||が|な)
 ```
 
-:ruby[振り仮名（ふ　がな）]
+{振り仮名}(ふ||が|な)
 
 ## Spoiler
 
@@ -176,11 +176,11 @@ ABBR abbr xABBRx
 > Warning information
 
 ```
-> [!NOTE/(･ρ･)ﾉ]
+> [!NOTE] (･ρ･)ﾉ
 > Custom title text
 ```
 
-> [!NOTE/(･ρ･)ﾉ]
+> [!NOTE] (･ρ･)ﾉ
 > Custom title text
 
 ## Extended Tables

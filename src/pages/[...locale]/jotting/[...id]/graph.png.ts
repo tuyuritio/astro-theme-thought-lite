@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import config, { monolocale } from "$config";
-import graph, { contentMap } from "$graph/content";
+import graph from "$graph/content";
 import i18nit from "$i18n";
 
 export async function getStaticPaths() {
@@ -20,17 +20,14 @@ export async function getStaticPaths() {
 			id = ids.join("/");
 		}
 
-		contentMap.set(jotting.id, {
-			locale: locale || config.i18n.defaultLocale,
-			type: i18nit(locale || config.i18n.defaultLocale)("navigation.jotting"),
-			title: jotting.data.title,
-			timestamp: jotting.data.timestamp.toISOString().split("T")[0].replace(/-/g, "/"),
-			tags: jotting.data.tags
-		});
-
 		return {
 			params: { locale, id },
-			props: { id: jotting.id }
+			props: {
+				type: i18nit(locale || config.i18n.defaultLocale)(`navigation.jotting`),
+				title: jotting.data.title,
+				time: jotting.data.timestamp.toISOString().split("T")[0].replace(/-/g, "/"),
+				tags: jotting.data.tags
+			}
 		};
 	});
 }
@@ -38,8 +35,16 @@ export async function getStaticPaths() {
 /**
  * GET handler that generates and returns the Open Graph image for a jotting.
  */
-export const GET: APIRoute = async ({ props }) => {
-	const image = await graph(props.id);
+export const GET: APIRoute = async ({ params, props }) => {
+	const image = await graph({
+		locale: params.locale || config.i18n.defaultLocale,
+		type: props.type,
+		site: config.title,
+		author: config.author.name,
+		title: props.title,
+		time: props.time,
+		tags: props.tags
+	});
 
 	return new Response(new Uint8Array(image), { headers: { "Content-Type": "image/png" } });
 };

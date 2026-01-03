@@ -43,19 +43,19 @@ description: 详细介绍主题中扩展的 Markdown 语法功能，包括 Ruby 
 
 ## Ruby
 
-> 插件：[`remark-ruby-directive`](https://github.com/brklntmhwk/remark-ruby-directive)
+> 自行实现
 
 ```
-:ruby[拼音(pīn yīn)]
+{拼音}(pīn|yīn)
 ```
 
-:ruby[拼音(pīn yīn)]
+{拼音}(pīn|yīn)
 
 ```
-:ruby[振り仮名（ふ　がな）]
+{振り仮名}(ふ||が|な)
 ```
 
-:ruby[振り仮名（ふ　がな）]
+{振り仮名}(ふ||が|な)
 
 ## 遮罩
 
@@ -176,11 +176,11 @@ ABBR abbr xABBRx
 > 警告信息
 
 ```
-> [!NOTE/(･ρ･)ﾉ]
+> [!NOTE] (･ρ･)ﾉ
 > 自定义标题文字
 ```
 
-> [!NOTE/(･ρ･)ﾉ]
+> [!NOTE] (･ρ･)ﾉ
 > 自定义标题文字
 
 ## 表格扩展

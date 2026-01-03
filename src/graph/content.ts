@@ -1,86 +1,7 @@
 import satori from "satori";
 import sharp from "sharp";
 import icon from "$public/favicon.svg?raw";
-import config from "$config";
-
-/**
- * Metadata for content (note or jotting) used in Open Graph image generation
- */
-interface ContentMeta {
-	/** Locale code */
-	locale: string;
-
-	/** Content type label */
-	type: string;
-
-	/** Content title */
-	title: string;
-
-	/** Formatted timestamp (YYYY/MM/DD) */
-	timestamp: string;
-
-	/** Series name */
-	series?: string;
-
-	/** Tags associated with the content */
-	tags?: string[];
-}
-
-/**
- * Map storing metadata for all content items, keyed by content ID.
- * Populated during static path generation to enable font caching optimization.
- */
-export const contentMap = new Map<string, ContentMeta>();
-
-/**
- * Font configuration for each locale with caching support.
- * The buffer is lazily loaded and cached on first use per locale.
- */
-export const fonts: Record<string, { name: string; text?: string; buffer?: ArrayBuffer }> = {
-	en: { name: "Noto Serif" },
-	"zh-cn": { name: "Noto Serif SC" },
-	ja: { name: "Noto Serif JP" }
-};
-
-/**
- * Loads and caches a Google Font for the specified content's locale.
- * On first call for a locale, collects all text from contents of that locale,
- * deduplicates characters, and fetches a subset font from Google Fonts.
- * Subsequent calls for the same locale return the cached font buffer.
- *
- * @param id - The content ID to load font for
- * @returns ArrayBuffer containing the font data
- * @throws Error if the content ID is not found in contentMap or font loading fails
- */
-async function loadGoogleFont(id: string) {
-	const locale = contentMap.get(id)?.locale;
-	if (!locale) throw new Error(`Locale "${locale}" not found`);
-
-	const font = fonts[locale];
-
-	if (font.buffer) {
-		return font.buffer;
-	} else {
-		font.text = config.title + config.author.name;
-
-		const contents = Array.from(contentMap.values()).filter(content => content.locale === locale);
-		font.text += contents.map(content => content.type + content.title + content.timestamp + content.series + content.tags).join("");
-
-		font.text = Array.from(new Set(font.text.split(""))).join("");
-
-		const url = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(font.name)}:wght@900&text=${font.text}`;
-
-		const css = await (await fetch(url)).text();
-		const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype|woff2?)'\)/);
-
-		if (!resource) throw new Error("Failed to load font url");
-
-		const response = await fetch(resource[1]);
-		font.buffer = await response.arrayBuffer();
-
-		return font.buffer;
-	}
-}
+import { loadFont } from ".";
 
 /*
 <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "3rem", width: "100%", height: "100%", background: "#fffffd" }}>
@@ -114,18 +35,25 @@ async function loadGoogleFont(id: string) {
 </div>
 */
 
-/**
- * Generates an Open Graph image (1200x630 PNG) for the specified content.
- * Uses satori to render SVG from virtual DOM and sharp for PNG conversion.
- *
- * @param id - The content ID to generate image for
- * @returns Buffer containing the PNG image data
- * @throws Error if the content ID is not found in contentMap
- */
-export default async (id: string) => {
-	const content = contentMap.get(id);
-	if (!content) throw new Error(`Content with id "${id}" not found`);
-
+export default async ({
+	locale,
+	type,
+	site,
+	author,
+	title,
+	time,
+	series,
+	tags
+}: {
+	locale: string;
+	type: string;
+	site: string;
+	author: string;
+	title: string;
+	time: string;
+	series?: string;
+	tags?: string[];
+}) => {
 	const svg = await satori(
 		{
 			type: "div",
@@ -160,8 +88,8 @@ export default async (id: string) => {
 											fontSize: "1.5rem"
 										},
 										children: [
-											content.type,
-											content.series
+											type,
+											series
 												? {
 														type: "span",
 														props: {
@@ -173,7 +101,7 @@ export default async (id: string) => {
 																		children: "·"
 																	}
 																},
-																content.series
+																series
 															]
 														}
 													}
@@ -185,7 +113,7 @@ export default async (id: string) => {
 									type: "span",
 									props: {
 										style: { fontSize: "4rem" },
-										children: content.title
+										children: title
 									}
 								},
 								{
@@ -201,9 +129,9 @@ export default async (id: string) => {
 										children: [
 											{
 												type: "time",
-												props: { children: content.timestamp }
+												props: { children: time }
 											},
-											...(content.tags?.length
+											...(tags?.length
 												? [
 														{
 															type: "span",
@@ -215,7 +143,7 @@ export default async (id: string) => {
 																}
 															}
 														},
-														...content.tags.map(tag => ({
+														...tags.map(tag => ({
 															type: "span",
 															key: tag,
 															props: { children: `#${tag}` }
@@ -267,7 +195,7 @@ export default async (id: string) => {
 												type: "span",
 												props: {
 													style: { fontSize: "2rem" },
-													children: config.title
+													children: site
 												}
 											}
 										]
@@ -277,7 +205,7 @@ export default async (id: string) => {
 									type: "div",
 									props: {
 										style: { fontSize: "1.5rem" },
-										children: config.author.name
+										children: author
 									}
 								}
 							]
@@ -292,7 +220,7 @@ export default async (id: string) => {
 			fonts: [
 				{
 					name: "Serif",
-					data: await loadGoogleFont(id)
+					data: await loadFont(locale)
 				}
 			]
 		}
