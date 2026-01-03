@@ -11,7 +11,7 @@ import i18nit from "$i18n";
 import Drifter from "./Drifter.svelte";
 import context, { countdownComment } from "./context.svelte";
 
-let { reply, edit, text, view = $bindable() }: { reply?: string; edit?: string; text?: string; view?: boolean } = $props();
+let { reply, edit, text, view = $bindable() }: { reply?: string | null; edit?: string; text?: string | null; view?: boolean } = $props();
 
 const t = i18nit(context.locale);
 

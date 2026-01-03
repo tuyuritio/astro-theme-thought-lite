@@ -15,22 +15,6 @@ import i18nit from "$i18n";
 
 const env = import.meta.env;
 
-/**
- * Define the CommentItem structure
- */
-export type CommentItem = {
-	id: string;
-	section: string;
-	item: string;
-	reply: string | null;
-	drifter: string;
-	timestamp: Date;
-	updated: Date | null;
-	deleted: boolean | null;
-	content: string;
-	subcomments: CommentItem[];
-};
-
 export const comment = {
 	// Action to create a new comment or edit an existing one
 	create: defineAction({
@@ -377,9 +361,9 @@ export const comment = {
 					updated: Comment.updated,
 					deleted: Comment.deleted,
 					// Return null for content if the comment is deleted
-					content: sql`CASE WHEN ${Comment.deleted} = 1 THEN NULL ELSE ${Comment.content} END`,
+					content: sql<string | null>`IIF(${Comment.deleted} = 1, NULL, ${Comment.content})`,
 					// Use display name if available, otherwise use handle
-					name: sql`CASE WHEN ${Drifter.name} IS NULL THEN ${Drifter.handle} ELSE ${Drifter.name} END`,
+					name: sql<string | null>`coalesce(${Drifter.name}, ${Drifter.handle})`,
 					// Use nickname for unauthenticated users
 					nickname: Comment.nickname,
 					description: Drifter.description,
@@ -393,28 +377,59 @@ export const comment = {
 				.where(and(eq(Comment.section, section), eq(Comment.item, item)))
 				.orderBy(Comment.timestamp);
 
+			type CommentItem = (typeof comments)[number] & { subcomments: CommentItem[] };
+
 			// Create a map for efficient comment lookup and initialize subcomments arrays
-			const map = new Map<string, any>();
-			comments.forEach((comment: any) => {
-				comment.subcomments = [];
-				map.set(comment.id, comment);
+			const map = new Map<string, CommentItem>();
+			comments.forEach(comment => {
+				map.set(comment.id, { ...comment, subcomments: [] });
 			});
 
 			// Build comment tree structure with replies
-			const treeification: CommentItem[] = [];
+			let treeification: CommentItem[] = [];
 
 			// Organize comments into tree structure
-			comments.forEach((comment: any) => {
+			comments.forEach(comment => {
+				const item = map.get(comment.id)!;
 				if (comment.reply) {
 					// This is a reply, add to parent's subcomments
-					map.get(comment.reply)?.subcomments.push(comment);
+					map.get(comment.reply)?.subcomments.push(item);
 				} else {
 					// This is a top-level comment
-					treeification.push(comment);
+					treeification.push(item);
 				}
 			});
 
-			return { treeification, count: comments.length };
+			let count = comments.length;
+
+			if (config.comment?.["hide-deleted"]) {
+				count = 0;
+
+				/**
+				 * Recursively filter out deleted comments without subcomments
+				 * @param comments Array of comments to filter
+				 * @returns Filtered array of comments
+				 */
+				function filter(comments: CommentItem[]) {
+					return comments.filter(comment => {
+						// Recursively filter subcomments
+						comment.subcomments = filter(comment.subcomments);
+
+						// Keep the comment if not deleted or has subcomments
+						if (!comment.deleted || comment.subcomments.length) {
+							count++;
+							return true;
+						}
+
+						// Otherwise, exclude it
+						return false;
+					});
+				}
+
+				treeification = filter(treeification);
+			}
+
+			return { treeification, count };
 		}
 	})
 };

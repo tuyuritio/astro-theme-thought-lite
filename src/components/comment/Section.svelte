@@ -2,12 +2,10 @@
 import { actions } from "astro:actions";
 import { onMount } from "svelte";
 import { flip } from "svelte/animate";
-import config from "$config";
-import type { CommentItem } from "$actions/comment";
 import Icon from "$components/Icon.svelte";
 import { pushTip } from "$components/Tip.svelte";
 import i18nit from "$i18n";
-import CommentBlock from "./Comment.svelte";
+import CommentBlock, { type CommentItem } from "./Comment.svelte";
 import Reply from "./Reply.svelte";
 import context from "./context.svelte";
 
@@ -158,9 +156,7 @@ onMount(async () => {
 		{/if}
 		{#each list as comment (comment.id)}
 			<div animate:flip={{ duration: 150 }}>
-				{#if !comment.deleted || comment.subcomments.length || !config.comment?.["hide-deleted"]}
-					<CommentBlock {comment} />
-				{/if}
+				<CommentBlock {comment} />
 			</div>
 		{/each}
 	{:else}

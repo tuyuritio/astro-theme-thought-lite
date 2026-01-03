@@ -11,7 +11,9 @@ import Self from "./Comment.svelte";
 import Reply from "./Reply.svelte";
 import context from "./context.svelte";
 
-let { comment, depth = 0 }: { comment: any; depth?: number } = $props();
+export type CommentItem = NonNullable<Awaited<ReturnType<typeof actions.comment.list>>["data"]>["treeification"][number];
+
+let { comment, depth = 0 }: { comment: CommentItem; depth?: number } = $props();
 const t = i18nit(context.locale);
 
 /** Minimum nesting depth for comment threads to ensure proper display */
