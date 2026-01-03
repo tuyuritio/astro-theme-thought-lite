@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.34.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.33.0...v0.34.0) (2026-01-03)
+
+
+### Features
+
+* **markdown:** implement custom GitHub alert plugin ([980a811](https://github.com/tuyuritio/astro-theme-thought-lite/commit/980a8113a46abd79e08a654c0cd510a2d7dfae80))
+
+
+### Bug Fixes
+
+* enhance language switcher interaction ([cc46662](https://github.com/tuyuritio/astro-theme-thought-lite/commit/cc46662208ec8a3a7519b49188d91182f5542b31))
+* **graph:** use full font files to resolve Open Graph generation error ([c78c93f](https://github.com/tuyuritio/astro-theme-thought-lite/commit/c78c93f4bf7d845ecf96834ca3eea94fe6c5b276))
+
 ## [0.33.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.32.1...v0.33.0) (2026-01-02)
 
 
