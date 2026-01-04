@@ -122,11 +122,7 @@ onMount(async () => {
 	{#if loaded}
 		{#if compact || comments.length}
 			<div class="flex items-center justify-between mt-6">
-				<p class="flex items-center gap-2">
-					<b class="text-lg">{t("comment.name")}</b>
-					<span>·</span>
-					<span>{count}</span>
-				</p>
+				<p class="flex items-center gap-2"><b>{t("comment.name")}</b> · {count}</p>
 
 				{#if compact}
 					<button onclick={() => (expanded = !expanded)}>
