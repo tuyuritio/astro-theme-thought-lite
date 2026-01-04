@@ -13,7 +13,14 @@ import context from "./context.svelte";
 
 export type CommentItem = NonNullable<Awaited<ReturnType<typeof actions.comment.list>>["data"]>["treeification"][number];
 
-let { comment, depth = 0 }: { comment: CommentItem; depth?: number } = $props();
+let {
+	section,
+	item,
+	link,
+	refresh,
+	comment,
+	depth = 0
+}: { section: string; item: string; link: string; refresh: (auto?: boolean) => Promise<void>; comment: CommentItem; depth?: number } = $props();
 const t = i18nit(context.locale);
 
 /** Minimum nesting depth for comment threads to ensure proper display */
@@ -45,7 +52,7 @@ async function remove() {
 	const { error } = await actions.comment.delete(comment.id);
 	if (!error) {
 		// Refresh comment list and close modal on successful deletion
-		context.refresh();
+		refresh();
 		deleteView = false;
 
 		pushTip("success", t("comment.remove.success"));
@@ -140,13 +147,13 @@ async function remove() {
 	</dl>
 	<div class:ms-7={depth < MIN_DEPTH} class:sm:ms-7={depth < Math.max(MIN_DEPTH, MAX_DEPTH)}>
 		{#if replyView && !editView}
-			<Reply reply={comment.id} bind:view={replyView} />
+			<Reply {section} {item} {link} {refresh} reply={comment.id} bind:view={replyView} />
 		{:else if editView && !replyView}
-			<Reply reply={comment.reply} edit={comment.id} text={comment.content} bind:view={editView} />
+			<Reply {section} {item} {link} {refresh} reply={comment.reply} edit={comment.id} text={comment.content} bind:view={editView} />
 		{/if}
 
 		{#each comment.subcomments as subcomment}
-			<Self comment={subcomment} depth={depth + 1} />
+			<Self {section} {item} {link} {refresh} comment={subcomment} depth={depth + 1} />
 		{/each}
 	</div>
 </main>

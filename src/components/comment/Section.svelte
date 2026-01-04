@@ -32,14 +32,10 @@ let {
 } = $props();
 
 context.locale = locale;
-context.link = link;
-context.section = section;
-context.item = item;
 context.oauth = oauth;
 context.turnstile = turnstile;
 context.push = push;
 context.email = email;
-context.refresh = refresh;
 
 const t = i18nit(locale);
 
@@ -120,7 +116,7 @@ onMount(async () => {
 
 <main>
 	{#if (!compact || expanded) && loaded}
-		<Reply />
+		<Reply {section} {item} {link} {refresh} />
 	{/if}
 
 	{#if loaded}
@@ -156,7 +152,7 @@ onMount(async () => {
 		{/if}
 		{#each list as comment (comment.id)}
 			<div animate:flip={{ duration: 150 }}>
-				<CommentBlock {comment} />
+				<CommentBlock {section} {item} {link} {comment} {refresh} />
 			</div>
 		{/each}
 	{:else}

@@ -11,7 +11,25 @@ import i18nit from "$i18n";
 import Drifter from "./Drifter.svelte";
 import context, { countdownComment } from "./context.svelte";
 
-let { reply, edit, text, view = $bindable() }: { reply?: string | null; edit?: string; text?: string | null; view?: boolean } = $props();
+let {
+	section,
+	item,
+	link,
+	refresh,
+	reply,
+	edit,
+	text,
+	view = $bindable()
+}: {
+	section: string;
+	item: string;
+	link: string;
+	refresh: (auto?: boolean) => Promise<void>;
+	reply?: string | null;
+	edit?: string;
+	text?: string | null;
+	view?: boolean;
+} = $props();
 
 const t = i18nit(context.locale);
 
@@ -34,7 +52,7 @@ let overlength: boolean = $derived(content.length > Number(config.comment?.["max
 const DRAFT_PREFIX = "comment-draft:";
 const DRAFT_SAVE_DELAY = 500;
 
-let draftKey = `${DRAFT_PREFIX}${context.section}:${context.item}`;
+let draftKey = `${DRAFT_PREFIX}${section}:${item}`;
 if (reply) draftKey += `:reply-${reply}`;
 if (edit) draftKey += `:edit-${edit}`;
 
@@ -118,11 +136,11 @@ async function submit() {
 
 		({ error } = await actions.comment.create({
 			locale: context.locale,
-			section: context.section,
-			item: context.item,
+			section: section,
+			item: item,
 			reply,
 			content,
-			link: context.link,
+			link: link,
 			push: context.subscription,
 			passer: { nickname, captcha }
 		}));
@@ -141,18 +159,18 @@ async function submit() {
 		// For authenticated users creating a comment
 		({ error } = await actions.comment.create({
 			locale: context.locale,
-			section: context.section,
-			item: context.item,
+			section: section,
+			item: item,
 			reply,
 			content,
-			link: context.link,
+			link: link,
 			push: context.subscription
 		}));
 	}
 
 	if (!error) {
 		// Refresh comment list to show updated comment
-		context.refresh();
+		refresh();
 
 		// Implement rate limiting: 5-second cooldown
 		countdownComment();

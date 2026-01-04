@@ -1,8 +1,5 @@
 const context: {
 	locale: string;
-	link: string;
-	section: string;
-	item: string;
 	oauth: any[];
 	turnstile?: string;
 	push?: string;
@@ -21,17 +18,12 @@ const context: {
 		notify: boolean | null;
 	};
 	subscription?: number;
-	refresh: (auto?: boolean) => Promise<void>;
 } = $state({
 	locale: "",
-	link: "",
-	section: "",
-	item: "",
 	oauth: [],
 	email: false,
 	limitComment: 0,
-	limitEmail: 0,
-	refresh: async () => {}
+	limitEmail: 0
 });
 
 export default context;
