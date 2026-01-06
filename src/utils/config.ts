@@ -48,6 +48,9 @@ interface SiteConfigOptions<Locales extends readonly string[] = readonly string[
 		defaultLocale: Locales[number];
 	};
 
+	/** Pagination Configuration */
+	pagination?: Partial<Record<Section, number>>;
+
 	/** Feed Configuration */
 	feed?: {
 		/** Feed Sections */

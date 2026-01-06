@@ -3,7 +3,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { onMount } from "svelte";
 import { flip } from "svelte/animate";
 import { fade } from "svelte/transition";
-import { monolocale } from "$config";
+import config, { monolocale } from "$config";
 import Icon from "$components/Icon.svelte";
 import i18nit from "$i18n";
 
@@ -37,7 +37,7 @@ let filtered: any[] = $derived.by(() => {
 });
 
 // Calculate pagination
-const size: number = 20;
+const size: number = config.pagination?.jotting || 24;
 let pages: number = $derived(Math.ceil(filtered.length / size));
 
 // Ensure page is within valid range
@@ -111,7 +111,7 @@ onMount(() => {
 			</footer>
 		{/if}
 	</article>
-	<aside class="sm:basis-[200px] flex flex-col gap-5">
+	<aside class="sm:basis-50 flex flex-col gap-5">
 		<section>
 			<h4>{t("jotting.tag")}</h4>
 			<p>
