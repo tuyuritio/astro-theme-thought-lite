@@ -1,5 +1,6 @@
 import { Mock } from "./providers/mock";
 import { Resend } from "./providers/resend";
+import { Mailgun } from "./providers/mailgun";
 import main from "./template/index.html?raw";
 import verification from "./template/verification.html?raw";
 import fresh from "./template/fresh.html?raw";
@@ -48,9 +49,15 @@ export function render(template: keyof typeof templates, params?: Record<string,
  * @param payload email payload
  */
 export async function send(payload: EmailPayload, unsubscribeURL?: string | URL) {
+	let mailer: EmailProvider;
+
 	if (env.RESEND_API_KEY) {
-		await new Resend(env.RESEND_API_KEY, unsubscribeURL).send(payload);
+		mailer = new Resend(env.RESEND_API_KEY, unsubscribeURL);
+	} else if (env.MAILGUN_DOMAIN && env.MAILGUN_API_KEY) {
+		mailer = new Mailgun(env.MAILGUN_DOMAIN, env.MAILGUN_API_KEY, unsubscribeURL);
 	} else {
-		await new Mock().send(payload);
+		mailer = new Mock();
 	}
+
+	await mailer.send(payload);
 }

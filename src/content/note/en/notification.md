@@ -78,6 +78,17 @@ After configuring the following variable in `.env`, the system will use Resend t
 
 `*` Indicates a required option.
 
+#### Mailgun
+
+After configuring the following variables in `.env`, the system will use Mailgun to send emails:
+
+| Variable | Description |
+| - | - |
+| `MAILGUN_DOMAIN`* | Email Domain |
+| `MAILGUN_API_KEY`* | Mailgun API Key |
+
+`*` Indicates a required option.
+
 #### Mock (Local Development)
 
 If no email service provider configuration is detected, the system will fall back to **Mock**.
@@ -142,10 +153,16 @@ Modify the `src/utils/email/index.ts` file to select your new provider based on 
 import { Postmark } from "./providers/postmark";
 
 export async function send(payload: EmailPayload, unsubscribeURL?: string | URL) {
-    if (env.POSTMARK_SERVER_TOKEN) {
-        await new Postmark(env.POSTMARK_SERVER_TOKEN).send(payload);
+	let mailer: EmailProvider;
+
+	if (env.POSTMARK_SERVER_TOKEN) {
+        mailer = new Postmark(env.POSTMARK_SERVER_TOKEN, unsubscribeURL);
     } else if (env.RESEND_API_KEY) {
         // ...
-    }
+	} else {
+        // ...
+	}
+
+	await mailer.send(payload);
 }
 ```

@@ -78,6 +78,17 @@ Private Key:
 
 `*` は必須項目を示します。
 
+#### Mailgun
+
+`.env` に以下の変数を設定すると、システムは Mailgun を使用して電書を送信します：
+
+| 変数 | 説明 |
+| - | - |
+| `MAILGUN_DOMAIN`* | メールドメイン |
+| `MAILGUN_API_KEY`* | Mailgun API キー |
+
+`*` は必須項目を示します。
+
 #### Mock (ローカル開発)
 
 電書サービスプロバイダーの設定が検出されない場合、システムは **Mock** にフォールバックします。
@@ -142,10 +153,16 @@ export class Postmark implements EmailProvider {
 import { Postmark } from "./providers/postmark";
 
 export async function send(payload: EmailPayload, unsubscribeURL?: string | URL) {
-    if (env.POSTMARK_SERVER_TOKEN) {
-        await new Postmark(env.POSTMARK_SERVER_TOKEN).send(payload);
+	let mailer: EmailProvider;
+
+	if (env.POSTMARK_SERVER_TOKEN) {
+        mailer = new Postmark(env.POSTMARK_SERVER_TOKEN, unsubscribeURL);
     } else if (env.RESEND_API_KEY) {
         // ...
-    }
+	} else {
+        // ...
+	}
+
+	await mailer.send(payload);
 }
 ```

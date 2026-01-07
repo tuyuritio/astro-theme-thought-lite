@@ -78,6 +78,17 @@ Private Key:
 
 `*` 表示必要选项。
 
+#### Mailgun
+
+在 `.env` 中配置以下变量后，系统将使用 Mailgun 发送邮件：
+
+| 变量 | 描述 |
+| - | - |
+| `MAILGUN_DOMAIN`* | 邮件域名 |
+| `MAILGUN_API_KEY`* | Mailgun API 密钥 |
+
+`*` 表示必要选项。
+
 #### Mock (本地开发)
 
 如未检测到任何邮件服务提供商的配置，系统将回退到 **Mock**。
@@ -142,10 +153,16 @@ export class Postmark implements EmailProvider {
 import { Postmark } from "./providers/postmark";
 
 export async function send(payload: EmailPayload, unsubscribeURL?: string | URL) {
-    if (env.POSTMARK_SERVER_TOKEN) {
-        await new Postmark(env.POSTMARK_SERVER_TOKEN).send(payload);
+	let mailer: EmailProvider;
+
+	if (env.POSTMARK_SERVER_TOKEN) {
+        mailer = new Postmark(env.POSTMARK_SERVER_TOKEN, unsubscribeURL);
     } else if (env.RESEND_API_KEY) {
         // ...
-    }
+	} else {
+        // ...
+	}
+
+	await mailer.send(payload);
 }
 ```
