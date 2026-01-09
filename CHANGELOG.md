@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.0...v0.35.1) (2026-01-09)
+
+
+### Bug Fixes
+
+* correct date formatting in toString function ([5e4ed05](https://github.com/tuyuritio/astro-theme-thought-lite/commit/5e4ed05194a6ef90b6de9bb45e2f43be4a71defa))
+
 ## [0.35.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.34.0...v0.35.0) (2026-01-09)
 
 
