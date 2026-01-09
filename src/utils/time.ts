@@ -29,7 +29,7 @@ namespace Time {
 	 */
 	export function toString(time?: string | Date, userTimezone: boolean = false): string {
 		const datetime = Time(time, userTimezone);
-		return datetime.toString().replace(/-/g, "/").replace("T", "-").split("+")[0];
+		return datetime.toString().substring(0, 19).replace(/-/g, "/").replace("T", "-");
 	}
 
 	/**
