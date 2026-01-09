@@ -1,5 +1,4 @@
 ---
-import type { MarkdownHeading } from "astro";
 import { getCollection, render } from "astro:content";
 import config, { monolocale } from "$config";
 import Time from "$utils/time";
@@ -49,7 +48,7 @@ const t = i18nit(locale);
 		<header class="flex flex-col gap-4">
 			<h1>{note.data.title}</h1>
 			<div class="flex flex-col gap-3 sm:flex-row *:flex *:items-center *:gap-1 *:text-[0.875rem] *:text-secondary">
-				<time datetime={note.data.timestamp.toISOString()}><Icon name="lucide--calendar" />{Time(note.data.timestamp)}</time>
+				<time datetime={note.data.timestamp.toISOString()}><Icon name="lucide--calendar" />{Time.toString(note.data.timestamp)}</time>
 				{
 					note.data.series && (
 						<span>

@@ -11,5 +11,6 @@
 	"bracketSameLine": true,
 	"arrowParens": "avoid",
 	"plugins": ["prettier-plugin-astro", "prettier-plugin-svelte"],
-	"svelteSortOrder": "options-scripts-markup-styles"
+	"svelteSortOrder": "options-scripts-markup-styles",
+	"svelteIndentScriptAndStyle": false
 }

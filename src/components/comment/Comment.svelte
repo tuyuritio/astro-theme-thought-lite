@@ -66,7 +66,7 @@ async function remove() {
 	<div id="delete" class="flex flex-col items-center justify-center gap-5">
 		<h2>{t("comment.remove.name")}</h2>
 		<input type="hidden" name="ID" value={comment.id} />
-		<time>{t("comment.time")}：{Time.full(comment.timestamp, Time.userTimezone)}</time>
+		<time>{t("comment.time")}: {Time.toString(comment.timestamp, true)}</time>
 		<section class="flex gap-5">
 			<button class="form-button" onclick={() => (deleteView = false)}>{t("cancel")}</button>
 			<button class="form-button" onclick={remove}>{t("confirm")}</button>
@@ -108,7 +108,7 @@ async function remove() {
 						{#if comment.author}<Icon name="lucide--signature" title={t("comment.author")} />{/if}
 						{#if comment.homepage}<a href={comment.homepage} target="_blank" class="inline-flex"><Icon name="lucide--house" /></a>{/if}
 						<span>·</span>
-						<time class="text-xs">{Time(comment.updated ?? comment.timestamp, Time.userTimezone).replace("-", " ")}</time>
+						<time class="text-xs">{Time.toString(comment.updated ?? comment.timestamp, true).replace("-", " ")}</time>
 					</p>
 					{#if comment.description}<span title={comment.description} class="text-secondary text-xs leading-normal truncate">{comment.description}</span>{/if}
 				</dt>
@@ -122,7 +122,7 @@ async function remove() {
 							<b class="text-weak">{t("drifter.deactivate.done")}</b>
 						{/if}
 						<span>·</span>
-						<time class="text-xs">{Time(comment.timestamp, Time.userTimezone).replace("-", " ")}</time>
+						<time class="text-xs">{Time.toString(comment.timestamp, true).replace("-", " ")}</time>
 					</p>
 				</dt>
 			{/if}
