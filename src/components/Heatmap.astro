@@ -1,0 +1,187 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Temporal } from "temporal-polyfill";
+import config, { monolocale } from "$config";
+import type { Section } from "$utils/config";
+import Time from "$utils/time";
+import i18nit from "$i18n";
+
+/**
+ * Content item structure
+ */
+interface ContentItem {
+	id: string;
+	data: {
+		title: string;
+		timestamp: Date;
+	};
+}
+
+/**
+ * Heatmap component props
+ */
+interface Props {
+	locale: string;
+	notes: ContentItem[];
+	jottings: ContentItem[];
+}
+
+let { locale, notes, jottings } = Astro.props;
+
+// Initialize translation function for current locale
+const t = i18nit(locale);
+
+// Temporary storage for processed content and heatmap cells
+const contents: { section: Section; title: string; date: Temporal.PlainDate; link: string }[] = [];
+const cells: { target: string; contents: typeof contents }[] = [];
+
+// Determine heatmap frequency (default: day)
+const frequency = config.heatmap?.unit || "day";
+const now = Time().toPlainDate();
+
+// Normalize notes and add to contents list
+notes.forEach(note => {
+	contents.push({
+		section: "note",
+		title: note.data.title,
+		date: Time(note.data.timestamp.toISOString()).toPlainDate(),
+		link: getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)
+	});
+});
+
+// Normalize jottings and add to contents list
+jottings.forEach(jotting => {
+	contents.push({
+		section: "jotting",
+		title: jotting.data.title,
+		date: Time(jotting.data.timestamp.toISOString()).toPlainDate(),
+		link: getRelativeLocaleUrl(locale, `/jotting/${monolocale ? jotting.id : jotting.id.split("/").slice(1).join("/")}`)
+	});
+});
+
+// Group content into heatmap cells based on the configured frequency
+if (frequency === "month") {
+	const { years = 4 } = config.heatmap?.unit === "month" ? config.heatmap : {};
+	const start = Temporal.PlainDate.from({ year: now.year - years + 1, month: 1, day: 1 });
+	const end = Temporal.PlainDate.from({ year: now.year, month: 12, day: 31 });
+
+	let current = start;
+	// Initialize month-based cells
+	while (Temporal.PlainDate.compare(current, end) <= 0) {
+		cells.push({
+			target: current.toLocaleString(locale, { month: "short", year: "numeric" }),
+			contents: []
+		});
+		current = current.add({ months: 1 });
+	}
+
+	// Distribute content into month-based cells
+	contents.forEach(content => {
+		const gap = start.until(content.date, { largestUnit: "month" }).months;
+		if (gap >= 0 && gap < cells.length) cells[gap].contents.push(content);
+	});
+} else if (frequency === "week") {
+	const start = now.subtract({ weeks: 51, days: now.dayOfWeek - 1 });
+
+	let current = start;
+	// Initialize week-based cells
+	while (Temporal.PlainDate.compare(current, now) <= 0) {
+		cells.push({
+			target: `${current.toLocaleString(locale, { month: "short", day: "numeric" })} - ${current.add({ days: 6 }).toLocaleString(locale, { month: "short", day: "numeric" })}`,
+			contents: []
+		});
+		current = current.add({ weeks: 1 });
+	}
+
+	// Distribute content into week-based cells
+	contents.forEach(content => {
+		const gap = start.until(content.date, { largestUnit: "week" }).weeks;
+		if (gap >= 0 && gap < cells.length) cells[gap].contents.push(content);
+	});
+} else {
+	const weekend = now.add({ days: 7 - now.dayOfWeek });
+
+	const { weeks = 20 } = config.heatmap?.unit === "day" ? config.heatmap : {};
+	const start = weekend.subtract({ weeks: weeks - 1, days: 6 });
+
+	let current = start;
+	// Initialize day-based cells
+	while (Temporal.PlainDate.compare(current, weekend) <= 0) {
+		cells.push({ target: current.toLocaleString(locale, { dateStyle: "medium" }), contents: [] });
+		current = current.add({ days: 1 });
+	}
+
+	// Distribute content into day-based cells
+	contents.forEach(content => {
+		const gap = start.until(content.date, { largestUnit: "day" }).days;
+		if (gap >= 0 && gap < cells.length) cells[gap].contents.push(content);
+	});
+}
+---
+
+<section class:list={["grid gap-1", { "grid-flow-col grid-rows-7": frequency === "day", "grid-cols-13": frequency === "week", "grid-cols-12": frequency === "month" }]}>
+	{
+		cells.map(cell => {
+			const count = cell.contents.length;
+			const details = [];
+
+			// Generate details for the popup based on cell content
+			if (count) {
+				const notes = cell.contents.filter(content => content.section === "note");
+				const jottings = cell.contents.filter(content => content.section === "jotting");
+
+				if (notes.length) {
+					if (frequency === "month") {
+						details.push(<p>{t("home.heatmap.note", { count: notes.length })}</p>);
+					} else {
+						details.push(
+							<p class="my-1">{t("home.heatmap.note", { count: notes.length })}：</p>,
+							<ul class="flex flex-col gap-0.5">
+								{notes.map(note => (
+									<li>
+										<a href={note.link} aria-label={note.title} class="ms-1 link">
+											{note.title}
+										</a>
+									</li>
+								))}
+							</ul>
+						);
+					}
+				}
+
+				if (jottings.length) {
+					if (frequency === "month") {
+						details.push(<p>{t("home.heatmap.jotting", { count: jottings.length })}</p>);
+					} else {
+						details.push(
+							<p class="my-1">{t("home.heatmap.jotting", { count: jottings.length })}：</p>,
+							<ul class="flex flex-col gap-0.5">
+								{jottings.map(jotting => (
+									<li>
+										<a href={jotting.link} aria-label={jotting.title} class="ms-1 link">
+											{jotting.title}
+										</a>
+									</li>
+								))}
+							</ul>
+						);
+					}
+				}
+			} else {
+				// Display empty message if no content
+				details.push(<p class="mt-1">{t("home.heatmap.empty")}</p>);
+			}
+
+			return (
+				<figure class="relative group/pop">
+					<i class:list={["block bg-primary/10", { "w-2.5 h-2.5": frequency === "day", "w-4 h-4": frequency === "week", "w-4.5 h-4.5": frequency === "month" }, { "bg-primary/40": count > 0, "bg-primary/70": count > 1, "bg-primary": count > 2 }]} />
+
+					<div class="absolute start-0 bottom-full w-max -translate-x-1/2 rtl:translate-x-1/2 flex flex-col mb-1 rounded-sm px-2 py-2 text-xs text-background bg-primary pop">
+						<time class="font-bold">{cell.target}</time>
+						{details}
+					</div>
+				</figure>
+			);
+		})
+	}
+</section>

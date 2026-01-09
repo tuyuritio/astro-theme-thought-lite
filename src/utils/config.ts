@@ -6,7 +6,7 @@ type CCLicenseType = "CC0 1.0" | "CC BY 4.0" | "CC BY-SA 4.0" | "CC BY-NC 4.0" |
 /**
  * Content Section Type
  */
-type Section = "note" | "jotting";
+export type Section = "note" | "jotting";
 
 interface SiteConfigOptions<Locales extends readonly string[] = readonly string[]> {
 	/** Site Title */
@@ -50,6 +50,39 @@ interface SiteConfigOptions<Locales extends readonly string[] = readonly string[
 
 	/** Pagination Configuration */
 	pagination?: Partial<Record<Section, number>>;
+
+	/** Heatmap Configuration */
+	heatmap?:
+		| {
+				/**
+				 * Each cell represents a single day.
+				 *
+				 * Cells are organized vertically into columns of 7 days (one column per week).
+				 */
+				unit: "day";
+
+				/** Number of weeks to display in the heatmap. */
+				weeks?: number;
+		  }
+		| {
+				/**
+				 * Each cell represents a single week.
+				 *
+				 * Displays data using a fixed 52-week sliding window.
+				 */
+				unit: "week";
+		  }
+		| {
+				/**
+				 * Each cell represents a single month.
+				 *
+				 * Cells are organized horizontally into rows of 12 months (one row per year).
+				 */
+				unit: "month";
+
+				/** Number of years to display in the heatmap. */
+				years?: number;
+		  };
 
 	/** Feed Configuration */
 	feed?: {

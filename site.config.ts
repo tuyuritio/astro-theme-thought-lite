@@ -21,6 +21,10 @@ const config = siteConfig({
 		note: 15,
 		jotting: 24
 	},
+	heatmap: {
+		unit: "day",
+		weeks: 20
+	},
 	feed: {
 		section: "*",
 		limit: 20

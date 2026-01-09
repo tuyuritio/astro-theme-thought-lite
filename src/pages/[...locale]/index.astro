@@ -4,7 +4,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import config, { monolocale } from "$config";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
-import Heatmap from "$components/Heatmap.svelte";
+import Heatmap from "$components/Heatmap.astro";
 import Logo from "$icons/site-logo.svg";
 import i18nit from "$i18n";
 
@@ -90,7 +90,7 @@ const { Content } = preface ? await render(preface) : ({} as any);
 						<Content />
 					</article>
 					<a href={getRelativeLocaleUrl(locale, "/preface")} class="self-end my-2 text-sm text-secondary">
-						—— {Time.date.locale(preface.data.timestamp, locale)}
+						—— {Time.toLocaleDateString(preface.data.timestamp, locale)}
 					</a>
 				</section>
 			)
@@ -117,7 +117,7 @@ const { Content } = preface ? await render(preface) : ({} as any);
 							</div>
 						</div>
 						<time datetime={latest.data.timestamp.toISOString()} class="text-remark font-mono text-xs">
-							{Time(latest.data.timestamp)}
+							{Time.toString(latest.data.timestamp)}
 						</time>
 					</blockquote>
 				</footer>

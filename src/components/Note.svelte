@@ -115,7 +115,7 @@ onMount(() => {
 						{/each}
 					</span>
 				</div>
-				<time datetime={note.data.timestamp.toISOString()} class="font-mono text-[0.65rem] text-remark">{Time(note.data.timestamp)}</time>
+				<time datetime={note.data.timestamp.toISOString()} class="font-mono text-[0.65rem] text-remark">{Time.toString(note.data.timestamp)}</time>
 			</section>
 		{:else}
 			<div class="pt-[10vh] text-center text-secondary font-bold text-xl">{t("note.empty")}</div>
