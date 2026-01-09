@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.35.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.34.0...v0.35.0) (2026-01-09)
+
+
+### Features
+
+* **config:** add pagination configuration ([f72d8e6](https://github.com/tuyuritio/astro-theme-thought-lite/commit/f72d8e6e9b9dad35b31cd129c13fde64fef18d12))
+* refactor Time utility and add heatmap configuration ([4f4a61c](https://github.com/tuyuritio/astro-theme-thought-lite/commit/4f4a61ce30d9264b4feee625dca5668b66c37724))
+
 ## [0.34.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.33.0...v0.34.0) (2026-01-03)
 
 
