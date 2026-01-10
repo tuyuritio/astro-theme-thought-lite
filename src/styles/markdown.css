@@ -2,6 +2,7 @@
 	.markdown {
 		line-height: 1.75;
 		word-wrap: break-word;
+		user-select: text;
 
 		&,
 		section {
@@ -9,10 +10,6 @@
 			flex-direction: column;
 			gap: 0.8em;
 			width: 100%;
-		}
-
-		* {
-			user-select: text;
 		}
 
 		h1,

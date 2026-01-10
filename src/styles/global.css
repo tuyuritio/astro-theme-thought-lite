@@ -63,32 +63,23 @@
 }
 
 @layer base {
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		font-family: inherit;
-		user-select: none;
-		-webkit-tap-highlight-color: transparent;
-	}
-
-	*::selection {
+	::selection {
 		background-color: var(--selection-color);
 	}
 
-	*::-webkit-scrollbar {
+	::-webkit-scrollbar {
 		background-color: transparent;
 		width: 5px;
 		height: 5px;
 	}
 
-	*::-webkit-scrollbar-thumb {
+	::-webkit-scrollbar-thumb {
 		border-radius: 5px;
 		background-color: var(--primary-color);
 	}
 
 	@supports not selector(::-webkit-scrollbar) {
-		* {
+		:root {
 			scrollbar-width: thin;
 			scrollbar-color: var(--primary-color) transparent;
 		}
@@ -97,6 +88,7 @@
 	html {
 		scroll-behavior: smooth;
 		overflow-x: clip;
+		-webkit-tap-highlight-color: transparent;
 	}
 
 	body {
@@ -105,6 +97,7 @@
 		color: var(--primary-color);
 		background-color: var(--background-color);
 		overflow-x: clip;
+		user-select: none;
 	}
 
 	@media screen and (max-width: 640px) {
