@@ -32,6 +32,7 @@
 		"check": "astro check",
 		"build": "astro build",
 		"preview": "wrangler dev",
+		"types": "wrangler types",
 		"format": "biome format --write",
 		"lint": "biome lint",
 		"deploy": "wrangler deploy",
@@ -40,7 +41,7 @@
 		"db:migration": "drizzle-kit generate",
 		"db:migrate:local": "wrangler d1 migrations apply DB --local",
 		"db:migrate:remote": "wrangler d1 migrations apply DB --remote",
-		"prepare": "husky",
+		"prepare": "pnpm run types && husky",
 		"preinstall": "npx only-allow pnpm"
 	},
 	"dependencies": {
@@ -112,6 +113,7 @@
 		"@types/luxon": "^3.7.1",
 		"@types/mdast": "^4.0.4",
 		"@types/ms": "^2.1.0",
+		"@types/node": "^25.0.6",
 		"@types/unist": "^3.0.3",
 		"css-tree": "^3.1.0",
 		"drizzle-kit": "^0.31.8",

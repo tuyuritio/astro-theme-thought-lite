@@ -6,6 +6,7 @@ dist/
 # generated types
 .astro/
 .vscode/count
+/worker-configuration.d.ts
 
 # dependencies
 node_modules/
