@@ -84,7 +84,6 @@ Private Key:
 
 | 变量 | 描述 |
 | - | - |
-| `MAILGUN_DOMAIN`* | 邮件域名 |
 | `MAILGUN_API_KEY`* | Mailgun API 密钥 |
 
 `*` 表示必要选项。

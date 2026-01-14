@@ -3,12 +3,10 @@ export class Mailgun implements EmailProvider {
 
 	/**
 	 * Creates a new Mailgun email provider.
-	 * @param domain Email domain
 	 * @param apiKey Mailgun API key
 	 * @param unsubscribeURL optional unsubscribe URL to include in email headers
 	 */
 	constructor(
-		private domain: string,
 		private apiKey: string,
 		private unsubscribeURL?: string | URL
 	) {}
@@ -27,7 +25,8 @@ export class Mailgun implements EmailProvider {
 			form.append("h:List-Unsubscribe-Post", "List-Unsubscribe=One-Click");
 		}
 
-		await fetch(`https://api.mailgun.net/v3/${this.domain}/messages`, {
+		const domain = from.match(/(?:<[^>]*@|@)([^>\s]+)>?$/)?.[1];
+		await fetch(`https://api.mailgun.net/v3/${domain}/messages`, {
 			method: "POST",
 			headers: {
 				authorization: `Basic ${btoa(`api:${this.apiKey}`)}`

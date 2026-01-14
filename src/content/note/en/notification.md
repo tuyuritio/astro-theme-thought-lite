@@ -84,7 +84,6 @@ After configuring the following variables in `.env`, the system will use Mailgun
 
 | Variable | Description |
 | - | - |
-| `MAILGUN_DOMAIN`* | Email Domain |
 | `MAILGUN_API_KEY`* | Mailgun API Key |
 
 `*` Indicates a required option.

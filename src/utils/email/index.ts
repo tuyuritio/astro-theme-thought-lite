@@ -53,8 +53,8 @@ export async function send(payload: EmailPayload, unsubscribeURL?: string | URL)
 
 	if (env.RESEND_API_KEY) {
 		mailer = new Resend(env.RESEND_API_KEY, unsubscribeURL);
-	} else if (env.MAILGUN_DOMAIN && env.MAILGUN_API_KEY) {
-		mailer = new Mailgun(env.MAILGUN_DOMAIN, env.MAILGUN_API_KEY, unsubscribeURL);
+	} else if (env.MAILGUN_API_KEY) {
+		mailer = new Mailgun(env.MAILGUN_API_KEY, unsubscribeURL);
 	} else {
 		mailer = new Mock();
 	}

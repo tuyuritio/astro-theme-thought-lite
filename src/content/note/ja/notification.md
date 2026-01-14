@@ -84,7 +84,6 @@ Private Key:
 
 | 変数 | 説明 |
 | - | - |
-| `MAILGUN_DOMAIN`* | メールドメイン |
 | `MAILGUN_API_KEY`* | Mailgun API キー |
 
 `*` は必須項目を示します。
