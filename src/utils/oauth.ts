@@ -94,7 +94,7 @@ export class OAuth {
 			const response = await fetch("https://api.github.com/user", {
 				headers: { authorization: `Bearer ${accessToken}`, "user-agent": USER_AGENT }
 			});
-			const user = await response.json();
+			const user: any = await response.json();
 
 			// Fetch user email addresses to find primary verified email
 			// https://docs.github.com/en/rest/users/emails#list-email-addresses-for-the-authenticated-user
@@ -139,7 +139,7 @@ export class OAuth {
 			const response = await fetch("https://api.twitter.com/2/users/me?user.fields=confirmed_email,description,profile_image_url", {
 				headers: { authorization: `Bearer ${accessToken}`, "user-agent": USER_AGENT }
 			});
-			const user = (await response.json()).data;
+			const user = (await response.json<any>()).data;
 
 			// Remove "_normal" suffix from Twitter profile image for higher resolution
 			return {
@@ -173,7 +173,7 @@ export class OAuth {
 			const response = await fetch("https://api.github.com/user", {
 				headers: { authorization: `Bearer ${token}`, "user-agent": USER_AGENT }
 			});
-			const user = await response.json();
+			const user: any = await response.json();
 
 			return {
 				provider: "GitHub",
@@ -197,7 +197,7 @@ export class OAuth {
 			const response = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
 				headers: { authorization: `Bearer ${token}`, "user-agent": USER_AGENT }
 			});
-			const user = await response.json();
+			const user: any = await response.json();
 
 			return { provider: "Google", access: token, expire: expireAt, account: user.sub, name: user.name, image: user.picture };
 		} else if (this.provider instanceof Twitter) {
@@ -213,7 +213,7 @@ export class OAuth {
 			const response = await fetch("https://api.twitter.com/2/users/me?user.fields=description,profile_image_url", {
 				headers: { authorization: `Bearer ${token}`, "user-agent": USER_AGENT }
 			});
-			const user = (await response.json()).data;
+			const user = (await response.json<any>()).data;
 
 			// Remove "_normal" suffix from Twitter profile image for higher resolution
 			return {

@@ -33,7 +33,7 @@ export const GET: APIRoute = async ({ site, params }) => {
 		favicon: new URL("favicon.ico", site).toString(), // Feed favicon
 		id: site!.toString(), // Unique feed identifier
 		link: site!.toString(), // Feed's associated website
-		stylesheet: new URL("/feed.xsl", site).toString() // XSL stylesheet for feed
+		stylesheet: "feed.xsl" // XSL stylesheet for feed
 	});
 
 	// Aggregate items from specified sections

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.2...v0.35.3) (2026-01-15)
+
+
+### Bug Fixes
+
+* **feed:** use relative URL for XSL stylesheet ([795a02a](https://github.com/tuyuritio/astro-theme-thought-lite/commit/795a02aca1ac1ca17dd994ac8ba1e55d2bb18911))
+
 ## [0.35.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.1...v0.35.2) (2026-01-15)
 
 

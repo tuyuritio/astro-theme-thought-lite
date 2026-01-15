@@ -63,7 +63,7 @@ export const comment = {
 						})
 					});
 
-					const result = await response.json();
+					const result: { success: boolean } = await response.json();
 					if (!result.success) throw new ActionError({ code: "BAD_REQUEST" });
 				} else {
 					// If unauthenticated and Turnstile is unavailable, throw unauthorized error
