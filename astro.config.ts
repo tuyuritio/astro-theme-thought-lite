@@ -34,7 +34,7 @@ import reading from "./src/utils/remark/reading";
 import figure from "./src/utils/remark/figure";
 
 import siteConfig from "./site.config";
-import { ZeoSevenFonts } from "./src/fonts/config";
+import ZeoSevenFonts from "./src/fonts/zeo-seven-fonts";
 
 // https://astro.build/config
 export default defineConfig({
@@ -145,6 +145,7 @@ export default defineConfig({
 				provider: fontProviders.google(),
 				weights: [100],
 				display: "block",
+				subsets: ["fallback"],
 				fallbacks: ["serif"],
 				cssVariable: "--font-playwrite-mx"
 			},
