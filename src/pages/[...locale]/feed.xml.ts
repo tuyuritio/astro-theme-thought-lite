@@ -32,7 +32,8 @@ export const GET: APIRoute = async ({ site, params }) => {
 		image: new URL("favicon-96x96.png", site).toString(), // Feed image/logo
 		favicon: new URL("favicon.ico", site).toString(), // Feed favicon
 		id: site!.toString(), // Unique feed identifier
-		link: site!.toString() // Feed's associated website
+		link: site!.toString(), // Feed's associated website
+		stylesheet: new URL("/feed.xsl", site).toString() // XSL stylesheet for feed
 	});
 
 	// Aggregate items from specified sections
@@ -111,8 +112,8 @@ export const GET: APIRoute = async ({ site, params }) => {
 		});
 	});
 
-	// Append stylesheet declaration to the feed
-	const xml = feed.atom1().replace(/(<\?xml version="1\.0" encoding="utf-8".*\?>)/, '$1\n<?xml-stylesheet type="text/xsl" href="/feed.xsl"?>');
+	// Generate Atom 1.0 XML feed
+	const xml = feed.atom1();
 
 	return new Response(xml, { headers: { "Content-Type": "application/xml" } });
 };

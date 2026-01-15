@@ -51,7 +51,7 @@
 		"@swup/astro": "^1.7.0",
 		"@tailwindcss/vite": "^4.1.18",
 		"astro": "^5.16.6",
-		"feed": "^5.1.0",
+		"feed": "^5.2.0",
 		"hastscript": "^9.0.1",
 		"katex": "^0.16.27",
 		"luxon": "^3.7.2",
