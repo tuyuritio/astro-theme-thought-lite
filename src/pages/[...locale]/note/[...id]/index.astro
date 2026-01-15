@@ -46,7 +46,7 @@ const t = i18nit(locale);
 <Base title={note.data.title} {locale} description={note.data.description} article={{ timestamp: note.data.timestamp, section: note.data.series, tags: note.data.tags }}>
 	<main class="flex flex-col gap-6">
 		<header class="flex flex-col gap-4">
-			<h1>{note.data.title}</h1>
+			<h1 class="select-text">{note.data.title}</h1>
 			<div class="flex flex-col gap-3 sm:flex-row *:flex *:items-center *:gap-1 *:text-[0.875rem] *:text-secondary">
 				<time datetime={note.data.timestamp.toISOString()}><Icon name="lucide--calendar" />{Time.toString(note.data.timestamp)}</time>
 				{
