@@ -5,4 +5,9 @@ declare global {
 		swup: Swup;
 		zoom: () => void;
 	}
+
+	declare module "*.yaml" {
+		const content: Record<string, any>;
+		export default content;
+	}
 }
