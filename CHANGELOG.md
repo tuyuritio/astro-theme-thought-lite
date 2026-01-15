@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.35.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.1...v0.35.2) (2026-01-15)
+
+
+### Bug Fixes
+
+* **feed:** upgrade dependency to support formal XSL configuration ([b57d1e4](https://github.com/tuyuritio/astro-theme-thought-lite/commit/b57d1e43dfb34f23dd9a98ee6cb6f84f8877e3c3))
+
+
+### Miscellaneous Chores
+
+* upgrade dependency and refactor ZeoSevenFonts provider ([e4302f5](https://github.com/tuyuritio/astro-theme-thought-lite/commit/e4302f52ce5ba0ac4064df44cb8c7233ffe997f6))
+
+
+### Styles
+
+* add text selection styling to title ([4c7614d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/4c7614d50b15d41f9c2184825a19bbc86da4883e))
+
 ## [0.35.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.0...v0.35.1) (2026-01-09)
 
 
