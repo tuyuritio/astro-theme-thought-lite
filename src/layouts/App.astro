@@ -1,5 +1,6 @@
 ---
 import { Font, type CssVariable } from "astro:assets";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import { turnstile } from "$config";
 
 const { locale, title, subtitle, description, author, article } = Astro.props;
@@ -21,6 +22,7 @@ const localedMainFont = mainFonts[locale];
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<link rel="alternate" type="application/atom+xml" {title} href={getRelativeLocaleUrl(locale, "/feed.xml")} />
 
 		<meta property="og:title" content={`${subtitle && `${subtitle} | `}${title}`} />
 		<meta property="og:type" content={(article && "article") || "website"} />

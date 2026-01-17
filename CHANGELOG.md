@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.35.4](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.3...v0.35.4) (2026-01-17)
+
+
+### Miscellaneous Chores
+
+* add alternate feed link ([5f776b8](https://github.com/tuyuritio/astro-theme-thought-lite/commit/5f776b834bcd031f416bf534a8d4375279f32ac8))
+* update environment variable patterns ([72429c8](https://github.com/tuyuritio/astro-theme-thought-lite/commit/72429c87bd02f57018b027bfb403f84266b4ae89))
+
 ## [0.35.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.2...v0.35.3) (2026-01-15)
 
 
