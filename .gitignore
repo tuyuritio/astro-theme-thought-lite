@@ -26,7 +26,8 @@ todo*
 
 # environment variables
 .env
-.env.production
+.env.*
+!.env.example
 wrangler.toml
 
 # macOS-specific files
