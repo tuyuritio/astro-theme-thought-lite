@@ -1,4 +1,4 @@
-name = "<PROJECT_NAME>"
+name = "$PROJECT_NAME"
 main = "./dist/_worker.js/index.js"
 compatibility_date = "2025-06-30"
 compatibility_flags = ["nodejs_compat"]
@@ -13,8 +13,8 @@ enabled = true
 
 [[d1_databases]]
 binding = "DB"
-database_name = "<DATABASE_NAME>"
-database_id = "<DATABASE_ID>"
+database_name = "$DATABASE_NAME"
+database_id = "$DATABASE_ID"
 migrations_dir = "drizzle"
 
 [[ratelimits]]
