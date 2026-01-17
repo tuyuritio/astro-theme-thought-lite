@@ -4,8 +4,6 @@ declare global {
 	interface Window {
 		swup: Swup;
 		zoom: () => void;
-		turnstile: any;
-		onloadTurnstileCallback: () => void;
 	}
 
 	declare namespace App {

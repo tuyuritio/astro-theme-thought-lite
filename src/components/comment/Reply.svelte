@@ -1,7 +1,8 @@
 <script lang="ts">
 import { ActionError, actions } from "astro:actions";
-import { slide } from "svelte/transition";
 import { onMount, untrack } from "svelte";
+import { slide } from "svelte/transition";
+import { Turnstile } from "svelte-turnstile";
 import remark from "$utils/remark";
 import Icon from "$components/Icon.svelte";
 import Modal from "$components/Modal.svelte";
@@ -44,8 +45,7 @@ let content: string = $state(""); // Comment content, will be initialized in onM
 let preview: boolean = $state(false); // Toggle between edit and preview mode
 let nickname: string | null = $state(null); // Nickname for unauthenticated users
 let captcha: string | undefined = $state(); // Captcha token for unauthenticated users
-let turnstileElement: HTMLElement | undefined = $state(); // Element to render Turnstile widget
-let turnstileID: string | undefined = $state(); // ID of the rendered Turnstile widget
+let resetTurnstile: (() => void) | undefined = $state(); // Function to reset Turnstile widget
 let overlength: boolean = $derived(content.length > Number(config.comment?.["max-length"])); // Content length check
 
 // Generate storage key
@@ -147,7 +147,7 @@ async function submit() {
 
 		// Only reset turnstile for top-level comments (when reply is undefined) or if there was an error
 		if (!reply || error) {
-			window.turnstile.reset(turnstileID);
+			resetTurnstile?.();
 			captcha = undefined;
 		}
 
@@ -272,31 +272,6 @@ onMount(() => {
 	// If unauthenticated, setup nickname and Turnstile
 	if (!context.drifter) {
 		nickname = localStorage.getItem("nickname");
-
-		/**
-		 * Render Turnstile widget
-		 */
-		function initTurnstile() {
-			turnstileID = window.turnstile.render(turnstileElement, {
-				sitekey: context.turnstile,
-				callback: (token: string) => {
-					captcha = token;
-				},
-				"expired-callback": () => {
-					captcha = undefined;
-				},
-				"error-callback": () => {
-					captcha = undefined;
-				}
-			});
-		}
-
-		// Check if turnstile is available and render immediately
-		if (window.turnstile) {
-			initTurnstile();
-		} else {
-			window.onloadTurnstileCallback = initTurnstile;
-		}
 	}
 });
 </script>
@@ -377,7 +352,9 @@ onMount(() => {
 				{#if context.drifter}
 					<button onclick={() => (profileView = true)}><Icon name="lucide--user-round-pen" title={t("drifter.profile")} /></button>
 				{:else}
-					<div bind:this={turnstileElement}></div>
+					{#if context.turnstile}
+						<Turnstile siteKey={context.turnstile} bind:reset={resetTurnstile} on:expired={() => (captcha = undefined)} on:error={() => (captcha = undefined)} on:callback={({ detail }) => (captcha = detail.token)} />
+					{/if}
 					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35 text-sm" />
 					{#if context.oauth.length}
 						<button onclick={() => (reachView = true)}><Icon name="lucide--user-round" title={t("drifter.signin")} /></button>
