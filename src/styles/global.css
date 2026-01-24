@@ -36,6 +36,23 @@
 	}
 }
 
+[data-theme="light"] {
+	--primary-color: #2a2a28;
+	--secondary-color: #50504d;
+	--remark-color: #757575;
+	--weak-color: #9f9f9c;
+	--background-color: #fffffd;
+	--block-color: #eeeeee;
+	--shadow-color: #cdcdcc;
+	--selection-color: #adadacc3;
+}
+
+[data-theme="light"] .astro-code,
+[data-theme="light"] .astro-code span {
+	color: var(--shiki-light) !important;
+	background-color: var(--shiki-light-bg) !important;
+}
+
 [data-theme="dark"] {
 	--primary-color: #dddddb;
 	--secondary-color: #aaaaa8;
