@@ -1,4 +1,9 @@
 ---
+/**
+ * Scroll Indicator
+ * Combined component: scroll progress bar + back-to-top button
+ * Single progress calculation shared between both UI elements
+ */
 import Icon from "$components/Icon.svelte";
 import i18nit from "$i18n";
 
@@ -7,7 +12,6 @@ export interface Props {
 }
 
 const { locale } = Astro.props;
-
 const t = i18nit(locale);
 ---
 
@@ -32,59 +36,143 @@ const t = i18nit(locale);
 			0 4px 6px -1px rgb(0 0 0 / 0.1),
 			0 2px 4px -2px rgb(0 0 0 / 0.1);
 	}
+
+	/* Progress circle using conic-gradient */
+	.progress-ring {
+		position: absolute;
+		top: -2px;
+		left: -2px;
+		width: calc(100% + 4px);
+		height: calc(100% + 4px);
+		border-radius: 50%;
+		pointer-events: none;
+		--progress: 0;
+		background: conic-gradient(
+			from 0deg,
+			currentColor calc(var(--progress) * 1%),
+			transparent calc(var(--progress) * 1%)
+		);
+		-webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+		mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+	}
 </style>
 
+<!-- Scroll Progress Bar -->
+<div id="scroll-progress" class="scroll-progress">
+	<div class="scroll-progress-track"></div>
+	<div class="scroll-progress-bar"></div>
+	<div id="scroll-handle" class="scroll-progress-handle"></div>
+</div>
+
+<!-- Back to Top Button -->
 <figure class="fixed end-[calc(20px+max(calc((100%-1100px)/2),0px))] bottom-5 sm:bottom-30 flex flex-col gap-2 z-3">
 	<button aria-label="Scroll to Top" class="border-weak" onclick="document.scrollingElement?.scrollTo({top: 0, behavior: 'smooth'})">
 		<Icon name="lucide--arrow-up-to-line" size={18} title={t("note.top")} />
-		<svg class="absolute -top-0.5 -start-0.5 w-[calc(100%+4px)] h-[calc(100%+4px)] -rotate-90 transform-origin-center pointer-events-none">
-			<circle id="progress-circle" cx="50%" cy="50%" r="calc(50% - 1px)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"></circle>
-		</svg>
+		<div id="progress-circle" class="progress-ring"></div>
 	</button>
 </figure>
 
 <script>
-	function updateProgress() {
-		const content = document.getElementById("markdown-content");
-		if (content) {
-			// Retrieve key metrics: content height, top position, viewport height, and current scroll
-			const contentHeight = content.scrollHeight;
-			const contentTop = content.offsetTop;
-			const viewportHeight = window.innerHeight;
-			const scrollTop = window.scrollY;
+	let container: HTMLElement | null = null;
+	let progressRing: HTMLElement | null = null;
+	let ticking = false;
+	let isDragging = false;
 
-			let scrolled, scrollable;
+	/** Calculate page scroll progress (0 at top, 1 at bottom) */
+	function calculateProgress(): number {
+		const scrollTop = window.scrollY;
+		const scrollHeight = document.documentElement.scrollHeight;
+		const viewportHeight = window.innerHeight;
+		const scrollableHeight = scrollHeight - viewportHeight;
 
-			// Determine if the content is taller than the viewport
-			if (viewportHeight < contentHeight) {
-				// Long Article
+		if (scrollableHeight <= 0) return 0;
+		return Math.min(Math.max(scrollTop / scrollableHeight, 0), 1);
+	}
 
-				// Distance scrolled past the top of the content
-				scrolled = Math.max(0, scrollTop - contentTop);
+	/** Update all progress indicators */
+	function update(): void {
+		const progress = calculateProgress();
+		const percent = progress * 100;
 
-				// Total distance required to align the bottom of the content with the viewport bottom
-				scrollable = contentHeight - viewportHeight;
-			} else {
-				// Short Article
+		// Update scroll progress bar and handle position via CSS variable
+		document.documentElement.style.setProperty("--scroll-progress", `${percent}%`);
 
-				// Absolute scroll position from the top of the page
-				scrolled = scrollTop;
-
-				// Distance required for the content's bottom to touch the viewport's bottom
-				scrollable = Math.max(0, contentHeight + contentTop - viewportHeight);
-			}
-
-			// Calculate progress ratio
-			// Note: If scrollable is 0, result is Infinity/NaN, which CSS ignores, effectively defaulting to 100% (full circle).
-			const progress = Math.min(1, scrolled / scrollable);
-
-			const circle = document.getElementById("progress-circle");
-			if (circle instanceof SVGCircleElement) {
-				circle.style.strokeDashoffset = `${100 * (1 - progress)}`;
-			}
+		// Update back-to-top circle using CSS custom property
+		if (progressRing) {
+			progressRing.style.setProperty("--progress", `${percent}`);
 		}
 	}
 
-	window.addEventListener("scroll", updateProgress);
-	updateProgress();
+	function onScroll(): void {
+		if (!ticking) {
+			requestAnimationFrame(() => {
+				update();
+				ticking = false;
+			});
+			ticking = true;
+		}
+	}
+
+	function onMouseDown(e: MouseEvent): void {
+		e.preventDefault();
+		isDragging = true;
+		// Disable smooth scroll during drag
+		document.documentElement.style.scrollBehavior = "auto";
+		// Immediately scroll to mouse position on mousedown
+		const rect = container!.getBoundingClientRect();
+		const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+		const progress = Math.max(0, Math.min(e.clientY / rect.height, 1));
+		window.scrollTo({ top: progress * scrollable });
+
+		document.addEventListener("mousemove", onMouseMove);
+		document.addEventListener("mouseup", onMouseUp);
+		document.body.style.userSelect = "none";
+	}
+
+	function onMouseMove(e: MouseEvent): void {
+		if (!isDragging) return;
+		// Direct position-based scrolling - follow mouse position
+		const rect = container!.getBoundingClientRect();
+		const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+		const progress = Math.max(0, Math.min(e.clientY / rect.height, 1));
+		window.scrollTo({ top: progress * scrollable });
+	}
+
+	function onMouseUp(): void {
+		isDragging = false;
+		// Restore smooth scroll
+		document.documentElement.style.scrollBehavior = "";
+		document.removeEventListener("mousemove", onMouseMove);
+		document.removeEventListener("mouseup", onMouseUp);
+		document.body.style.userSelect = "";
+	}
+
+	function onClick(e: MouseEvent): void {
+		const rect = container!.getBoundingClientRect();
+		const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+		const targetScroll = (e.clientY / rect.height) * scrollable;
+		window.scrollTo({ top: targetScroll, behavior: "smooth" });
+	}
+
+	function init(): void {
+		// Scroll progress bar elements
+		container = document.getElementById("scroll-progress");
+		if (container) {
+			const handle = document.getElementById("scroll-handle");
+			// Click on container for smooth scroll
+			container.addEventListener("click", onClick);
+			// Bind drag only to handle
+			handle?.addEventListener("mousedown", onMouseDown);
+		}
+
+		// Back-to-top progress ring element
+		progressRing = document.getElementById("progress-circle");
+
+		update();
+		window.addEventListener("scroll", onScroll, { passive: true });
+		window.addEventListener("resize", update, { passive: true });
+	}
+
+	init();
+	document.addEventListener("astro:page-load", init);
 </script>

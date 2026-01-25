@@ -15,6 +15,9 @@
 	--selection-color: #adadacc3;
 
 	--swup-fade-theme-duration: 0.15s;
+
+	/* Scroll progress indicator */
+	--scroll-progress: 0%;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -67,22 +70,14 @@
 		background-color: var(--selection-color);
 	}
 
+	/* Hide native scrollbar but keep scroll functionality */
 	::-webkit-scrollbar {
-		background-color: transparent;
-		width: 5px;
-		height: 5px;
+		display: none;
 	}
 
-	::-webkit-scrollbar-thumb {
-		border-radius: 5px;
-		background-color: var(--primary-color);
-	}
-
-	@supports not selector(::-webkit-scrollbar) {
-		:root {
-			scrollbar-width: thin;
-			scrollbar-color: var(--primary-color) transparent;
-		}
+	/* Firefox: hide scrollbar */
+	html {
+		scrollbar-width: none;
 	}
 
 	html {
@@ -299,4 +294,72 @@
 	@variant ltr {
 		clip-path: inset(0 0 0 0);
 	}
+}
+
+/* Custom scroll progress indicator */
+.scroll-progress {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 12px;
+	height: 100vh;
+	z-index: 9999;
+	cursor: pointer;
+}
+
+.scroll-progress-track {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 4px;
+	height: 100%;
+	background-color: transparent;
+	transition:
+		width 0.15s ease,
+		background-color 0.15s ease;
+}
+
+.scroll-progress:hover .scroll-progress-track {
+	width: 100%;
+	background-color: var(--block-color);
+}
+
+.scroll-progress-bar {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 4px;
+	height: var(--scroll-progress, 0%);
+	background-color: var(--primary-color);
+	transition: width 0.15s ease;
+}
+
+.scroll-progress:hover .scroll-progress-bar {
+	width: 100%;
+}
+
+/* Scroll handle - extends from progress bar on hover */
+.scroll-progress-handle {
+	position: absolute;
+	top: var(--scroll-progress, 0%);
+	right: 0;
+	width: 4px;
+	height: 0;
+	background-color: var(--primary-color);
+	border-radius: 4px;
+	cursor: grab;
+	transition:
+		width 0.15s ease,
+		height 0.15s ease;
+	transform: translateY(-50%);
+}
+
+.scroll-progress:hover .scroll-progress-handle {
+	width: 100%;
+	height: 20px;
+	background-color: var(--secondary-color);
+}
+
+.scroll-progress-handle:active {
+	cursor: grabbing;
 }
