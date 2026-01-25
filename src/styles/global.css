@@ -64,6 +64,12 @@
 	--selection-color: #adadacc3;
 }
 
+[data-theme="dark"] .astro-code,
+[data-theme="dark"] .astro-code span {
+	color: var(--shiki-dark) !important;
+	background-color: var(--shiki-dark-bg) !important;
+}
+
 /* Language-specific fonts */
 :lang(zh-cn) {
 	--font-serif: var(--font-noto-serif-sc);
@@ -71,12 +77,6 @@
 
 :lang(ja) {
 	--font-serif: var(--font-noto-serif-jp);
-}
-
-[data-theme="dark"] .astro-code,
-[data-theme="dark"] .astro-code span {
-	color: var(--shiki-dark) !important;
-	background-color: var(--shiki-dark-bg) !important;
 }
 
 @layer base {
