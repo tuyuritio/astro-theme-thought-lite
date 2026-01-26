@@ -126,7 +126,8 @@ pnpm install
 - 宣传项目或帮助其他用户
 - 提交 [issues](https://github.com/tuyuritio/astro-theme-thought-lite/issues) 或新功能建议
 - 改进文档及国际化（i18n）支持
-- 贡献代码 - 详情请参阅 [代码贡献指南](CONTRIBUTING.md)
+- 贡献代码
+- 更多信息请参阅[代码贡献指南](CONTRIBUTING.md)
 
 ## 🙏 鸣谢
 

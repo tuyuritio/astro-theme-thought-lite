@@ -126,7 +126,8 @@ pnpm install
 - プロジェクトの宣伝や他のユーザーの支援
 - [Issues](https://github.com/tuyuritio/astro-theme-thought-lite/issues) の報告や新機能の提案
 - ドキュメントの改善や国際化（i18n）の支援
-- コード貢献の提出 - 詳細は[コード貢献ガイド](CONTRIBUTING.md)を参照してください
+- コード貢献の提出
+- 詳細は[コード貢献ガイド](CONTRIBUTING.md)を参照してください
 
 ## 🙏 謝辞
 
