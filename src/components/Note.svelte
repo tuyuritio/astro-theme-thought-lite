@@ -1,6 +1,6 @@
 <script lang="ts">
 import { getRelativeLocaleUrl } from "astro:i18n";
-import { onMount } from "svelte";
+import { untrack } from "svelte";
 import { flip } from "svelte/animate";
 import { fade } from "svelte/transition";
 import config, { monolocale } from "$config";
@@ -12,53 +12,17 @@ let { locale, notes, series: seriesList, tags: tagList }: { locale: string; note
 
 const t = i18nit(locale);
 
-let initial = $state(false); // Track initial load to prevent unexpected effects
+/** Track initial load to parse URL parameters */
+let initial = $state(true);
+
+/** Pagination size */
+const size: number = config.pagination?.note || 15;
+
+let pages: number = $state(1);
+let page: number = $state(1);
+let pageParam: boolean = $state(false);
 let series: string | null = $state(null);
 let tags: string[] = $state([]);
-let filtered: any[] = $derived.by(() => {
-	let list: any[] = notes
-		// Apply series and tag filtering
-		.filter(note => {
-			// Check if note matches the specified series
-			let matchSeries = !series || note.data.series === series;
-
-			// Check if note contains all specified tags
-			let matchTags = tags.every(tag => note.data.tags?.includes(tag));
-
-			return matchSeries && matchTags;
-		})
-		// Sort by timestamp (newest first)
-		.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
-
-	if (!initial) return list;
-
-	// Build URL with current page, series, and tag filters using URLSearchParams
-	let params = new URLSearchParams();
-
-	params.set("page", String(page));
-	if (series) params.set("series", series);
-	for (const tag of tags) params.append("tag", tag);
-
-	let url = `${location.pathname}?${params.toString()}`;
-
-	// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
-	window.history.replaceState({ url, random: Math.random(), source: "swup" }, "", url);
-
-	return list;
-});
-
-// Calculate pagination
-const size: number = config.pagination?.note || 15;
-let pages: number = $derived(Math.ceil(filtered.length / size));
-
-// Ensure page is within valid range
-let page: number = $state(1);
-$effect(() => {
-	page = Math.max(1, Math.min(Math.floor(page), pages));
-});
-
-// Apply pagination by slicing the array
-let list: any[] = $derived(filtered.slice((page - 1) * size, page * size));
 
 /**
  * Toggle tag inclusion/exclusion in the filter list
@@ -71,6 +35,10 @@ function switchTag(tag: string, turn?: boolean) {
 
 	// Add tag if turning on and not included, or remove if turning off
 	tags = turn ? (included ? tags : [...tags, tag]) : tags.filter(item => item !== tag);
+
+	// Reset page parameter
+	pageParam = false;
+	page = 1;
 }
 
 /**
@@ -82,16 +50,70 @@ function chooseSeries(seriesChoice: string, turn?: boolean) {
 	if (turn === undefined) turn = series !== seriesChoice;
 	// Set series if turning on, or clear if turning off
 	series = turn ? seriesChoice : null;
+
+	// Reset page parameter
+	pageParam = false;
+	page = 1;
 }
 
-onMount(() => {
-	const params = new URLSearchParams(window.location.search);
+/** Filtered and paginated list of notes */
+let list: any[] = $derived.by(() => {
+	let filtered: any[] = notes
+		.filter(note => {
+			// Check if note matches the specified series
+			let matchSeries = !series || note.data.series === series;
 
-	page = Number(params.get("page")) || 1;
-	series = params.get("series");
-	tags = params.getAll("tag");
+			// Check if note contains all specified tags
+			let matchTags = tags.every(tag => note.data.tags?.includes(tag));
 
-	initial = true;
+			return matchSeries && matchTags;
+		})
+		// Sort by timestamp (newest first)
+		.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
+
+	untrack(() => {
+		// Ensure page is within valid range
+		pages = Math.ceil(filtered.length / size);
+		page = Math.max(1, Math.min(Math.floor(page), pages));
+	});
+
+	// Apply pagination by slicing the array
+	filtered = filtered.slice((page - 1) * size, page * size);
+
+	return filtered;
+});
+
+$effect(() => {
+	if (initial) {
+		// Parse URL parameters when component is first mounted
+		const params = new URLSearchParams(window.location.search);
+
+		if (params.get("page") !== null) {
+			pageParam = true;
+			const value = Number(params.get("page"));
+			page = Number.isNaN(value) ? 1 : value;
+		}
+
+		series = params.get("series");
+		tags = params.getAll("tag");
+
+		initial = false;
+	} else {
+		// Build URL with current page, series, and tag filters using URLSearchParams
+		const url = new URL(window.location.href);
+		url.searchParams.delete("series");
+		url.searchParams.delete("tag");
+		url.searchParams.delete("page");
+
+		if (series) url.searchParams.set("series", series);
+		for (const tag of tags) url.searchParams.append("tag", tag);
+
+		if (page > 1) pageParam = true;
+		if (pageParam) url.searchParams.set("page", String(page));
+
+		// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
+		window.history.replaceState({ url: url.toString(), random: Math.random(), source: "swup" }, "", url);
+	}
 });
 </script>
 
