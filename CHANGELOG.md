@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.35.5](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.4...v0.35.5) (2026-02-01)
+
+
+### Bug Fixes
+
+* improve URL replacing logic ([66ba5ce](https://github.com/tuyuritio/astro-theme-thought-lite/commit/66ba5ceea28c020f549fcb986404ad3c6703d0bb))
+* **pagination:** implement reusable pagination component ([61690c3](https://github.com/tuyuritio/astro-theme-thought-lite/commit/61690c3c772632c0f538c27a5304f54cdca70fc4))
+
 ## [0.35.4](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.3...v0.35.4) (2026-01-17)
 
 
