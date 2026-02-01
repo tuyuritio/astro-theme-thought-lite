@@ -144,7 +144,8 @@ All kinds of contributions are welcome and appreciated!
 - Help promote the project or assist other users
 - Report [issues](https://github.com/tuyuritio/astro-theme-thought-lite/issues) or suggest new features
 - Improve documentation or help with internationalization (i18n)
-- Submit code contributions - see the [Code Contribution Guide](CONTRIBUTING.md) for more details
+- Submit code contributions
+- See [Contribution Guide](CONTRIBUTING.md) for more information
 
 ## 🙏 Acknowledgments
 
