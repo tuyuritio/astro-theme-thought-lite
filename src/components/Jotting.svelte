@@ -2,9 +2,9 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { untrack } from "svelte";
 import { flip } from "svelte/animate";
-import { fade } from "svelte/transition";
 import config, { monolocale } from "$config";
 import Icon from "$components/Icon.svelte";
+import Pagination from "$components/Pagination.svelte";
 import i18nit from "$i18n";
 
 let { locale, jottings, tags: tagList }: { locale: string; jottings: any[]; tags: string[] } = $props();
@@ -96,7 +96,7 @@ $effect(() => {
 			{#each list as jotting (jotting.id)}
 				<section animate:flip={{ duration: 150 }} class="flex flex-col justify-center border-b border-dashed border-b-weak pb-1">
 					<span class="flex items-center gap-1">
-						{#if jotting.data.top > 0}<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100"/>{/if}
+						{#if jotting.data.top > 0}<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100" />{/if}
 						{#if jotting.data.sensitive}<Icon name="lucide--siren" title={t("sensitive.icon")} />{/if}
 						<a href={getRelativeLocaleUrl(locale, `/jotting/${monolocale ? jotting.id : jotting.id.split("/").slice(1).join("/")}`)} class="leading-normal text-primary font-semibold link truncate">{jotting.data.title}</a>
 					</span>
@@ -111,23 +111,7 @@ $effect(() => {
 			{/each}
 		</header>
 
-		{#if pages > 1}
-			<footer class="sticky bottom-0 flex items-center justify-center gap-3 mt-auto pb-1 text-weak bg-background font-mono">
-				<button onclick={() => (page = Math.max(1, page - 1))}><Icon name="lucide--arrow-left" class="rtl:-scale-x-100" /></button>
-				<button class:location={1 == page} onclick={() => (page = 1)}>{1}</button>
-
-				{#if pages > 7 && page > 4}<Icon name="lucide--ellipsis" />{/if}
-
-				{#each Array.from({ length: Math.min(5, pages - 2) }, (_, i) => i + Math.max(2, Math.min(pages - 5, page - 2))) as P (P)}
-					<button class:location={P == page} onclick={() => (page = P)} animate:flip={{ duration: 150 }} transition:fade={{ duration: 150 }}>{P}</button>
-				{/each}
-
-				{#if pages > 7 && page < pages - 3}<Icon name="lucide--ellipsis" />{/if}
-
-				<button class:location={pages == page} onclick={() => (page = pages)}>{pages}</button>
-				<button onclick={() => (page = Math.min(pages, page + 1))}><Icon name="lucide--arrow-right" class="rtl:-scale-x-100" /></button>
-			</footer>
-		{/if}
+		<Pagination bind:pages bind:page />
 	</article>
 
 	<aside class="sm:basis-50 shrink-0 flex flex-col gap-5">
@@ -143,65 +127,39 @@ $effect(() => {
 </main>
 
 <style>
-	article {
-		footer {
-			button {
-				display: flex;
-				align-items: center;
-				justify-content: center;
+aside {
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
 
-				width: 30px;
-				height: 30px;
-
-				margin-top: 0.25rem 0rem 0.5rem;
-				border-bottom: 2px solid;
-
-				font-style: var(--font-mono);
-				font-size: 0.875rem;
-
-				transition: color 0.15s ease-in-out;
-
-				&:hover,
-				&.location {
-					color: var(--primary-color);
-				}
-			}
-		}
-	}
-
-	aside {
-		section {
+		p {
 			display: flex;
-			flex-direction: column;
+			flex-direction: row;
+			flex-wrap: wrap;
 			gap: 5px;
 
-			p {
-				display: flex;
-				flex-direction: row;
-				flex-wrap: wrap;
-				gap: 5px;
+			button {
+				border-bottom: 1px solid var(--primary-color);
+				padding: 0rem 0.35rem;
+				font-size: 0.9rem;
+				transition:
+					color 0.1s ease-in-out,
+					background-color 0.1s ease-in-out;
 
-				button {
-					border-bottom: 1px solid var(--primary-color);
-					padding: 0rem 0.35rem;
-					font-size: 0.9rem;
-					transition:
-						color 0.1s ease-in-out,
-						background-color 0.1s ease-in-out;
+				&.selected {
+					color: var(--background-color);
+					background-color: var(--primary-color);
+				}
 
-					&.selected {
+				@media (min-width: 640px) {
+					&:hover {
 						color: var(--background-color);
 						background-color: var(--primary-color);
 					}
-
-					@media (min-width: 640px) {
-						&:hover {
-							color: var(--background-color);
-							background-color: var(--primary-color);
-						}
-					}
 				}
 			}
 		}
 	}
+}
 </style>
