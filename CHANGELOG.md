@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.35.7](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.6...v0.35.7) (2026-02-03)
+
+
+### Bug Fixes
+
+* **font:** optimize font fallbacks  to prevent FOUT ([b72fe55](https://github.com/tuyuritio/astro-theme-thought-lite/commit/b72fe55f223d257f1688edd3034746bceae6017a))
+* **style:** prevent unintended outlines ([bce8145](https://github.com/tuyuritio/astro-theme-thought-lite/commit/bce8145513f2e9b476d49889ab84392759172cbc))
+
 ## [0.35.6](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.5...v0.35.6) (2026-02-03)
 
 
