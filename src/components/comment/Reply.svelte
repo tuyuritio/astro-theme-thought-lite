@@ -323,7 +323,7 @@ onMount(() => {
 			{@render corner(true, true)}{@render corner(true, false)}{@render corner(false, true)}{@render corner(false, false)}
 
 			<article class="flex flex-col min-h-20 mb-2 overflow-auto">
-				<textarea hidden={preview} placeholder="   {t('comment.placeholder')}" bind:this={textarea} bind:value={content} class="grow w-full bg-transparent text-base outline-none resize-none transition-[height]"></textarea>
+				<textarea hidden={preview} placeholder="   {t('comment.placeholder')}" bind:this={textarea} bind:value={content} class="grow w-full bg-transparent text-base resize-none transition-[height]"></textarea>
 				{#if preview}
 					{#if content.trim()}
 						{#await remark.process(content)}
