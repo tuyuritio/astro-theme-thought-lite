@@ -78,7 +78,7 @@
 		background-color: var(--primary-color);
 	}
 
-	*:focus {
+	*:focus-visible {
 		outline: 0.125rem solid var(--weak-color);
 		outline-offset: 0.25rem;
 	}
