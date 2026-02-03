@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.6](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.5...v0.35.6) (2026-02-03)
+
+
+### Bug Fixes
+
+* **style:** enhance focus outline ([17d4565](https://github.com/tuyuritio/astro-theme-thought-lite/commit/17d4565353b59dfadf6060ec0e36f4b059e14f71))
+
 ## [0.35.5](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.4...v0.35.5) (2026-02-01)
 
 
