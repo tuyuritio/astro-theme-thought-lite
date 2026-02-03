@@ -78,6 +78,11 @@
 		background-color: var(--primary-color);
 	}
 
+	*:focus {
+		outline: 0.125rem solid var(--weak-color);
+		outline-offset: 0.25rem;
+	}
+
 	@supports not selector(::-webkit-scrollbar) {
 		:root {
 			scrollbar-width: thin;
