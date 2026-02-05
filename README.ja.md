@@ -141,7 +141,6 @@ pnpm install
 - **フォント** - [Google Fonts](https://fonts.google.com/) | [ZeoSeven Fonts](https://fonts.zeoseven.com/)
 - **画像ビューア** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
 - **SPA トランジション** - [Swup](https://swup.js.org/)
-- **時間処理** - [Luxon](https://moment.github.io/luxon/)
 - **コード品質** - [Biome](https://biomejs.dev/)
 - **静的デプロイ** - [Vercel](https://vercel.com/)
 
