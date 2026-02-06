@@ -4,6 +4,16 @@
 	prefixes: lucide, simple-icons, fa6-brands;
 }
 
+/*
+  Z-index scale:
+  < 0: Below
+  0-9: Base
+  10-99: Elevated
+  100-999: Component
+  1000-9999: Overlay
+  10000-99999: Frame
+*/
+
 :root {
 	--primary-color: #2a2a28;
 	--secondary-color: #50504d;
@@ -192,11 +202,11 @@
 }
 
 .medium-zoom-overlay {
-	z-index: 5;
+	z-index: 1000;
 }
 
 .medium-zoom-image--opened {
-	z-index: 5;
+	z-index: 1000;
 }
 
 ::view-transition-old(root),
@@ -206,19 +216,19 @@
 }
 
 ::view-transition-old(root) {
-	z-index: 1;
+	z-index: 10000;
 }
 
 ::view-transition-new(root) {
-	z-index: 10;
+	z-index: 10001;
 }
 
 [data-theme="dark"]::view-transition-old(root) {
-	z-index: 10;
+	z-index: 10001;
 }
 
 [data-theme="dark"]::view-transition-new(root) {
-	z-index: 1;
+	z-index: 10000;
 }
 
 @theme {
@@ -286,7 +296,7 @@
 	}
 
 	.pop {
-		@apply opacity-0 invisible z-1 transition-[opacity,visibility] group-hover/pop:opacity-100 group-hover/pop:visible;
+		@apply opacity-0 invisible z-2000 transition-[opacity,visibility] group-hover/pop:opacity-100 group-hover/pop:visible;
 	}
 }
 
