@@ -24,13 +24,15 @@ import Icon from "$components/Icon.svelte";
 	}
 </style>
 
-<button id="theme-toggle" class="items-center" aria-label="Toggle theme">
+<button id="theme-toggle" aria-label="Toggle theme">
 	<span id="sun-icon"><Icon name="lucide--sun" /></span>
 	<span id="moon-icon"><Icon name="lucide--moon" /></span>
 </button>
 
 <script>
 	type Scheme = "light" | "dark";
+
+	const button = document.getElementById("theme-toggle")!;
 
 	/**
 	 * Apply the selected theme scheme
@@ -46,9 +48,8 @@ import Icon from "$components/Icon.svelte";
 
 	/**
 	 * Toggle between light and dark themes with animated transition
-	 * @param event - The mouse event triggering the theme toggle
 	 */
-	function toggle(event: MouseEvent) {
+	function toggle() {
 		const current = document.documentElement.dataset.theme;
 		const target = current === "dark" ? "light" : "dark";
 		const transit = () => trigger(target);
@@ -56,9 +57,11 @@ import Icon from "$components/Icon.svelte";
 		let transition: ViewTransition;
 		if (!(transition = document.startViewTransition?.(transit))) return transit(); // Compatibility check
 
+		const rectangular = button.getBoundingClientRect();
+
 		// Get click coordinates for radial animation origin
-		const x = event.clientX;
-		const y = event.clientY;
+		const x = rectangular.left + rectangular.width / 2;
+		const y = rectangular.top + rectangular.height / 2;
 		transition.ready.then(() => {
 			// Create expanding circle animation from click point
 			const path = [`circle(0% at ${x}px ${y}px)`, `circle(130% at ${x}px ${y}px)`];
@@ -84,8 +87,9 @@ import Icon from "$components/Icon.svelte";
 	const theme = localStorage.getItem("theme");
 	trigger(theme ? (theme as Scheme) : mode.matches ? "dark" : "light");
 
-	const button = document.getElementById("theme-toggle")!;
+	// Listen for user interactions
 	button.addEventListener("click", toggle);
 
+	// Listen for system theme changes
 	mode.addEventListener("change", ({ matches }) => trigger(matches ? "dark" : "light"));
 </script>

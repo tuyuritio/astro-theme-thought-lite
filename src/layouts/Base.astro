@@ -14,14 +14,18 @@ const title = config.title;
 ---
 
 <script>
-	import zoom from "medium-zoom/dist/pure";
+	import MediumnZoom, { type Zoom } from "medium-zoom/dist/pure";
 	import Time from "$utils/time";
 
 	// Set the `title` attribute of all `<time>` elements to localized date-time strings
 	const localizeTimes = () => document.querySelectorAll("time").forEach(time => time.dateTime && (time.title = Time.toLocaleString(time.dateTime, navigator.language, true)));
 
 	// Add zoom effect to images within markdown content
-	window.zoom = () => zoom(".markdown img:not([data-nozoom])", { background: "#00000044" });
+	const zoom: Zoom = MediumnZoom(undefined, { background: "#00000044" });
+	window.zoom = () => {
+		zoom.detach();
+		zoom.attach(".markdown img:not([data-nozoom])");
+	};
 
 	// Page initialization function
 	function initialize() {
