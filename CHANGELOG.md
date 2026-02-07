@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.36.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.7...v0.36.0) (2026-02-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **navigation:** The `Menu` has been refactored from Svelte to an Astro component. Now using Astro slot syntax instead of Svelte snippets.
+
+### Features
+
+* **navigation:** optimize interaction and routing logic ([7c9b5dd](https://github.com/tuyuritio/astro-theme-thought-lite/commit/7c9b5dd9f84517d6162c39ce233a2bf6ed8d09d5))
+
+
+### Bug Fixes
+
+* simplify URL handling in components ([24d8191](https://github.com/tuyuritio/astro-theme-thought-lite/commit/24d819133fb57dcf09ef94cab4e242e6f6f62470))
+
 ## [0.35.7](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.6...v0.35.7) (2026-02-03)
 
 
