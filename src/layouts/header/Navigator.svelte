@@ -27,15 +27,11 @@ function handleClose() {
 }
 
 onMount(() => {
-	// Set up route tracking for page navigation with Swup integration
-	const updateRoute = () => (route = window.location.pathname);
-	if (window.swup) {
-		// Register route update hook if Swup is already available
-		window.swup.hooks.on("page:load", updateRoute);
-	} else {
-		// Wait for Swup to be enabled and then register the hook
-		document.addEventListener("swup:enable", () => window.swup?.hooks.on("page:load", updateRoute));
-	}
+	/** Register route update hook */
+	const register = () => window.swup?.hooks.on("page:load", () => (route = window.location.pathname));
+
+	// Register the hook immediately if swup is already enabled, otherwise wait for the enable event
+	window.swup ? register() : document.addEventListener("swup:enable", register, { once: true });
 });
 </script>
 

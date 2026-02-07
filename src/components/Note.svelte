@@ -1,8 +1,7 @@
 <script lang="ts">
-import { getRelativeLocaleUrl } from "astro:i18n";
 import { untrack } from "svelte";
 import { flip } from "svelte/animate";
-import config, { monolocale } from "$config";
+import config from "$config";
 import Time from "$utils/time";
 import Icon from "$components/Icon.svelte";
 import Pagination from "$components/Pagination.svelte";
@@ -129,7 +128,7 @@ $effect(() => {
 							<button onclick={() => chooseSeries(note.data.series, true)}>{note.data.series}</button>
 							<span aria-hidden="true">|</span>
 						{/if}
-						<a href={getRelativeLocaleUrl(locale, `/note/${monolocale ? note.id : note.id.split("/").slice(1).join("/")}`)} class="link">{note.data.title}</a>
+						<a href={note.url} class="link">{note.data.title}</a>
 					</div>
 					<span class="inline-flex items-center sm:justify-end gap-1 flex-wrap content-start sm:ms-auto">
 						{#each note.data.tags as tag}

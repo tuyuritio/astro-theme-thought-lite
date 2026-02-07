@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import config, { monolocale } from "$config";
 import Base from "$layouts/Base.astro";
 import Jotting from "$components/Jotting.svelte";
@@ -25,6 +26,7 @@ const jottings = await getCollection("jotting", jotting => {
 // Standardize note structure
 let list = jottings.map(jotting => ({
 	id: jotting.id,
+	url: getRelativeLocaleUrl(locale, `/jotting/${monolocale ? jotting.id : jotting.id.split("/").slice(1).join("/")}`),
 	data: {
 		title: jotting.data.title,
 		timestamp: jotting.data.timestamp,

@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import config, { monolocale } from "$config";
 import Time from "$utils/time";
 import Base from "$layouts/Base.astro";
@@ -69,7 +70,7 @@ const t = i18nit(locale);
 			<hr class="border-b border-weak" />
 		</header>
 
-		<Sensitive {locale} back="/note" sensitive={note.data.sensitive} client:load>
+		<Sensitive {locale} back={getRelativeLocaleUrl(locale, "/note")} sensitive={note.data.sensitive} client:load>
 			<div class="flex gap-5">
 				<section id="markdown-content" class="markdown"><Content /></section>
 				{

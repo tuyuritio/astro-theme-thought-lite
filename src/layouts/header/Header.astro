@@ -1,10 +1,11 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-import ThemeSwitcher from "./ThemeSwitcher.astro";
 import Icon from "$components/Icon.svelte";
-import config, { monolocale } from "$config";
+import { monolocale } from "$config";
 import i18nit from "$i18n";
 import Navigator from "./Navigator.svelte";
+import ThemeSwitcher from "./ThemeSwitcher.astro";
+import LanguagePicker from "./LanguagePicker.svelte";
 import Menu from "./Menu.astro";
 
 const { locale, title } = Astro.props;
@@ -19,9 +20,7 @@ const routes: { path: string; extra?: string[]; icon: `${string}--${string}`; la
 	{ label: t("navigation.about"), path: getRelativeLocaleUrl(locale, "/about"), icon: "lucide--at-sign" }
 ];
 
-// Extract path without locale prefix for language switching
 const route = Astro.url.pathname;
-const path = route.slice(`/${locale === config.i18n.defaultLocale ? "" : locale}`.length) || undefined;
 ---
 
 <style>
@@ -69,12 +68,7 @@ const path = route.slice(`/${locale === config.i18n.defaultLocale ? "" : locale}
 				!monolocale && (
 					<Menu label="Language switcher">
 						<Icon name="lucide--earth" slot="trigger" />
-
-						{config.i18n.locales.map(target => (
-							<a data-no-swup href={getRelativeLocaleUrl(target as string, path)} lang={target} aria-current={locale === target ? "page" : undefined} class={locale === target ? "font-bold sm:bg-primary sm:text-background pointer-events-none" : ""}>
-								{i18nit(target)("language")}
-							</a>
-						))}
+						<LanguagePicker {locale} {route} client:load />
 					</Menu>
 				)
 			}
