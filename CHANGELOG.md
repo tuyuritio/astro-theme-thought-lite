@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.36.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.36.0...v0.36.1) (2026-02-07)
+
+
+### Bug Fixes
+
+* prevent duplicate event registration ([0491424](https://github.com/tuyuritio/astro-theme-thought-lite/commit/04914243feb9e5f55120c90eb0087620d106d9c3))
+* **style:** standardize theme gradient animation origins ([fcb93ed](https://github.com/tuyuritio/astro-theme-thought-lite/commit/fcb93edf1d7b33b0e9c2cf5e76221bdcf4f2ffa5))
+
 ## [0.36.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.35.7...v0.36.0) (2026-02-07)
 
 
