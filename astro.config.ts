@@ -114,7 +114,8 @@ export default defineConfig({
 			globalInstance: true,
 			preload: false,
 			smoothScrolling: false,
-			progress: true
+			progress: true,
+			reloadScripts: false
 		})
 	],
 	experimental: {
