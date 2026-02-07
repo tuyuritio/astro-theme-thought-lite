@@ -1,0 +1,104 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import ThemeSwitcher from "./ThemeSwitcher.astro";
+import Icon from "$components/Icon.svelte";
+import config, { monolocale } from "$config";
+import i18nit from "$i18n";
+import Navigator from "./Navigator.svelte";
+import Menu from "./Menu.astro";
+
+const { locale, title } = Astro.props;
+
+const t = i18nit(locale);
+
+/** Define navigation routes configuration */
+const routes: { path: string; extra?: string[]; icon: `${string}--${string}`; label: string }[] = [
+	{ label: t("navigation.home"), path: getRelativeLocaleUrl(locale), extra: [getRelativeLocaleUrl(locale, "/preface")], icon: "lucide--tent" },
+	{ label: t("navigation.note"), path: getRelativeLocaleUrl(locale, "/note"), icon: "lucide--list" },
+	{ label: t("navigation.jotting"), path: getRelativeLocaleUrl(locale, "/jotting"), icon: "lucide--feather" },
+	{ label: t("navigation.about"), path: getRelativeLocaleUrl(locale, "/about"), icon: "lucide--at-sign" }
+];
+
+// Extract path without locale prefix for language switching
+const route = Astro.url.pathname;
+const path = route.slice(`/${locale === config.i18n.defaultLocale ? "" : locale}`.length) || undefined;
+---
+
+<style>
+	#sidebar {
+		transform: translateX(100%);
+
+		&:is([dir="rtl"] *) {
+			transform: translateX(-100%);
+		}
+
+		&.active {
+			transform: translateX(0);
+		}
+	}
+
+	#sidebar-overlay {
+		pointer-events: none;
+		background-color: transparent;
+
+		&.active {
+			pointer-events: auto;
+			background-color: #aaaaaa88;
+		}
+	}
+</style>
+
+<header class="sticky top-0 flex items-center justify-between pt-3 pb-1 mb-4 bg-background z-100 sm:static sm:mb-12">
+	<a href={getRelativeLocaleUrl(locale)} class="text-lg sm:text-2xl font-bold">{title}</a>
+
+	<button id="sidebar-open" aria-label="Open Sidebar" class="sm:hidden"><Icon name="lucide--align-justify" /></button>
+	<div id="sidebar-overlay" aria-hidden="true" class="sm:hidden fixed top-0 start-0 w-screen h-screen transition-[background-color]"></div>
+
+	<nav id="sidebar" class="fixed top-0 end-0 flex flex-col justify-between items-start gap-5 p-5 bg-background h-full sm:contents overflow-hidden transition-transform">
+		<header class="grid gap-5 text-secondary grid-rows-[repeat(5,1fr)] sm:grid-rows-none sm:grid-cols-[repeat(4,1fr)]">
+			<button id="sidebar-close" class="sm:hidden"><Icon name="lucide--x" /></button>
+			<Navigator {route} {routes} client:load />
+		</header>
+
+		<footer class="flex flex-col gap-2 sm:flex-row sm:gap-7">
+			<ThemeSwitcher />
+
+			<a href={getRelativeLocaleUrl(locale, "/feed.xml")} target="_blank" rel="noopener noreferrer" aria-label="Subscription" class="inline-flex"><Icon name="lucide--rss" /></a>
+
+			{
+				!monolocale && (
+					<Menu label="Language switcher">
+						<Icon name="lucide--earth" slot="trigger" />
+
+						{config.i18n.locales.map(target => (
+							<a data-no-swup href={getRelativeLocaleUrl(target as string, path)} lang={target} aria-current={locale === target ? "page" : undefined} class={locale === target ? "font-bold sm:bg-primary sm:text-background pointer-events-none" : ""}>
+								{i18nit(target)("language")}
+							</a>
+						))}
+					</Menu>
+				)
+			}
+		</footer>
+	</nav>
+</header>
+
+<script>
+	const sidebar = document.getElementById("sidebar")!;
+	const overlay = document.getElementById("sidebar-overlay")!;
+	const open = document.getElementById("sidebar-open")!;
+	const close = document.getElementById("sidebar-close")!;
+
+	function handleOpen() {
+		overlay.classList.add("active");
+		sidebar.classList.add("active");
+	}
+
+	function handleClose() {
+		overlay.classList.remove("active");
+		sidebar.classList.remove("active");
+	}
+
+	open.addEventListener("click", handleOpen);
+	close.addEventListener("click", handleClose);
+	overlay.addEventListener("click", handleClose);
+</script>
