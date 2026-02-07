@@ -159,7 +159,6 @@ All kinds of contributions are welcome and appreciated!
 - **Fonts** - [Google Fonts](https://fonts.google.com/) | [ZeoSeven Fonts](https://fonts.zeoseven.com/)
 - **Image Viewer** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
 - **SPA Transitions** - [Swup](https://swup.js.org/)
-- **Time Handling** - [Luxon](https://moment.github.io/luxon/)
 - **OAuth** - [Arctic](https://arcticjs.dev/)
 - **Code Quality** - [Biome](https://biomejs.dev/)
 - **ORM** - [Drizzle ORM](https://orm.drizzle.team/)

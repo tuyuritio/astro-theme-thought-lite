@@ -1,8 +1,7 @@
 <script lang="ts">
-import { getRelativeLocaleUrl } from "astro:i18n";
 import { untrack } from "svelte";
 import { flip } from "svelte/animate";
-import config, { monolocale } from "$config";
+import config from "$config";
 import Icon from "$components/Icon.svelte";
 import Pagination from "$components/Pagination.svelte";
 import i18nit from "$i18n";
@@ -98,7 +97,7 @@ $effect(() => {
 					<span class="flex items-center gap-1">
 						{#if jotting.data.top > 0}<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100" />{/if}
 						{#if jotting.data.sensitive}<Icon name="lucide--siren" title={t("sensitive.icon")} />{/if}
-						<a href={getRelativeLocaleUrl(locale, `/jotting/${monolocale ? jotting.id : jotting.id.split("/").slice(1).join("/")}`)} class="leading-normal text-primary font-semibold link truncate">{jotting.data.title}</a>
+						<a href={jotting.url} class="leading-normal text-primary font-semibold link truncate">{jotting.data.title}</a>
 					</span>
 					<span class="flex gap-1">
 						{#each jotting.data.tags as tag}

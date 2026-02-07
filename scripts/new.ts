@@ -4,7 +4,7 @@ import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { cancel, confirm, intro, isCancel, log, multiselect, note, outro, select, spinner, text } from "@clack/prompts";
-import { DateTime } from "luxon";
+import { Temporal } from "temporal-polyfill";
 import i18nit from "$i18n";
 import config, { monolocale } from "../site.config";
 
@@ -54,7 +54,7 @@ const CANCEL_MESSAGE = t("new.cancel");
 
 	// Generate timestamp in ISO format with timezone
 	let content = "";
-	const timestamp = DateTime.now().toFormat("yyyy-MM-dd HH:mm:ssZZ");
+	const timestamp = Temporal.Now.zonedDateTimeISO().toString({ smallestUnit: "second", timeZoneName: "never" }).replace("T", " ");
 
 	// Generate frontmatter metadata based on content type
 	const information: any = {};
@@ -100,7 +100,7 @@ const CANCEL_MESSAGE = t("new.cancel");
 			message: t("new.step.id.name"),
 			placeholder: t("new.step.id.placeholder"),
 			initialValue: id,
-			validate: value => (value === slugify(value) ? undefined : t("new.step.id.validate"))
+			validate: value => (value && value === slugify(value) ? undefined : t("new.step.id.validate"))
 		});
 
 		// Exit if user cancels the input

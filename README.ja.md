@@ -159,7 +159,6 @@ pnpm db:migrate:local
 - **フォント** - [Google Fonts](https://fonts.google.com/) | [ZeoSeven Fonts](https://fonts.zeoseven.com/)
 - **画像ビューア** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
 - **SPA トランジション** - [Swup](https://swup.js.org/)
-- **時間処理** - [Luxon](https://moment.github.io/luxon/)
 - **OAuth 認証** - [Arctic](https://arcticjs.dev/)
 - **コード品質** - [Biome](https://biomejs.dev/)
 - **ORM** - [Drizzle ORM](https://orm.drizzle.team/)

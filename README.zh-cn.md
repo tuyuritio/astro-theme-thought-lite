@@ -159,7 +159,6 @@ pnpm db:migrate:local
 - **字体** - [Google Fonts](https://fonts.google.com/) | [ZeoSeven Fonts](https://fonts.zeoseven.com/)
 - **图片查看器** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
 - **SPA 过渡** - [Swup](https://swup.js.org/)
-- **时间处理** - [Luxon](https://moment.github.io/luxon/)
 - **OAuth 认证** - [Arctic](https://arcticjs.dev/)
 - **代码质量** - [Biome](https://biomejs.dev/)
 - **对象关系映射** - [Drizzle ORM](https://orm.drizzle.team/)

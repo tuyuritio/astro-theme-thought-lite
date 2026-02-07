@@ -8,6 +8,7 @@ import Position from "$components/Position.astro";
 import Icon from "$components/Icon.svelte";
 import Sensitive from "$components/Sensitive.svelte";
 import i18nit from "$i18n";
+import { getRelativeLocaleUrl } from "astro:i18n";
 
 export async function getStaticPaths() {
 	// Get all jottings excluding drafts
@@ -59,7 +60,7 @@ const t = i18nit(locale);
 			<hr class="border-b border-weak" />
 		</header>
 
-		<Sensitive {locale} back="/jotting" sensitive={jotting.data.sensitive} client:load>
+		<Sensitive {locale} back={getRelativeLocaleUrl(locale, "/jotting")} sensitive={jotting.data.sensitive} client:load>
 			<div class="contents">
 				<section id="markdown-content" class="markdown"><Content /></section>
 				<blockquote id="comment-section"><Comments {locale} link={`${Astro.url.origin}${Astro.url.pathname}`} section="jotting" item={jotting.id} /></blockquote>
