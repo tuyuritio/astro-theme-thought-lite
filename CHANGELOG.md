@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.36.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.36.1...v0.36.2) (2026-02-08)
+
+
+### Bug Fixes
+
+* prevent view transition aborts ([f78516e](https://github.com/tuyuritio/astro-theme-thought-lite/commit/f78516ec39b623f47d8989003f74703da47cb381))
+
 ## [0.36.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.36.0...v0.36.1) (2026-02-07)
 
 
