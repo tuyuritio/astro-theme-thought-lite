@@ -14,7 +14,8 @@
   10000-99999: Frame
 */
 
-:root {
+:root,
+[data-theme="light"] {
 	--primary-color: #2a2a28;
 	--secondary-color: #50504d;
 	--remark-color: #757575;
@@ -27,25 +28,6 @@
 	--swup-fade-theme-duration: 0.15s;
 }
 
-@media (prefers-color-scheme: dark) {
-	:root {
-		--primary-color: #dddddb;
-		--secondary-color: #aaaaa8;
-		--remark-color: #a5a5a5;
-		--weak-color: #5d5d5a;
-		--background-color: #0e0e0c;
-		--block-color: #1e1e1e;
-		--shadow-color: #323231;
-		--selection-color: #adadacc3;
-	}
-
-	.astro-code,
-	.astro-code span {
-		color: var(--shiki-dark) !important;
-		background-color: var(--shiki-dark-bg) !important;
-	}
-}
-
 [data-theme="dark"] {
 	--primary-color: #dddddb;
 	--secondary-color: #aaaaa8;
@@ -55,6 +37,12 @@
 	--block-color: #1e1e1e;
 	--shadow-color: #323231;
 	--selection-color: #adadacc3;
+
+	.astro-code,
+	.astro-code span {
+		color: var(--shiki-dark) !important;
+		background-color: var(--shiki-dark-bg) !important;
+	}
 }
 
 /* Language-specific fonts */
@@ -64,12 +52,6 @@
 
 :lang(ja) {
 	--font-serif: var(--font-noto-serif-jp);
-}
-
-[data-theme="dark"] .astro-code,
-[data-theme="dark"] .astro-code span {
-	color: var(--shiki-dark) !important;
-	background-color: var(--shiki-dark-bg) !important;
 }
 
 @layer base {
