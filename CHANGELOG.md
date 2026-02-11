@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.36.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.36.2...v0.36.3) (2026-02-11)
+
+
+### Bug Fixes
+
+* **style:** implement native Anchor Position API for tooltips ([2c71f32](https://github.com/tuyuritio/astro-theme-thought-lite/commit/2c71f32e7c2f6ce71945f87bfe7cec652a86a87d))
+* **style:** resolve light mode lock-in and deduplicate CSS variables ([299bcb6](https://github.com/tuyuritio/astro-theme-thought-lite/commit/299bcb6331812df149c288ec3a68602a8745a28a)), closes [#113](https://github.com/tuyuritio/astro-theme-thought-lite/issues/113)
+
 ## [0.36.2](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.36.1...v0.36.2) (2026-02-08)
 
 
