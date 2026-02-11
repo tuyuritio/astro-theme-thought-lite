@@ -51,7 +51,8 @@ const localedMainFont = mainFonts[locale];
 
 		<script is:inline>
 			var theme = localStorage.getItem("theme");
-			if (theme) document.documentElement.dataset.theme = theme;
+			var prefers = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			document.documentElement.dataset.theme = theme || prefers;
 		</script>
 	</head>
 	<body>
