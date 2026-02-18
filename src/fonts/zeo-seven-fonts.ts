@@ -82,7 +82,4 @@ export default function ZeoSevenFonts(): FontProvider {
 		},
 		listFonts: () => Object.keys(ZEOSEVEN_FONTS)
 	};
-	// return defineAstroFontProvider({
-	// 	entrypoint: "src/fonts/zeo_seven_fonts.ts"
-	// });
 }

@@ -26,6 +26,11 @@
 	--selection-color: #adadacc3;
 
 	--swup-fade-theme-duration: 0.15s;
+
+	.astro-code,
+	.astro-code span {
+		background-color: var(--block-color) !important;
+	}
 }
 
 [data-theme="dark"] {

@@ -3,7 +3,6 @@ import config from "$config";
 import App from "$layouts/App.astro";
 import Header from "$layouts/header/Header.astro";
 import Footer from "$layouts/Footer.astro";
-import Tip from "$components/Tip.svelte";
 import "$styles/global.css";
 import "$styles/markdown.css";
 import "medium-zoom/dist/style.css";
@@ -41,7 +40,6 @@ const title = config.title;
 </script>
 
 <App {locale} {title} {subtitle} {description} {article} author={config.author.name}>
-	<Tip client:load />
 	<div class="flex flex-col mx-auto *:*:px-3 w-[min(100%,1000px)]">
 		<div id="body" class="flex flex-col min-h-screen">
 			<Header {locale} {title} />
