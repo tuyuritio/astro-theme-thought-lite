@@ -7,7 +7,6 @@ import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwindcss from "@tailwindcss/vite";
 import swup from "@swup/astro";
-import githubLight from "shiki/themes/github-light.mjs";
 
 import GFM from "remark-gfm";
 import ins from "remark-ins";
@@ -94,19 +93,10 @@ export default defineConfig({
 		smartypants: false,
 		shikiConfig: {
 			themes: {
-				light: {
-					...githubLight,
-					colorReplacements: {
-						"#fff": "var(--block-color)"
-					}
-				},
+				light: "github-light",
 				dark: "dark-plus"
 			},
-			transformers: [
-				copy({
-					duration: 1500
-				})
-			]
+			transformers: [copy({ duration: 1500 })]
 		}
 	},
 	vite: {
