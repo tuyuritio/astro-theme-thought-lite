@@ -6,7 +6,9 @@
 		"bradlc.vscode-tailwindcss",
 		"svelte.svelte-vscode",
 		"biomejs.biome",
-		"unifiedjs.vscode-mdx"
+		"unifiedjs.vscode-mdx",
+		"bierner.github-markdown-preview",
+		"yzhang.markdown-all-in-one"
 	],
 	"unwantedRecommendations": []
 }
