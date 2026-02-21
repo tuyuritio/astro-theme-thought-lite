@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.36.4](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.36.3...v0.36.4) (2026-02-21)
+
+
+### Miscellaneous Chores
+
+* remove Svelte link from footer ([f481839](https://github.com/tuyuritio/astro-theme-thought-lite/commit/f481839df1b2a4d954309415000fd224a861980c))
+
 ## [0.36.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.36.2...v0.36.3) (2026-02-11)
 
 
