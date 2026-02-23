@@ -1,11 +1,16 @@
 ---
 import type { MarkdownHeading } from "astro";
+import Icon from "$components/Icon.svelte";
+import i18nit from "$i18n";
 
 interface Props {
+	locale: string;
 	headings: Heading[];
 }
 
-const { headings } = Astro.props;
+const { locale, headings } = Astro.props;
+
+const t = i18nit(locale);
 
 // Extended heading type with additional properties for tree rendering
 // - last: indicates if this heading is the last child in its parent group
@@ -43,35 +48,85 @@ headings.forEach(heading => {
 });
 ---
 
-<ul class="flex flex-col text-base list-none">
-	{
-		headings.map((heading: Heading) => (
-			<li id={`indicator-${heading.slug}`} class="group relative flex items-stretch h-6 [&.indicate>a]:font-bold [&.indicate>a]:text-primary">
-				<div class="flex select-none" aria-hidden="true">
-					{heading.lines?.map(line => (
-						<div class="w-4 relative flex justify-center">{line && <span class="absolute top-0 bottom-0 border-s border-remark" />}</div>
-					))}
+<style>
+	#toc {
+		transform: translateX(100%);
 
-					{heading.depth > 1 && (
-						<div class="w-4 relative flex justify-center">
-							<span class:list={["absolute top-0 border-s border-remark", heading.last ? "h-[calc(50%+1px)]" : "h-full"]} />
-							<span class="absolute top-1/2 inset-s-1/2 w-2 border-b border-remark" />
-						</div>
-					)}
-				</div>
+		&:is([dir="rtl"] *) {
+			transform: translateX(-100%);
+		}
 
-				<a href={`#${heading.slug}`} title={heading.text} class="grow min-w-0 inline-flex items-center ps-1 text-weak hover:font-bold hover:text-primary transition-[color,font-weight]">
-					<span class="truncate">{heading.text}</span>
-				</a>
-			</li>
-		))
+		&.active {
+			transform: translateX(0);
+		}
 	}
-</ul>
+
+	#toc-overlay {
+		pointer-events: none;
+		background-color: transparent;
+
+		&.active {
+			pointer-events: auto;
+			background-color: #aaaaaa88;
+		}
+	}
+</style>
+
+<div id="toc-overlay" aria-hidden="true" class="sm:hidden fixed top-0 inset-s-0 w-screen h-screen transition-[background-color] max-sm:z-110"></div>
+
+<aside id="toc" class="sm:contents fixed top-0 inset-e-0 flex flex-col justify-between items-start gap-5 p-5 bg-background h-full overflow-hidden transition-transform max-sm:z-120">
+	<div class="sm:sticky self-start top-3 w-50 flex flex-col gap-1 max-sm:h-full">
+		<h4>{t("contents")}</h4>
+		<nav class="overflow-y-auto">
+			<!-- Original -->
+			<ul class="flex flex-col text-base list-none">
+				{
+					headings.map((heading: Heading) => (
+						<li id={`indicator-${heading.slug}`} class="group relative flex items-stretch h-6 [&.indicate>a]:font-bold [&.indicate>a]:text-primary">
+							<div class="flex select-none" aria-hidden="true">
+								{heading.lines?.map(line => (
+									<div class="w-4 relative flex justify-center">{line && <span class="absolute top-0 bottom-0 border-s border-remark" />}</div>
+								))}
+
+								{heading.depth > 1 && (
+									<div class="w-4 relative flex justify-center">
+										<span class:list={["absolute top-0 border-s border-remark", heading.last ? "h-[calc(50%+1px)]" : "h-full"]} />
+										<span class="absolute top-1/2 inset-s-1/2 w-2 border-b border-remark" />
+									</div>
+								)}
+							</div>
+
+							<a href={`#${heading.slug}`} title={heading.text} class="grow min-w-0 inline-flex items-center ps-1 text-weak hover:font-bold hover:text-primary transition-[color,font-weight]">
+								<span class="truncate">{heading.text}</span>
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+		<button id="toc-close" class="sm:hidden mt-auto ms-auto mb-2 me-2"><Icon name="lucide--x" /></button>
+	</div>
+</aside>
 
 <script>
 	// Global variable to store the IntersectionObserver instance
 	// Used to clean up previous observer when re-initializing
 	let observer: IntersectionObserver | undefined;
+
+	// Sidebar open/close logic
+	let sidebar: HTMLElement;
+	let overlay: HTMLElement;
+	let close: HTMLElement;
+
+	function handleOpen() {
+		sidebar?.classList.add("active");
+		overlay?.classList.add("active");
+	}
+
+	function handleClose() {
+		sidebar?.classList.remove("active");
+		overlay?.classList.remove("active");
+	}
 
 	/**
 	 * Initialize Table of Contents functionality with scroll-based highlighting
@@ -110,6 +165,14 @@ headings.forEach(heading => {
 			.querySelector("#markdown-content") // Get main content container
 			?.querySelectorAll("section[data-heading-rank]") // Find all heading sections
 			.forEach(section => observer?.observe(section)); // Start observing each section
+
+		sidebar = document.getElementById("toc")!;
+		overlay = document.getElementById("toc-overlay")!;
+		close = document.getElementById("toc-close")!;
+
+		close?.addEventListener("click", handleClose);
+		overlay?.addEventListener("click", handleClose);
+		document.querySelectorAll("#toc nav ul li a").forEach(link => link.addEventListener("click", handleClose));
 	}
 
 	// Initialize TOC functionality when page loads
@@ -118,4 +181,7 @@ headings.forEach(heading => {
 	// Re-initialize TOC after Astro's view transitions complete
 	// This ensures TOC works correctly with client-side navigation
 	document.addEventListener("astro:after-swap", TOC);
+
+	// Listen for open event dispatched by the Position component button
+	document.addEventListener("toc:open", handleOpen);
 </script>

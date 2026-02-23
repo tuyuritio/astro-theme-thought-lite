@@ -1,6 +1,7 @@
 about:
   introduction: ○○自述
   linkroll: ○○连结
+contents: 目录
 feed:
   address: 订阅地址
   copy:
@@ -33,7 +34,6 @@ navigation:
   preface: 序文
   subscription: 订阅
 note:
-  contents: 目录
   empty: 暂无文记
   series: 系列
   tag: 标签

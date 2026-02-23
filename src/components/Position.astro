@@ -4,33 +4,36 @@ import i18nit from "$i18n";
 
 export interface Props {
 	locale: string;
+	toc?: boolean;
 }
 
-const { locale } = Astro.props;
+const { locale, toc } = Astro.props;
 
 const t = i18nit(locale);
 ---
 
 <style>
-	figure button {
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+	@layer components {
+		figure button {
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 
-		width: 2rem;
-		height: 2rem;
+			width: 2rem;
+			height: 2rem;
 
-		border-width: 2px;
-		border-style: solid;
-		border-radius: 50%;
+			border-width: 2px;
+			border-style: solid;
+			border-radius: 50%;
 
-		padding: 5px;
-		background-color: var(--background-color);
+			padding: 5px;
+			background-color: var(--background-color);
 
-		box-shadow:
-			0 4px 6px -1px rgb(0 0 0 / 0.1),
-			0 2px 4px -2px rgb(0 0 0 / 0.1);
+			box-shadow:
+				0 4px 6px -1px rgb(0 0 0 / 0.1),
+				0 2px 4px -2px rgb(0 0 0 / 0.1);
+		}
 	}
 </style>
 
@@ -41,6 +44,13 @@ const t = i18nit(locale);
 			<circle id="progress-circle" cx="50%" cy="50%" r="calc(50% - 1px)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"></circle>
 		</svg>
 	</button>
+	{
+		toc && (
+			<button aria-label="Open Table of Contents" class="sm:hidden" onclick="document.dispatchEvent(new CustomEvent('toc:open'))">
+				<Icon name="lucide--list" size={15} title={t("contents")} />
+			</button>
+		)
+	}
 </figure>
 
 <script>

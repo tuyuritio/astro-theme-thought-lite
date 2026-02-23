@@ -1,6 +1,7 @@
 about:
   introduction: ○○紹介
   linkroll: ○○連結
+contents: 目次
 feed:
   address: 購読アドレス
   copy:
@@ -33,7 +34,6 @@ navigation:
   preface: 序文
   subscription: 購読
 note:
-  contents: 目次
   empty: 文記がありません
   series: 系列
   tag: 付札

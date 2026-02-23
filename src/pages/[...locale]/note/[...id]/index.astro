@@ -71,23 +71,14 @@ const t = i18nit(locale);
 		</header>
 
 		<Sensitive {locale} back={getRelativeLocaleUrl(locale, "/note")} sensitive={note.data.sensitive} client:load>
-			<div class="flex gap-5">
-				<section id="markdown-content" class="markdown"><Content /></section>
-				{
-					note.data.toc && (
-						<aside class="hidden sm:block sm:shrink-0 sm:w-50">
-							<div class="sticky top-3 flex flex-col gap-1">
-								<h4>{t("note.contents")}</h4>
-								<nav class="overflow-y-auto">
-									<TOC {headings} />
-								</nav>
-							</div>
-						</aside>
-					)
-				}
+			<div class="contents">
+				<div class="flex gap-5">
+					<section id="markdown-content" class="markdown"><Content /></section>
+					{note.data.toc && <TOC {headings} {locale} />}
+				</div>
 			</div>
 		</Sensitive>
 
-		<Position {locale} />
+		<Position {locale} toc={note.data.toc} />
 	</main>
 </Base>

@@ -1,6 +1,7 @@
 about:
   introduction: Introduction
   linkroll: Linkroll
+contents: Contents
 feed:
   address: Subscription address
   copy:
@@ -19,7 +20,7 @@ home:
     jotting:
       one: '{count} jotting'
       other: '{count} jottings'
-    note: 
+    note:
       one: '{count} note'
       other: '{count} notes'
   latest: Latest
@@ -37,7 +38,6 @@ navigation:
   preface: Preface
   subscription: Subscription
 note:
-  contents: Contents
   empty: No notes available
   series: Series
   tag: Tag
