@@ -2,7 +2,7 @@
 	"name": "astro-theme-thought-lite",
 	"type": "module",
 	"private": true,
-	"version": "0.36.4",
+	"version": "0.37.0",
 	"description": "A modern Astro theme focused on content creation",
 	"keywords": [
 		"astro",
