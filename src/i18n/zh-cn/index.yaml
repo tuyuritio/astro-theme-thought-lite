@@ -51,6 +51,7 @@ comment:
     failure: 人机校验失败
     progress: 正在自动进行人机校验
 confirm: 确认
+contents: 目录
 delete: 删除
 drifter:
   deactivate:
@@ -141,7 +142,6 @@ navigation:
   subscription: 订阅
 note:
   comment: 前往想法
-  contents: 目录
   empty: 暂无文记
   series: 系列
   tag: 标签

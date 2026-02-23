@@ -51,6 +51,7 @@ comment:
     failure: Human verification failed
     progress: Verifying automatically
 confirm: Confirm
+contents: Contents
 delete: Delete
 drifter:
   deactivate:
@@ -147,7 +148,6 @@ navigation:
   subscription: Subscription
 note:
   comment: Thoughts
-  contents: Contents
   empty: No notes available
   series: Series
   tag: Tag

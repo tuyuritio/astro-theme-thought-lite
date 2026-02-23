@@ -51,9 +51,9 @@ const route = Astro.url.pathname;
 	<a href={getRelativeLocaleUrl(locale)} class="text-lg sm:text-2xl font-bold">{title}</a>
 
 	<button id="sidebar-open" aria-label="Open Sidebar" class="sm:hidden"><Icon name="lucide--align-justify" /></button>
-	<div id="sidebar-overlay" aria-hidden="true" class="sm:hidden fixed top-0 start-0 w-screen h-screen transition-[background-color]"></div>
+	<div id="sidebar-overlay" aria-hidden="true" class="sm:hidden fixed top-0 inset-s-0 w-screen h-screen transition-[background-color]"></div>
 
-	<nav id="sidebar" class="fixed top-0 end-0 flex flex-col justify-between items-start gap-5 p-5 bg-background h-full sm:contents overflow-hidden transition-transform">
+	<nav id="sidebar" class="fixed top-0 inset-e-0 flex flex-col justify-between items-start gap-5 p-5 bg-background h-full sm:contents overflow-hidden transition-transform">
 		<header class="grid gap-5 text-secondary grid-rows-[repeat(5,1fr)] sm:grid-rows-none sm:grid-cols-[repeat(4,1fr)]">
 			<button id="sidebar-close" class="sm:hidden"><Icon name="lucide--x" /></button>
 			<Navigator {route} {routes} client:load />

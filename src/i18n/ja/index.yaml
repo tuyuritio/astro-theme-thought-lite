@@ -51,6 +51,7 @@ comment:
     failure: 人間判定に失敗しました
     progress: 自動で人間判定を実行中
 confirm: 確認
+contents: 目次
 delete: 削除
 drifter:
   deactivate:
@@ -141,7 +142,6 @@ navigation:
   subscription: 購読
 note:
   comment: 感想
-  contents: 目次
   empty: 文記がありません
   series: 系列
   tag: 付札
