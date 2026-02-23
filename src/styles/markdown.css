@@ -280,13 +280,13 @@
 				counter-reset: footnote;
 
 				li {
-					position: relative;
+					display: flex;
+					gap: 0.5em;
+					align-items: start;
+
 					counter-increment: footnote;
-					padding-inline-start: 1.5em;
 
 					&::before {
-						position: absolute;
-						inset-inline-start: 0;
 						content: "[" counter(footnote) "]";
 					}
 
