@@ -2,7 +2,7 @@
 	"name": "astro-theme-thought-lite",
 	"type": "module",
 	"private": true,
-	"version": "0.36.3",
+	"version": "0.36.4",
 	"description": "A modern Astro theme focused on content creation",
 	"keywords": [
 		"astro",
@@ -26,7 +26,7 @@
 		"name": "tuyuritio",
 		"url": "https://github.com/tuyuritio"
 	},
-	"packageManager": "pnpm@10.30.0",
+	"packageManager": "pnpm@10.30.1",
 	"scripts": {
 		"new": "tsx --loader esm-loader-yaml scripts/new.ts",
 		"dev": "astro dev",
