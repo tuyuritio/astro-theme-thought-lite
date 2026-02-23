@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.37.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.36.4...v0.37.0) (2026-02-23)
+
+
+### Features
+
+* add mobile sidebar table of contents ([fa47a9d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/fa47a9d1a6d2f67d5b3f29e0cdc9d531916f3fd4))
+
 ## [0.36.4](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.36.3...v0.36.4) (2026-02-23)
 
 
