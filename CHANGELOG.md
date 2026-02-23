@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.36.4](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.36.3...v0.36.4) (2026-02-23)
+
+
+### Bug Fixes
+
+* **style:** enhance task list styling ([6132b16](https://github.com/tuyuritio/astro-theme-thought-lite/commit/6132b16ef8c76275955eed7af34dfdc3e911bb41))
+* **style:** improve footnote list styling ([3a112c3](https://github.com/tuyuritio/astro-theme-thought-lite/commit/3a112c336c0f7bd06efe576ff9899abccaacf3c9))
+
+
+### Miscellaneous Chores
+
+* remove Svelte link from footer ([f481839](https://github.com/tuyuritio/astro-theme-thought-lite/commit/f481839df1b2a4d954309415000fd224a861980c))
+
 ## [0.36.3](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.36.2...v0.36.3) (2026-02-11)
 
 
