@@ -97,22 +97,45 @@
 			padding-inline-start: 1.2em;
 		}
 
-		ul.contains-task-list {
+		.contains-task-list {
 			list-style: none;
 
-			input.task-list-item-checkbox {
-				appearance: none;
+			li.task-list-item {
+				position: relative;
 
-				&::before {
-					content: "";
-					margin-inline-end: 5px;
-					font-family: var(--font-mono);
-					font-weight: 900;
-					font-size: 1.2em;
-				}
+				input[type="checkbox"] {
+					position: absolute;
+					appearance: none;
+					-webkit-appearance: none;
 
-				&:checked::before {
-					content: "";
+					inset-inline-start: -0.9em;
+					top: 0.55em;
+					width: 0.7em;
+					height: 0.7em;
+					border: 1.5px solid var(--color-primary);
+
+					&::before {
+						content: "";
+						position: absolute;
+						display: block;
+
+						width: 0.5em;
+						height: 0.25em;
+
+						border-left-width: 1.5px;
+						border-bottom-width: 1.5px;
+						border-color: transparent;
+
+						inset-inline-start: 0.175em;
+						bottom: 0.05em;
+
+						transform-origin: left bottom;
+						transform: rotate(-45deg);
+					}
+
+					&:checked::before {
+						border-color: var(--color-primary);
+					}
 				}
 			}
 		}
