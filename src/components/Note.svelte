@@ -167,39 +167,39 @@ $effect(() => {
 </main>
 
 <style>
-	aside {
-		section {
+aside {
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+
+		p {
 			display: flex;
-			flex-direction: column;
+			flex-direction: row;
+			flex-wrap: wrap;
 			gap: 5px;
 
-			p {
-				display: flex;
-				flex-direction: row;
-				flex-wrap: wrap;
-				gap: 5px;
+			button {
+				border-bottom: 1px solid var(--primary-color);
+				padding: 0rem 0.35rem;
+				font-size: 0.9rem;
+				transition:
+					color 0.1s ease-in-out,
+					background-color 0.1s ease-in-out;
 
-				button {
-					border-bottom: 1px solid var(--primary-color);
-					padding: 0rem 0.35rem;
-					font-size: 0.9rem;
-					transition:
-						color 0.1s ease-in-out,
-						background-color 0.1s ease-in-out;
+				&.selected {
+					color: var(--background-color);
+					background-color: var(--primary-color);
+				}
 
-					&.selected {
+				@media (min-width: 640px) {
+					&:hover {
 						color: var(--background-color);
 						background-color: var(--primary-color);
-					}
-
-					@media (min-width: 640px) {
-						&:hover {
-							color: var(--background-color);
-							background-color: var(--primary-color);
-						}
 					}
 				}
 			}
 		}
 	}
+}
 </style>
