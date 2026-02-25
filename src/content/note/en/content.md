@@ -50,7 +50,7 @@ You can describe the site's **creation background**, **core positioning**, **fut
 
 Here you can elaborate on your recommendation criteria and management methods for external links, providing visitors with opportunities for extended reading, making it an important part of the site.
 
-> For more information about the `Linkroll` component, please refer to the [Linkroll Component Guide](/en/note/linkroll)
+> For more information about the `Linkroll` component, please refer to the [Linkroll Component Guide](/note/linkroll)
 
 ### Policy
 
