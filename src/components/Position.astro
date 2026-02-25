@@ -44,7 +44,7 @@ const t = i18nit(locale);
 	</button>
 	{
 		toc && (
-			<button aria-label="Open Table of Contents" class="sm:hidden" onclick="document.dispatchEvent(new CustomEvent('toc:open'))">
+			<button aria-label="Open Table of Contents" class="sm:hidden!" onclick="document.dispatchEvent(new CustomEvent('toc:open'))">
 				<Icon name="lucide--list" size={15} title={t("contents")} />
 			</button>
 		)
