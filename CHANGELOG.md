@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.37.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.37.0...v0.37.1) (2026-02-25)
+
+
+### Bug Fixes
+
+* **render:** prevent inline layer reordering from breaking markdown styles ([#119](https://github.com/tuyuritio/astro-theme-thought-lite/issues/119)) ([36cab34](https://github.com/tuyuritio/astro-theme-thought-lite/commit/36cab349e29ad64f090b48c10b6994e3a0f7ffff))
+* **style:** force hide TOC button on responsive layouts ([07661ff](https://github.com/tuyuritio/astro-theme-thought-lite/commit/07661ffde244be229a012e3ab6fedb364d5d9033))
+
 ## [0.37.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.36.4...v0.37.0) (2026-02-23)
 
 
