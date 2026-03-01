@@ -1,6 +1,6 @@
 ---
 title: Internationalization Configuration Guide
-timestamp: 2025-11-07 00:00:00+00:00
+timestamp: 2026-01-07 00:00:00+00:00
 tags: [Guide, Astro]
 description: Detailed guide on configuring multi-language support for the theme, including changing default language, adding new languages, managing translation files, and configuring content directory structure.
 ---
@@ -14,6 +14,7 @@ Modify `i18n.defaultLocale` in `site.config.ts`:
 ```ts
 export default siteConfig({
     i18n: {
+        // Array order determines the display order in the language picker
         locales: ["en", "zh-cn", "ja"],
         // Change default language to Simplified Chinese
         defaultLocale: "zh-cn"
@@ -96,7 +97,7 @@ If you need to support Open Graph image generation for the language, add a mappi
 
 ```ts
 const notoFonts: Record<string, string> = {
-	  en: "Noto Serif",
+    en: "Noto Serif",
     "zh-cn": "Noto Serif SC",
     ja: "Noto Serif JP",
     tlh: "Noto Serif TLH"

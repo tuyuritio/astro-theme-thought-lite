@@ -1,6 +1,6 @@
 ---
 title: 内容创作指南
-timestamp: 2025-04-04 00:00:00+00:00
+timestamp: 2026-01-26 00:00:00+00:00
 series: Astro
 tags: [Content, Demo]
 description: 全面介绍主题的三个内容板块：文记、随笔、说明，帮助用户了解不同内容类型的创作和发布规范。
@@ -57,50 +57,3 @@ top: 1
 「政策」是建立站点**合规性**和明确**权责关系**的重要内容。
 
 说明网站的隐私政策、服务条款、免责声明等关键信息，确保网站运营的合法性和透明度。
-
-## 图片插入
-
-在 Markdown 正文中插入图片，可以通过三种来源：
-
-### 相对路径
-
-例如，要在 [image-preview.md](image-preview/index.md) 中插入图片：
-
-可以创建 `image-preview` 目录，再将 `image-preview.md` 移动到该目录下并重命名为 `index.md`。
-
-> [!NOTE]
-> 此时 Astro 会自动将 `index.md` 视为该目录的默认内容，因此 ID 依旧为 `image-preview`，
-
-接着在 `image-preview` 目录下放入图片文件，如 `photo.png`。
-
-然后在 `index.md` 中使用相对路径插入图片：
-
-```md
-![图片描述](photo.png)
-```
-
-文件结构为：
-
-```
-image-preview
-├── index.md
-└── photo.png
-```
-
-### 绝对路径
-
-也可以将图片直接放在 `/public` 目录下，然后使用绝对路径插入：
-
-```md
-![图片描述](/photo.png)
-```
-
-但是这种方式不利于内容的组织管理，同时 Astro 不会对图片做优化处理，一般**不推荐**使用。
-
-### 外部图床
-
-如果将图片托管在外部图床（例如 [imgbb](https://imgbb.com/)）上，则可以直接使用图片的 URL：
-
-```md
-![图片描述](https://image.host/photo.png)
-```

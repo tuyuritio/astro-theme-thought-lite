@@ -1,6 +1,6 @@
 ---
 title: Content Creation Guide
-timestamp: 2025-04-04 00:00:00+00:00
+timestamp: 2026-01-26 00:00:00+00:00
 series: Astro
 tags: [Content, Demo]
 description: "Comprehensive guide to the theme's three sections: Notes, Jottings, and Information, helping users understand content types and publishing standards."
@@ -57,50 +57,3 @@ Here you can elaborate on your recommendation criteria and management methods fo
 "Policy" is important content for establishing site **compliance** and clarifying **responsibility relationships**.
 
 It explains the website's privacy policy, terms of service, disclaimers and other key information, ensuring the legality and transparency of website operations.
-
-## Image Insertion
-
-To insert images in Markdown body text, you can use three sources:
-
-### Relative Path
-
-For example, to insert an image in [image-preview.md](image-preview/index.md):
-
-You can create an `image-preview` directory, then move `image-preview.md` to that directory and rename it to `index.md`.
-
-> [!NOTE]
-> At this point, Astro will automatically treat `index.md` as the default content for that directory, so the ID remains `image-preview`.
-
-Next, place image files in the `image-preview` directory, such as `photo.png`.
-
-Then use the relative path to insert the image in `index.md`:
-
-```md
-![Image description](photo.png)
-```
-
-File structure:
-
-```
-image-preview
-├── index.md
-└── photo.png
-```
-
-### Absolute Path
-
-You can also place images directly in the `/public` directory and use absolute paths to insert them:
-
-```md
-![Image description](/photo.png)
-```
-
-However, this method is not conducive to content organization and management. At the same time, Astro will not optimize the images, so it is generally **not recommended**.
-
-### External Image Hosting
-
-If you host images on external image hosting services (such as [imgbb](https://imgbb.com/)), you can directly use the image URL:
-
-```md
-![Image description](https://image.host/photo.png)
-```
