@@ -1,8 +1,8 @@
 ---
-title: 敏感コンテンツの例
+title: Sensitive Content Example
 timestamp: 2025-08-28 00:00:00+00:00
 tags: [Sensitive, Demo]
-description: 敏感コンテンツ警告を実演するサンプル文書です。
+description: This is a sample document demonstrating the sensitive content warning.
 sensitive: true
 ---
 

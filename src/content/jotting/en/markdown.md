@@ -3,47 +3,36 @@ title: Markdown Extension Manual
 timestamp: 2025-11-24 00:00:00+00:00
 series: Astro
 tags: [Markup, Demo]
-description: Detailed guide to extended Markdown syntax features in the theme, including Ruby annotations, abbreviations, spoiler text, and other special markup syntax.
+description: Detailed guide to extended Markdown syntax features in the theme.
 ---
 
-<style>
-.red {
-  color: #ef4444;
-  font-weight: 600;
-}
+Astro uses [remark](https://github.com/remarkjs/remark) as its Markdown engine, providing a plugin configuration interface in `astro.config.ts`.
 
-.big {
-  font-size: 1.25em;
-  font-weight: bold;
-}
+The theme includes the following plugins for syntax extensions:
 
-.colorful {
-  font-weight: bold;
-  background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
-  background-size: 200% auto;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: rainbow 3s linear infinite;
-}
+## Insertion
 
-@keyframes rainbow {
-  0% {
-    background-position: 0% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-</style>
+> Plugin: [`remark-ins`](https://www.npmjs.com/package/remark-ins)
 
-I originally wanted to use my favorite [markdown-it](https://github.com/markdown-it/markdown-it) as the Markdown rendering engine. But to adapt to Astro and prevent unexpected errors, I compromised and used [remark](https://github.com/remarkjs/remark).
+```
+++Inserted content++
+```
 
-Out of personal usage habits, I added some plugins to implement syntax extensions.
+++Inserted content++
+
+## Marking
+
+> Plugin: [`remark-flexible-markers`](https://www.npmjs.com/package/remark-flexible-markers)
+
+```
+==Marked content==
+```
+
+==Marked content==
 
 ## Ruby
 
-> Self-implemented
+> Plugin: [`@tuyuritio/remark-ruby`](https://www.npmjs.com/package/@tuyuritio/remark-ruby)
 
 ```
 {拼音}(pīn|yīn)
@@ -59,7 +48,7 @@ Out of personal usage habits, I added some plugins to implement syntax extension
 
 ## Spoiler
 
-> Self-implemented
+> Plugin: [`@tuyuritio/remark-spoiler`](https://www.npmjs.com/package/@tuyuritio/remark-spoiler)
 
 ```
 !!Spoiler content!!
@@ -69,7 +58,7 @@ Out of personal usage habits, I added some plugins to implement syntax extension
 
 ## Emoji
 
-> Plugin: [`remark-gemoji`](https://github.com/remarkjs/remark-gemoji)
+> Plugin: [`remark-gemoji`](https://www.npmjs.com/package/remark-gemoji)
 
 ```
 :wink: :cry: :laughing: :yum:
@@ -81,7 +70,7 @@ Out of personal usage habits, I added some plugins to implement syntax extension
 
 ## Katex
 
-> Plugin: [`remark-math` & `rehype-katex`](https://github.com/remarkjs/remark-math)
+> Plugin: [`remark-math`](https://www.npmjs.com/package/remark-math) & [`rehype-katex`](https://www.npmjs.com/package/rehype-katex)
 
 ```
 $e^{ix} = \cos x + i \sin x$
@@ -101,7 +90,7 @@ $$
 
 ## Footnotes
 
-> Plugin: [`remark-footnotes-extra`](https://github.com/miaobuao/remark-footnotes-extra)
+> Plugin: [`remark-footnotes-extra`](https://www.npmjs.com/package/remark-footnotes-extra)
 
 ```
 Footnote[^1]
@@ -119,7 +108,7 @@ Inline Footnote^[Inline information]
 
 ## Abbreviations
 
-> Self-implemented
+> Plugin: [`@tuyuritio/remark-abbreviation`](https://www.npmjs.com/package/@tuyuritio/remark-abbreviation)
 
 ```
 ABBR abbr xABBRx
@@ -133,7 +122,8 @@ ABBR abbr xABBRx
 
 ## GitHub Alerts
 
-> Plugin: [remark-github-blockquote-alert](https://github.com/jaywcjlove/remark-github-blockquote-alert)
+> Plugin: [`@tuyuritio/remark-github-alert`](https://www.npmjs.com/package/@tuyuritio/remark-github-alert)
+
 
 ```
 > [!NOTE]
@@ -185,7 +175,7 @@ ABBR abbr xABBRx
 
 ## Extended Tables
 
-> Plugin: [remark-extended-table](https://github.com/wataru-chocola/remark-extended-table)
+> Plugin: [remark-extended-table](https://www.npmjs.com/package/remark-extended-table)
 
 ```
 | Left Align  | Center | Right Align |    Center     |
@@ -203,7 +193,38 @@ ABBR abbr xABBRx
 
 ## Inline Element Attributes Extension {#custom-id}
 
-> Self-implemented
+<style>
+.red {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.big {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+.colorful {
+  font-weight: bold;
+  background: linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 3s linear infinite;
+}
+
+@keyframes rainbow {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+</style>
+
+> Plugin: [`@tuyuritio/remark-attribute`](https://www.npmjs.com/package/@tuyuritio/remark-attribute)
 
 ```
 ## Inline Element Attributes Extension {#custom-id}
