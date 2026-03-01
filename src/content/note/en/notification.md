@@ -1,5 +1,5 @@
 ---
-title: Notification Configuration
+title: Notification Configuration Guide
 timestamp: 2025-12-30 00:00:00+00:00
 ---
 
