@@ -5,9 +5,10 @@ import i18nit from "$i18n";
 export interface Props {
 	locale: string;
 	toc?: boolean;
+	series?: boolean;
 }
 
-const { locale, toc } = Astro.props;
+const { locale, toc, series } = Astro.props;
 
 const t = i18nit(locale);
 ---
@@ -43,7 +44,7 @@ const t = i18nit(locale);
 		</svg>
 	</button>
 	{
-		toc && (
+		(toc || series) && (
 			<button aria-label="Open Table of Contents" class="sm:hidden!" onclick="document.dispatchEvent(new CustomEvent('toc:open'))">
 				<Icon name="lucide--list" size={15} title={t("contents")} />
 			</button>
