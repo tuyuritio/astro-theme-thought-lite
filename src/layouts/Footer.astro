@@ -104,7 +104,14 @@ const policy = await getEntry("information", `${localePrefix}policy`);
 
 <footer class="flex flex-col sm:flex-row items-center justify-between gap-2 mt-8 mb-5 sm:mb-3 text-sm font-mono">
 	<div class="flex items-center gap-1">
-		{copyright.type != "CC0 1.0" && [<Icon name="lucide--copyright" />, <span>{copyright.year}</span>]}
+		{
+			copyright.type != "CC0 1.0" && (
+				<>
+					<Icon name="lucide--copyright" />
+					<span>{copyright.year}</span>
+				</>
+			)
+		}
 		<a href={author.link} target="_blank" rel="noopener noreferrer">{author.name}</a>
 		<span>|</span>
 		<a target="_blank" href={ccURL} aria-label={ccLabel} class="flex items-center gap-1">
@@ -113,12 +120,14 @@ const policy = await getEntry("information", `${localePrefix}policy`);
 		<span>·</span>
 		<Icon name="lucide--activity" title={t("statistics", { count: totalWords })} />
 		{
-			policy && [
-				<span>·</span>,
-				<a href={getRelativeLocaleUrl(locale, "/policy")} aria-label="Policy" class="inline-flex">
-					<Icon name="lucide--scale" title={t("navigation.policy")} />
-				</a>
-			]
+			policy && (
+				<>
+					<span>·</span>
+					<a href={getRelativeLocaleUrl(locale, "/policy")} aria-label="Policy" class="inline-flex">
+						<Icon name="lucide--scale" title={t("navigation.policy")} />
+					</a>
+				</>
+			)
 		}
 	</div>
 	<code class="flex items-center gap-2.5">
