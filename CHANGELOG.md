@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.38.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.37.1...v0.38.0) (2026-03-07)
+
+
+### Features
+
+* display related series in notes' sidebar ([bc6a853](https://github.com/tuyuritio/astro-theme-thought-lite/commit/bc6a8537eb9d1b59a913c7834e422cef7d46248e))
+
 ## [0.37.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.37.0...v0.37.1) (2026-02-25)
 
 
