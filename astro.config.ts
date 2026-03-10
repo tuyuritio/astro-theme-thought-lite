@@ -32,7 +32,6 @@ import copy from "@tuyuritio/shiki-code-copy";
 
 import reading from "./src/utils/reading";
 import inlineDisplayMath from "./src/utils/inline-display-math";
-import debug from "./src/utils/debug";
 
 import siteConfig from "./site.config";
 import ZeoSevenFonts from "./src/fonts/zeo-seven-fonts";
@@ -59,7 +58,6 @@ export default defineConfig({
 			ruby,
 			attr,
 			[inlineDisplayMath, { enabled: true }],
-			debug,
 			math,
 			gemoji,
 			footnote,
