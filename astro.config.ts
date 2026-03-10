@@ -57,7 +57,7 @@ export default defineConfig({
 			[CJKStrikethrough, { singleTilde: false }],
 			ruby,
 			attr,
-			[inlineDisplayMath, { enabled: true }],
+			[inlineDisplayMath, { enabled: false }],
 			math,
 			gemoji,
 			footnote,
