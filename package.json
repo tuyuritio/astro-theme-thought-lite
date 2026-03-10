@@ -79,7 +79,8 @@
 		"tailwindcss": "^4.2.0",
 		"temporal-polyfill": "^0.3.0",
 		"typescript": "^5.9.3",
-		"unified": "^11.0.5"
+		"unified": "^11.0.5",
+		"unist-util-visit-parents": "^6.0.2"
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.6",
@@ -92,6 +93,7 @@
 		"esm-loader-yaml": "^1.0.2",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.2.7",
+		"mdast-util-math": "^3.0.0",
 		"prettier": "3.8.1",
 		"prettier-plugin-astro": "0.14.1",
 		"prettier-plugin-svelte": "^3.5.0",

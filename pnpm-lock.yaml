@@ -134,6 +134,9 @@ importers:
       unified:
         specifier: ^11.0.5
         version: 11.0.5
+      unist-util-visit-parents:
+        specifier: ^6.0.2
+        version: 6.0.2
     devDependencies:
       '@astrojs/check':
         specifier: ^0.9.6
@@ -165,6 +168,9 @@ importers:
       lint-staged:
         specifier: ^16.2.7
         version: 16.2.7
+      mdast-util-math:
+        specifier: ^3.0.0
+        version: 3.0.0
       prettier:
         specifier: 3.8.1
         version: 3.8.1
