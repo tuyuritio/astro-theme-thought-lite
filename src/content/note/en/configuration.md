@@ -26,6 +26,7 @@ description: Essential configuration guide for Astro theme sites, covering envir
     - `defaultLocale` - Default language
 - `markdown`
     - `remarkPlugins` - Markdown processing plugins
+      - `inlineDisplayMath` - If true, inline $$...$$ will be automatically promoted to display math (defaults to false).
     - `rehypePlugins` - HTML processing plugins
 
 ## `site.config.ts`
