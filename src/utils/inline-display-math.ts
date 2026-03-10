@@ -2,13 +2,21 @@ import { visitParents, SKIP } from "unist-util-visit-parents";
 import type { Root, Paragraph, RootContent } from "mdast";
 import type { InlineMath } from "mdast-util-math";
 
+interface Options {
+	enabled: boolean;
+}
+
 function normalizeClass(v: unknown): string[] {
 	if (Array.isArray(v)) return v.map(String);
 	if (typeof v === "string") return v.split(/\s+/);
 	return [];
 }
 
-function remarkInlineDisplayMath() {
+function remarkInlineDisplayMath(opt: Options) {
+	const { enabled = true } = opt;
+
+	if (!enabled) return;
+
 	return (tree: Root) => {
 		visitParents(tree, "inlineMath", (node: InlineMath, parents) => {
 			const parent = parents.at(-1) as Paragraph | undefined;
