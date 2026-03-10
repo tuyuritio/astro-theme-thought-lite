@@ -29,9 +29,9 @@ function remarkInlineDisplayMath() {
 			const before = parent.children.slice(0, index);
 			const after = parent.children.slice(index + 1);
 
-			// Skip if there is another inlineMath before this one.
-			// We only transform the last inlineMath in a paragraph to avoid
-			// mutating the AST while earlier inlineMath nodes are still being visited.
+			// Skip if an inlineMath already appeared earlier in this paragraph.
+			// This ensures the transformation runs at most once per paragraph
+			// and avoids AST mutation issues during traversal.
 			if (before.some(n => n.type === "inlineMath")) return;
 
 			const blocks: RootContent[] = [];
