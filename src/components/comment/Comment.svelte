@@ -83,7 +83,7 @@ async function remove() {
 			{:then response}
 				{#if !response.error}
 					{#each response.data.reverse() as item}
-						<dt class="font-bold">{Time(item.timestamp)}</dt>
+						<dt class="font-bold">{Time.toString(item.timestamp)}</dt>
 						{#await remark.process(item.content) then html}
 							<dd class="markdown comment">{@html html}</dd>
 						{/await}
