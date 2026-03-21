@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.39.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.38.0...v0.39.0) (2026-03-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* The `PUBLIC_TIMEZONE` variable in `.env` is no longer supported. You must migrate this value to the `timezone` field within your `site.config.ts` file.
+
+### Bug Fixes
+
+* apply locale-specific font styles dynamically ([27056b6](https://github.com/tuyuritio/astro-theme-thought-lite/commit/27056b6fa70c2b53181681ba33bdec81856a4018))
+* **style:** adjust button positioning ([747613f](https://github.com/tuyuritio/astro-theme-thought-lite/commit/747613fc188c159546dde3ad020cd02181f88773))
+
+
+### Code Refactoring
+
+* relocate `timezone` to site config and rename `utils` to `lib` ([34caecb](https://github.com/tuyuritio/astro-theme-thought-lite/commit/34caecbfe843dfa206fa88d88a8e056c858eddee))
+
 ## [0.38.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.37.1...v0.38.0) (2026-03-07)
 
 
