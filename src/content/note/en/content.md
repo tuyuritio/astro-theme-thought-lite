@@ -1,7 +1,6 @@
 ---
 title: Content Creation Guide
 timestamp: 2026-01-26 00:00:00+00:00
-series: Astro
 tags: [Content, Demo]
 description: "Comprehensive guide to the theme's three sections: Notes, Jottings, and Information, helping users understand content types and publishing standards."
 toc: true

@@ -1,7 +1,6 @@
 ---
 title: 内容创作指南
 timestamp: 2026-01-26 00:00:00+00:00
-series: Astro
 tags: [Content, Demo]
 description: 全面介绍主题的三个内容板块：文记、随笔、说明，帮助用户了解不同内容类型的创作和发布规范。
 toc: true

@@ -1,7 +1,8 @@
 ---
 title: Internationalization Configuration Guide
 timestamp: 2026-01-07 00:00:00+00:00
-tags: [Guide, Astro]
+series: Guide
+tags: [Configuration, Astro]
 description: Detailed guide on configuring multi-language support for the theme, including changing default language, adding new languages, managing translation files, and configuring content directory structure.
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: Markdown Image Handling
 timestamp: 2026-02-27 00:00:00+00:00
-series: Astro
 tags: [Content, Demo]
 description: Demonstrates three ways to reference images in Markdown—relative paths, absolute paths, and external URLs—showcasing image optimization and management best practices.
 ---

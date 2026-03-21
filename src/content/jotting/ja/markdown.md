@@ -1,7 +1,6 @@
 ---
 title: Markdown 拡張マニュアル
 timestamp: 2025-11-24 00:00:00+00:00
-series: Astro
 tags: [Markup, Demo]
 description: テーマで拡張されたMarkdown構文機能の詳細ガイド。
 ---

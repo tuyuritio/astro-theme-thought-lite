@@ -1,7 +1,8 @@
 ---
 title: 国際化設定ガイド
 timestamp: 2026-01-07 00:00:00+00:00
-tags: [Guide, Astro]
+series: Guide
+tags: [Configuration, Astro]
 description: テーマの多言語サポートの設定方法の詳細ガイド、デフォルト言語の変更、新しい言語の追加、翻訳ファイルの管理、コンテンツディレクトリ構造の設定を含む。
 ---
 
