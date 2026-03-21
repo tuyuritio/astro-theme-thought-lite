@@ -10,7 +10,7 @@
 			"$assets/*": ["src/assets/*"],
 			"$icons/*": ["src/icons/*"],
 			"$graph/*": ["src/graph/*"],
-			"$utils/*": ["src/utils/*"],
+			"$lib/*": ["src/lib/*"],
 			"$components/*": ["src/components/*"],
 			"$i18n": ["src/i18n/index"],
 			"$layouts/*": ["src/layouts/*"],

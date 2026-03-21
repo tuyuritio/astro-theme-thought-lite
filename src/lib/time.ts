@@ -1,6 +1,7 @@
 /** biome-ignore-all lint/suspicious/noShadowRestrictedNames: Local function namespace */
 
 import { Temporal } from "temporal-polyfill";
+import config from "$config";
 
 /**
  * Get ZonedDateTime in specified timezone
@@ -12,7 +13,7 @@ function Time(time?: string | Date, userTimezone: boolean = false) {
 	if (time instanceof Date) time = time.toISOString();
 
 	const instant = time ? Temporal.Instant.from(time) : Temporal.Now.instant();
-	const timezone = userTimezone ? Temporal.Now.timeZoneId() : import.meta.env.PUBLIC_TIMEZONE || "UTC";
+	const timezone = userTimezone ? Temporal.Now.timeZoneId() : config.timezone || "UTC";
 
 	return instant.toZonedDateTimeISO(timezone);
 }

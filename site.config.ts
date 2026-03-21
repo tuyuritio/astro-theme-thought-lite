@@ -1,4 +1,4 @@
-import siteConfig from "./src/utils/config";
+import siteConfig from "./src/lib/config";
 
 const config = siteConfig({
 	title: "ThoughtLite",
@@ -13,6 +13,7 @@ const config = siteConfig({
 		type: "CC BY-NC-ND 4.0",
 		year: "2025"
 	},
+	timezone: "UTC",
 	i18n: {
 		locales: ["en", "zh-cn", "ja"],
 		defaultLocale: "en"
