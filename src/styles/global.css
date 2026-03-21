@@ -50,15 +50,6 @@
 	}
 }
 
-/* Language-specific fonts */
-:lang(zh-cn) {
-	--font-serif: var(--font-noto-serif-sc);
-}
-
-:lang(ja) {
-	--font-serif: var(--font-noto-serif-jp);
-}
-
 @layer base {
 	::selection {
 		background-color: var(--selection-color);
