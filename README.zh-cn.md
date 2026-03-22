@@ -80,13 +80,9 @@ pnpm dev
 - [Astro 配置参考](https://docs.astro.build/zh-cn/reference/configuration-reference/)
 - [站点配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/configuration)
 - [国际化配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/internationalization)
-
-评论系统相关配置请按照以下步骤配置：
-
-1. 创建 Cloudflare D1，参阅[Cloudflare D1 配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/cloudflare-d1)。
-2. 配置 Cloudflare Turnstile，参阅[Cloudflare Turnstile 配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/cloudflare-turnstile)。
-    - 如果不启用匿名评论，可跳过这一步。
-3. 配置 OAuth 认证，参阅[OAuth 配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/oauth)。
+- [评论系统配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/comment)
+- [通知配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/notification)
+- [OAuth 配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/oauth)
 
 ## 💻 命令
 

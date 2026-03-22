@@ -28,6 +28,8 @@ The theme's custom configuration is located in the `site.config.ts` file in the 
 | `feed.section` | `"*" \| Section[]` | Content sections included in the feed; `*` indicates all. |
 | `feed.limit` | `number` | Maximum number of items displayed in the feed. |
 | `comment.max-length` | `number` | Maximum comment length. |
+| `comment.hide-deleted` | `boolean` | Hide deleted comments. |
+| `comment.history` | `boolean` | Show comment history. |
 | `latest` | `"*" \| Section[]` | Sections displayed in the "Latest" on the homepage; `*` indicates all. |
 
 ### Type Descriptions

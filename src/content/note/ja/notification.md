@@ -1,6 +1,9 @@
 ---
 title: 通知設定ガイド
 timestamp: 2025-12-30 00:00:00+00:00
+series: Comment
+tags: [Guide, Email]
+description: Web Push とメール通知を設定し、コメント返信の即時通知を実現して体験を向上させます。
 ---
 
 コメントの返信を即座に通知するために、テーマは **Web Push** と **電子書簡** の2つの方法を提供します。

@@ -1,6 +1,9 @@
 ---
 title: Notification Configuration Guide
 timestamp: 2025-12-30 00:00:00+00:00
+series: Comment
+tags: [Guide, Email]
+description: Configure Web Push and email notifications to ensure instant reply alerts and enhance engagement.
 ---
 
 To notify comment replies instantly, the theme provides two methods: **Web Push** and **Email**.

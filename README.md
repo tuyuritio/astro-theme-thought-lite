@@ -80,13 +80,9 @@ Related theme configuration can be found in the following documents:
 - [Astro Configuration Reference](https://docs.astro.build/en/reference/configuration-reference/)
 - [Site Configuration Guide](https://thought-lite.ttio.workers.dev/note/configuration)
 - [Internationalization Configuration Guide](https://thought-lite.ttio.workers.dev/note/internationalization)
-
-Please follow the steps below to configure the comment system:
-
-1. Create Cloudflare D1, refer to [Cloudflare D1 Configuration Guide](https://thought-lite.ttio.workers.dev/note/cloudflare-d1).
-2. Configure Cloudflare Turnstile, refer to [Cloudflare Turnstile Configuration Guide](https://thought-lite.ttio.workers.dev/note/cloudflare-turnstile).
-    - You can skip this step if you don't enable anonymous comments.
-3. Configure OAuth authentication, refer to [OAuth Configuration Guide](https://thought-lite.ttio.workers.dev/note/oauth).
+- [Comment System Configuration Guide](https://thought-lite.ttio.workers.dev/note/comment)
+- [Notification Configuration Guide](https://thought-lite.ttio.workers.dev/note/notification)
+- [OAuth Configuration Guide](https://thought-lite.ttio.workers.dev/note/oauth).
 
 ## 💻 Commands
 

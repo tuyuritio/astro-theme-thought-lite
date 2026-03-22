@@ -1,6 +1,9 @@
 ---
 title: 通知配置指南
 timestamp: 2025-12-30 00:00:00+00:00
+series: Comment
+tags: [Guide, Email]
+description: 配置 Web Push 和电子邮件通知，确保即时接收评论回复提醒，提升互动体验。
 ---
 
 为即时通知评论回复，主题提供 **Web Push** 及**电子邮件**两种方式。

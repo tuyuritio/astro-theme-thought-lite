@@ -80,13 +80,9 @@ pnpm dev
 - [Astro 設定リファレンス](https://docs.astro.build/ja/reference/configuration-reference/)
 - [サイト設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/configuration)
 - [国際化設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/internationalization)
-
-コメントシステムの関連設定は、以下の手順に従って行ってください：
-
-1. Cloudflare D1 を作成、[Cloudflare D1 設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/cloudflare-d1)を参照。
-2. Cloudflare Turnstile を設定、[Cloudflare Turnstile 設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/cloudflare-turnstile)を参照。
-    - 匿名コメントを有効にしない場合は、このステップをスキップできます。
-3. OAuth 認証を設定、[OAuth 設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/oauth)を参照。
+- [コメントシステム設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/comment)
+- [通知設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/notification)
+- [OAuth 設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/oauth)を参照。
 
 ## 💻 コマンド
 

@@ -28,6 +28,8 @@ toc: true
 | `feed.section` | `"*" \| Section[]` | 订阅源包含的内容板块；`*` 表示全部。 |
 | `feed.limit` | `number` | 订阅源中显示的最大条目数。 |
 | `comment.max-length` | `number` | 评论最大字数。 |
+| `comment.hide-deleted` | `boolean` | 隐藏已删除的评论。 |
+| `comment.history` | `boolean` | 显示评论历史记录。 |
 | `latest` | `"*" \| Section[]` | 首页「最新内容」展示的板块；`*` 表示全部。 |
 
 ### 类型说明
