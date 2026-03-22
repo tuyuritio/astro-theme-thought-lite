@@ -100,10 +100,10 @@ Private Key:
 
 #### 1. 创建提供商文件
 
-在 `src/utils/email/providers/` 目录下创建文件（如 `postmark.ts`），并实现 `send` 方法：
+在 `src/lib/email/providers/` 目录下创建文件（如 `postmark.ts`），并实现 `send` 方法：
 
 ```typescript
-// src/utils/email/providers/postmark.ts
+// src/lib/email/providers/postmark.ts
 export class Postmark implements EmailProvider {
     name = "Postmark";
 
@@ -146,7 +146,7 @@ export class Postmark implements EmailProvider {
 
 #### 2. 注册提供商
 
-修改 `src/utils/email/index.ts` 文件，根据环境变量选择你的新提供商：
+修改 `src/lib/email/index.ts` 文件，根据环境变量选择你的新提供商：
 
 ```typescript
 import { Postmark } from "./providers/postmark";

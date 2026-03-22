@@ -1,61 +1,59 @@
 ﻿---
 title: 站点配置指南
-timestamp: 2025-11-04 00:00:00+00:00
-tags: [Guide, Astro]
-description: Astro 主题站点的基础配置说明，涵盖环境变量、站点信息、Markdown 处理、图标生成等核心配置项。
+timestamp: 2026-03-21 00:00:00+00:00
+series: Guide
+tags: [Configuration, Astro]
+description: 主题基础配置说明，涵盖站点信息、显示效果、图标生成等核心配置项。
+toc: true
 ---
 
-## `.env`
+## 配置参考
 
-1. 运行命令创建 `.env` 文件：
-    ```sh
-    cp .env.example .env
-    ```
-2. 修改或添加变量：
-    | 变量 | 描述 |
-    | - | - |
-    | `PUBLIC_TIMEZONE`* | 默认显示时区，参考[时区列表](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) |
-    | `PASS_KEY`* | 用于生成 Token，16 字节 Base64 格式密钥，使用命令 `openssl rand -base64 16` 生成<br>或 `node -e "console.log(require('crypto').randomBytes(16).toString('base64'))"` |
-    | `AUTHOR_ID` | 作者 ID，用于在评论系统中标识站点作者；需在 [Cloudflare D1 面板](https://dash.cloudflare.com/?to=/:account/workers/d1)中查询 |
+主题自定义配置位于根目录下的 `site.config.ts` 文件，以下是各配置项的详细说明：
 
-    `*` 表示必要选项。
+| 配置项 | 类型 | 描述 |
+|:- |:- |:- |
+| `title` | `string` | 站点标题。 |
+| `prologue` | `string` | 首页标语；支持 `\n` 换行。 |
+| `author.name` | `string` | 作者名称。 |
+| `author.email` | `string` | 作者邮箱。 |
+| `author.link` | `string` | 作者个人主页链接。 |
+| `description` | `string` | 站点描述。 |
+| `copyright.type` | `CCLicenseType` | [Creative Commons 4.0](https://creativecommons.org/chooser/) 许可类型。 |
+| `copyright.year` | `string` | 版权年份或年份范围。 |
+| `timezone` | `string` | 站点显示时区，参考[时区列表](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List)。 |
+| `i18n` | `object` | 详见[国际化配置指南](internationalization)。 |
+| `pagination` | `Record<Section, number>` | 各板块每页显示的条目数。 |
+| `heatmap` | `Heatmap` | 热力图显示配置。 |
+| `feed.section` | `"*" \| Section[]` | 订阅源包含的内容板块；`*` 表示全部。 |
+| `feed.limit` | `number` | 订阅源中显示的最大条目数。 |
+| `comment.max-length` | `number` | 评论最大字数。 |
+| `latest` | `"*" \| Section[]` | 首页「最新内容」展示的板块；`*` 表示全部。 |
 
-## `astro.config.ts`
+### 类型说明
 
-- `site` - 站点 URL
-- `i18n`
-    - `locales` - 支持的语言列表
-    - `defaultLocale` - 默认语言
-- `markdown`
-    - `remarkPlugins` - Markdown 处理插件
-    - `rehypePlugins` - HTML 处理插件
+#### `CCLicenseType`
 
-## `site.config.ts`
+- `"CC0 1.0"`
+- `"CC BY 4.0"`
+- `"CC BY-SA 4.0"`
+- `"CC BY-NC 4.0"`
+- `"CC BY-NC-SA 4.0"`
+- `"CC BY-ND 4.0"`
+- `"CC BY-NC-ND 4.0"`
 
-- `title` - 站点标题
-- `prologue` - 首页标语，支持 `\n` 换行
-- `author`
-    - **string** - 作者名称
-    - **object**
-        - `name` - 作者名称
-        - `email` - 作者邮箱
-        - `link` - 作者个人网站
-- `description` - 站点描述
-- `copyright` - 版权信息
-    - `type` - CC 许可类型
-    - `year` - 版权年份或年份范围
-- `feed` - 订阅源
-    - `section` - 订阅源内容板块
-        - **`*`** - 所有板块
-        - **array**
-            - `note` - 文记板块
-            - `jotting` - 随笔板块
-    - `limit` - 内容数量限制
-- `comment`
-    - `max-length` - 评论最大字数
-- `latest` - 最新内容显示
-    - `note` - 是否显示最新文记
-    - `jotting` - 是否显示最新随笔
+#### `Section`
+
+- `"note"`
+- `"jotting"`
+
+#### `Heatmap`
+
+| `unit` | `weeks` | `years` |
+|:- | - | - |
+| `day` | 显示的总周数 | × |
+| `week` | *固定显示 51 周* | × |
+| `month` | × | 显示的总年数 |
 
 ## 图标生成
 

@@ -6,11 +6,11 @@ import { drizzle } from "drizzle-orm/d1";
 import { alias } from "drizzle-orm/sqlite-core";
 import { Comment, CommentHistory, Drifter, Email, Notification, PushSubscription } from "$db/schema";
 import config, { turnstile, oauth, push, email } from "$config";
-import remark from "$utils/remark";
-import { enhash, Token } from "$utils/token";
-import { render } from "$utils/email";
-import sendEmail from "$utils/email/util";
-import sendPush from "$utils/push";
+import remark from "$lib/remark";
+import { enhash, Token } from "$lib/token";
+import { render } from "$lib/email";
+import sendEmail from "$lib/email/util";
+import sendPush from "$lib/push";
 import i18nit from "$i18n";
 
 const env = import.meta.env;

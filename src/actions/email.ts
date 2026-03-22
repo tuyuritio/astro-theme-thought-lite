@@ -5,9 +5,9 @@ import { and, eq, ne } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { email as enabled } from "$config";
 import { Email } from "$db/schema";
-import { render } from "$utils/email";
-import sendEmail from "$utils/email/util";
-import { AESEncryption, Token } from "$utils/token";
+import { render } from "$lib/email";
+import sendEmail from "$lib/email/util";
+import { AESEncryption, Token } from "$lib/token";
 import i18nit from "$i18n";
 
 export const email = {

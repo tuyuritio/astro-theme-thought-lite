@@ -2,8 +2,8 @@ import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { OAuth, type OAuthAccount } from "$utils/oauth";
-import { Token } from "$utils/token";
+import { OAuth, type OAuthAccount } from "$lib/oauth";
+import { Token } from "$lib/token";
 import { Drifter, Email } from "$db/schema";
 import { oauth } from "$config";
 

@@ -1,4 +1,4 @@
-import { Token } from "$utils/token";
+import { Token } from "$lib/token";
 import type { APIRoute } from "astro";
 
 export const prerender = false;

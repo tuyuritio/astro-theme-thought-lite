@@ -31,7 +31,7 @@ import wrapper from "@tuyuritio/rehype-table-wrapper";
 import sectionize from "@hbsnow/rehype-sectionize";
 import copy from "@tuyuritio/shiki-code-copy";
 
-import reading from "./src/utils/reading";
+import reading from "./src/lib/reading";
 
 import siteConfig from "./site.config";
 import ZeoSevenFonts from "./src/fonts/zeo-seven-fonts";

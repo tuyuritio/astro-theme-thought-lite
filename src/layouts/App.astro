@@ -61,6 +61,8 @@ const localedMainFont = mainFonts[locale];
 		<Font cssVariable="--font-maple-mono-nf-cn" />
 		<Font cssVariable={localedMainFont} />
 
+		<style set:html={`[lang="${locale}"]{--font-serif:var(${localedMainFont})}`}></style>
+
 		{turnstile && [<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onloadTurnstileCallback" async defer data-swup-ignore-script is:inline />]}
 
 		<script is:inline>

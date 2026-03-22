@@ -100,10 +100,10 @@ Private Key:
 
 #### 1. プロバイダーファイルの作成
 
-`src/utils/email/providers/` ディレクトリにファイル（例：`postmark.ts`）を作成し、`send` メソッドを実装します：
+`src/lib/email/providers/` ディレクトリにファイル（例：`postmark.ts`）を作成し、`send` メソッドを実装します：
 
 ```typescript
-// src/utils/email/providers/postmark.ts
+// src/lib/email/providers/postmark.ts
 export class Postmark implements EmailProvider {
     name = "Postmark";
 
@@ -146,7 +146,7 @@ export class Postmark implements EmailProvider {
 
 #### 2. プロバイダーの登録
 
-`src/utils/email/index.ts` ファイルを変更し、環境変数に基づいて新しいプロバイダーを選択するようにします：
+`src/lib/email/index.ts` ファイルを変更し、環境変数に基づいて新しいプロバイダーを選択するようにします：
 
 ```typescript
 import { Postmark } from "./providers/postmark";

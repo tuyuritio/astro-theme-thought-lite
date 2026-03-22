@@ -2,8 +2,8 @@ import type { APIRoute } from "astro";
 import { generateCodeVerifier, generateState } from "arctic";
 import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { OAuth, type OAuthAccount } from "$utils/oauth";
-import { random, Token } from "$utils/token";
+import { OAuth, type OAuthAccount } from "$lib/oauth";
+import { random, Token } from "$lib/token";
 import { Drifter, Email } from "$db/schema";
 
 export const prerender = false;

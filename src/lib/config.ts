@@ -39,6 +39,9 @@ interface SiteConfigOptions<Locales extends readonly string[] = readonly string[
 		year: string;
 	};
 
+	/** Timezone Configuration */
+	timezone?: string;
+
 	/** Internationalization Configuration */
 	i18n: {
 		/** Supported Locales */

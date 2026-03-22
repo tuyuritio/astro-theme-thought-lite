@@ -27,7 +27,7 @@ In provider configuration, fill in the site URL for `Website URL`, and fill in `
 
 ## Extend OAuth Providers
 
-If you need to add a new OAuth provider, please refer to the following steps or [Arctic documentation](https://arcticjs.dev/), and supplement the corresponding logic in `src/utils/oauth.ts`.
+If you need to add a new OAuth provider, please refer to the following steps or [Arctic documentation](https://arcticjs.dev/), and supplement the corresponding logic in `src/lib/oauth.ts`.
 
 ### 1. Environment Variable Configuration
 

@@ -1,4 +1,4 @@
-import siteConfig, { providers } from "./src/utils/config";
+import siteConfig, { providers } from "./src/lib/config";
 
 const env = import.meta.env ?? {};
 
@@ -15,6 +15,7 @@ const config = siteConfig({
 		type: "CC BY-NC-ND 4.0",
 		year: "2025"
 	},
+	timezone: "UTC",
 	i18n: {
 		locales: ["en", "zh-cn", "ja"],
 		defaultLocale: "en"

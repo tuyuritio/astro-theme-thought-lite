@@ -1,7 +1,8 @@
 ---
 title: 連結コンポーネント使用ガイド
 timestamp: 2025-11-17 00:00:00+00:00
-tags: [Guide, MDX]
+series: Guide
+tags: [Component, MDX]
 toc: true
 ---
 

@@ -11,7 +11,7 @@
 			"$actions/*": ["src/actions/*"],
 			"$icons/*": ["src/icons/*"],
 			"$graph/*": ["src/graph/*"],
-			"$utils/*": ["src/utils/*"],
+			"$lib/*": ["src/lib/*"],
 			"$components/*": ["src/components/*"],
 			"$db/*": ["src/db/*"],
 			"$i18n": ["src/i18n/index"],

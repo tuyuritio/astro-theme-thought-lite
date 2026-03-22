@@ -22,7 +22,7 @@
 > - `main` ブランチ：静的ビルド、任意の静的ホスティングプラットフォームにデプロイ可能。
 > - `cloudflare` ブランチ✅：内蔵コメントシステムを有効にし、Cloudflare のみでデプロイ可能。
 
-🎬 **ライブデモ**：[Cloudflare Workers](https://thought-lite.ttio.workers.dev/ja/)
+🎬 **ライブデモ**：[Cloudflare Workers](https://thought-lite.ttio.workers.dev/ja)
 
 ## ✨ 機能
 
@@ -75,14 +75,18 @@ pnpm dev
 
 ## 🔧 設定
 
-1. Cloudflare D1 を作成、[Cloudflare D1 設定ガイド](src/content/note/ja/cloudflare-d1.md)を参照。
-2. Cloudflare Turnstile を設定、[Cloudflare Turnstile 設定ガイド](src/content/note/ja/cloudflare-turnstile.md)を参照。
+テーマ関連の構成については、次のドキュメントを参照してください：
+
+- [Astro 設定リファレンス](https://docs.astro.build/ja/reference/configuration-reference/)
+- [サイト設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/configuration)
+- [国際化設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/internationalization)
+
+コメントシステムの関連設定は、以下の手順に従って行ってください：
+
+1. Cloudflare D1 を作成、[Cloudflare D1 設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/cloudflare-d1)を参照。
+2. Cloudflare Turnstile を設定、[Cloudflare Turnstile 設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/cloudflare-turnstile)を参照。
     - 匿名コメントを有効にしない場合は、このステップをスキップできます。
-3. OAuth 認証を設定、[OAuth 設定ガイド](src/content/note/ja/oauth.md)を参照。
-4. サイト設定および国際化（i18n）設定をカスタマイズするには、以下のファイルを変更してください。[サイト設定ガイド](src/content/note/ja/configuration.md)と[国際化設定ガイド](src/content/note/ja/internationalization.md)を参照：
-    - `.env`
-    - `astro.config.ts`
-    - `site.config.ts`
+3. OAuth 認証を設定、[OAuth 設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/oauth)を参照。
 
 ## 💻 コマンド
 
@@ -135,7 +139,7 @@ pnpm db:migrate:local
 - `preface` - 序文、第一印象としてサイトのホームページに表示
 - `information` - 情報、各種説明的なコンテンツを含む
 
-詳細は[コンテンツ作成ガイド](src/content/note/ja/content.md)を参照してください。
+詳細は[コンテンツ作成ガイド](https://thought-lite.vercel.app/ja/note/content)を参照してください。
 
 ## 🤝 貢献
 

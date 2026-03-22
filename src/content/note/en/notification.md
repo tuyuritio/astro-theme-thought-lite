@@ -100,10 +100,10 @@ Implement the `EmailProvider` interface to add new email service providers.
 
 #### 1. Create Provider File
 
-Create a file in the `src/utils/email/providers/` directory (e.g., `postmark.ts`) and implement the `send` method:
+Create a file in the `src/lib/email/providers/` directory (e.g., `postmark.ts`) and implement the `send` method:
 
 ```typescript
-// src/utils/email/providers/postmark.ts
+// src/lib/email/providers/postmark.ts
 export class Postmark implements EmailProvider {
     name = "Postmark";
 
@@ -146,7 +146,7 @@ export class Postmark implements EmailProvider {
 
 #### 2. Register Provider
 
-Modify the `src/utils/email/index.ts` file to select your new provider based on environment variables:
+Modify the `src/lib/email/index.ts` file to select your new provider based on environment variables:
 
 ```typescript
 import { Postmark } from "./providers/postmark";

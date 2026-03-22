@@ -1,61 +1,59 @@
 ---
 title: Site Configuration Guide
-timestamp: 2025-11-04 00:00:00+00:00
-tags: [Guide, Astro]
-description: Essential configuration guide for Astro theme sites, covering environment variables, site information, Markdown processing, and icon generation.
+timestamp: 2026-03-21 00:00:00+00:00
+series: Guide
+tags: [Configuration, Astro]
+description: Essential configuration guide for the theme, covering site information, display effects, icon generation, and other core configuration items.
+toc: true
 ---
 
-## `.env`
+## Configuration Reference
 
-1. Run the command to create `.env` file:
-    ```sh
-    cp .env.example .env
-    ```
-2. Modify or add variables:
-    | Variable | Description |
-    | - | - |
-    | `PUBLIC_TIMEZONE`* | Default display timezone, refer to [Timezone List](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List) |
-    | `PASS_KEY`* | Used for generating tokens, 16-byte Base64 format key, generate with `openssl rand -base64 16`<br>or `node -e "console.log(require('crypto').randomBytes(16).toString('base64'))"` |
-    | `AUTHOR_ID` | Author ID for identifying site author in comment section; check in [Cloudflare D1 Panel](https://dash.cloudflare.com/?to=/:account/workers/d1) |
+The theme's custom configuration is located in the `site.config.ts` file in the root directory. Below are the detailed descriptions for each configuration item:
 
-    `*` indicates required options.
+| Configuration Item | Type | Description |
+|:- |:- |:- |
+| `title` | `string` | Site title. |
+| `prologue` | `string` | Homepage slogan; supports `\n` for line breaks. |
+| `author.name` | `string` | Author name. |
+| `author.email` | `string` | Author email. |
+| `author.link` | `string` | Author's personal homepage link. |
+| `description` | `string` | Site description. |
+| `copyright.type` | `CCLicenseType` | [Creative Commons 4.0](https://creativecommons.org/chooser/) license type. |
+| `copyright.year` | `string` | Copyright year or year range. |
+| `timezone` | `string` | Site display timezone, refer to [Timezone List](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). |
+| `i18n` | `object` | See [Internationalization Configuration Guide](internationalization) for details. |
+| `pagination` | `Record<Section, number>` | Number of items displayed per page for each section. |
+| `heatmap` | `Heatmap` | Heatmap display configuration. |
+| `feed.section` | `"*" \| Section[]` | Content sections included in the feed; `*` indicates all. |
+| `feed.limit` | `number` | Maximum number of items displayed in the feed. |
+| `comment.max-length` | `number` | Maximum comment length. |
+| `latest` | `"*" \| Section[]` | Sections displayed in the "Latest" on the homepage; `*` indicates all. |
 
-## `astro.config.ts`
+### Type Descriptions
 
-- `site` - Site URL
-- `i18n`
-    - `locales` - List of supported languages
-    - `defaultLocale` - Default language
-- `markdown`
-    - `remarkPlugins` - Markdown processing plugins
-    - `rehypePlugins` - HTML processing plugins
+#### `CCLicenseType`
 
-## `site.config.ts`
+- `"CC0 1.0"`
+- `"CC BY 4.0"`
+- `"CC BY-SA 4.0"`
+- `"CC BY-NC 4.0"`
+- `"CC BY-NC-SA 4.0"`
+- `"CC BY-ND 4.0"`
+- `"CC BY-NC-ND 4.0"`
 
-- `title` - Site title
-- `prologue` - Homepage tagline, supports `\n` line breaks
-- `author`
-    - **string** - Author name
-    - **object**
-        - `name` - Author name
-        - `email` - Author email
-        - `link` - Author personal website
-- `description` - Site description
-- `copyright` - Copyright information
-    - `type` - CC license type
-    - `year` - Copyright year or year range
-- `feed` - Feed
-    - `section` - Feed content sections
-        - **`*`** - All sections
-        - **array**
-            - `note` - Note section
-            - `jotting` - Jotting section
-    - `limit` - Content quantity limit
-- `comment`
-    - `max-length` - Maximum comment length
-- `latest` - Latest content display
-    - `note` - Whether to display latest note
-    - `jotting` - Whether to display latest jotting
+#### `Section`
+
+- `"note"`
+- `"jotting"`
+
+#### `Heatmap`
+
+| `unit` | `weeks` | `years` |
+|:- | - | - |
+| `day` | Total number of weeks to display | × |
+| `week` | *Fixed display of 51 weeks* | × |
+| `month` | × | Total number of years to display |
 
 ## Icon Generation
 

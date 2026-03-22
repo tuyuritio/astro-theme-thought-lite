@@ -3,7 +3,7 @@ import { ActionError, actions } from "astro:actions";
 import { onMount, untrack } from "svelte";
 import { slide } from "svelte/transition";
 import { Turnstile } from "svelte-turnstile";
-import remark from "$utils/remark";
+import remark from "$lib/remark";
 import Icon from "$components/Icon.svelte";
 import Modal from "$components/Modal.svelte";
 import { pushTip } from "$components/Tip.svelte";

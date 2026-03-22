@@ -1,7 +1,7 @@
 import { site } from "astro:config/client";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import config from "$config";
-import { AESEncryption } from "$utils/token";
+import { AESEncryption } from "$lib/token";
 import i18nit from "$i18n";
 import { render, send } from "./index";
 

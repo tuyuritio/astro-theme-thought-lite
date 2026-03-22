@@ -1,7 +1,6 @@
 ---
 title: Markdown 画像処理
 timestamp: 2026-02-27 00:00:00+00:00
-series: Astro
 tags: [Content, Demo]
 description: Markdown での画像参照の3つの方法（相対パス、絶対パス、外部URL）を示し、画像の最適化と管理のベストプラクティスを紹介します。
 ---

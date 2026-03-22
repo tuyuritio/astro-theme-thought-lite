@@ -77,7 +77,8 @@ if (headings) {
 
 <div id="toc-overlay" aria-hidden="true" class="sm:hidden fixed top-0 inset-s-0 w-screen h-screen transition-[background-color] max-sm:z-110"></div>
 
-<aside id="toc" class="sm:contents fixed top-0 inset-e-0 flex flex-col justify-between items-start gap-5 p-5 bg-background h-full overflow-hidden transition-transform max-sm:z-120">
+<aside id="toc" class="sm:contents fixed top-0 inset-e-0 flex flex-col items-start gap-2 p-5 bg-background h-full overflow-hidden transition-transform max-sm:z-120">
+	<button id="toc-close" class="sm:hidden"><Icon name="lucide--x" /></button>
 	<div class="sm:sticky self-start shrink-0 top-3 w-50 flex flex-col gap-7.5 max-sm:h-full">
 		{
 			headings && (
@@ -126,7 +127,6 @@ if (headings) {
 				</section>
 			)
 		}
-		<button id="toc-close" class="sm:hidden mt-auto ms-auto mb-2 me-2"><Icon name="lucide--x" /></button>
 	</div>
 </aside>
 
