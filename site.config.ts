@@ -19,7 +19,7 @@ const config = siteConfig({
 		defaultLocale: "en"
 	},
 	pagination: {
-		note: 15,
+		note: 10,
 		jotting: 24
 	},
 	heatmap: {
