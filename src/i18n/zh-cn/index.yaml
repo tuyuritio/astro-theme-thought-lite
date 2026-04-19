@@ -2,16 +2,6 @@ about:
   introduction: ○○自述
   linkroll: ○○连结
 contents: 目录
-feed:
-  address: 订阅地址
-  copy:
-    failure: 订阅地址已复制到剪贴板！
-    name: 复制
-    success: 订阅地址已复制到剪贴板！
-  description: 本页面是 Atom 格式的内容订阅源。
-  last: 最后更新
-  usage: 您可以在任何支持的阅读器中添加当前地址来订阅此内容，以便及时获取最新内容更新。
-  visit: 这是订阅源页面。访问 {title} 以获得完整的网站体验。
 home:
   heatmap:
     empty: 无字
@@ -32,7 +22,6 @@ navigation:
   note: 文记
   policy: 政策
   preface: 序文
-  subscription: 订阅
 note:
   empty: 暂无文记
   series: 系列
