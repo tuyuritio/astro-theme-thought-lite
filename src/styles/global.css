@@ -14,11 +14,17 @@
   10000-99999: Frame
 */
 
+/* 
+主色：#12161D
+次色：#71717B
+强调色：#585A5F
+背景色：#FAFAFA
+ */
+
 :root,
 [data-theme="light"] {
 	--primary-color: #2a2a28;
-	--secondary-color: #50504d;
-	--remark-color: #757575;
+	--secondary-color: #7e7e7b;
 	--weak-color: #9f9f9c;
 	--background-color: #fffffd;
 	--block-color: #eeeeee;
@@ -35,8 +41,7 @@
 
 [data-theme="dark"] {
 	--primary-color: #dddddb;
-	--secondary-color: #aaaaa8;
-	--remark-color: #a5a5a5;
+	--secondary-color: #9e9e9b;
 	--weak-color: #5d5d5a;
 	--background-color: #0e0e0c;
 	--block-color: #1e1e1e;
@@ -212,7 +217,6 @@
 @theme {
 	--color-primary: var(--primary-color);
 	--color-secondary: var(--secondary-color);
-	--color-remark: var(--remark-color);
 	--color-weak: var(--weak-color);
 	--color-background: var(--background-color);
 	--color-block: var(--block-color);

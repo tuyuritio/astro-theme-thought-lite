@@ -101,7 +101,7 @@ $effect(() => {
 					</span>
 					<span class="flex gap-1">
 						{#each jotting.data.tags as tag}
-							<button onclick={() => switchTag(tag, true)} class="text-[0.825rem] text-remark">#{tag}</button>
+							<button onclick={() => switchTag(tag, true)} class="text-[0.825rem] text-secondary">#{tag}</button>
 						{/each}
 					</span>
 				</section>

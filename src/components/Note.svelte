@@ -132,11 +132,11 @@ $effect(() => {
 					</div>
 					<span class="inline-flex items-center sm:justify-end gap-1 flex-wrap content-start sm:ms-auto">
 						{#each note.data.tags as tag}
-							<button onclick={() => switchTag(tag, true)} class="text-[0.875rem] text-remark sm:text-sm">#{tag}</button>
+							<button onclick={() => switchTag(tag, true)} class="text-[0.875rem] text-secondary sm:text-sm">#{tag}</button>
 						{/each}
 					</span>
 				</div>
-				<time datetime={note.data.timestamp.toISOString()} class="font-mono text-[0.65rem] text-remark">{Time.toString(note.data.timestamp)}</time>
+				<time datetime={note.data.timestamp.toISOString()} class="font-mono text-[0.65rem] text-secondary">{Time.toString(note.data.timestamp)}</time>
 			</section>
 		{:else}
 			<div class="pt-[10vh] text-center text-secondary font-bold text-xl">{t("note.empty")}</div>
