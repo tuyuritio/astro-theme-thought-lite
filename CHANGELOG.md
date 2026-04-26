@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.40.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.39.0...v0.40.0) (2026-04-26)
+
+
+### Features
+
+* **feed:** remove XSLT support ([d7dbe71](https://github.com/tuyuritio/astro-theme-thought-lite/commit/d7dbe71d58a8b5036741799d37966c5ce628bf20))
+
+
+### Bug Fixes
+
+* **style:** improve layout and spacing for note display ([1beff1d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/1beff1de003986ce64c6c67ca121a539a6c3ac97))
+* **style:** update color scheme ([b9b50af](https://github.com/tuyuritio/astro-theme-thought-lite/commit/b9b50afc34963ca30c564d1f893d87284e7ab55e))
+
 ## [0.39.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.38.0...v0.39.0) (2026-03-21)
 
 

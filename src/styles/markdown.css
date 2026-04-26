@@ -26,7 +26,7 @@
 		}
 
 		hr {
-			border-bottom: 1px dashed var(--remark-color);
+			border-bottom: 1px dashed var(--secondary-color);
 		}
 
 		a {
@@ -294,7 +294,7 @@
 			margin-top: 2.5em;
 			border-top: 4px dotted var(--weak-color);
 			padding-top: 1.5em;
-			color: var(--remark-color);
+			color: var(--secondary-color);
 			font-size: 0.8em;
 
 			ol {

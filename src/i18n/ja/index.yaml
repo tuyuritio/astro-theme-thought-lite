@@ -108,16 +108,6 @@ email:
       failure: 認証電書を送信できませんでした
       success: 認証電書を送信しました。リンクは 5 分以内に期限切れになりますので、お早めにご確認ください。
     success: 電子書簡の認証に成功しました！
-feed:
-  address: 購読アドレス
-  copy:
-    failure: 複写に失敗しました。購読アドレスを手動で複写してください。
-    name: 複写
-    success: 購読アドレスをクリップボードに複写しました！
-  description: このページは Atom 形式の記事購読ソースです。
-  last: 最終更新
-  usage: 対応しているリーダーで現在のアドレスを追加して、このコンテンツを購読し、最新の記事更新を適時に取得できます。
-  visit: これはフィードページです。完全なウェブサイト体験のために {title} を訪問してください。
 home:
   heatmap:
     empty: 無字
@@ -139,7 +129,6 @@ navigation:
   note: 文記
   policy: 規約
   preface: 序文
-  subscription: 購読
 note:
   comment: 感想
   empty: 文記がありません

@@ -169,7 +169,7 @@ All kinds of contributions are welcome and appreciated!
 
 - [Astro Sphere](https://github.com/markhorn-dev/astro-sphere)
 - [astro-vitesse](https://github.com/adrian-ub/astro-vitesse)
-- [Miniblog](https://github.com/nicholasdly/miniblog)
+- [Miniblog v1](https://github.com/nicholasdly/miniblog/tree/v1)
 - [AstroPaper with I18n](https://github.com/yousef8/astro-paper-i18n)
 
 ## 📜 License

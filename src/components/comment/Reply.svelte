@@ -315,7 +315,7 @@ onMount(() => {
 		</div>
 	{/if}
 	<div class:pointer-events-none={!enabled} class:blur={!enabled}>
-		<fieldset disabled={!enabled} class="group relative flex flex-col py-3 px-4 *:text-remark focus-within:*:text-primary focus-within:*:border-remark *:transition-[color,backgroud,border,width,height] *:duration-200 *:ease-out">
+		<fieldset disabled={!enabled} class="group relative flex flex-col py-3 px-4 *:text-secondary focus-within:*:text-primary focus-within:*:border-secondary *:transition-[color,backgroud,border,width,height] *:duration-200 *:ease-out">
 			{#snippet corner(top: boolean, start: boolean)}
 				<span aria-hidden="true" class="absolute -z-1 w-2 h-2 border-shadow group-focus-within:w-1/2 group-focus-within:h-1/2" class:top-0={top} class:bottom-0={!top} class:start-0={start} class:end-0={!start} class:border-t-2={top} class:border-b-2={!top} class:border-s-2={start} class:border-e-2={!start}></span>
 			{/snippet}

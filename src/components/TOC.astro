@@ -90,13 +90,13 @@ if (headings) {
 								<li id={`indicator-${heading.slug}`} class="group relative flex items-stretch h-6 [&.indicate>a]:font-bold [&.indicate>a]:text-primary">
 									<div class="flex select-none" aria-hidden="true">
 										{heading.lines?.map(line => (
-											<div class="w-4 relative flex justify-center">{line && <span class="absolute top-0 bottom-0 border-s border-remark" />}</div>
+											<div class="w-4 relative flex justify-center">{line && <span class="absolute top-0 bottom-0 border-s border-secondary" />}</div>
 										))}
 
 										{heading.depth > 1 && (
 											<div class="w-4 relative flex justify-center">
-												<span class:list={["absolute top-0 border-s border-remark", heading.last ? "h-[calc(50%+1px)]" : "h-full"]} />
-												<span class="absolute top-1/2 inset-s-1/2 w-2 border-b border-remark" />
+												<span class:list={["absolute top-0 border-s border-secondary", heading.last ? "h-[calc(50%+1px)]" : "h-full"]} />
+												<span class="absolute top-1/2 inset-s-1/2 w-2 border-b border-secondary" />
 											</div>
 										)}
 									</div>

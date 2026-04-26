@@ -117,26 +117,24 @@ $effect(() => {
 </script>
 
 <main class="flex flex-col-reverse sm:flex-row gap-10 grow">
-	<article class="flex flex-col gap-4 grow">
+	<article class="flex flex-col gap-5 grow">
 		{#each list as note (note.id)}
 			<section animate:flip={{ duration: 150 }} class="flex flex-col">
-				<div class="flex max-sm:flex-col">
-					<div class="leading-[1.55] *:inline *:align-middle">
-						{#if note.data.top > 0}<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100" />{/if}
-						{#if note.data.sensitive}<Icon name="lucide--siren" title={t("sensitive.icon")} />{/if}
-						{#if note.data.series}
-							<button onclick={() => chooseSeries(note.data.series, true)}>{note.data.series}</button>
-							<span aria-hidden="true">|</span>
-						{/if}
-						<a href={note.url} class="link">{note.data.title}</a>
-					</div>
-					<span class="inline-flex items-center sm:justify-end gap-1 flex-wrap content-start sm:ms-auto">
-						{#each note.data.tags as tag}
-							<button onclick={() => switchTag(tag, true)} class="text-[0.875rem] text-remark sm:text-sm">#{tag}</button>
-						{/each}
-					</span>
+				<div class="*:inline *:align-middle font-bold">
+					{#if note.data.top > 0}<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100" />{/if}
+					{#if note.data.sensitive}<Icon name="lucide--siren" title={t("sensitive.icon")} />{/if}
+					{#if note.data.series}
+						<button onclick={() => chooseSeries(note.data.series, true)}>{note.data.series}</button>
+						<span aria-hidden="true">|</span>
+					{/if}
+					<a href={note.url} class="link">{note.data.title}</a>
 				</div>
-				<time datetime={note.data.timestamp.toISOString()} class="font-mono text-[0.65rem] text-remark">{Time.toString(note.data.timestamp)}</time>
+				<span class="inline-flex gap-1 flex-wrap">
+					{#each note.data.tags as tag}
+						<button onclick={() => switchTag(tag, true)} class="text-secondary text-sm">#{tag}</button>
+					{/each}
+				</span>
+				<time datetime={note.data.timestamp.toISOString()} class="mt-1 font-mono text-[0.65rem] text-secondary">{Time.toString(note.data.timestamp)}</time>
 			</section>
 		{:else}
 			<div class="pt-[10vh] text-center text-secondary font-bold text-xl">{t("note.empty")}</div>
