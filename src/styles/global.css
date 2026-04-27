@@ -68,7 +68,7 @@
 
 	::-webkit-scrollbar-thumb {
 		border-radius: 5px;
-		background-color: var(--primary-color);
+		background-color: var(--background-color);
 	}
 
 	*:focus-visible {
