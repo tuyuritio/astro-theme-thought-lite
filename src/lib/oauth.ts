@@ -1,5 +1,5 @@
 import { site } from "astro:config/server";
-import { decodeIdToken, GitHub, Google, Twitter } from "arctic";
+import { decodeIdToken, GitHub, Google } from "arctic";
 
 const env = import.meta.env;
 
@@ -35,7 +35,7 @@ export class OAuth {
 
 	/**
 	 * Initialize OAuth provider
-	 * @param provider - OAuth provider name ("GitHub", "Google", or "X")
+	 * @param provider - OAuth provider name
 	 * @throws Error if provider is invalid or required environment variables are missing
 	 */
 	constructor(provider?: string) {
@@ -45,9 +45,6 @@ export class OAuth {
 		} else if (provider === "Google") {
 			if (!(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
 			this.provider = new Google(env.GOOGLE_CLIENT_ID, env.GOOGLE_CLIENT_SECRET, `${REDIRECT_URI}/Google`);
-		} else if (provider === "X") {
-			if (!(env.TWITTER_CLIENT_ID && env.TWITTER_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
-			this.provider = new Twitter(env.TWITTER_CLIENT_ID, env.TWITTER_CLIENT_SECRET, `${REDIRECT_URI}/X`);
 		} else {
 			throw new Error("Invalid Provider");
 		}
@@ -69,9 +66,6 @@ export class OAuth {
 			const url = this.provider.createAuthorizationURL(state, codeVerifier, ["email", "openid", "profile"]);
 			url.searchParams.set("access_type", "offline"); // Request refresh token
 			return url;
-		} else if (this.provider instanceof Twitter) {
-			// https://docs.x.com/fundamentals/authentication/guides/v2-authentication-mapping
-			return this.provider.createAuthorizationURL(state, codeVerifier, ["tweet.read", "users.read", "users.email", "offline.access"]);
 		} else {
 			throw new Error("Invalid Provider");
 		}
@@ -130,30 +124,6 @@ export class OAuth {
 				image: user.picture,
 				email: user.email
 			};
-		} else if (this.provider instanceof Twitter) {
-			// Extract token information and fetch user profile from Twitter API
-			const expireAt = tokens.accessTokenExpiresAt();
-			const refreshToken = tokens.refreshToken();
-
-			// https://docs.x.com/x-api/users/get-my-user
-			const response = await fetch("https://api.twitter.com/2/users/me?user.fields=confirmed_email,description,profile_image_url", {
-				headers: { authorization: `Bearer ${accessToken}`, "user-agent": USER_AGENT }
-			});
-			const user = (await response.json<any>()).data;
-
-			// Remove "_normal" suffix from Twitter profile image for higher resolution
-			return {
-				provider: "X",
-				access: accessToken,
-				expire: expireAt,
-				refresh: refreshToken,
-				account: user.id,
-				handle: user.username,
-				name: user.name,
-				description: user.description,
-				image: user.profile_image_url.replace("_normal", ""),
-				email: user.confirmed_email
-			};
 		} else {
 			throw new Error("Invalid Provider");
 		}
@@ -200,32 +170,6 @@ export class OAuth {
 			const user: any = await response.json();
 
 			return { provider: "Google", access: token, expire: expireAt, account: user.sub, name: user.name, image: user.picture };
-		} else if (this.provider instanceof Twitter) {
-			let expireAt: Date | undefined;
-			// Refresh access token if expired
-			if (expire) {
-				const tokens = await this.provider.refreshAccessToken(token);
-				token = tokens.accessToken();
-				expireAt = tokens.accessTokenExpiresAt();
-			}
-
-			// Fetch fresh profile data from Twitter API
-			const response = await fetch("https://api.twitter.com/2/users/me?user.fields=description,profile_image_url", {
-				headers: { authorization: `Bearer ${token}`, "user-agent": USER_AGENT }
-			});
-			const user = (await response.json<any>()).data;
-
-			// Remove "_normal" suffix from Twitter profile image for higher resolution
-			return {
-				provider: "X",
-				access: token,
-				expire: expireAt,
-				account: user.id,
-				handle: user.username,
-				name: user.name,
-				description: user.description,
-				image: user.profile_image_url.replace("_normal", "")
-			};
 		} else {
 			throw new Error("Invalid Provider");
 		}
@@ -244,19 +188,6 @@ export class OAuth {
 		} else if (this.provider instanceof Google) {
 			// Use Google's built-in token revocation
 			await this.provider.revokeToken(token);
-		} else if (this.provider instanceof Twitter) {
-			// Manual implementation for Twitter token revocation
-			// @see https://github.com/pilcrowonpaper/arctic/issues/314
-			await fetch("https://api.twitter.com/2/oauth2/revoke", {
-				method: "POST",
-				headers: {
-					"content-type": "application/x-www-form-urlencoded",
-					"user-agent": USER_AGENT,
-					// Basic authentication using client credentials
-					authorization: `Basic ${btoa(`${env.TWITTER_CLIENT_ID}:${env.TWITTER_CLIENT_SECRET}`)}`
-				},
-				body: `token=${encodeURIComponent(token)}&token_type_hint=access_token`
-			});
 		} else {
 			throw new Error("Invalid Provider");
 		}

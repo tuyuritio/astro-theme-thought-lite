@@ -3,7 +3,7 @@ title: OAuth Configuration Guide
 timestamp: 2025-06-24 00:00:00+00:00
 series: Comment
 tags: [Guide, OAuth]
-description: Comprehensive guide for setting up OAuth 2.0 authentication with support for GitHub, Google, Twitter and other providers.
+description: Comprehensive guide for setting up OAuth 2.0 authentication with support for GitHub, Google and other providers.
 ---
 
 ## Create OAuth Token
@@ -18,8 +18,6 @@ Please add corresponding variables for the providers you need to add in the `.en
 | `GITHUB_CLIENT_SECRET` | Create secret in Github OAuth APP, https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps |
 | `GOOGLE_CLIENT_ID` | Create Google OAuth Platform, https://console.cloud.google.com/auth |
 | `GOOGLE_CLIENT_SECRET` | Get secret from OAuth 2.0 client ID, https://console.cloud.google.com/auth/clients |
-| `TWITTER_CLIENT_ID` | Create X Developer APP, https://developer.x.com/en/portal/dashboard |
-| `TWITTER_CLIENT_SECRET` | Create secret in User authentication settings |
 
 > [!TIP]
 > When enabling any third-party auth provider, you must configure both the `*_CLIENT_ID` and `*_CLIENT_SECRET` for that provider; if either variable is missing, the provider will remain **disabled**.
