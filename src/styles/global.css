@@ -14,13 +14,6 @@
   10000-99999: Frame
 */
 
-/* 
-主色：#12161D
-次色：#71717B
-强调色：#585A5F
-背景色：#FAFAFA
- */
-
 :root,
 [data-theme="light"] {
 	--primary-color: #2a2a28;
