@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.40.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.40.0...v0.40.1) (2026-05-01)
+
+
+### Bug Fixes
+
+* **style:** adjust z-index ([7dc66c7](https://github.com/tuyuritio/astro-theme-thought-lite/commit/7dc66c7e7997e963c605818b48e51a320f191d9b))
+
 ## [0.40.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.39.0...v0.40.0) (2026-04-26)
 
 
