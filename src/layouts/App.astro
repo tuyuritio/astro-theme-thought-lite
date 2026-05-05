@@ -1,6 +1,7 @@
 ---
 import { Font, type CssVariable } from "astro:assets";
-import { getRelativeLocaleUrl } from "astro:i18n";
+import { getRelativeLocaleUrl, getAbsoluteLocaleUrl } from "astro:i18n";
+import config from "$config";
 
 const { locale, title, subtitle, description, author, article } = Astro.props;
 
@@ -11,6 +12,8 @@ const mainFonts: Record<string, CssVariable> = {
 };
 
 const localedMainFont = mainFonts[locale];
+
+const route = Astro.url.pathname.slice(`/${locale === config.i18n.defaultLocale ? "" : locale}`.length);
 ---
 
 <html lang={locale} dir={["ar", "he", "fa", "ur"].includes(locale) ? "rtl" : "ltr"}>
@@ -61,6 +64,8 @@ const localedMainFont = mainFonts[locale];
 		<Font cssVariable={localedMainFont} />
 
 		<style set:html={`[lang="${locale}"]{--font-serif:var(${localedMainFont})}`}></style>
+
+		{config.i18n.locales.map(locale => <link rel="alternate" hreflang={locale} href={getAbsoluteLocaleUrl(locale, route)} />)}
 
 		<script is:inline>
 			var theme = localStorage.getItem("theme");
