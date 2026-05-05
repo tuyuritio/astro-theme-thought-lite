@@ -107,65 +107,63 @@ export default defineConfig({
 			progress: true
 		})
 	],
-	experimental: {
-		fonts: [
-			{
-				name: "Noto Serif",
-				provider: fontProviders.google(),
-				weights: [400, 700],
-				optimizedFallbacks: false,
-				fallbacks: ["Noto Serif", "Georgia", "Times New Roman", "serif"],
-				cssVariable: "--font-noto-serif"
-			},
-			{
-				name: "Noto Serif SC",
-				provider: fontProviders.google(),
-				weights: [400, 700],
-				optimizedFallbacks: false,
-				fallbacks: ["Noto Serif SC", "Source Han Serif SC", "STSong", "Songti SC", "SimSun", "serif"],
-				cssVariable: "--font-noto-serif-sc"
-			},
-			{
-				name: "Noto Serif JP",
-				provider: fontProviders.google(),
-				weights: [400, 700],
-				optimizedFallbacks: false,
-				fallbacks: ["Noto Serif JP", "Source Han Serif JP", "Hiragino Mincho ProN", "MS Mincho", "serif"],
-				cssVariable: "--font-noto-serif-jp"
-			},
-			{
-				name: "Playwrite MX",
-				provider: fontProviders.google(),
-				weights: [100],
-				display: "block",
-				subsets: ["fallback"],
-				fallbacks: ["Apple Chancery", "Segoe Script", "cursive"],
-				cssVariable: "--font-playwrite-mx"
-			},
-			{
-				name: "Maple Mono NF CN",
-				provider: ZeoSevenFonts(),
-				optimizedFallbacks: false,
-				fallbacks: [
-					"Maple Mono NF CN",
-					"Maple Mono NF",
-					"Maple Mono CN",
-					"Maple Mono",
-					"Consolas",
-					"Monaco",
-					"Cascadia Code",
-					"Courier New",
-					"monospace"
-				],
-				cssVariable: "--font-maple-mono-nf-cn"
-			},
-			{
-				name: "The Peak Font Plus",
-				provider: ZeoSevenFonts(),
-				optimizedFallbacks: false,
-				fallbacks: ["Georgia", "STSong", "serif"],
-				cssVariable: "--font-the-peak-font-plus"
-			}
-		]
-	}
+	fonts: [
+		{
+			name: "Noto Serif",
+			provider: fontProviders.google(),
+			weights: [400, 700],
+			optimizedFallbacks: false,
+			fallbacks: ["Noto Serif", "Georgia", "Times New Roman", "serif"],
+			cssVariable: "--font-noto-serif"
+		},
+		{
+			name: "Noto Serif SC",
+			provider: fontProviders.google(),
+			weights: [400, 700],
+			optimizedFallbacks: false,
+			fallbacks: ["Noto Serif SC", "Source Han Serif SC", "STSong", "Songti SC", "SimSun", "serif"],
+			cssVariable: "--font-noto-serif-sc"
+		},
+		{
+			name: "Noto Serif JP",
+			provider: fontProviders.google(),
+			weights: [400, 700],
+			optimizedFallbacks: false,
+			fallbacks: ["Noto Serif JP", "Source Han Serif JP", "Hiragino Mincho ProN", "MS Mincho", "serif"],
+			cssVariable: "--font-noto-serif-jp"
+		},
+		{
+			name: "Playwrite MX",
+			provider: fontProviders.google(),
+			weights: [100],
+			display: "block",
+			subsets: ["fallback"],
+			fallbacks: ["Apple Chancery", "Segoe Script", "cursive"],
+			cssVariable: "--font-playwrite-mx"
+		},
+		{
+			name: "Maple Mono NF CN",
+			provider: ZeoSevenFonts(),
+			optimizedFallbacks: false,
+			fallbacks: [
+				"Maple Mono NF CN",
+				"Maple Mono NF",
+				"Maple Mono CN",
+				"Maple Mono",
+				"Consolas",
+				"Monaco",
+				"Cascadia Code",
+				"Courier New",
+				"monospace"
+			],
+			cssVariable: "--font-maple-mono-nf-cn"
+		},
+		{
+			name: "The Peak Font Plus",
+			provider: ZeoSevenFonts(),
+			optimizedFallbacks: false,
+			fallbacks: ["Georgia", "STSong", "serif"],
+			cssVariable: "--font-the-peak-font-plus"
+		}
+	]
 });
