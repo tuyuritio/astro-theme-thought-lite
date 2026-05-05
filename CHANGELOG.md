@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.41.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.40.1...v0.41.0) (2026-05-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to astro 6
+
+### Bug Fixes
+
+* **i18n:** eliminate client-side dynamic i18n hydration ([cf97e95](https://github.com/tuyuritio/astro-theme-thought-lite/commit/cf97e9555009414bd09e579a8868cbb032d6166c))
+
+
+### Miscellaneous Chores
+
+* standardize compilerOptions ([ea49b1c](https://github.com/tuyuritio/astro-theme-thought-lite/commit/ea49b1c9eefdbc52acb18aea77d35c442ea4d0c8))
+* upgrade to astro 6 ([e6e96a8](https://github.com/tuyuritio/astro-theme-thought-lite/commit/e6e96a8fae0c755e6a3705ab3240960fd979535d))
+
 ## [0.40.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.40.0...v0.40.1) (2026-05-01)
 
 
