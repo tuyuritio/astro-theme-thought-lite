@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.41.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.41.0...v0.41.1) (2026-05-11)
+
+
+### Miscellaneous Chores
+
+* **dependencies:** update packages ([09c6875](https://github.com/tuyuritio/astro-theme-thought-lite/commit/09c68750df63b27165a5284b5893c207d2c46b12))
+
 ## [0.41.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.40.1...v0.41.0) (2026-05-05)
 
 
