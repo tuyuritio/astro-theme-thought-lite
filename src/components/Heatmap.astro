@@ -174,7 +174,7 @@ if (frequency === "month") {
 
 			return (
 				<figure class="group/pop">
-					<i class:list={["block bg-primary/10", { "w-2.5 h-2.5": frequency === "day", "w-4 h-4": frequency === "week", "w-4.5 h-4.5": frequency === "month" }, { "bg-primary/40": count > 0, "bg-primary/70": count > 1, "bg-primary": count > 2 }]} />
+					<i class:list={["block bg-heatmap/10", { "w-2.5 h-2.5": frequency === "day", "w-4 h-4": frequency === "week", "w-4.5 h-4.5": frequency === "month" }, { "bg-heatmap/40": count > 0, "bg-heatmap/70": count > 1, "bg-heatmap": count > 2 }]} />
 
 					<div class="w-max flex flex-col mb-1 rounded-sm px-2 py-2 text-xs text-background bg-primary pop">
 						<time class="font-bold">{cell.target}</time>

@@ -2,6 +2,8 @@
 import { Font, type CssVariable } from "astro:assets";
 import { getRelativeLocaleUrl, getAbsoluteLocaleUrl } from "astro:i18n";
 import config from "$config";
+import { resolveTheme, themeCSS } from "$lib/theme";
+import themeInit from "../scripts/theme-init.js?raw";
 
 const { locale, title, subtitle, description, author, article } = Astro.props;
 
@@ -12,11 +14,12 @@ const mainFonts: Record<string, CssVariable> = {
 };
 
 const localedMainFont = mainFonts[locale];
+const theme = resolveTheme(config.theme);
 
 const route = Astro.url.pathname.slice(`/${locale === config.i18n.defaultLocale ? "" : locale}`.length);
 ---
 
-<html lang={locale} dir={["ar", "he", "fa", "ur"].includes(locale) ? "rtl" : "ltr"}>
+<html lang={locale} dir={["ar", "he", "fa", "ur"].includes(locale) ? "rtl" : "ltr"} data-visual-theme={theme.name} data-color-mode={theme.mode}>
 	<head>
 		<title>{subtitle && `${subtitle} |`} {title}</title>
 		<meta name="description" content={description} />
@@ -64,14 +67,11 @@ const route = Astro.url.pathname.slice(`/${locale === config.i18n.defaultLocale 
 		<Font cssVariable={localedMainFont} />
 
 		<style set:html={`[lang="${locale}"]{--font-serif:var(${localedMainFont})}`}></style>
+		<style is:inline set:html={themeCSS(theme)}></style>
 
 		{config.i18n.locales.map(locale => <link rel="alternate" hreflang={locale} href={getAbsoluteLocaleUrl(locale, route)} />)}
 
-		<script is:inline>
-			var theme = localStorage.getItem("theme");
-			var prefers = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-			document.documentElement.dataset.theme = theme || prefers;
-		</script>
+		<script is:inline data-swup-ignore-script set:html={themeInit} />
 	</head>
 	<body>
 		<slot />

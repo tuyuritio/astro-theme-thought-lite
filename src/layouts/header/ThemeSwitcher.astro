@@ -43,7 +43,12 @@ import Icon from "$components/Icon.svelte";
 		document.documentElement.dataset.theme = scheme;
 
 		// Persist user preference across sessions
-		localStorage.setItem("theme", scheme);
+		try {
+			localStorage.setItem("theme", scheme);
+		} catch {
+			// Keep switching usable when browser storage is blocked.
+		}
+		document.dispatchEvent(new CustomEvent("thought-lite:scheme", { detail: scheme }));
 	}
 
 	/**
@@ -55,6 +60,7 @@ import Icon from "$components/Icon.svelte";
 		const transit = () => trigger(target);
 
 		let transition: ViewTransition;
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return transit();
 		if (!(transition = document.startViewTransition?.(transit))) return transit(); // Compatibility check
 
 		const rectangular = button.getBoundingClientRect();
@@ -82,14 +88,6 @@ import Icon from "$components/Icon.svelte";
 		});
 	}
 
-	// Initial theme setup
-	const mode = window.matchMedia("(prefers-color-scheme: dark)");
-	const theme = localStorage.getItem("theme");
-	trigger(theme ? (theme as Scheme) : mode.matches ? "dark" : "light");
-
 	// Listen for user interactions (use property assignment to avoid duplicate handlers on script re-execution)
 	button.onclick = toggle;
-
-	// Listen for system theme changes
-	mode.onchange = ({ matches }) => trigger(matches ? "dark" : "light");
 </script>

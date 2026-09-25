@@ -14,37 +14,30 @@
   10000-99999: Frame
 */
 
-:root,
-[data-theme="light"] {
-	--primary-color: #2a2a28;
-	--secondary-color: #7e7e7b;
-	--weak-color: #9f9f9c;
-	--background-color: #fffffd;
-	--block-color: #eeeeee;
-	--shadow-color: #cdcdcc;
-	--selection-color: #adadacc3;
-
+:root {
 	--swup-fade-theme-duration: 0.15s;
-
-	.astro-code,
-	.astro-code span {
-		background-color: var(--block-color) !important;
-	}
 }
 
-[data-theme="dark"] {
-	--primary-color: #dddddb;
-	--secondary-color: #9e9e9b;
-	--weak-color: #5d5d5a;
-	--background-color: #0e0e0c;
-	--block-color: #1e1e1e;
-	--shadow-color: #323231;
-	--selection-color: #adadacc3;
+.astro-code,
+.astro-code span {
+	background-color: var(--code-background-color) !important;
+}
 
-	.astro-code,
-	.astro-code span {
+[data-theme="dark"] .astro-code,
+[data-theme="dark"] .astro-code span {
+	color: var(--shiki-dark) !important;
+}
+
+/* Match the palette when JavaScript is disabled. */
+:root[data-color-mode="dark"]:not([data-theme]) .astro-code,
+:root[data-color-mode="dark"]:not([data-theme]) .astro-code span {
+	color: var(--shiki-dark) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root[data-color-mode="system"]:not([data-theme]) .astro-code,
+	:root[data-color-mode="system"]:not([data-theme]) .astro-code span {
 		color: var(--shiki-dark) !important;
-		background-color: var(--shiki-dark-bg) !important;
 	}
 }
 
@@ -83,8 +76,8 @@
 	}
 
 	body {
-		font-size: 1.0625rem;
-		font-family: var(--font-serif), var(--font-mono);
+		font-size: var(--body-font-size);
+		font-family: var(--font-body);
 		color: var(--primary-color);
 		background-color: var(--background-color);
 		overflow-x: clip;
@@ -93,7 +86,7 @@
 
 	@media screen and (max-width: 640px) {
 		body {
-			font-size: 1rem;
+			font-size: var(--mobile-font-size);
 		}
 	}
 
@@ -215,6 +208,8 @@
 	--color-block: var(--block-color);
 	--color-shadow: var(--shadow-color);
 	--color-selection: var(--selection-color);
+	--color-accent: var(--accent-color);
+	--color-heatmap: var(--heatmap-color);
 
 	--font-serif: var(--font-noto-serif);
 	--font-mono: var(--font-maple-mono-nf-cn);

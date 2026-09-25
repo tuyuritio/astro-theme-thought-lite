@@ -31,6 +31,7 @@ import sectionize from "@hbsnow/rehype-sectionize";
 import copy from "@tuyuritio/shiki-code-copy";
 
 import reading from "./src/lib/reading";
+import { resolveTheme } from "./src/lib/theme";
 
 import siteConfig from "./site.config";
 import ZeoSevenFonts from "./src/fonts/zeo-seven-fonts";
@@ -85,10 +86,7 @@ export default defineConfig({
 		],
 		smartypants: false,
 		shikiConfig: {
-			themes: {
-				light: "github-light",
-				dark: "dark-plus"
-			},
+			themes: resolveTheme(siteConfig.theme).code,
 			transformers: [copy({ duration: 1500 })]
 		}
 	},

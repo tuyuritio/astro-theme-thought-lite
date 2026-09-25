@@ -1,6 +1,10 @@
 import siteConfig from "./src/lib/config";
 
 const config = siteConfig({
+	theme: {
+		preset: "thought-lite", // "thought-lite", "catppuccin", or a defineTheme() module
+		mode: "system"
+	},
 	title: "ThoughtLite",
 	prologue: "If you need a website\nthat loads fast and has great SEO, then Astro is for you.",
 	author: {

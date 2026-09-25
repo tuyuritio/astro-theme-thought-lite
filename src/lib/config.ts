@@ -1,3 +1,5 @@
+import type { ThemeOptions } from "./theme";
+
 /**
  * Creative Commons 4.0 License Type
  */
@@ -9,6 +11,9 @@ type CCLicenseType = "CC0 1.0" | "CC BY 4.0" | "CC BY-SA 4.0" | "CC BY-NC 4.0" |
 export type Section = "note" | "jotting";
 
 interface SiteConfigOptions<Locales extends readonly string[] = readonly string[]> {
+	/** Visual theme, separate from site content and locale settings. */
+	theme?: ThemeOptions;
+
 	/** Site Title */
 	title: string;
 
