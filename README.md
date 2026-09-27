@@ -93,6 +93,14 @@ For deployment methods on various platforms, refer to the [Astro Official Deploy
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/tuyuritio/astro-theme-thought-lite&project-name=astro-blog-thought-lite&repository-name=astro-blog-thought-lite&teamSlug=tuyuritios-projects)
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/integration/start/deploy?repository=https://github.com/tuyuritio/astro-theme-thought-lite)
 
+### Cache policy
+
+Page transitions use Swup with its in-memory page cache disabled, so revisiting a page can retrieve updated content. This does not disable the browser or CDN HTTP cache: configure your host to send `Cache-Control: no-cache` for HTML, feeds, and mutable files with stable URLs. Keep `ETag` or `Last-Modified` validators so unchanged files can return `304 Not Modified`.
+
+Only fingerprinted build assets such as those in `/_astro/` should use `Cache-Control: public, max-age=31536000, immutable`. Do not apply this policy to all JavaScript, images, or files copied from `public/`: their URLs may stay the same after an edit. Purge any existing CDN cache when changing these rules. Set these as HTTP response headers at your host; HTML meta tags cannot replace them.
+
+This policy checks for updates during navigation or refresh; it does not push changes into an idle page. Swup's cache can be re-enabled with `cache: true` in `astro.config.ts` if session-long page reuse is preferred. See the [Swup cache documentation](https://swup.js.org/api/cache/) and [HTTP caching guide](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching).
+
 ## 🔄 Updates
 
 Run the following commands to sync upstream updates:

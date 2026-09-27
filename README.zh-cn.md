@@ -93,6 +93,14 @@ pnpm dev
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/tuyuritio/astro-theme-thought-lite&project-name=astro-blog-thought-lite&repository-name=astro-blog-thought-lite&teamSlug=tuyuritios-projects)
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/integration/start/deploy?repository=https://github.com/tuyuritio/astro-theme-thought-lite)
 
+### 缓存策略
+
+页面过渡使用 Swup，但关闭了其内存页面缓存，使再次访问页面时能够获取更新。这不会关闭浏览器或 CDN 的 HTTP 缓存：请在托管服务中为 HTML、Feed 和 URL 不变的可更新文件设置 `Cache-Control: no-cache`。保留 `ETag` 或 `Last-Modified`，让未变化的文件可以返回 `304 Not Modified`。
+
+只有 `/_astro/` 中这类文件名带内容指纹的构建资源才适合使用 `Cache-Control: public, max-age=31536000, immutable`。不要将它应用到全部 JavaScript、图片或从 `public/` 复制的文件，因为编辑后它们的 URL 可能不变。修改规则时，清理已有的 CDN 缓存。这些配置必须作为服务器的 HTTP 响应头发送，HTML meta 标签不能替代。
+
+该策略在导航或刷新时检查更新，不会主动更新停留中的页面。如果更看重整个会话内的页面复用，可在 `astro.config.ts` 中重新设置 `cache: true`。参阅 [Swup 缓存文档](https://swup.js.org/api/cache/)和 [HTTP 缓存指南](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Guides/Caching)。
+
 ## 🔄 更新
 
 运行以下命令以同步上游更新：

@@ -102,6 +102,8 @@ export default defineConfig({
 		sitemap(),
 		swup({
 			globalInstance: true,
+			// Revalidate visited pages through HTTP instead of reusing a session-old HTML copy.
+			cache: false,
 			preload: false,
 			smoothScrolling: false,
 			progress: true

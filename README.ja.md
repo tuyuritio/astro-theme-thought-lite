@@ -93,6 +93,14 @@ pnpm dev
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/tuyuritio/astro-theme-thought-lite&project-name=astro-blog-thought-lite&repository-name=astro-blog-thought-lite&teamSlug=tuyuritios-projects)
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/integration/start/deploy?repository=https://github.com/tuyuritio/astro-theme-thought-lite)
 
+### キャッシュ方針
+
+ページ遷移には Swup を使用しますが、再訪時に更新を取得できるよう、メモリ内のページキャッシュは無効にしています。ブラウザーや CDN の HTTP キャッシュは別です。HTML、フィード、URL が変わらない更新可能なファイルには、ホスティング側で `Cache-Control: no-cache` を設定してください。`ETag` または `Last-Modified` を維持すると、変更のないファイルには `304 Not Modified` を返せます。
+
+`Cache-Control: public, max-age=31536000, immutable` は、`/_astro/` 内のようにファイル名にコンテンツの指紋を含むビルド成果物だけに使用してください。すべての JavaScript、画像、`public/` からコピーされるファイルに適用しないでください。編集後も URL が変わらない場合があります。ルール変更時は既存の CDN キャッシュを削除してください。これらはサーバーの HTTP レスポンスヘッダーで設定する必要があり、HTML の meta タグでは代用できません。
+
+この方針は遷移や再読み込み時に更新を確認し、表示中のページを自動更新するものではありません。セッション中のページ再利用を優先する場合は、`astro.config.ts` で `cache: true` に戻せます。[Swup のキャッシュ仕様](https://swup.js.org/api/cache/)と [HTTP キャッシュガイド](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching)を参照してください。
+
 ## 🔄 更新
 
 アップストリームの更新を同期するには、以下のコマンドを実行します：
