@@ -1,9 +1,8 @@
 ---
-import { render } from "astro:content";
+import { render, getEntry } from "astro:content";
 import config, { monolocale } from "$config";
 import Base from "$layouts/Base.astro";
 import i18nit from "$i18n";
-import { getEntry } from "astro:content";
 
 export async function getStaticPaths() {
 	// Create path for each locale, omitting default locale from URL

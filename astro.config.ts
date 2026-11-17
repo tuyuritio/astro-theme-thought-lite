@@ -4,6 +4,7 @@ import yaml from "@rollup/plugin-yaml";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
+import { unified } from "@astrojs/markdown-remark";
 import tailwindcss from "@tailwindcss/vite";
 import swup from "@swup/astro";
 
@@ -47,43 +48,45 @@ export default defineConfig({
 		}
 	},
 	markdown: {
-		remarkPlugins: [
-			[GFM, { singleTilde: false }],
-			ins,
-			mark,
-			spoiler,
-			CJK,
-			[CJKStrikethrough, { singleTilde: false }],
-			ruby,
-			attr,
-			math,
-			gemoji,
-			footnote,
-			abbr,
-			[table, { colspanWithEmpty: true }],
-			[alerts, { typeFormat: "capitalize" }],
-			reading
-		],
-		remarkRehype: {
-			footnoteLabel: null,
-			footnoteLabelTagName: "p",
-			footnoteLabelProperties: {
-				className: ["hidden"]
+		processor: unified({
+			remarkPlugins: [
+				[GFM, { singleTilde: false }],
+				ins,
+				mark,
+				spoiler,
+				CJK,
+				[CJKStrikethrough, { singleTilde: false }],
+				ruby,
+				attr,
+				math,
+				gemoji,
+				footnote,
+				abbr,
+				[table, { colspanWithEmpty: true }],
+				[alerts, { typeFormat: "capitalize" }],
+				reading
+			],
+			remarkRehype: {
+				footnoteLabel: null,
+				footnoteLabelTagName: "p",
+				footnoteLabelProperties: {
+					className: ["hidden"]
+				},
+				handlers: {
+					...tableHandler
+				}
 			},
-			handlers: {
-				...tableHandler
-			}
-		},
-		rehypePlugins: [
-			ids,
-			[anchor, { behavior: "wrap" }],
-			[links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
-			katex,
-			figure,
-			wrapper,
-			sectionize
-		],
-		smartypants: false,
+			rehypePlugins: [
+				ids,
+				[anchor, { behavior: "wrap" }],
+				[links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
+				katex,
+				figure,
+				wrapper,
+				sectionize
+			],
+			smartypants: false
+		}),
 		shikiConfig: {
 			themes: {
 				light: "github-light",
@@ -93,7 +96,6 @@ export default defineConfig({
 		}
 	},
 	vite: {
-		// @ts-expect-error
 		plugins: [yaml(), tailwindcss()]
 	},
 	integrations: [
@@ -136,8 +138,8 @@ export default defineConfig({
 			name: "Playwrite MX",
 			provider: fontProviders.google(),
 			weights: [100],
+			subsets: ["menu", "fallback"],
 			display: "block",
-			subsets: ["fallback"],
 			fallbacks: ["Apple Chancery", "Segoe Script", "cursive"],
 			cssVariable: "--font-playwrite-mx"
 		},
