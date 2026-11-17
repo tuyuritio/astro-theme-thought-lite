@@ -78,7 +78,7 @@ export const email = {
 			const t = i18nit(locale, "email");
 
 			// Send verification email
-			locals.runtime.ctx.waitUntil(
+			locals.cfContext.waitUntil(
 				sendEmail(locale, drifter, address, {
 					subject: t("verification.subject"),
 					html: render("verification", {

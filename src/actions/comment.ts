@@ -25,7 +25,7 @@ export const comment = {
 			item: z.string(), // The item ID this comment belongs to
 			reply: z.string().nullish(), // ID of replied comment if this is a reply
 			content: z.string(), // The comment content
-			link: z.string().url(), // URL link for notifications
+			link: z.url(), // URL link for notifications
 			push: z.number().optional(), // Push subscription ID for notifications
 			passer: z
 				.object({
@@ -89,7 +89,7 @@ export const comment = {
 			await db.insert(Comment).values({ id, section, item, reply, drifter, nickname: passer?.nickname, timestamp: new Date(), content });
 
 			// The `ctx.waitUntil()` method is specific to Cloudflare Workers.
-			locals.runtime.ctx.waitUntil(
+			locals.cfContext.waitUntil(
 				Promise.all([
 					// Store push subscription for future notifications
 					(async () => {
@@ -255,7 +255,7 @@ export const comment = {
 			if (!oauth.length) throw new ActionError({ code: "FORBIDDEN" });
 
 			// Verify user authentication
-			const drifter = (await Token.check(cookies, "passport")).visa;
+			const drifter = (await Token.check(cookies, "passport"))?.visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection
@@ -299,7 +299,7 @@ export const comment = {
 			if (!oauth.length) throw new ActionError({ code: "FORBIDDEN" });
 
 			// Verify user authentication
-			const drifter = (await Token.check(cookies, "passport")).visa;
+			const drifter = (await Token.check(cookies, "passport"))?.visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Initialize database connection

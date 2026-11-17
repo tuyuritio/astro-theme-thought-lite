@@ -101,7 +101,7 @@ export const GET: APIRoute = async ({ site, params }) => {
 	// Add each filtered note as a feed item
 	items.forEach(item => {
 		feed.addItem({
-			id: item.id, // Unique item identifier
+			id: (<any>item).link, // Unique item identifier
 			title: item.data.title, // Post title
 			link: (<any>item).link, // URL to the post
 			date: item.data.timestamp, // Publication date

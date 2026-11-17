@@ -37,18 +37,22 @@ const CANCEL_MESSAGE = t("new.cancel");
 	path = join(path, contentType);
 
 	// Select language for the article (skip if single language mode)
-	let locale: string | symbol = config.i18n.defaultLocale;
+	let locale = config.i18n.defaultLocale;
 	if (!monolocale) {
-		locale = await select({
+		const selected = await select({
 			message: t("new.step.language"),
 			options: config.i18n.locales.map(locale => ({ label: i18nit(locale)("language"), value: locale })),
 			initialValue: config.i18n.defaultLocale
 		});
 
 		// Exit if user cancels the selection
-		isCancel(locale) && (cancel(CANCEL_MESSAGE), process.exit(0));
+		if (isCancel(selected)) {
+			cancel(CANCEL_MESSAGE);
+			process.exit(0);
+		}
 
 		// Update path based on selected locale
+		locale = selected;
 		path = join(path, locale);
 	}
 
@@ -95,16 +99,18 @@ const CANCEL_MESSAGE = t("new.cancel");
 				.replace(/^-+|-+$/g, "");
 
 		// Prompt user to input content ID (filename)
-		let id: string | symbol = slugify(title);
-		id = await text({
+		const id = await text({
 			message: t("new.step.id.name"),
 			placeholder: t("new.step.id.placeholder"),
-			initialValue: id,
+			initialValue: slugify(title),
 			validate: value => (value && value === slugify(value) ? undefined : t("new.step.id.validate"))
 		});
 
 		// Exit if user cancels the input
-		isCancel(id) && (cancel(CANCEL_MESSAGE), process.exit(0));
+		if (isCancel(id)) {
+			cancel(CANCEL_MESSAGE);
+			process.exit(0);
+		}
 
 		// If content type is Note, allow user to specify a series
 		if (contentType === "note") {

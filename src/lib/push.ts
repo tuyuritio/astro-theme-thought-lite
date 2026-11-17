@@ -41,8 +41,8 @@ export default async function sendPush(
 	const message: PushMessage = {
 		data: {
 			title: data.title,
-			body: data.body,
-			url: data.url,
+			...(data.body !== undefined && { body: data.body }),
+			...(data.url !== undefined && { url: data.url }),
 			timestamp: Date.now() // Add timestamp for client-side handling
 		},
 		options: {

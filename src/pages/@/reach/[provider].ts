@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { generateCodeVerifier, generateState } from "arctic";
+import { env } from "cloudflare:workers";
 import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { OAuth, type OAuthAccount } from "$lib/oauth";
@@ -8,7 +9,7 @@ import { Drifter, Email } from "$db/schema";
 
 export const prerender = false;
 
-export const GET: APIRoute = async ({ cookies, params, url, locals, redirect, request }) => {
+export const GET: APIRoute = async ({ cookies, params, url, redirect, request }) => {
 	const { provider } = params;
 
 	const code = url.searchParams.get("code");

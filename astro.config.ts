@@ -22,7 +22,7 @@ import footnote from "remark-footnotes-extra";
 import abbr from "@tuyuritio/remark-abbreviation";
 import { remarkExtendedTable as table, extendedTableHandlers as tableHandler } from "remark-extended-table";
 import alerts from "@tuyuritio/remark-github-alert";
-import { rehypeHeadingIds as ids } from "@astrojs/markdown-remark";
+import { rehypeHeadingIds as ids, unified, type RehypePlugin } from "@astrojs/markdown-remark";
 import anchor from "rehype-autolink-headings";
 import links from "rehype-external-links";
 import katex from "rehype-katex";
@@ -52,43 +52,45 @@ export default defineConfig({
 		}
 	},
 	markdown: {
-		remarkPlugins: [
-			[GFM, { singleTilde: false }],
-			ins,
-			mark,
-			spoiler,
-			CJK,
-			[CJKStrikethrough, { singleTilde: false }],
-			ruby,
-			attr,
-			math,
-			gemoji,
-			footnote,
-			abbr,
-			[table, { colspanWithEmpty: true }],
-			[alerts, { typeFormat: "capitalize" }],
-			reading
-		],
-		remarkRehype: {
-			footnoteLabel: null,
-			footnoteLabelTagName: "p",
-			footnoteLabelProperties: {
-				className: ["hidden"]
+		processor: unified({
+			remarkPlugins: [
+				[GFM, { singleTilde: false }],
+				ins,
+				mark,
+				spoiler,
+				CJK,
+				[CJKStrikethrough, { singleTilde: false }],
+				ruby,
+				attr,
+				math,
+				gemoji,
+				footnote,
+				abbr,
+				[table, { colspanWithEmpty: true }],
+				[alerts, { typeFormat: "capitalize" }],
+				reading
+			],
+			remarkRehype: {
+				footnoteLabel: null,
+				footnoteLabelTagName: "p",
+				footnoteLabelProperties: {
+					className: ["hidden"]
+				},
+				handlers: {
+					...tableHandler
+				}
 			},
-			handlers: {
-				...tableHandler
-			}
-		},
-		rehypePlugins: [
-			ids,
-			[anchor, { behavior: "wrap" }],
-			[links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
-			katex,
-			figure,
-			wrapper,
-			sectionize
-		],
-		smartypants: false,
+			rehypePlugins: [
+				ids,
+				[anchor, { behavior: "wrap" }],
+				[links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
+				katex,
+				figure as RehypePlugin,
+				wrapper as RehypePlugin,
+				sectionize as RehypePlugin
+			],
+			smartypants: false
+		}),
 		shikiConfig: {
 			themes: {
 				light: "github-light",
@@ -98,7 +100,6 @@ export default defineConfig({
 		}
 	},
 	vite: {
-		// @ts-expect-error
 		plugins: [yaml(), tailwindcss()]
 	},
 	integrations: [
