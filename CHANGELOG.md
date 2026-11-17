@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.42.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.41.1...v0.42.0) (2026-11-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to astro 7
+
+### Miscellaneous Chores
+
+* upgrade to astro 7 ([87e7a27](https://github.com/tuyuritio/astro-theme-thought-lite/commit/87e7a27d76f1a2e9f717eb4e73ad3fa087fc874f))
+
 ## [0.41.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.41.0...v0.41.1) (2026-05-25)
 
 
