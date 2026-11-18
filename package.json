@@ -30,6 +30,7 @@
 		"new": "tsx --loader esm-loader-yaml scripts/new.ts",
 		"dev": "astro dev",
 		"check": "astro check",
+		"test:theme": "node --import tsx tests/theme.test.ts",
 		"build": "astro build",
 		"preview": "astro preview",
 		"format": "biome format --write",

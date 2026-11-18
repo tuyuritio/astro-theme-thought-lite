@@ -26,6 +26,7 @@
 
 ## ✨ Features
 
+- [x] **Configurable Visual Themes** - Built-in ThoughtLite and all four Catppuccin flavors, typed overrides, and shareable theme modules. [Configuration](src/content/note/en/configuration.md#visual-themes).
 - [x] **Responsive Design** - Adaptive for mobile, tablet, and desktop.
 - [x] **Light / Dark Mode** - Auto-follows system preference with manual toggle support.
 - [x] **CSR Dynamic Content Filtering** - List filtering and pagination via History API.

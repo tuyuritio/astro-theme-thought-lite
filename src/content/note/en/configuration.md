@@ -54,6 +54,85 @@ The theme's custom configuration is located in the `site.config.ts` file in the 
 | `week` | *Fixed display of 51 weeks* | × |
 | `month` | × | Total number of years to display |
 
+## Visual themes
+
+Configure appearance with `theme` in `site.config.ts`. Omitting it preserves the original ThoughtLite appearance and follows the system color scheme.
+
+```ts
+theme: {
+  preset: "catppuccin", // "thought-lite" | "catppuccin" | custom theme object
+  mode: "system",      // "system" | "light" | "dark"
+  showToggle: true,
+  colors: {
+    light: { accent: "#40a02b", link: "#209fb5" },
+    dark: { accent: "#a6e3a1", link: "#74c7ec" }
+  },
+  fonts: { body: "system-ui, sans-serif" },
+  layout: { contentWidth: "1100px", lineHeight: 1.8 }
+}
+```
+
+`thought-lite` retains the original monochrome palette. `catppuccin` uses Latte / Mocha for pages, the heatmap, Markdown links and alerts, and syntax highlighting. Overrides merge by field; light and dark palettes merge independently.
+
+All four [official Catppuccin flavors](https://github.com/catppuccin/palette) are provided separately, preserving their official color values:
+
+| Preset name | Flavor | Scheme |
+| --- | --- | --- |
+| `catppuccin-latte` | Latte | Light |
+| `catppuccin-frappe` | Frappé | Dark |
+| `catppuccin-macchiato` | Macchiato | Dark |
+| `catppuccin-mocha` | Mocha | Dark |
+
+Select a light/dark preset pair to keep page colors and syntax highlighting in sync:
+
+```ts
+theme: {
+  preset: {
+    light: "catppuccin-latte",
+    dark: "catppuccin-frappe" // or catppuccin-macchiato / catppuccin-mocha
+  },
+  mode: "system"
+}
+```
+
+`preset: "catppuccin"` is shorthand for Latte / Mocha. Preset pairs also work with `defineTheme()` through `extends`. `mode` still controls the initial scheme preference, and the visitor button switches between the selected light and dark flavors.
+
+| Option | Purpose |
+| --- | --- |
+| `colors.light` / `colors.dark` | `primary`, `secondary`, `weak`: text levels; `background`, `block`, `shadow`, `selection`: page, blocks, borders/outlines, and selection. |
+| Same | `accent`: latest-content heading; `link`: Markdown links; `heatmap`: activity cells; `success`, `info`, `warning`, `danger`: alerts; `codeBackground`: code block background. |
+| `fonts` | `body`, `mono`, `display`: font stacks for body text, monospace text, and the prologue. These do not download fonts. Defaults retain locale-aware Noto Serif; register additional web fonts in `astro.config.ts`. |
+| `layout` | `contentWidth`, `fontSize`, `mobileFontSize`: CSS lengths; `lineHeight`: numeric Markdown line height. |
+| `code` | `light` / `dark`: Astro-supported Shiki theme names or objects. Rebuild to apply changes. `codeBackground` controls the background. |
+| `mode` | Initial color mode, defaults to `system`. |
+| `showToggle` | Show the light/dark button, defaults to `true`. Hiding it does not clear saved visitor preferences. |
+
+An existing visitor preference (`localStorage.theme`, `light` or `dark`) takes priority over the site default. OS changes apply only without a manual choice. Switching still works for the current page if storage is blocked. Without JavaScript, the site default and system color scheme apply.
+
+Restart the development server after changing a preset or syntax highlighting configuration, then rebuild before deploying.
+
+### Create and share a theme
+
+Add `src/themes/my-theme.ts`; no core component or preset registry changes are required:
+
+```ts
+import { defineTheme } from "../lib/theme";
+
+export default defineTheme({
+  name: "my-theme",
+  extends: "catppuccin",
+  colors: {
+    light: { background: "#fffaf0", accent: "#8839ef" },
+    dark: { background: "#181825", accent: "#cba6f7" }
+  },
+  layout: { contentWidth: "960px" }
+});
+```
+
+Import this file as `myTheme` in `site.config.ts` and set `theme: { preset: myTheme }`. Share the file to reuse the theme, or pass another theme object to `extends`. Themes are selected at build time; the visitor button switches between light and dark only.
+
+This configuration covers shared page styles. Page structure, author cards, content, logos, favicons, and OpenGraph image templates are maintained separately. Extend structure through optional components instead of copying entire theme pages.
+
 ## Icon Generation
 
 It is recommended to use [RealFaviconGenerator](https://realfavicongenerator.net/) to generate icons, download and extract the following files, and overwrite them to the `/public` directory:
