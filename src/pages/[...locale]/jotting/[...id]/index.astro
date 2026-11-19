@@ -63,7 +63,7 @@ const t = i18nit(locale);
 				<section id="markdown-content" class="markdown"><Content /></section>
 				{comment && (
 					<blockquote id="comment-section">
-						<Comments {locale} link={`${Astro.url.origin}${Astro.url.pathname}`} section="jotting" item={jotting.id} />
+						<Comments {locale} section="jotting" item={jotting.id} />
 					</blockquote>
 				)}
 			</div>

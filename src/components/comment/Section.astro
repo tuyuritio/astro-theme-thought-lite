@@ -4,14 +4,13 @@ import Comments from "./Section.svelte";
 
 interface Props {
 	locale: string;
-	link: string;
-	section: string;
+	section: "note" | "jotting" | "preface";
 	item: string;
 	compact?: boolean;
 }
 
-const { locale, link, section, item, compact } = Astro.props;
+const { locale, section, item, compact } = Astro.props;
 ---
 
 <!-- Wrapping component to inject server-side environment variables -->
-{comment && <Comments client:visible {locale} {link} {section} {item} {oauth} {turnstile} {push} {email} {compact} />}
+{comment && <Comments client:visible {locale} {section} {item} {oauth} {turnstile} {push} {email} {compact} />}

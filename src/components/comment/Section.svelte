@@ -11,7 +11,6 @@ import context from "./context.svelte";
 
 let {
 	locale,
-	link,
 	section,
 	item,
 	oauth,
@@ -21,8 +20,7 @@ let {
 	compact = false
 }: {
 	locale: string;
-	link: string;
-	section: string;
+	section: "note" | "jotting" | "preface";
 	item: string;
 	oauth: any;
 	turnstile?: string;
@@ -116,7 +114,7 @@ onMount(async () => {
 
 <main>
 	{#if (!compact || expanded) && loaded}
-		<Reply {section} {item} {link} {refresh} />
+		<Reply {section} {item} {refresh} />
 	{/if}
 
 	{#if loaded}
@@ -148,7 +146,7 @@ onMount(async () => {
 		{/if}
 		{#each list as comment (comment.id)}
 			<div animate:flip={{ duration: 150 }}>
-				<CommentBlock {section} {item} {link} {comment} {refresh} />
+				<CommentBlock {section} {item} {comment} {refresh} />
 			</div>
 		{/each}
 	{:else}

@@ -85,7 +85,7 @@ const t = i18nit(locale);
 				</div>
 				{comment && (
 					<blockquote id="comment-section">
-						<Comments {locale} link={`${Astro.url.origin}${Astro.url.pathname}`} section="note" item={note.id} />
+						<Comments {locale} section="note" item={note.id} />
 					</blockquote>
 				)}
 			</div>

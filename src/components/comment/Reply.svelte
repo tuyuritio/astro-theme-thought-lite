@@ -15,16 +15,14 @@ import context, { countdownComment } from "./context.svelte";
 let {
 	section,
 	item,
-	link,
 	refresh,
 	reply,
 	edit,
 	text,
 	view = $bindable()
 }: {
-	section: string;
+	section: "note" | "jotting" | "preface";
 	item: string;
-	link: string;
 	refresh: (auto?: boolean) => Promise<void>;
 	reply?: string | null;
 	edit?: string;
@@ -140,7 +138,6 @@ async function submit() {
 			item: item,
 			reply,
 			content,
-			link: link,
 			push: context.subscription,
 			passer: { nickname, captcha }
 		}));
@@ -163,7 +160,6 @@ async function submit() {
 			item: item,
 			reply,
 			content,
-			link: link,
 			push: context.subscription
 		}));
 	}

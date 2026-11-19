@@ -1,12 +1,13 @@
 import { ActionError, defineAction } from "astro:actions";
 import { getEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import { z } from "astro/zod";
 import { env } from "cloudflare:workers";
 import { and, eq, isNull, lt, ne, or, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { alias } from "drizzle-orm/sqlite-core";
 import { Comment, CommentHistory, Drifter, Email, Notification, PushSubscription } from "$db/schema";
-import config, { turnstile, oauth, push, email } from "$config";
+import config, { turnstile, oauth, push, email, monolocale } from "$config";
 import remark from "$lib/remark";
 import { enhash, Token } from "$lib/token";
 import { render } from "$lib/email";
@@ -21,11 +22,10 @@ export const comment = {
 	create: defineAction({
 		input: z.object({
 			locale: z.string(), // Current locale for notifications
-			section: z.string(), // The section this comment belongs to
+			section: z.enum(["note", "jotting", "preface"]), // The section this comment belongs to
 			item: z.string(), // The item ID this comment belongs to
 			reply: z.string().nullish(), // ID of replied comment if this is a reply
 			content: z.string(), // The comment content
-			link: z.url(), // URL link for notifications
 			push: z.number().optional(), // Push subscription ID for notifications
 			passer: z
 				.object({
@@ -34,14 +34,16 @@ export const comment = {
 				})
 				.optional()
 		}),
-		handler: async ({ locale, section, item, reply, content, link, push: subscription, passer }, { cookies, request, locals, site }) => {
+		handler: async ({ locale, section, item, reply, content, push: subscription, passer }, { cookies, request, locals, site }) => {
+			if (!(config.i18n.locales as readonly string[]).includes(locale)) throw new ActionError({ code: "BAD_REQUEST" });
+
 			const t = i18nit(locale, "email");
 			const tIndex = i18nit(locale);
 
 			// Check if the target entry exists
-			const entry = await getEntry(section as any, item);
+			const entry = await getEntry(section, item);
 			if (!entry) throw new ActionError({ code: "NOT_FOUND" });
-			const title = section === "preface" ? tIndex("navigation.preface") : entry.data.title;
+			const title = entry.collection === "preface" ? tIndex("navigation.preface") : entry.data.title;
 
 			// Check if commenting is enabled
 			if (!oauth.length && !turnstile) throw new ActionError({ code: "FORBIDDEN" });
@@ -81,6 +83,11 @@ export const comment = {
 
 			// Generate unique comment ID
 			const id = enhash(content + reply).substring(0, 8);
+
+			// Construct canonical notification link on the server
+			const slug = monolocale ? item : item.split("/").slice(1).join("/");
+			const path = section === "preface" ? "/preface" : `/${section}/${slug}`;
+			const link = new URL(`${getRelativeLocaleUrl(locale, path)}#${id}`, site ?? config.site).toString();
 
 			// Initialize database connection
 			const db = drizzle(env.DB);
