@@ -5,6 +5,7 @@ import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { OAuth, type OAuthAccount } from "$lib/oauth";
 import { random, Token } from "$lib/token";
+import { safeRedirect } from "$lib/url";
 import { Drifter, Email } from "$db/schema";
 
 export const prerender = false;
@@ -67,13 +68,13 @@ export const GET: APIRoute = async ({ cookies, params, url, redirect, request })
 		await Token.issue(cookies, "passport", { visa: drifter.id });
 
 		// Redirect to original page or home after successful authentication
-		return redirect(escort.referrer ?? "/", 302);
+		return redirect(safeRedirect(escort.referrer, url.origin), 302);
 	} else if (errorStatus) {
 		// Handle OAuth errors from provider
 		switch (errorStatus) {
 			case "access_denied":
 				// User denied access, redirect back to referrer
-				return redirect(escort?.referrer ?? "/", 302);
+				return redirect(safeRedirect(escort?.referrer, url.origin), 302);
 
 			case "redirect_uri_mismatch":
 			case "application_suspended":
@@ -90,7 +91,12 @@ export const GET: APIRoute = async ({ cookies, params, url, redirect, request })
 		const codeVerifier = generateCodeVerifier();
 
 		// Store OAuth state and referrer in escort token
-		await Token.issue(cookies, "escort", { state, codeVerifier, referrer: request.headers.get("referer") ?? "/" }, "5 minutes");
+		await Token.issue(
+			cookies,
+			"escort",
+			{ state, codeVerifier, referrer: safeRedirect(request.headers.get("referer"), url.origin) },
+			"5 minutes"
+		);
 
 		// Generate OAuth authorization URL and redirect user
 		const link: URL = new OAuth(provider).url(state, codeVerifier);

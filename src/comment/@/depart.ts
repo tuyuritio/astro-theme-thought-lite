@@ -1,9 +1,10 @@
 import { Token } from "$lib/token";
+import { safeRedirect } from "$lib/url";
 import type { APIRoute } from "astro";
 
 export const prerender = false;
 
-export const GET: APIRoute = async ({ request, cookies, redirect }) => {
+export const GET: APIRoute = async ({ request, cookies, redirect, url }) => {
 	// Verify user authentication before proceeding with signout
 	const passport = await Token.check(cookies, "passport");
 	if (!passport?.visa) return new Response("Unauthorized", { status: 401 });
@@ -14,5 +15,5 @@ export const GET: APIRoute = async ({ request, cookies, redirect }) => {
 	await Token.issue(cookies, "passport", passport);
 
 	// Redirect to referrer or home page after successful signout
-	return redirect(request.headers.get("referer") ?? "/", 302);
+	return redirect(safeRedirect(request.headers.get("referer"), url.origin), 302);
 };
