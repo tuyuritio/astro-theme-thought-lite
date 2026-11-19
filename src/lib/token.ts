@@ -7,20 +7,26 @@ import { EncryptJWT, jwtDecrypt, type JWTPayload } from "jose";
 // Character set for generating random strings
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-// Master encryption key from environment variables
-// The fallback value is the base64-encoded string of "DEFAULT_PASS_KEY"
-const PASS_KEY = import.meta.env.PASS_KEY || "REVGQVVMVF9QQVNTX0tFWQo=";
+// Master encryption key from environment variables (validated in site.config.ts when OAuth/Email is enabled)
+const PASS_KEY = import.meta.env.PASS_KEY;
+
+// Derive 128-bit key for JWT A128GCM encryption (preserves direct 16-byte Base64 keys, hashes otherwise)
+const JWT_KEY = PASS_KEY
+	? (() => {
+			const decoded = Buffer.from(PASS_KEY, "base64");
+			return new Uint8Array(decoded.length === 16 ? decoded : crypto.createHash("sha256").update(PASS_KEY).digest().subarray(0, 16));
+		})()
+	: undefined;
+
+// Derive 256-bit key for AES-256-GCM encryption
+const AES_KEY = PASS_KEY ? new Uint8Array(crypto.createHash("sha256").update(PASS_KEY).digest()) : undefined;
 
 /**
- * Generate a random string of specified length
+ * Generate a cryptographically secure random string of specified length
  * @param length - Length of the random string to generate
  * @returns Random string composed of alphanumeric characters
  */
-export const random = (length: number) =>
-	new Array(length)
-		.fill(null)
-		.map(_ => characters.charAt(Math.floor(Math.random() * characters.length)))
-		.join("");
+export const random = (length: number) => Array.from({ length }, () => characters.charAt(crypto.randomInt(characters.length))).join("");
 
 /**
  * Create a hash of text with current timestamp for uniqueness
@@ -52,8 +58,9 @@ export namespace Token {
 		// Create encrypted JWT using direct encryption (dir) algorithm with A128GCM
 		const token = await new EncryptJWT(payload)
 			.setProtectedHeader({ alg: "dir", enc: "A128GCM" })
+			.setIssuedAt()
 			.setExpirationTime(expiration)
-			.encrypt(new Uint8Array(Buffer.from(PASS_KEY, "base64")));
+			.encrypt(JWT_KEY!);
 
 		// Set secure HTTP-only cookie with proper domain and security settings
 		cookies.set(name, token, {
@@ -78,13 +85,13 @@ export namespace Token {
 			if (!cookies.has(name)) return null;
 
 			// Decrypt and verify the JWT token
-			const result = await jwtDecrypt(cookies.get(name)!.value, new Uint8Array(Buffer.from(PASS_KEY, "base64")));
+			const result = await jwtDecrypt(cookies.get(name)!.value, JWT_KEY!);
 			const payload = result.payload as any;
 
 			// Check if token should be renewed
 			if (payload.exp && renew) {
-				// Create new payload without exp claim (will be set by issue method)
-				const { _exp, _iat, ...renewal } = payload;
+				// Create new payload without exp/iat claims (will be set by issue method)
+				const { exp, iat, ...renewal } = payload;
 				await issue(cookies, name, renewal);
 			}
 
@@ -108,9 +115,6 @@ export namespace Token {
 
 // AES namespace for symmetric encryption utilities
 export namespace AESEncryption {
-	// Derive 256-bit encryption key from master password
-	const key = crypto.createHash("sha256").update(PASS_KEY).digest();
-
 	/**
 	 * Encrypt data using AES-256-GCM encryption
 	 * @param data - Data to encrypt
@@ -120,7 +124,7 @@ export namespace AESEncryption {
 		try {
 			// Generate random 12-byte initialization vector
 			const iv = crypto.randomBytes(12);
-			const cipher = crypto.createCipheriv("aes-256-gcm", new Uint8Array(key), new Uint8Array(iv));
+			const cipher = crypto.createCipheriv("aes-256-gcm", AES_KEY!, new Uint8Array(iv));
 
 			const encrypted = cipher.update(data);
 			const final = cipher.final();
@@ -145,7 +149,7 @@ export namespace AESEncryption {
 			const tag = buffer.subarray(12, 28); // Extract Auth Tag
 			const encrypted = buffer.subarray(28); // Extract Encrypted Data
 
-			const decipher = crypto.createDecipheriv("aes-256-gcm", new Uint8Array(key), new Uint8Array(iv));
+			const decipher = crypto.createDecipheriv("aes-256-gcm", AES_KEY!, new Uint8Array(iv));
 			decipher.setAuthTag(new Uint8Array(tag));
 
 			const decrypted = decipher.update(new Uint8Array(encrypted));

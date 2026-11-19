@@ -59,6 +59,10 @@ const oauth = comment
 		])
 	: [];
 
+if ((oauth.length > 0 || email) && !env.PASS_KEY) {
+	throw new Error("PASS_KEY is required when OAuth or email notification is enabled");
+}
+
 export { comment, turnstile, oauth, monolocale, push, email };
 
 export default config;
