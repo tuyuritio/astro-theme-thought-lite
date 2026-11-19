@@ -4,7 +4,7 @@ import yaml from "@rollup/plugin-yaml";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
-import { unified } from "@astrojs/markdown-remark";
+import { unified, rehypeHeadingIds as ids } from "@astrojs/markdown-remark";
 import tailwindcss from "@tailwindcss/vite";
 import swup from "@swup/astro";
 
@@ -22,7 +22,6 @@ import footnote from "remark-footnotes-extra";
 import abbr from "@tuyuritio/remark-abbreviation";
 import { remarkExtendedTable as table, extendedTableHandlers as tableHandler } from "remark-extended-table";
 import alerts from "@tuyuritio/remark-github-alert";
-import { rehypeHeadingIds as ids } from "@astrojs/markdown-remark";
 import anchor from "rehype-autolink-headings";
 import links from "rehype-external-links";
 import katex from "rehype-katex";
