@@ -13,6 +13,7 @@ toc: true
 
 | 配置项 | 类型 | 描述 |
 |:- |:- |:- |
+| `site` | `string` | 站点 URL。 |
 | `title` | `string` | 站点标题。 |
 | `prologue` | `string` | 首页标语；支持 `\n` 换行。 |
 | `author.name` | `string` | 作者名称。 |
@@ -51,7 +52,7 @@ toc: true
 | `unit` | `weeks` | `years` |
 |:- | - | - |
 | `day` | 显示的总周数 | × |
-| `week` | *固定显示 51 周* | × |
+| `week` | *固定显示 52 周* | × |
 | `month` | × | 显示的总年数 |
 
 ## 图标生成

@@ -13,6 +13,7 @@ toc: true
 
 | 設定項目 | 型 | 説明 |
 |:- |:- |:- |
+| `site` | `string` | サイトの URL。 |
 | `title` | `string` | サイトのタイトル。 |
 | `prologue` | `string` | ホームページのキャッチコピー；`\n` での改行をサポート。 |
 | `author.name` | `string` | 著者名。 |
@@ -51,7 +52,7 @@ toc: true
 | `unit` | `weeks` | `years` |
 |:- | - | - |
 | `day` | 表示する総週数 | × |
-| `week` | *51週の固定表示* | × |
+| `week` | *52週の固定表示* | × |
 | `month` | × | 表示する総年数 |
 
 ## アイコン生成

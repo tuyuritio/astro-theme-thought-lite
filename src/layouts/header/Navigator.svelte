@@ -28,7 +28,7 @@ function handleClose() {
 
 onMount(() => {
 	/** Register route update hook */
-	const register = () => window.swup?.hooks.on("page:load", () => (route = window.location.pathname));
+	const register = () => window.swup?.hooks.on("content:replace", () => (route = window.location.pathname));
 
 	// Register the hook immediately if swup is already enabled, otherwise wait for the enable event
 	window.swup ? register() : document.addEventListener("swup:enable", register, { once: true });

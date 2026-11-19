@@ -11,7 +11,7 @@ const mainFonts: Record<string, CssVariable> = {
 	ja: "--font-noto-serif-jp"
 };
 
-const localedMainFont = mainFonts[locale];
+const localedMainFont = mainFonts[locale] ?? "--font-noto-serif";
 
 const route = Astro.url.pathname.slice(`/${locale === config.i18n.defaultLocale ? "" : locale}`.length);
 ---
@@ -19,44 +19,42 @@ const route = Astro.url.pathname.slice(`/${locale === config.i18n.defaultLocale 
 <html lang={locale} dir={["ar", "he", "fa", "ur"].includes(locale) ? "rtl" : "ltr"}>
 	<head>
 		<title>{subtitle && `${subtitle} |`} {title}</title>
-		<meta name="description" content={description} />
+		<meta name="description" content={description}>
 
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<link rel="alternate" type="application/atom+xml" {title} href={getRelativeLocaleUrl(locale, "/feed.xml")} />
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width">
+		<meta name="generator" content={Astro.generator}>
+		<link rel="alternate" type="application/atom+xml" {title} href={getRelativeLocaleUrl(locale, "/feed.xml")}>
 
-		<meta property="og:title" content={`${subtitle && `${subtitle} | `}${title}`} />
-		<meta property="og:type" content={(article && "article") || "website"} />
-		<meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
-		<meta property="og:description" content={description} />
-		<meta property="og:site_name" content={title} />
-		<meta property="og:locale" content={locale.replace(/-(\w+)/, (_: any, region: string) => `_${region.toUpperCase()}`)} />
+		<meta property="og:title" content={`${subtitle && `${subtitle} | `}${title}`}>
+		<meta property="og:type" content={(article && "article") || "website"}>
+		<meta property="og:url" content={new URL(Astro.url.pathname, config.site)}>
+		<meta property="og:description" content={description}>
+		<meta property="og:site_name" content={title}>
+		<meta property="og:locale" content={locale.replace(/-(\w+)/, (_: any, region: string) => `_${region.toUpperCase()}`)}>
 
-		<meta property="og:image" content={article ? new URL(`${Astro.url.pathname}/graph.png`, Astro.site) : new URL("graph.png", Astro.site)} />
-		<meta property="og:image:alt" content={title} />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
-		<meta name="twitter:card" content="summary_large_image" />
+		<meta property="og:image" content={article ? new URL(`${Astro.url.pathname}/graph.png`, config.site) : new URL("graph.png", config.site)}>
+		<meta property="og:image:alt" content={title}>
+		<meta property="og:image:width" content="1200">
+		<meta property="og:image:height" content="630">
+		<meta name="twitter:card" content="summary_large_image">
 
-		{
-			article && (
-				<>
-					<meta property="article:author" content={author} />
-					<meta property="article:published_time" content={article.timestamp.toISOString()} />
-					{article.section && <meta property="article:section" content={article.section} />}
-					{article.tags?.map((tag: string) => (
-						<meta property="article:tag" content={tag} />
-					))}
-				</>
-			)
-		}
+		{article && (
+	<>
+		<meta property="article:author" content={author} />
+		<meta property="article:published_time" content={article.timestamp.toISOString()} />
+		{article.section && <meta property="article:section" content={article.section} />}
+		{article.tags?.map((tag: string) => (
+			<meta property="article:tag" content={tag} />
+		))}
+	</>
+)}
 
-		<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-		<link rel="shortcut icon" href="/favicon.ico" />
-		<link rel="sitemap" href="/sitemap-index.xml" />
+		{!["/404", "/500"].includes(Astro.routePattern) && <link rel="canonical" href={new URL(Astro.url.pathname, config.site)} />}
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="sitemap" href="/sitemap-index.xml">
 
 		<Font cssVariable="--font-playwrite-mx" />
 		<Font cssVariable="--font-the-peak-font-plus" />
@@ -65,12 +63,12 @@ const route = Astro.url.pathname.slice(`/${locale === config.i18n.defaultLocale 
 
 		<style set:html={`[lang="${locale}"]{--font-serif:var(${localedMainFont})}`}></style>
 
-		{config.i18n.locales.map(locale => <link rel="alternate" hreflang={locale} href={getAbsoluteLocaleUrl(locale, route)} />)}
+		{!["/404", "/500"].includes(Astro.routePattern) && config.i18n.locales.map(locale => <link rel="alternate" hreflang={locale} href={getAbsoluteLocaleUrl(locale, route)} />)}
 
 		<script is:inline>
-			var theme = localStorage.getItem("theme");
-			var prefers = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-			document.documentElement.dataset.theme = theme || prefers;
+		var theme = localStorage.getItem("theme");
+		var prefers = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+		document.documentElement.dataset.theme = theme || prefers;
 		</script>
 	</head>
 	<body>

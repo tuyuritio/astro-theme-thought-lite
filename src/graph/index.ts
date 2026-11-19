@@ -26,7 +26,8 @@ export async function loadFont(locale: string) {
 	const fileName = path.basename(url);
 	const filePath = path.join(CACHE_DIR, fileName);
 
-	if (fs.existsSync(filePath)) return fs.promises.readFile(filePath).then(buffer => buffer.buffer);
+	if (fs.existsSync(filePath))
+		return fs.promises.readFile(filePath).then(buffer => buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength));
 
 	const response = await fetch(url);
 	if (!response.ok) throw new Error(`Failed to load font from ${url}: ${response.status} ${response.statusText}`);

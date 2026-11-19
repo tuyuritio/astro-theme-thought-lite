@@ -105,12 +105,14 @@ language: tlhIngan Hol
 ```ts
 import tlh from "./tlh/index.yaml";
 import tlhScript from "./tlh/script.yaml";
+import tlhLinkroll from "./tlh/linkroll.yaml";
 
 const translations = {
   ...,
   tlh: {
-    ...tlh,
-    script: tlhScript
+    index: tlh,
+    script: tlhScript,
+    linkroll: tlhLinkroll
   }
 };
 ```
@@ -129,7 +131,7 @@ content/
 
 ### 四、添加字体
 
-如果新语言需要使用特定字体，请在 `astro.config.ts` 的 `experimental.fonts` 中注册新字体：
+如果新语言需要使用特定字体，请在 `astro.config.ts` 的 `fonts` 中注册新字体：
 
 ```ts
 {

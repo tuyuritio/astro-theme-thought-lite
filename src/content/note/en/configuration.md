@@ -13,6 +13,7 @@ The theme's custom configuration is located in the `site.config.ts` file in the 
 
 | Configuration Item | Type | Description |
 |:- |:- |:- |
+| `site` | `string` | Site URL. |
 | `title` | `string` | Site title. |
 | `prologue` | `string` | Homepage slogan; supports `\n` for line breaks. |
 | `author.name` | `string` | Author name. |
@@ -51,7 +52,7 @@ The theme's custom configuration is located in the `site.config.ts` file in the 
 | `unit` | `weeks` | `years` |
 |:- | - | - |
 | `day` | Total number of weeks to display | × |
-| `week` | *Fixed display of 51 weeks* | × |
+| `week` | *Fixed display of 52 weeks* | × |
 | `month` | × | Total number of years to display |
 
 ## Icon Generation

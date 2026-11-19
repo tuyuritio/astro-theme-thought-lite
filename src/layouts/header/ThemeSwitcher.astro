@@ -3,93 +3,88 @@ import Icon from "$components/Icon.svelte";
 ---
 
 <style>
-	#theme-toggle {
-		#sun-icon {
-			display: contents;
-		}
-
-		#moon-icon {
-			display: none;
-		}
+#theme-toggle {
+	#sun-icon {
+		display: contents;
 	}
 
-	:global([data-theme="dark"]) #theme-toggle {
-		#sun-icon {
-			display: none;
-		}
-
-		#moon-icon {
-			display: contents;
-		}
+	#moon-icon {
+		display: none;
 	}
+}
+
+:global([data-theme="dark"]) #theme-toggle {
+	#sun-icon {
+		display: none;
+	}
+
+	#moon-icon {
+		display: contents;
+	}
+}
 </style>
 
-<button id="theme-toggle" aria-label="Toggle theme">
+<button type="button" id="theme-toggle" aria-label="Toggle theme">
 	<span id="sun-icon"><Icon name="lucide--sun" /></span>
 	<span id="moon-icon"><Icon name="lucide--moon" /></span>
 </button>
 
 <script>
-	type Scheme = "light" | "dark";
+const button = document.getElementById("theme-toggle")!;
+const mode = window.matchMedia("(prefers-color-scheme: dark)");
 
-	const button = document.getElementById("theme-toggle")!;
+/**
+ * Sync the active theme from stored preference or system color scheme
+ */
+function trigger() {
+	document.documentElement.dataset.theme = localStorage.getItem("theme") || (mode.matches ? "dark" : "light");
+}
 
-	/**
-	 * Apply the selected theme scheme
-	 * @param scheme - The theme scheme to apply ("light" or "dark")
-	 */
-	function trigger(scheme: Scheme) {
-		// Update CSS custom properties via data attribute
-		document.documentElement.dataset.theme = scheme;
+/**
+ * Toggle between light and dark themes with animated transition
+ */
+function toggle() {
+	const current = document.documentElement.dataset.theme;
+	const target = current === "dark" ? "light" : "dark";
+	const transit = () => {
+		localStorage.setItem("theme", target);
+		trigger();
+	};
 
-		// Persist user preference across sessions
-		localStorage.setItem("theme", scheme);
-	}
+	let transition: ViewTransition;
+	if (!(transition = document.startViewTransition?.(transit))) return transit(); // Compatibility check
 
-	/**
-	 * Toggle between light and dark themes with animated transition
-	 */
-	function toggle() {
-		const current = document.documentElement.dataset.theme;
-		const target = current === "dark" ? "light" : "dark";
-		const transit = () => trigger(target);
+	const rectangular = button.getBoundingClientRect();
 
-		let transition: ViewTransition;
-		if (!(transition = document.startViewTransition?.(transit))) return transit(); // Compatibility check
+	// Get click coordinates for radial animation origin
+	const x = rectangular.left + rectangular.width / 2;
+	const y = rectangular.top + rectangular.height / 2;
+	transition.ready.then(() => {
+		// Create expanding circle animation from click point
+		const path = [`circle(0% at ${x}px ${y}px)`, `circle(130% at ${x}px ${y}px)`];
+		document.documentElement.animate(
+			{
+				// Reverse animation direction based on theme transition
+				clipPath: target === "dark" ? [...path].reverse() : path
+			},
+			{
+				duration: 400,
+				easing: "ease-in",
+				// Keep end state after animation completes to avoid flicker
+				fill: "forwards",
+				// Target different pseudo-elements for incoming/outgoing content
+				pseudoElement: target === "dark" ? "::view-transition-old(root)" : "::view-transition-new(root)"
+			}
+		);
+	});
+}
 
-		const rectangular = button.getBoundingClientRect();
+// Initial theme setup (avoid persisting system default to localStorage until user toggles)
+trigger();
 
-		// Get click coordinates for radial animation origin
-		const x = rectangular.left + rectangular.width / 2;
-		const y = rectangular.top + rectangular.height / 2;
-		transition.ready.then(() => {
-			// Create expanding circle animation from click point
-			const path = [`circle(0% at ${x}px ${y}px)`, `circle(130% at ${x}px ${y}px)`];
-			document.documentElement.animate(
-				{
-					// Reverse animation direction based on theme transition
-					clipPath: target === "dark" ? [...path].reverse() : path
-				},
-				{
-					duration: 400,
-					easing: "ease-in",
-					// Keep end state after animation completes to avoid flicker
-					fill: "forwards",
-					// Target different pseudo-elements for incoming/outgoing content
-					pseudoElement: target === "dark" ? "::view-transition-old(root)" : "::view-transition-new(root)"
-				}
-			);
-		});
-	}
+// Listen for user interactions (use property assignment to avoid duplicate handlers on script re-execution)
+button.onclick = toggle;
 
-	// Initial theme setup
-	const mode = window.matchMedia("(prefers-color-scheme: dark)");
-	const theme = localStorage.getItem("theme");
-	trigger(theme ? (theme as Scheme) : mode.matches ? "dark" : "light");
-
-	// Listen for user interactions (use property assignment to avoid duplicate handlers on script re-execution)
-	button.onclick = toggle;
-
-	// Listen for system theme changes
-	mode.onchange = ({ matches }) => trigger(matches ? "dark" : "light");
+// Listen for system theme changes
+mode.onchange = trigger;
 </script>

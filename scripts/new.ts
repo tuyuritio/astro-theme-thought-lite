@@ -201,7 +201,7 @@ ${content}
 `;
 
 	// Display the generated content to the user for review
-	`${note(content, t("new.preview", { path }))}:`;
+	note(content, t("new.preview", { path }));
 
 	// Confirm with user to proceed with file creation
 	const proceed = await confirm({

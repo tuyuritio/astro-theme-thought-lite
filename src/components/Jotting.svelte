@@ -84,29 +84,35 @@ $effect(() => {
 		if (pageParam) url.searchParams.set("page", String(page));
 
 		// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
-		window.history.replaceState({ url: url.toString(), random: Math.random(), source: "swup" }, "", url);
+		if (url.toString() !== window.location.href) {
+			window.history.replaceState({ url: url.toString(), random: Math.random(), source: "swup" }, "", url);
+		}
 	}
 });
 </script>
 
-<main class="flex flex-col-reverse sm:flex-row gap-10 grow">
+<div class="flex flex-col-reverse sm:flex-row gap-10 grow">
 	<article class="flex flex-col grow">
 		<header class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-5">
 			{#each list as jotting (jotting.id)}
 				<section animate:flip={{ duration: 150 }} class="flex flex-col justify-center border-b border-dashed border-b-weak pb-1">
 					<span class="flex items-center gap-1">
-						{#if jotting.data.top > 0}<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100" />{/if}
-						{#if jotting.data.sensitive}<Icon name="lucide--siren" title={t("sensitive.icon")} />{/if}
+						{#if jotting.data.top > 0}
+							<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100" />
+						{/if}
+						{#if jotting.data.sensitive}
+							<Icon name="lucide--siren" title={t("sensitive.icon")} />
+						{/if}
 						<a href={jotting.url} class="leading-normal text-primary font-semibold link truncate">{jotting.data.title}</a>
 					</span>
-					<span class="flex gap-1">
+					<span class="flex flex-wrap gap-1">
 						{#each jotting.data.tags as tag}
-							<button onclick={() => switchTag(tag, true)} class="text-[0.825rem] text-secondary">#{tag}</button>
+							<button type="button" onclick={() => switchTag(tag, true)} class="text-[0.825rem] text-secondary">#{tag}</button>
 						{/each}
 					</span>
 				</section>
 			{:else}
-				<div class="col-span-2 pt-[10vh] text-center text-secondary font-bold text-xl">{t("jotting.empty")}</div>
+				<div class="col-span-full pt-[10vh] text-center text-secondary font-bold text-xl">{t("jotting.empty")}</div>
 			{/each}
 		</header>
 
@@ -118,12 +124,12 @@ $effect(() => {
 			<h4>{t("jotting.tag")}</h4>
 			<p>
 				{#each tagList as tag (tag)}
-					<button class:selected={tags.includes(tag)} onclick={() => switchTag(tag)}>{tag}</button>
+					<button type="button" class:selected={tags.includes(tag)} onclick={() => switchTag(tag)}>{tag}</button>
 				{/each}
 			</p>
 		</section>
 	</aside>
-</main>
+</div>
 
 <style>
 aside {

@@ -111,27 +111,33 @@ $effect(() => {
 		if (pageParam) url.searchParams.set("page", String(page));
 
 		// Match https://github.com/swup/swup/blob/main/src/helpers/history.ts#L22
-		window.history.replaceState({ url: url.toString(), random: Math.random(), source: "swup" }, "", url);
+		if (url.toString() !== window.location.href) {
+			window.history.replaceState({ url: url.toString(), random: Math.random(), source: "swup" }, "", url);
+		}
 	}
 });
 </script>
 
-<main class="flex flex-col-reverse sm:flex-row gap-10 grow">
+<div class="flex flex-col-reverse sm:flex-row gap-10 grow">
 	<article class="flex flex-col gap-5 grow">
 		{#each list as note (note.id)}
 			<section animate:flip={{ duration: 150 }} class="flex flex-col">
 				<div class="*:inline *:align-middle font-bold">
-					{#if note.data.top > 0}<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100" />{/if}
-					{#if note.data.sensitive}<Icon name="lucide--siren" title={t("sensitive.icon")} />{/if}
+					{#if note.data.top > 0}
+						<Icon name="lucide--flag-triangle-right" class="rtl:-scale-x-100" />
+					{/if}
+					{#if note.data.sensitive}
+						<Icon name="lucide--siren" title={t("sensitive.icon")} />
+					{/if}
 					{#if note.data.series}
-						<button onclick={() => chooseSeries(note.data.series, true)}>{note.data.series}</button>
+						<button type="button" onclick={() => chooseSeries(note.data.series, true)}>{note.data.series}</button>
 						<span aria-hidden="true">|</span>
 					{/if}
 					<a href={note.url} class="link">{note.data.title}</a>
 				</div>
 				<span class="inline-flex gap-1 flex-wrap">
 					{#each note.data.tags as tag}
-						<button onclick={() => switchTag(tag, true)} class="text-secondary text-sm">#{tag}</button>
+						<button type="button" onclick={() => switchTag(tag, true)} class="text-secondary text-sm">#{tag}</button>
 					{/each}
 				</span>
 				<time datetime={note.data.timestamp.toISOString()} class="mt-1 font-mono text-[0.65rem] text-secondary">{Time.toString(note.data.timestamp)}</time>
@@ -148,7 +154,7 @@ $effect(() => {
 			<h4>{t("note.series")}</h4>
 			<p>
 				{#each seriesList as seriesItem (seriesItem)}
-					<button class:selected={seriesItem == series} onclick={() => chooseSeries(seriesItem)}>{seriesItem}</button>
+					<button type="button" class:selected={seriesItem === series} onclick={() => chooseSeries(seriesItem)}>{seriesItem}</button>
 				{/each}
 			</p>
 		</section>
@@ -157,12 +163,12 @@ $effect(() => {
 			<h4>{t("note.tag")}</h4>
 			<p>
 				{#each tagList as tag (tag)}
-					<button class:selected={tags.includes(tag)} onclick={() => switchTag(tag)}>{tag}</button>
+					<button type="button" class:selected={tags.includes(tag)} onclick={() => switchTag(tag)}>{tag}</button>
 				{/each}
 			</p>
 		</section>
 	</aside>
-</main>
+</div>
 
 <style>
 aside {

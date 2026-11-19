@@ -6,7 +6,7 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"includes": ["**", "!!**/dist"]
+		"includes": ["**", "!!**/dist", "!**/*.md", "!**/*.mdx", "!**/*.yaml", "!**/*.yml"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -21,7 +21,7 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true,
+			"preset": "recommended",
 			"style": {
 				"noNonNullAssertion": "off",
 				"noDescendingSpecificity": "off",
@@ -51,6 +51,7 @@
 		}
 	},
 	"html": {
+		"experimentalFullSupportEnabled": true,
 		"formatter": {
 			"enabled": true,
 			"lineWidth": 320,

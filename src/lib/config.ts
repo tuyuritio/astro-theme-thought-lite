@@ -9,6 +9,9 @@ type CCLicenseType = "CC0 1.0" | "CC BY 4.0" | "CC BY-SA 4.0" | "CC BY-NC 4.0" |
 export type Section = "note" | "jotting";
 
 interface SiteConfigOptions<Locales extends readonly string[] = readonly string[]> {
+	/** Site URL */
+	site: string;
+
 	/** Site Title */
 	title: string;
 
@@ -109,5 +112,7 @@ interface SiteConfigOptions<Locales extends readonly string[] = readonly string[
  * @returns The validated site configuration
  */
 export default function siteConfig<const Locales extends string[]>(config: SiteConfigOptions<Locales>): SiteConfigOptions<Locales> {
+	// Validate that `site` is a well-formed absolute URL at startup
+	new URL(config.site);
 	return config;
 }
