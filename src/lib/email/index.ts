@@ -10,6 +10,18 @@ const env = import.meta.env;
 
 const templates = { main, verification, fresh, reply };
 
+const htmlEntities: Record<string, string> = {
+	"&": "&amp;",
+	"<": "&lt;",
+	">": "&gt;",
+	'"': "&quot;",
+	"'": "&#39;"
+};
+
+function escapeHtml(value: string): string {
+	return value.replace(/[&<>"']/g, char => htmlEntities[char]);
+}
+
 /**
  * Renders an email template by processing conditional blocks and variable injections.
  * @param template template name
@@ -18,9 +30,14 @@ const templates = { main, verification, fresh, reply };
  *
  * Supported formats:
  *
- * Variables:
+ * Escaped variables:
  * ```
  * %key%
+ * ```
+ *
+ * Raw HTML variables:
+ * ```
+ * %%key%%
  * ```
  *
  * Conditionals:
@@ -36,9 +53,13 @@ export function render(template: keyof typeof templates, params?: Record<string,
 	// Process conditional blocks
 	text = text.replace(/%if\s+([\w.-]+?)%([\s\S]*?)%endif%/g, (_, key, content) => (params?.[key] ? content : ""));
 
-	// Replace variable placeholders
+	// Replace variable placeholders (escape by default, allow raw HTML with %%key%%)
 	if (params) {
-		text = text.replace(/%([\w.-]+?)%/g, (_, key) => params[key] ?? "");
+		text = text.replace(/%%([\w.-]+?)%%|%([\w.-]+?)%/g, (_, rawKey, key) => {
+			const value = params[rawKey ?? key];
+			if (value == null) return "";
+			return rawKey ? String(value) : escapeHtml(String(value));
+		});
 	}
 
 	return text;
