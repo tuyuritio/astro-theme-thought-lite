@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
-import config, { monolocale } from "$config";
+import config, { comment, monolocale } from "$config";
 import Time from "$lib/time";
 import Base from "$layouts/Base.astro";
 import Comments from "$components/comment/Section.astro";
@@ -63,7 +63,13 @@ const t = i18nit(locale);
 		<Sensitive {locale} back={getRelativeLocaleUrl(locale, "/jotting")} sensitive={jotting.data.sensitive} client:load>
 			<div class="contents">
 				<section id="markdown-content" class="markdown"><Content /></section>
-				<blockquote id="comment-section"><Comments {locale} link={`${Astro.url.origin}${Astro.url.pathname}`} section="jotting" item={jotting.id} /></blockquote>
+				{
+					comment && (
+						<blockquote id="comment-section">
+							<Comments {locale} link={`${Astro.url.origin}${Astro.url.pathname}`} section="jotting" item={jotting.id} />
+						</blockquote>
+					)
+				}
 			</div>
 		</Sensitive>
 

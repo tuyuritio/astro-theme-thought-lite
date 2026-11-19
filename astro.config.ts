@@ -32,16 +32,19 @@ import sectionize from "@hbsnow/rehype-sectionize";
 import copy from "@tuyuritio/shiki-code-copy";
 
 import reading from "./src/lib/reading";
+import commentIntegration from "./src/integrations/comment";
 
-import siteConfig from "./site.config";
+import siteConfig, { comment } from "./site.config";
 import ZeoSevenFonts from "./src/fonts/zeo-seven-fonts";
 
 // https://astro.build/config
 export default defineConfig({
-	adapter: cloudflare({
-		prerenderEnvironment: "node",
-		imageService: "compile"
-	}),
+	adapter: comment
+		? cloudflare({
+				prerenderEnvironment: "node",
+				imageService: "compile"
+			})
+		: undefined,
 	site: "https://thought-lite.ttio.workers.dev",
 	trailingSlash: "never",
 	i18n: {
@@ -103,6 +106,7 @@ export default defineConfig({
 		plugins: [yaml(), tailwindcss()]
 	},
 	integrations: [
+		commentIntegration(),
 		svelte(),
 		mdx(),
 		sitemap(),

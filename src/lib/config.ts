@@ -98,6 +98,9 @@ interface SiteConfigOptions<Locales extends readonly string[] = readonly string[
 
 	/** Comment Configuration */
 	comment?: {
+		/** Enable Comment System (requires SSR / Cloudflare adapter) */
+		enable?: boolean;
+
 		/** Maximum Comment Length */
 		"max-length"?: number;
 

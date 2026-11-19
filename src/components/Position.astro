@@ -1,4 +1,5 @@
 ---
+import { comment } from "$config";
 import Icon from "$components/Icon.svelte";
 import i18nit from "$i18n";
 
@@ -50,9 +51,13 @@ const t = i18nit(locale);
 			</button>
 		)
 	}
-	<button aria-label="Scroll to Comments" onclick="document.querySelector('#comment-section')?.scrollIntoView({behavior: 'smooth'})">
-		<Icon name="lucide--message-square" size={15} title={t("note.comment")} />
-	</button>
+	{
+		comment && (
+			<button aria-label="Scroll to Comments" onclick="document.querySelector('#comment-section')?.scrollIntoView({behavior: 'smooth'})">
+				<Icon name="lucide--message-square" size={15} title={t("note.comment")} />
+			</button>
+		)
+	}
 </figure>
 
 <script>

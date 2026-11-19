@@ -42,7 +42,7 @@
 		"db:migration": "drizzle-kit generate",
 		"db:migrate:local": "wrangler d1 migrations apply DB --local",
 		"db:migrate:remote": "wrangler d1 migrations apply DB --remote",
-		"prepare": "pnpm run types && husky"
+		"prepare": "husky"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^14.4.8",

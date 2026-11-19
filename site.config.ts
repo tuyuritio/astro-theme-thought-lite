@@ -33,6 +33,7 @@ const config = siteConfig({
 		limit: 20
 	},
 	comment: {
+		enable: true,
 		"max-length": 500,
 		"hide-deleted": true,
 		history: true
@@ -42,17 +43,21 @@ const config = siteConfig({
 
 const monolocale = Number(config.i18n.locales.length) === 1;
 
-const turnstile = env.CLOUDFLARE_TURNSTILE_SECRET_KEY ? env.CLOUDFLARE_TURNSTILE_SITE_KEY : undefined;
+const comment = Boolean(config.comment && config.comment.enable !== false);
 
-const push = env.VAPID_PRIVATE_KEY ? env.VAPID_PUBLIC_KEY : undefined;
+const turnstile = comment && env.CLOUDFLARE_TURNSTILE_SECRET_KEY ? env.CLOUDFLARE_TURNSTILE_SITE_KEY : undefined;
 
-const email = Boolean(env.EMAIL_FROM);
+const push = comment && env.VAPID_PRIVATE_KEY ? env.VAPID_PUBLIC_KEY : undefined;
 
-const oauth = providers([
-	{ name: "GitHub", logo: "simple-icons--github", clientID: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET },
-	{ name: "Google", logo: "simple-icons--google", clientID: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET }
-]);
+const email = comment && Boolean(env.EMAIL_FROM);
 
-export { turnstile, oauth, monolocale, push, email };
+const oauth = comment
+	? providers([
+			{ name: "GitHub", logo: "simple-icons--github", clientID: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET },
+			{ name: "Google", logo: "simple-icons--google", clientID: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET }
+		])
+	: [];
+
+export { comment, turnstile, oauth, monolocale, push, email };
 
 export default config;

@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
-import config, { monolocale } from "$config";
+import config, { comment, monolocale } from "$config";
 import Time from "$lib/time";
 import Base from "$layouts/Base.astro";
 import Comments from "$components/comment/Section.astro";
@@ -45,9 +45,13 @@ const entries = await Promise.all(prefaces.map(async preface => ({ ...preface, c
 						<article class="markdown">
 							<preface.content />
 						</article>
-						<blockquote class="mb-4">
-							<Comments compact={true} {locale} link={`${Astro.url.origin}${Astro.url.pathname}#${preface.id}`} section="preface" item={preface.id} />
-						</blockquote>
+						{
+							comment && (
+								<blockquote class="mb-4">
+									<Comments compact={true} {locale} link={`${Astro.url.origin}${Astro.url.pathname}#${preface.id}`} section="preface" item={preface.id} />
+								</blockquote>
+							)
+						}
 					</li>
 				])
 			}
