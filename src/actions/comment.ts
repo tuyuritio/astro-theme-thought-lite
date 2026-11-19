@@ -117,7 +117,7 @@ export const comment = {
 						const subscriptions = await db
 							.select({ endpoint: PushSubscription.endpoint, p256dh: PushSubscription.p256dh, auth: PushSubscription.auth })
 							.from(PushSubscription)
-							.innerJoin(Notification, eq(Notification.comment, reply));
+							.innerJoin(Notification, and(eq(PushSubscription.id, Notification.subscription), eq(Notification.comment, reply)));
 
 						// Send push notifications to subscribers and clean up failed ones
 						await Promise.all(
