@@ -74,6 +74,9 @@ export const drifter = {
 			// Check if access token has expired
 			const expire = drifter.expire ? drifter.expire < Date.now() : false;
 
+			// Require refresh token when access token has expired
+			if (expire && !drifter.refresh) throw new ActionError({ code: "UNAUTHORIZED" });
+
 			// Fetch updated profile from OAuth provider
 			// Use refresh token if access token expired, otherwise use access token
 			const profile: OAuthAccount = await new OAuth(drifter.provider).update(expire ? drifter.refresh! : drifter.access, expire);
@@ -82,6 +85,11 @@ export const drifter = {
 			const newProfile = await db
 				.update(Drifter)
 				.set({
+					...(expire && {
+						access: profile.access,
+						expire: profile.expire?.getTime(),
+						...(profile.refresh && { refresh: profile.refresh })
+					}),
 					handle: profile.handle,
 					name: profile.name,
 					description: profile.description,

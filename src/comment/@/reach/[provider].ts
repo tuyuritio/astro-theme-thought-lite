@@ -50,6 +50,7 @@ export const GET: APIRoute = async ({ cookies, params, url, redirect, request })
 				set: {
 					access: sql`excluded.access`,
 					expire: sql`excluded.expire`,
+					refresh: sql`COALESCE(excluded.refresh, ${Drifter.refresh})`,
 					handle: sql`excluded.handle`,
 					name: sql`excluded.name`,
 					description: sql`excluded.description`,

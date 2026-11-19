@@ -156,11 +156,13 @@ export class OAuth {
 			};
 		} else if (this.provider instanceof Google) {
 			let expireAt: Date | undefined;
+			let refreshToken: string | undefined;
 			// Refresh access token if expired
 			if (expire) {
 				const tokens = await this.provider.refreshAccessToken(token);
 				token = tokens.accessToken();
 				expireAt = tokens.accessTokenExpiresAt();
+				refreshToken = tokens.hasRefreshToken() ? tokens.refreshToken() : undefined;
 			}
 
 			// Fetch fresh profile data from Google API
@@ -169,7 +171,15 @@ export class OAuth {
 			});
 			const user: any = await response.json();
 
-			return { provider: "Google", access: token, expire: expireAt, account: user.sub, name: user.name, image: user.picture };
+			return {
+				provider: "Google",
+				access: token,
+				expire: expireAt,
+				refresh: refreshToken,
+				account: user.sub,
+				name: user.name,
+				image: user.picture
+			};
 		} else {
 			throw new Error("Invalid Provider");
 		}
