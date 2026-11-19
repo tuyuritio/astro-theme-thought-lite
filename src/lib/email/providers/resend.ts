@@ -12,10 +12,11 @@ export class Resend implements EmailProvider {
 	) {}
 
 	async send({ from, to, replyTo, subject, html, text }: EmailPayload): Promise<void> {
-		await fetch("https://api.resend.com/emails", {
+		const response = await fetch("https://api.resend.com/emails", {
 			method: "POST",
 			headers: {
-				authorization: `Bearer ${this.apiKey}`
+				authorization: `Bearer ${this.apiKey}`,
+				"content-type": "application/json"
 			},
 			body: JSON.stringify({
 				from,
@@ -30,5 +31,7 @@ export class Resend implements EmailProvider {
 					: null
 			})
 		});
+
+		if (!response.ok) throw new Error(`Failed to send email via Resend: HTTP ${response.status}`);
 	}
 }

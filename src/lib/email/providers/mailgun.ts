@@ -26,12 +26,14 @@ export class Mailgun implements EmailProvider {
 		}
 
 		const domain = from.match(/(?:<[^>]*@|@)([^>\s]+)>?$/)?.[1];
-		await fetch(`https://api.mailgun.net/v3/${domain}/messages`, {
+		const response = await fetch(`https://api.mailgun.net/v3/${domain}/messages`, {
 			method: "POST",
 			headers: {
 				authorization: `Basic ${btoa(`api:${this.apiKey}`)}`
 			},
 			body: form
 		});
+
+		if (!response.ok) throw new Error(`Failed to send email via Mailgun: HTTP ${response.status}`);
 	}
 }
