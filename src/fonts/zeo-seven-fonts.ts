@@ -17,7 +17,9 @@ export default function ZeoSevenFonts(): FontProvider {
 			if (!id) return { fonts: [] };
 
 			const cssURL = new URL(`/${id}/main/result.css`, ORIGIN);
-			const style = await (await fetch(cssURL)).text();
+			const response = await fetch(cssURL);
+			if (!response.ok) throw new Error(`Failed to fetch font CSS from ${cssURL}: ${response.status} ${response.statusText}`);
+			const style = await response.text();
 			const css = parse(style);
 			const fontFaces = findAll(css, node => node.type === "Atrule" && node.name === "font-face") as Atrule[];
 

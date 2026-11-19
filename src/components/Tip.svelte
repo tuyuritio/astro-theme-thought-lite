@@ -41,9 +41,9 @@ export function pushTip(type: keyof typeof icons, content: string): void {
 </script>
 
 <script lang="ts">
-	import { flip } from "svelte/animate";
-	import { fly } from "svelte/transition";
-	import { circInOut } from "svelte/easing";
+import { flip } from "svelte/animate";
+import { fly } from "svelte/transition";
+import { circInOut } from "svelte/easing";
 </script>
 
 <figure class="fixed top-0 start-0 w-full h-full flex flex-col pe-5 z-5000 pointer-events-none overflow-hidden">
@@ -51,7 +51,9 @@ export function pushTip(type: keyof typeof icons, content: string): void {
 		<section animate:flip={{ duration: 200, easing: circInOut }} transition:fly={{ y: -100, opacity: 0, duration: 200, easing: circInOut }} class="relative flex items-center gap-2 ms-auto mt-7 border-2 border-weak rounded-sm py-4 px-3 w-xs bg-background shadow-md pointer-events-auto">
 			<Icon name={icons[tip.type]} />
 			<p>{tip.content}</p>
-			<span class="ms-auto"><button onclick={() => Close(tip)}><Icon name="lucide--x" /></button></span>
+			<span class="ms-auto"
+				><button type="button" onclick={() => Close(tip)}><Icon name="lucide--x" /></button></span
+			>
 		</section>
 	{/each}
 </figure>

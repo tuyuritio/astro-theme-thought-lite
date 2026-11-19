@@ -1,7 +1,6 @@
 ---
 import { getEntry, render } from "astro:content";
 import config, { monolocale } from "$config";
-import Time from "$lib/time";
 import Base from "$layouts/Base.astro";
 import i18nit from "$i18n";
 
@@ -24,53 +23,54 @@ const { Content: Introduction } = introduction ? await render(introduction) : ({
 const { Content: Linkroll } = linkroll ? await render(linkroll) : ({} as any);
 
 const chronicles = Object.entries<string[]>(chronicle ?? {})
-	.map(([date, events]) => ({ date: new Date(date), events: events ?? [] }))
-	.sort((a, b) => b.date.getTime() - a.date.getTime());
+	.map(([date, events]) => {
+		const time = new Date(date).getTime();
+		return {
+			date: Number.isNaN(time) ? date : new Date(time).toISOString().slice(0, 10).replace(/-/g, "/"),
+			time,
+			events: events ?? []
+		};
+	})
+	.sort((a, b) => b.time - a.time);
 ---
 
 <Base title={t("navigation.about")} {locale}>
 	<main class="flex flex-col sm:flex-row justify-between gap-8">
 		<article class="flex flex-col">
-			{
-				introduction && (
-					<div class="mb-6">
-						<h2 class="mb-4">{t("about.introduction")}</h2>
-						<div class="markdown">
-							<Introduction />
-						</div>
+			{introduction && (
+				<div class="mb-6">
+					<h2 class="mb-4">{t("about.introduction")}</h2>
+					<div class="markdown">
+						<Introduction />
 					</div>
-				)
-			}
-			{
-				linkroll && (
-					<div>
-						<h2 class="mb-4">{t("about.linkroll")}</h2>
-						<div class="markdown">
-							<Linkroll {locale} />
-						</div>
+				</div>
+			)}
+			{linkroll && (
+				<div>
+					<h2 class="mb-4">{t("about.linkroll")}</h2>
+					<div class="markdown">
+						<Linkroll {locale} />
 					</div>
-				)
-			}
+				</div>
+			)}
 		</article>
 
-		{
-			chronicles.length > 0 && (
-				<aside class="flex flex-col justify-between basis-60 shrink-0">
-					<ul class="list-none relative before:absolute before:content-[''] before:h-full before:top-2 before:border-s-2 before:border-primary after:absolute after:content-[''] after:w-3 after:h-3 after:-bottom-2 after:-inset-s-[0.325rem] after:border-2 after:border-primary after:rounded-full after:bg-primary">
-						{chronicles.map(chronicle => (
-							<li class="relative mb-2 pb-2 ps-3 before:absolute before:content-[''] before:w-3 before:h-3 before:top-2 before:-inset-s-[0.325rem] before:border-2 before:border-primary before:rounded-full before:bg-background">
-								<span class="relative font-mono">{Time.toDateString(chronicle.date)}</span>
-								<ul class="my-2 ps-3.5 list-none">
-									{chronicle.events.map(event => {
-										const remove = event?.match(/^~(?!~)(.*)$/);
-										return <li class="relative before:absolute before:content-[''] before:top-2.5 before:-inset-s-3 before:w-1.75 before:h-1.75 before:border before:border-primary before:rounded-full">{remove ? <del>{remove[1]}</del> : event}</li>;
-									})}
-								</ul>
-							</li>
-						))}
-					</ul>
-				</aside>
-			)
-		}
+		{chronicles.length > 0 && (
+			<aside class="flex flex-col justify-between basis-60 shrink-0">
+				<ul class="list-none relative before:absolute before:content-[''] before:h-full before:top-2 before:border-s-2 before:border-primary after:absolute after:content-[''] after:w-3 after:h-3 after:-bottom-2 after:-inset-s-[0.325rem] after:border-2 after:border-primary after:rounded-full after:bg-primary">
+					{chronicles.map(chronicle => (
+						<li class="relative mb-2 pb-2 ps-3 before:absolute before:content-[''] before:w-3 before:h-3 before:top-2 before:-inset-s-[0.325rem] before:border-2 before:border-primary before:rounded-full before:bg-background">
+							<span class="relative font-mono">{chronicle.date}</span>
+							<ul class="my-2 ps-3.5 list-none">
+								{chronicle.events.map(event => {
+									const remove = event?.match(/^~(?!~)(.*)$/);
+									return <li class="relative before:absolute before:content-[''] before:top-2.5 before:-inset-s-3 before:w-1.75 before:h-1.75 before:border before:border-primary before:rounded-full">{remove ? <del>{remove[1]}</del> : event}</li>;
+								})}
+							</ul>
+						</li>
+					))}
+				</ul>
+			</aside>
+		)}
 	</main>
 </Base>

@@ -287,7 +287,7 @@ onMount(() => {
 			<li>{t("oauth.benefit.homepage")}</li>
 		</ul>
 
-		<hr class="border-0 border-b border-dashed w-full" />
+		<hr class="border-0 border-b border-dashed w-full">
 
 		<div class="flex flex-col items-center gap-2">
 			{#each context.oauth as provider}
@@ -298,7 +298,7 @@ onMount(() => {
 			{/each}
 		</div>
 
-		<button class="form-button" onclick={() => (reachView = false)}>{t("cancel")}</button>
+		<button type="button" class="form-button" onclick={() => (reachView = false)}>{t("cancel")}</button>
 	</div>
 </Modal>
 
@@ -310,20 +310,31 @@ onMount(() => {
 			{#if !context.oauth.length}
 				<span class="text-xl font-bold">{t("comment.disabled")}</span>
 			{:else}
-				<button onclick={() => (reachView = true)} class="border-2 py-1 px-2 rounded-sm font-bold">{t("comment.signin")}</button>
+				<button type="button" onclick={() => (reachView = true)} class="border-2 py-1 px-2 rounded-sm font-bold">{t("comment.signin")}</button>
 			{/if}
 		</div>
 	{/if}
 	<div class:pointer-events-none={!enabled} class:blur={!enabled}>
 		<fieldset disabled={!enabled} class="group relative flex flex-col py-3 px-4 *:text-secondary focus-within:*:text-primary focus-within:*:border-secondary *:transition-[color,backgroud,border,width,height] *:duration-200 *:ease-out">
 			{#snippet corner(top: boolean, start: boolean)}
-				<span aria-hidden="true" class="absolute -z-1 w-2 h-2 border-shadow group-focus-within:w-1/2 group-focus-within:h-1/2" class:top-0={top} class:bottom-0={!top} class:start-0={start} class:end-0={!start} class:border-t-2={top} class:border-b-2={!top} class:border-s-2={start} class:border-e-2={!start}></span>
+				<span
+					aria-hidden="true"
+					class="absolute -z-1 w-2 h-2 border-shadow group-focus-within:w-1/2 group-focus-within:h-1/2"
+					class:top-0={top}
+					class:bottom-0={!top}
+					class:start-0={start}
+					class:end-0={!start}
+					class:border-t-2={top}
+					class:border-b-2={!top}
+					class:border-s-2={start}
+					class:border-e-2={!start}
+				></span>
 			{/snippet}
 
 			{@render corner(true, true)}{@render corner(true, false)}{@render corner(false, true)}{@render corner(false, false)}
 
 			<article class="flex flex-col min-h-20 mb-2 overflow-auto">
-				<textarea hidden={preview} placeholder="   {t('comment.placeholder')}" bind:this={textarea} bind:value={content} class="grow w-full bg-transparent text-base resize-none transition-[height]"></textarea>
+				<textarea hidden={preview} placeholder="   {t("comment.placeholder")}" bind:this={textarea} bind:value={content} class="grow w-full bg-transparent text-base resize-none transition-[height]"></textarea>
 				{#if preview}
 					{#if content.trim()}
 						{#await remark.process(content)}
@@ -341,28 +352,28 @@ onMount(() => {
 					<figcaption class="contents"><Icon name="lucide--smile" /></figcaption>
 					<ul class="absolute bottom-full -start-3 flex flex-wrap sm:flex-nowrap items-center justify-center gap-2 mb-1 border-2 border-weak rounded-sm py-2 px-3 bg-background shadow-md pop">
 						{#each emojis as emoji}
-							<button onclick={() => insertEmoji(emoji.code)}>{emoji.icon}</button>
+							<button type="button" onclick={() => insertEmoji(emoji.code)}>{emoji.icon}</button>
 						{/each}
 						<a href="https://github.com/ikatyang/emoji-cheat-sheet?tab=readme-ov-file#table-of-contents" target="_blank">…</a>
 					</ul>
 				</figure>
-				<label class="flex items-center cursor-pointer group/icon" tabindex="-1"><Icon name="lucide--file-search" title={t("comment.preview.name")} /><input type="checkbox" class="switch" bind:checked={preview} /></label>
+				<label class="flex items-center cursor-pointer group/icon" tabindex="-1"><Icon name="lucide--file-search" title={t("comment.preview.name")} /><input type="checkbox" aria-label={t("comment.preview.name")} class="switch" bind:checked={preview}></label>
 				<div class="grow"></div>
 
 				{#if context.drifter}
-					<button onclick={() => (profileView = true)}><Icon name="lucide--user-round-pen" title={t("drifter.profile")} /></button>
+					<button type="button" onclick={() => (profileView = true)}><Icon name="lucide--user-round-pen" title={t("drifter.profile")} /></button>
 				{:else}
 					{#if context.turnstile}
 						<Turnstile siteKey={context.turnstile} bind:reset={resetTurnstile} on:expired={() => (captcha = undefined)} on:error={() => (captcha = undefined)} on:callback={({ detail }) => (captcha = detail.token)} />
 					{/if}
-					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35 text-sm" />
+					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35 text-sm">
 					{#if context.oauth.length}
-						<button onclick={() => (reachView = true)}><Icon name="lucide--user-round" title={t("drifter.signin")} /></button>
+						<button type="button" onclick={() => (reachView = true)}><Icon name="lucide--user-round" title={t("drifter.signin")} /></button>
 					{/if}
 				{/if}
 
 				{#if context.push}
-					<button onclick={toggleSubscription}>
+					<button type="button" onclick={toggleSubscription}>
 						{#if context.subscription !== undefined}
 							<Icon name="lucide--bell" title={t("push.enable.name")} />
 						{:else}
@@ -371,7 +382,7 @@ onMount(() => {
 					</button>
 				{/if}
 
-				<button id="submit" disabled={limit > 0 || (!context.drifter && !captcha) || overlength} onclick={submit}>
+				<button type="button" id="submit" disabled={limit > 0 || (!context.drifter && !captcha) || overlength} onclick={submit}>
 					{#if limit > 0}
 						<span class="flex gap-0.5"><Icon name="lucide--timer" /><span class="relative top-0.5 text-sm font-mono leading-none">{Math.ceil(limit)}</span></span>
 					{:else if !context.drifter && !captcha}

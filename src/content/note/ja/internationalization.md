@@ -105,12 +105,14 @@ language: tlhIngan Hol
 ```ts
 import tlh from "./tlh/index.yaml";
 import tlhScript from "./tlh/script.yaml";
+import tlhLinkroll from "./tlh/linkroll.yaml";
 
 const translations = {
   ...,
   tlh: {
-    ...tlh,
-    script: tlhScript
+    index: tlh,
+    script: tlhScript,
+    linkroll: tlhLinkroll
   }
 };
 ```
@@ -129,7 +131,7 @@ content/
 
 ### 4. フォントの追加
 
-新しい言語に特定のフォントが必要な場合は、`astro.config.ts` の `experimental.fonts` に新しいフォントを登録してください：
+新しい言語に特定のフォントが必要な場合は、`astro.config.ts` の `fonts` に新しいフォントを登録してください：
 
 ```ts
 {

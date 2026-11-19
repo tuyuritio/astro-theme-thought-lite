@@ -13,14 +13,7 @@ import context from "./context.svelte";
 
 export type CommentItem = NonNullable<Awaited<ReturnType<typeof actions.comment.list>>["data"]>["treeification"][number];
 
-let {
-	section,
-	item,
-	link,
-	refresh,
-	comment,
-	depth = 0
-}: { section: string; item: string; link: string; refresh: (auto?: boolean) => Promise<void>; comment: CommentItem; depth?: number } = $props();
+let { section, item, link, refresh, comment, depth = 0 }: { section: string; item: string; link: string; refresh: (auto?: boolean) => Promise<void>; comment: CommentItem; depth?: number } = $props();
 const t = i18nit(context.locale);
 
 /** Minimum nesting depth for comment threads to ensure proper display */
@@ -65,11 +58,11 @@ async function remove() {
 <Modal bind:open={deleteView}>
 	<div id="delete" class="flex flex-col items-center justify-center gap-5">
 		<h2>{t("comment.remove.name")}</h2>
-		<input type="hidden" name="ID" value={comment.id} />
+		<input type="hidden" name="ID" value={comment.id}>
 		<time>{t("comment.time")}: {Time.toString(comment.timestamp, true)}</time>
 		<section class="flex gap-5">
-			<button class="form-button" onclick={() => (deleteView = false)}>{t("cancel")}</button>
-			<button class="form-button" onclick={remove}>{t("confirm")}</button>
+			<button type="button" class="form-button" onclick={() => (deleteView = false)}>{t("cancel")}</button>
+			<button type="button" class="form-button" onclick={remove}>{t("confirm")}</button>
 		</section>
 	</div>
 </Modal>
@@ -93,27 +86,38 @@ async function remove() {
 				{/if}
 			{/await}
 		</dl>
-		<section><button class="form-button" onclick={() => (historyView = false)}>{t("confirm")}</button></section>
+		<section><button type="button" class="form-button" onclick={() => (historyView = false)}>{t("confirm")}</button></section>
 	</div>
 </Modal>
 
-<main id={comment.id} class:before:hidden={depth >= MIN_DEPTH} class:sm:before:block={depth < Math.max(MIN_DEPTH, MAX_DEPTH)} class="relative before:absolute before:content-[''] before:top-12 before:start-4 before:h-[calc(100%-2rem)] before:w-[0.2rem] before:bg-[linear-gradient(var(--shadow-color)_calc(100%-2rem),transparent)]">
+<main
+	id={comment.id}
+	class:before:hidden={depth >= MIN_DEPTH}
+	class:sm:before:block={depth < Math.max(MIN_DEPTH, MAX_DEPTH)}
+	class="relative before:absolute before:content-[''] before:top-12 before:start-4 before:h-[calc(100%-2rem)] before:w-[0.2rem] before:bg-[linear-gradient(var(--shadow-color)_calc(100%-2rem),transparent)]"
+>
 	<dl class="flex flex-col gap-2 mt-6">
 		<div class="flex items-center gap-2">
 			{#if comment.name !== null}
-				<img src={comment.image} alt="image-{comment.name}" class="w-9 h-9 border border-solid border-weak rounded-full" onerror={e => (((e.currentTarget as HTMLImageElement).onerror = null), ((e.currentTarget as HTMLImageElement).src = "/akkarin.webp"))} />
+				<img src={comment.image} alt="image-{comment.name}" class="w-9 h-9 border border-solid border-weak rounded-full" onerror={e => (((e.currentTarget as HTMLImageElement).onerror = null), ((e.currentTarget as HTMLImageElement).src = "/akkarin.webp"))}>
 				<dt class="flex flex-col gap-0.5 min-w-0">
 					<p class="flex items-center gap-1">
 						<b>{comment.name}</b>
-						{#if comment.author}<Icon name="lucide--signature" title={t("comment.author")} />{/if}
-						{#if comment.homepage}<a href={comment.homepage} target="_blank" class="inline-flex"><Icon name="lucide--house" /></a>{/if}
+						{#if comment.author}
+							<Icon name="lucide--signature" title={t("comment.author")} />
+						{/if}
+						{#if comment.homepage}
+							<a href={comment.homepage} target="_blank" class="inline-flex"><Icon name="lucide--house" /></a>
+						{/if}
 						<span>·</span>
 						<time class="text-xs">{Time.toString(comment.updated ?? comment.timestamp, true).replace("-", " ")}</time>
 					</p>
-					{#if comment.description}<span title={comment.description} class="text-secondary text-xs leading-normal truncate">{comment.description}</span>{/if}
+					{#if comment.description}
+						<span title={comment.description} class="text-secondary text-xs leading-normal truncate">{comment.description}</span>
+					{/if}
 				</dt>
 			{:else}
-				<img src={comment.nickname ? "/scribe.webp" : "/akkarin.webp"} alt="Default avatar" class="w-9 h-9 border border-solid border-weak rounded-full" />
+				<img src={comment.nickname ? "/scribe.webp" : "/akkarin.webp"} alt="Default avatar" class="w-9 h-9 border border-solid border-weak rounded-full">
 				<dt class="flex flex-col gap-0.5 min-w-0">
 					<p class="flex items-center gap-1">
 						{#if comment.nickname}
@@ -129,15 +133,21 @@ async function remove() {
 		</div>
 		<blockquote class="ms-11">
 			{#if comment.content}
-				<div class="markdown comment">{#await remark.process(comment.content) then html}{@html html}{/await}</div>
+				<div class="markdown comment">
+					{#await remark.process(comment.content) then html}
+						{@html html}
+					{/await}
+				</div>
 				<dd class="flex items-center gap-4 mt-2">
-					<button onclick={() => ((replyView = !replyView), (editView = false))} disabled={!context.turnstile && !context.drifter}><Icon name="lucide--reply" title={t("comment.reply")} /></button>
-					{#if comment.updated && config.comment?.history}<button onclick={() => (historyView = true)}><Icon name="lucide--history" title={t("comment.history")} /></button>{/if}
-					<button onclick={share}><Icon name="lucide--share-2" title={t("comment.share.name")} /></button>
+					<button type="button" onclick={() => ((replyView = !replyView), (editView = false))} disabled={!context.turnstile && !context.drifter}><Icon name="lucide--reply" title={t("comment.reply")} /></button>
+					{#if comment.updated && config.comment?.history}
+						<button type="button" onclick={() => (historyView = true)}><Icon name="lucide--history" title={t("comment.history")} /></button>
+					{/if}
+					<button type="button" onclick={share}><Icon name="lucide--share-2" title={t("comment.share.name")} /></button>
 
 					{#if comment.drifter === context.drifter?.id}
-						<button onclick={() => ((editView = !editView), (replyView = false))}><Icon name="lucide--pencil" title={t("comment.edit.name")} /></button>
-						<button onclick={() => (deleteView = true)}><Icon name="lucide--trash" title={t("delete")} /></button>
+						<button type="button" onclick={() => ((editView = !editView), (replyView = false))}><Icon name="lucide--pencil" title={t("comment.edit.name")} /></button>
+						<button type="button" onclick={() => (deleteView = true)}><Icon name="lucide--trash" title={t("delete")} /></button>
 					{/if}
 				</dd>
 			{:else}

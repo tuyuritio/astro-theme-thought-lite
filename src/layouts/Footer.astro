@@ -75,10 +75,7 @@ const notes = await getCollection("note", note => {
 });
 
 // Calculate total word count across all notes
-const noteWords = (await Promise.all(notes.map(async note => (await render(note)).remarkPluginFrontmatter.words))).reduce(
-	(summary, words) => summary + words,
-	0
-);
+const noteWords = (await Promise.all(notes.map(async note => (await render(note)).remarkPluginFrontmatter.words))).reduce((summary, words) => summary + words, 0);
 
 const jottings = await getCollection("jotting", jotting => {
 	// Filter by publication status and locale
@@ -89,10 +86,7 @@ const jottings = await getCollection("jotting", jotting => {
 });
 
 // Calculate total word count across all jottings
-const jottingWords = (await Promise.all(jottings.map(async jotting => (await render(jotting)).remarkPluginFrontmatter.words))).reduce(
-	(summary, words) => summary + words,
-	0
-);
+const jottingWords = (await Promise.all(jottings.map(async jotting => (await render(jotting)).remarkPluginFrontmatter.words))).reduce((summary, words) => summary + words, 0);
 
 // Aggregate total word count
 const totalWords = noteWords + jottingWords;
@@ -104,31 +98,33 @@ const policy = await getEntry("information", `${localePrefix}policy`);
 
 <footer class="flex flex-col sm:flex-row items-center justify-between gap-2 mt-8 mb-5 sm:mb-3 text-sm font-mono">
 	<div class="flex items-center gap-1">
-		{
-			copyright.type != "CC0 1.0" && (
-				<>
-					<Icon name="lucide--copyright" />
-					<span>{copyright.year}</span>
-				</>
-			)
-		}
-		<a href={author.link} target="_blank" rel="noopener noreferrer">{author.name}</a>
+		{copyright.type !== "CC0 1.0" && (
+			<>
+				<Icon name="lucide--copyright" />
+				<span>{copyright.year}</span>
+			</>
+		)}
+		{author.link ? (
+			<a href={author.link} target="_blank" rel="noopener noreferrer">
+				{author.name}
+			</a>
+		) : (
+			<span>{author.name}</span>
+		)}
 		<span>|</span>
 		<a target="_blank" href={ccURL} aria-label={ccLabel} class="flex items-center gap-1">
 			{ccIcons.map(icon => <Icon name={icon} />)}
 		</a>
 		<span>·</span>
 		<Icon name="lucide--activity" title={t("statistics", { count: totalWords })} />
-		{
-			policy && (
-				<>
-					<span>·</span>
-					<a href={getRelativeLocaleUrl(locale, "/policy")} aria-label="Policy" class="inline-flex">
-						<Icon name="lucide--scale" title={t("navigation.policy")} />
-					</a>
-				</>
-			)
-		}
+		{policy && (
+			<>
+				<span>·</span>
+				<a href={getRelativeLocaleUrl(locale, "/policy")} aria-label="Policy" class="inline-flex">
+					<Icon name="lucide--scale" title={t("navigation.policy")} />
+				</a>
+			</>
+		)}
 	</div>
 	<code class="flex items-center gap-2.5">
 		<p>Powered by</p>

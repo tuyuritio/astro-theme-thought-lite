@@ -15,93 +15,91 @@ const t = i18nit(locale);
 ---
 
 <style>
-	figure button {
-		position: relative;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+figure button {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-		width: 2rem;
-		height: 2rem;
+	width: 2rem;
+	height: 2rem;
 
-		border-width: 2px;
-		border-style: solid;
-		border-radius: 50%;
+	border-width: 2px;
+	border-style: solid;
+	border-radius: 50%;
 
-		padding: 5px;
-		background-color: var(--background-color);
+	padding: 5px;
+	background-color: var(--background-color);
 
-		box-shadow:
-			0 4px 6px -1px rgb(0 0 0 / 0.1),
-			0 2px 4px -2px rgb(0 0 0 / 0.1);
-	}
+	box-shadow:
+		0 4px 6px -1px rgb(0 0 0 / 0.1),
+		0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
 </style>
 
 <figure class="fixed inset-e-[calc(20px+max(calc((100%-1100px)/2),0px))] bottom-15 sm:bottom-30 flex flex-col gap-2 z-100">
-	<button aria-label="Scroll to Top" class="border-weak" onclick="document.scrollingElement?.scrollTo({top: 0, behavior: 'smooth'})">
+	<button type="button" aria-label="Scroll to Top" class="border-weak" onclick="document.scrollingElement?.scrollTo({top: 0, behavior: 'smooth'})">
 		<Icon name="lucide--arrow-up-to-line" size={18} title={t("note.top")} />
-		<svg class="absolute -top-0.5 -inset-s-0.5 w-[calc(100%+4px)] h-[calc(100%+4px)] -rotate-90 transform-origin-center pointer-events-none">
+		<svg aria-hidden="true" class="absolute -top-0.5 -inset-s-0.5 w-[calc(100%+4px)] h-[calc(100%+4px)] -rotate-90 transform-origin-center pointer-events-none">
 			<circle id="progress-circle" cx="50%" cy="50%" r="calc(50% - 1px)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100"></circle>
 		</svg>
 	</button>
-	{
-		(toc || series) && (
-			<button aria-label="Open Table of Contents" class="sm:hidden!" onclick="document.dispatchEvent(new CustomEvent('toc:open'))">
-				<Icon name="lucide--list" size={15} title={t("contents")} />
-			</button>
-		)
-	}
-	{
-		comment && (
-			<button aria-label="Scroll to Comments" onclick="document.querySelector('#comment-section')?.scrollIntoView({behavior: 'smooth'})">
-				<Icon name="lucide--message-square" size={15} title={t("note.comment")} />
-			</button>
-		)
-	}
+	{(toc || series) && (
+		<button type="button" aria-label="Open Table of Contents" class="sm:hidden!" onclick="document.dispatchEvent(new CustomEvent('toc:open'))">
+			<Icon name="lucide--list" size={15} title={t("contents")} />
+		</button>
+	)}
+	{comment && (
+		<button type="button" aria-label="Scroll to Comments" onclick="document.querySelector('#comment-section')?.scrollIntoView({behavior: 'smooth'})">
+			<Icon name="lucide--message-square" size={15} title={t("note.comment")} />
+		</button>
+	)}
 </figure>
 
 <script>
-	function updateProgress() {
-		const content = document.getElementById("markdown-content");
-		if (content) {
-			// Retrieve key metrics: content height, top position, viewport height, and current scroll
-			const contentHeight = content.scrollHeight;
-			const contentTop = content.offsetTop;
-			const viewportHeight = window.innerHeight;
-			const scrollTop = window.scrollY;
+function updateProgress() {
+	const content = document.getElementById("markdown-content");
+	if (content) {
+		// Retrieve key metrics: content height, top position, viewport height, and current scroll
+		const contentHeight = content.scrollHeight;
+		const contentTop = content.offsetTop;
+		const viewportHeight = window.innerHeight;
+		const scrollTop = window.scrollY;
 
-			let scrolled, scrollable;
+		let scrolled: number, scrollable: number;
 
-			// Determine if the content is taller than the viewport
-			if (viewportHeight < contentHeight) {
-				// Long Article
+		// Determine if the content is taller than the viewport
+		if (viewportHeight < contentHeight) {
+			// Long Article
 
-				// Distance scrolled past the top of the content
-				scrolled = Math.max(0, scrollTop - contentTop);
+			// Distance scrolled past the top of the content
+			scrolled = Math.max(0, scrollTop - contentTop);
 
-				// Total distance required to align the bottom of the content with the viewport bottom
-				scrollable = contentHeight - viewportHeight;
-			} else {
-				// Short Article
+			// Total distance required to align the bottom of the content with the viewport bottom
+			scrollable = contentHeight - viewportHeight;
+		} else {
+			// Short Article
 
-				// Absolute scroll position from the top of the page
-				scrolled = scrollTop;
+			// Absolute scroll position from the top of the page
+			scrolled = scrollTop;
 
-				// Distance required for the content's bottom to touch the viewport's bottom
-				scrollable = Math.max(0, contentHeight + contentTop - viewportHeight);
-			}
+			// Distance required for the content's bottom to touch the viewport's bottom
+			scrollable = Math.max(0, contentHeight + contentTop - viewportHeight);
+		}
 
-			// Calculate progress ratio
-			// Note: If scrollable is 0, result is Infinity/NaN, which CSS ignores, effectively defaulting to 100% (full circle).
-			const progress = Math.min(1, scrolled / scrollable);
+		// Calculate progress ratio
+		// Note: If scrollable is 0, result is Infinity/NaN, which CSS ignores, effectively defaulting to 100% (full circle).
+		const progress = Math.min(1, scrolled / scrollable);
 
-			const circle = document.getElementById("progress-circle");
-			if (circle instanceof SVGCircleElement) {
-				circle.style.strokeDashoffset = `${100 * (1 - progress)}`;
-			}
+		const circle = document.getElementById("progress-circle");
+		if (circle instanceof SVGCircleElement) {
+			circle.style.strokeDashoffset = `${100 * (1 - progress)}`;
 		}
 	}
+}
 
-	window.addEventListener("scroll", updateProgress);
-	updateProgress();
+window.addEventListener("scroll", updateProgress);
+document.addEventListener("astro:page-load", updateProgress);
+document.addEventListener("sensitive:reveal", updateProgress);
+updateProgress();
 </script>

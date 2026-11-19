@@ -19,8 +19,8 @@
 </div>
 
 > [!NOTE]
-> - `main` 分支：静态化构建，可部署在任何静态托管平台。
-> - `cloudflare` 分支✅：启用内置评论系统，仅支持在 Cloudflare 部署。
+> - 默认静态化构建，可部署在任意静态托管平台。
+> - 可选启用内置评论系统（仅支持在 Cloudflare 部署）。
 
 🎬 **在线演示**：[Cloudflare Workers](https://thought-lite.ttio.workers.dev/zh-cn)
 
@@ -32,15 +32,20 @@
 - [x] **i18n 支持** - 可扩展的多语言支持，单语言模式同样适用。
 - [x] **Sitemap 及 Feed 订阅** - 自动化生成 Sitemap 和 Atom Feed。
 - [x] **OpenGraph 支持** - 内置 Open Graph 元标签，优化社交媒体分享效果。
-- [x] **评论系统** - 基于 Cloudflare D1，部署便捷，隐私可控；支持 OAuth 身份认证和免登录评论。
+
+### 评论系统
+
+基于 Cloudflare D1，部署便捷，隐私可控。
+
+- [x] **轻用户系统** - 支持 OAuth 身份认证和免登录评论。
 - [x] **桌面通知** - 使用 Web Push API 推送实时通知。
-- [x] **邮件通知** - 使用 Restful API 发送邮件通知。
+- [x] **邮件通知** - 使用 RESTful API 发送邮件通知。
 
 ## 📋 前期准备
 
-在开始之前，请确保拥有以下账户：
+如需启用评论系统，请确保拥有以下账户：
 
-- [Cloudflare 账户](https://dash.cloudflare.com/sign-up) - 用于部署和数据库托管
+- [Cloudflare 账户](https://dash.cloudflare.com/sign-up) - 用于 Cloudflare Workers 部署和 D1 数据库托管
 - [GitHub 账户](https://github.com/signup) - 用于代码托管和自动部署
 
 ## ⚡️ 快速上手
@@ -50,26 +55,25 @@
 运行如下命令：
 
 ```sh
-# 末尾的 `cloudflare` 是分支名称，请勿省略！
-pnpm create astro --template tuyuritio/astro-theme-thought-lite#cloudflare
+pnpm create astro --template tuyuritio/astro-theme-thought-lite
 
 # 根据交互提示创建项目
 
 cd <your-project-name>
-pnpm db:migrate:local
+# pnpm db:migrate:local  # 若开启评论系统，请先初始化本地数据库
 pnpm dev
 ```
 
 ### 使用模板
 
-1. [使用此模板](https://github.com/new?template_name=astro-theme-thought-lite&template_owner=tuyuritio)创建新的仓库（启用 `Include all branches`）或 [Fork](https://github.com/tuyuritio/astro-theme-thought-lite/fork) 此仓库（取消勾选 `Copy the main branch only`）。
+1. [使用此模板](https://github.com/new?template_name=astro-theme-thought-lite&template_owner=tuyuritio)创建新的仓库或 [Fork](https://github.com/tuyuritio/astro-theme-thought-lite/fork) 此仓库。
 2. 运行如下命令：
 
 ```sh
 git clone <your-repo-url>
 cd <your-repo-name>
 pnpm install
-pnpm db:migrate:local
+# pnpm db:migrate:local  # 若开启评论系统，请先初始化本地数据库
 pnpm dev
 ```
 
@@ -80,9 +84,9 @@ pnpm dev
 - [Astro 配置参考](https://docs.astro.build/zh-cn/reference/configuration-reference/)
 - [站点配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/configuration)
 - [国际化配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/internationalization)
-- [评论系统配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/comment)
-- [通知配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/notification)
-- [OAuth 配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/oauth)
+- [评论系统配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/comment) *(开启评论系统时)*
+- [通知配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/notification) *(开启评论系统时)*
+- [OAuth 配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/oauth) *(开启评论系统时)*
 
 ## 💻 命令
 
@@ -99,20 +103,29 @@ pnpm dev
 | `pnpm preview` | 预览构建后的站点 |
 | `pnpm format` | 代码格式化 |
 | `pnpm lint` | 代码检查 |
-| `pnpm deploy` | 部署到 Cloudflare |
-| `pnpm deploy:dry` | 模拟部署 |
-| `pnpm db:migration` | 生成数据库迁移文件 |
-| `pnpm db:migrate:local` | 在本地应用数据库迁移 |
-| `pnpm db:migrate:remote` | 在远程应用数据库迁移 |
+| `pnpm deploy` | 部署到 Cloudflare *(开启评论系统时)* |
+| `pnpm deploy:dry` | 模拟部署 *(开启评论系统时)* |
+| `pnpm db:migration` | 生成数据库迁移文件 *(开启评论系统时)* |
+| `pnpm db:migrate:local` | 在本地应用数据库迁移 *(开启评论系统时)* |
+| `pnpm db:migrate:remote` | 在远程应用数据库迁移 *(开启评论系统时)* |
 
 ## 🚀 部署
+
+### 静态构建
+
+默认配置下会构建为纯静态站点，可部署在任意静态托管平台。各平台部署方法请参阅 [Astro 官方部署指南](https://docs.astro.build/zh-cn/guides/deploy/)。
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/tuyuritio/astro-theme-thought-lite&project-name=astro-blog-thought-lite&repository-name=astro-blog-thought-lite&teamSlug=tuyuritios-projects)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/integration/start/deploy?repository=https://github.com/tuyuritio/astro-theme-thought-lite)
+
+### SSR（启用评论系统）
 
 ```sh
 pnpm build
 pnpm deploy
 ```
 
-使用 GitHub Actions **自动部署**的配置请参阅[GitHub Actions 配置指南](src/content/note/zh-cn/github-actions.md)。
+使用 GitHub Actions **自动部署**的配置请参阅 [GitHub Actions 配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/github-actions)。
 
 ## 🔄 更新
 
@@ -121,9 +134,9 @@ pnpm deploy
 ```sh
 git remote add theme https://github.com/tuyuritio/astro-theme-thought-lite.git
 git fetch theme
-git merge theme/cloudflare  # 首次更新需添加 `--allow-unrelated-histories` 参数
+git merge theme/main  # 首次更新需添加 `--allow-unrelated-histories` 参数
 pnpm install
-pnpm db:migrate:local
+# pnpm db:migrate:local  # 若开启评论系统，请同步数据库迁移
 ```
 
 ## ✍️ 创作
@@ -135,7 +148,7 @@ pnpm db:migrate:local
 - `preface` - 序文，作为第一印象在站点首页展示
 - `information` - 信息，包含各类说明性内容
 
-详情请参阅[内容创作指南](https://thought-lite.vercel.app/zh-cn/note/content)。
+详情请参阅[内容创作指南](https://thought-lite.ttio.workers.dev/zh-cn/note/content)。
 
 ## 🤝 贡献
 
@@ -159,8 +172,8 @@ pnpm db:migrate:local
 - **字体** - [Google Fonts](https://fonts.google.com/) | [ZeoSeven Fonts](https://fonts.zeoseven.com/)
 - **图片查看器** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
 - **SPA 过渡** - [Swup](https://swup.js.org/)
-- **OAuth 认证** - [Arctic](https://arcticjs.dev/)
 - **代码质量** - [Biome](https://biomejs.dev/)
+- **OAuth 认证** - [Arctic](https://arcticjs.dev/)
 - **对象关系映射** - [Drizzle ORM](https://orm.drizzle.team/)
 - **数据库** - [Cloudflare D1](https://developers.cloudflare.com/d1/)
 - **边缘部署** - [Cloudflare Workers](https://workers.cloudflare.com/)

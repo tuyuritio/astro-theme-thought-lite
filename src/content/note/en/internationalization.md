@@ -105,12 +105,14 @@ Import the new translation files in `src/i18n/index.ts`:
 ```ts
 import tlh from "./tlh/index.yaml";
 import tlhScript from "./tlh/script.yaml";
+import tlhLinkroll from "./tlh/linkroll.yaml";
 
 const translations = {
   ...,
   tlh: {
-    ...tlh,
-    script: tlhScript
+    index: tlh,
+    script: tlhScript,
+    linkroll: tlhLinkroll
   }
 };
 ```
@@ -129,7 +131,7 @@ content/
 
 ### 4. Add Fonts
 
-If the new language requires specific fonts, please register the new font in `experimental.fonts` in `astro.config.ts`:
+If the new language requires specific fonts, please register the new font in `fonts` in `astro.config.ts`:
 
 ```ts
 {

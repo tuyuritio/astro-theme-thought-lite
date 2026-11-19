@@ -117,108 +117,108 @@ if (frequency === "month") {
 		if (gap >= 0 && gap < cells.length) cells[gap].contents.push(content);
 	});
 }
+
+const colon = ["zh", "ja"].includes(locale.toLowerCase().split("-")[0]) ? "：" : ":";
 ---
 
 <section class:list={["grid gap-1", { "grid-flow-col grid-rows-7": frequency === "day", "grid-cols-13": frequency === "week", "grid-cols-12": frequency === "month" }]}>
-	{
-		cells.map(cell => {
-			const count = cell.contents.length;
-			const details = [];
+	{cells.map(cell => {
+		const count = cell.contents.length;
+		const details = [];
 
-			// Generate details for the popup based on cell content
-			if (count) {
-				const notes = cell.contents.filter(content => content.section === "note");
-				const jottings = cell.contents.filter(content => content.section === "jotting");
+		// Generate details for the popup based on cell content
+		if (count) {
+			const notes = cell.contents.filter(content => content.section === "note");
+			const jottings = cell.contents.filter(content => content.section === "jotting");
 
-				if (notes.length) {
-					if (frequency === "month") {
-						details.push(<p>{t("home.heatmap.note", { count: notes.length })}</p>);
-					} else {
-						details.push(
-							<p class="my-1">{t("home.heatmap.note", { count: notes.length })}：</p>,
-							<ul class="flex flex-col gap-0.5">
-								{notes.map(note => (
-									<li>
-										<a href={note.link} aria-label={note.title} class="ms-1 link">
-											{note.title}
-										</a>
-									</li>
-								))}
-							</ul>
-						);
-					}
+			if (notes.length) {
+				if (frequency === "month") {
+					details.push(<p>{t("home.heatmap.note", { count: notes.length })}</p>);
+				} else {
+					details.push(
+						<p class="my-1">{`${t("home.heatmap.note", { count: notes.length })}${colon}`}</p>,
+						<ul class="flex flex-col gap-0.5">
+							{notes.map(note => (
+								<li>
+									<a href={note.link} aria-label={note.title} class="ms-1 link">
+										{note.title}
+									</a>
+								</li>
+							))}
+						</ul>
+					);
 				}
-
-				if (jottings.length) {
-					if (frequency === "month") {
-						details.push(<p>{t("home.heatmap.jotting", { count: jottings.length })}</p>);
-					} else {
-						details.push(
-							<p class="my-1">{t("home.heatmap.jotting", { count: jottings.length })}：</p>,
-							<ul class="flex flex-col gap-0.5">
-								{jottings.map(jotting => (
-									<li>
-										<a href={jotting.link} aria-label={jotting.title} class="ms-1 link">
-											{jotting.title}
-										</a>
-									</li>
-								))}
-							</ul>
-						);
-					}
-				}
-			} else {
-				// Display empty message if no content
-				details.push(<p class="mt-1">{t("home.heatmap.empty")}</p>);
 			}
 
-			return (
-				<figure class="group/pop">
-					<i class:list={["block bg-primary/10", { "w-2.5 h-2.5": frequency === "day", "w-4 h-4": frequency === "week", "w-4.5 h-4.5": frequency === "month" }, { "bg-primary/40": count > 0, "bg-primary/70": count > 1, "bg-primary": count > 2 }]} />
+			if (jottings.length) {
+				if (frequency === "month") {
+					details.push(<p>{t("home.heatmap.jotting", { count: jottings.length })}</p>);
+				} else {
+					details.push(
+						<p class="my-1">{`${t("home.heatmap.jotting", { count: jottings.length })}${colon}`}</p>,
+						<ul class="flex flex-col gap-0.5">
+							{jottings.map(jotting => (
+								<li>
+									<a href={jotting.link} aria-label={jotting.title} class="ms-1 link">
+										{jotting.title}
+									</a>
+								</li>
+							))}
+						</ul>
+					);
+				}
+			}
+		} else {
+			// Display empty message if no content
+			details.push(<p class="mt-1">{t("home.heatmap.empty")}</p>);
+		}
 
-					<div class="w-max flex flex-col mb-1 rounded-sm px-2 py-2 text-xs text-background bg-primary pop">
-						<time class="font-bold">{cell.target}</time>
-						{details}
-					</div>
-				</figure>
-			);
-		})
-	}
+		return (
+			<figure class="group/pop">
+				<i class:list={["block bg-primary/10", { "w-2.5 h-2.5": frequency === "day", "w-4 h-4": frequency === "week", "w-4.5 h-4.5": frequency === "month" }, { "bg-primary/40": count > 0, "bg-primary/70": count > 1, "bg-primary": count > 2 }]} />
+
+				<div class="w-max flex flex-col mb-1 rounded-sm px-2 py-2 text-xs text-background bg-primary pop">
+					<time class="font-bold">{cell.target}</time>
+					{details}
+				</div>
+			</figure>
+		);
+	})}
 </section>
 
 <style>
-	@supports (anchor-name: --anchor-heatmap) {
-		figure {
-			anchor-scope: --anchor-heatmap;
+@supports (anchor-name: --anchor-heatmap) {
+	figure {
+		anchor-scope: --anchor-heatmap;
 
-			i {
-				anchor-name: --anchor-heatmap;
-			}
+		i {
+			anchor-name: --anchor-heatmap;
+		}
 
-			.pop {
-				position: fixed;
-				position-anchor: --anchor-heatmap;
-				position-area: top;
-				justify-self: anchor-center;
-				z-index: 10;
-			}
+		.pop {
+			position: fixed;
+			position-anchor: --anchor-heatmap;
+			position-area: top;
+			justify-self: anchor-center;
+			z-index: 10;
+		}
+	}
+}
+
+@supports not (anchor-name: --anchor-heatmap) {
+	figure {
+		position: relative;
+
+		.pop {
+			position: absolute;
+			bottom: 100%;
+			inset-inline-start: 0;
+			transform: translateX(-50%);
 		}
 	}
 
-	@supports not (anchor-name: --anchor-heatmap) {
-		figure {
-			position: relative;
-
-			.pop {
-				position: absolute;
-				bottom: 100%;
-				inset-inline-start: 0;
-				transform: translateX(-50%);
-			}
-		}
-
-		figure .pop:dir(rtl) {
-			transform: translateX(50%);
-		}
+	figure .pop:dir(rtl) {
+		transform: translateX(50%);
 	}
+}
 </style>

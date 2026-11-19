@@ -8,7 +8,7 @@ const { label } = Astro.props;
 ---
 
 <div class="flex flex-col justify-center border-e pe-2 border-primary sm:border-0 sm:p-0 group">
-	<button class="items-center sm:border-none" aria-label={label}><slot name="trigger" /></button>
+	<button type="button" class="items-center sm:border-none" aria-label={label}><slot name="trigger" /></button>
 	<section class="pt-1 z-200 bg-background sm:h-max sm:opacity-0 sm:invisible sm:transition-[opacity,visibility] sm:group-hover:opacity-100 sm:group-hover:visible">
 		<nav class="flex flex-col sm:border-2 sm:border-primary sm:shadow-md">
 			<slot />
@@ -17,60 +17,60 @@ const { label } = Astro.props;
 </div>
 
 <style>
-	@media (min-width: 640px) {
-		@supports (anchor-name: --anchor-menu) {
-			div {
-				anchor-scope: --anchor-menu;
+@media (min-width: 640px) {
+	@supports (anchor-name: --anchor-menu) {
+		div {
+			anchor-scope: --anchor-menu;
 
-				button {
-					anchor-name: --anchor-menu;
-				}
-
-				section {
-					position: fixed;
-					position-anchor: --anchor-menu;
-					position-area: bottom;
-					justify-self: anchor-center;
-				}
-			}
-		}
-
-		@supports not (anchor-name: --anchor-menu) {
-			div {
-				position: relative;
-				section {
-					position: absolute;
-					top: 100%;
-					inset-inline-start: 50%;
-					transform: translateX(-50%);
-				}
+			button {
+				anchor-name: --anchor-menu;
 			}
 
-			div section:dir(rtl) {
-				transform: translateX(50%);
+			section {
+				position: fixed;
+				position-anchor: --anchor-menu;
+				position-area: bottom;
+				justify-self: anchor-center;
 			}
 		}
 	}
 
+	@supports not (anchor-name: --anchor-menu) {
+		div {
+			position: relative;
+			section {
+				position: absolute;
+				top: 100%;
+				inset-inline-start: 50%;
+				transform: translateX(-50%);
+			}
+		}
+
+		div section:dir(rtl) {
+			transform: translateX(50%);
+		}
+	}
+}
+
+nav :global(a) {
+	font-size: 0.875rem;
+	line-height: 1.15rem;
+	white-space: nowrap;
+	padding: 0.125rem 0;
+}
+
+@media (min-width: 640px) {
 	nav :global(a) {
-		font-size: 0.875rem;
-		line-height: 1.15rem;
-		white-space: nowrap;
-		padding: 0.125rem 0;
+		padding: 0.5rem 0.75rem;
+		font-weight: bold;
+		transition:
+			color 150ms ease-in-out,
+			background-color 150ms ease-out;
 	}
 
-	@media (min-width: 640px) {
-		nav :global(a) {
-			padding: 0.5rem 0.75rem;
-			font-weight: bold;
-			transition:
-				color 150ms ease-in-out,
-				background-color 150ms ease-out;
-		}
-
-		nav :global(a:hover) {
-			color: var(--background-color);
-			background-color: var(--primary-color);
-		}
+	nav :global(a:hover) {
+		color: var(--background-color);
+		background-color: var(--primary-color);
 	}
+}
 </style>

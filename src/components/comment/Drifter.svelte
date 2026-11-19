@@ -86,8 +86,8 @@ async function deactivate() {
 			</ul>
 		</div>
 		<section class="flex gap-5">
-			<button class="form-button" onclick={() => (deactivateView = false)}>{t("drifter.deactivate.cancel")}</button>
-			<button class="form-button bg-red-500 text-white" onclick={deactivate}>{t("drifter.deactivate.confirm")}</button>
+			<button type="button" class="form-button" onclick={() => (deactivateView = false)}>{t("drifter.deactivate.cancel")}</button>
+			<button type="button" class="form-button bg-red-500 text-white" onclick={deactivate}>{t("drifter.deactivate.confirm")}</button>
 		</section>
 	</div>
 </Modal>
@@ -95,7 +95,7 @@ async function deactivate() {
 <Modal bind:open>
 	<main class="flex flex-col grow gap-5">
 		<header class="flex flex-col sm:flex-row gap-5">
-			<img src={drifter.image} alt={drifter.id} class="self-center w-20 h-20 border-2 border-solid border-weak rounded-full" onerror={e => (((e.currentTarget as HTMLImageElement).onerror = null), ((e.currentTarget as HTMLImageElement).src = "/akkarin.webp"))} />
+			<img src={drifter.image} alt={drifter.id} class="self-center w-20 h-20 border-2 border-solid border-weak rounded-full" onerror={e => (((e.currentTarget as HTMLImageElement).onerror = null), ((e.currentTarget as HTMLImageElement).src = "/akkarin.webp"))}>
 			<aside class="grow flex flex-col justify-center gap-2">
 				<menu class="flex items-center gap-2 font-bold">
 					{#each context.oauth as provider}
@@ -104,26 +104,28 @@ async function deactivate() {
 						{/if}
 					{/each}
 					{drifter.name}
-					<button onclick={synchronize}><Icon name="lucide--refresh-cw" title={t("drifter.sync.name")} /></button>
-					<button onclick={() => (location.href = "/@/depart")}><Icon name="lucide--log-out" title={t("drifter.signout")} /></button>
-					<button onclick={() => (deactivateView = true)} class="ms-auto text-red-500"><Icon name="lucide--user-round-x" title={t("drifter.deactivate.name")} /></button>
+					<button type="button" onclick={synchronize}><Icon name="lucide--refresh-cw" title={t("drifter.sync.name")} /></button>
+					<button type="button" onclick={() => (location.href = "/@/depart")}><Icon name="lucide--log-out" title={t("drifter.signout")} /></button>
+					<button type="button" onclick={() => (deactivateView = true)} class="ms-auto text-red-500"><Icon name="lucide--user-round-x" title={t("drifter.deactivate.name")} /></button>
 				</menu>
-				{#if drifter.description}<span class="text-sm">{drifter.description}</span>{/if}
+				{#if drifter.description}
+					<span class="text-sm">{drifter.description}</span>
+				{/if}
 			</aside>
 		</header>
-		<hr class="border-b border-weak" />
+		<hr class="border-b border-weak">
 		<div class="flex flex-col items-start gap-5">
-			<label class="flex items-center gap-1 flex-wrap">{t("drifter.homepage")}: <input type="url" class="input" bind:value={drifter.homepage} /></label>
+			<label class="flex items-center gap-1 flex-wrap">{t("drifter.homepage")}: <input type="url" class="input" bind:value={drifter.homepage}></label>
 			{#if context.email}
 				<Email />
 				{#if drifter.emailState === "verified"}
-					<label class="flex items-center gap-1 flex-wrap">{t("email.notify")}: <input type="checkbox" class="switch" bind:checked={drifter.notify} /></label>
+					<label class="flex items-center gap-1 flex-wrap">{t("email.notify")}: <input type="checkbox" class="switch" bind:checked={drifter.notify}></label>
 				{/if}
 			{/if}
 		</div>
 		<div class="self-center flex gap-5">
-			<button onclick={() => (open = false)} class="form-button">{t("cancel")}</button>
-			<button disabled={updating} onclick={update} class:bg-weak={updating} class="relative form-button transition-[background-color]">
+			<button type="button" onclick={() => (open = false)} class="form-button">{t("cancel")}</button>
+			<button type="button" disabled={updating} onclick={update} class:bg-weak={updating} class="relative form-button transition-[background-color]">
 				<span class:opacity-0={updating} class="opacity-100 transition-[color,opacity]">{t("drifter.update.name")}</span>
 				{#if updating}
 					<span class="absolute inset-0 inline-flex items-center justify-center text-secondary"><Icon name="svg-spinners--ring-resize" /></span>

@@ -98,23 +98,23 @@ async function remove() {
 	<div id="delete" class="flex flex-col items-center justify-center gap-5">
 		<h2>{t("email.remove.name")}</h2>
 		<section class="flex gap-5">
-			<button class="form-button" onclick={() => (removeView = false)}>{t("cancel")}</button>
-			<button class="form-button bg-red-500 text-white" onclick={remove}>{t("confirm")}</button>
+			<button type="button" class="form-button" onclick={() => (removeView = false)}>{t("cancel")}</button>
+			<button type="button" class="form-button bg-red-500 text-white" onclick={remove}>{t("confirm")}</button>
 		</section>
 	</div>
 </Modal>
 
 <label class="flex items-center gap-1 flex-wrap">
 	{t("email.name")}:
-	<input type="email" disabled={!edit} bind:value={address} class="input" />
+	<input type="email" disabled={!edit} bind:value={address} class="input">
 
 	<div class="flex gap-1 w-9.5">
 		{#if edit}
-			<button onclick={() => ((edit = false), (address = drifter.email))}><Icon name="lucide--x" /></button>
+			<button type="button" onclick={() => ((edit = false), (address = drifter.email))}><Icon name="lucide--x" /></button>
 			{#if drifter.email === undefined || address?.trim()}
-				<button onclick={verify}><Icon name="lucide--check" /></button>
+				<button type="button" onclick={verify}><Icon name="lucide--check" /></button>
 			{:else if drifter.email}
-				<button onclick={() => (removeView = true)}><Icon name="lucide--trash" title={t("email.remove.name")} /></button>
+				<button type="button" onclick={() => (removeView = true)}><Icon name="lucide--trash" title={t("email.remove.name")} /></button>
 			{/if}
 		{:else}
 			{#if drifter.emailState === "verified"}
@@ -122,9 +122,9 @@ async function remove() {
 			{:else if context.limitEmail > 0}
 				<span class="w-4.25 font-mono text-sm text-center">{Math.ceil(limit)}</span>
 			{:else if drifter.email}
-				<button onclick={resend}><Icon name="lucide--badge-question-mark" title={t("email.verify.resend")} /></button>
+				<button type="button" onclick={resend}><Icon name="lucide--badge-question-mark" title={t("email.verify.resend")} /></button>
 			{/if}
-			<button onclick={() => (edit = true)}><Icon name="lucide--pencil" /></button>
+			<button type="button" onclick={() => (edit = true)}><Icon name="lucide--pencil" /></button>
 		{/if}
 	</div>
 </label>

@@ -125,7 +125,7 @@ onMount(async () => {
 				<p class="flex items-center gap-2"><b>{t("comment.name")}</b> · {count}</p>
 
 				{#if compact}
-					<button onclick={() => (expanded = !expanded)}>
+					<button type="button" onclick={() => (expanded = !expanded)}>
 						{#if expanded}
 							<Icon name="lucide--chevrons-down" title={t("comment.collapse")} />
 						{:else}
@@ -135,8 +135,8 @@ onMount(async () => {
 				{/if}
 
 				<p class="flex gap-4">
-					<button onclick={() => refresh(false)}><Icon name="lucide--refresh-cw" title={t("comment.reload.name")} /></button>
-					<button onclick={() => (ascending = !ascending)}>
+					<button type="button" onclick={() => refresh(false)}><Icon name="lucide--refresh-cw" title={t("comment.reload.name")} /></button>
+					<button type="button" onclick={() => (ascending = !ascending)}>
 						{#if ascending}
 							<Icon name="lucide--clock-arrow-down" title={t("comment.sort.asc")} />
 						{:else}

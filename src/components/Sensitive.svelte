@@ -7,14 +7,18 @@ let { locale, sensitive = false, back, children }: { locale: string; sensitive: 
 
 const t = i18nit(locale);
 
-if (sensitive) {
-	$effect(() => {
-		if (!sensitive) window.zoom();
-	});
-}
+let acknowledged = $state(false);
+const locked = $derived(sensitive && !acknowledged);
+
+$effect(() => {
+	if (sensitive && acknowledged) {
+		window.zoom?.();
+		document.dispatchEvent(new CustomEvent("sensitive:reveal"));
+	}
+});
 </script>
 
-{#if sensitive}
+{#if locked}
 	<div transition:fade={{ duration: 150 }} class="flex flex-col items-center justify-end gap-6">
 		<h2>{t("sensitive.title")}</h2>
 		<div class="flex flex-col items-center justify-end gap-3">
@@ -22,7 +26,7 @@ if (sensitive) {
 			<p>{t("sensitive.warning")}</p>
 		</div>
 		<div class="flex gap-3">
-			<button class="font-bold text-background bg-red-500 py-1 px-2 rounded-md" onclick={() => (sensitive = false)}>
+			<button type="button" class="font-bold text-background bg-red-500 py-1 px-2 rounded-md" onclick={() => (acknowledged = true)}>
 				{t("sensitive.continue")}
 			</button>
 			<a href={back} class="flex items-center font-bold text-background bg-secondary py-1 px-2 rounded-md">

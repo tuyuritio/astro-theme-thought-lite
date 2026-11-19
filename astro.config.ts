@@ -45,7 +45,7 @@ export default defineConfig({
 				imageService: "compile"
 			})
 		: undefined,
-	site: "https://thought-lite.ttio.workers.dev",
+	site: siteConfig.site,
 	trailingSlash: "never",
 	i18n: {
 		...siteConfig.i18n,
@@ -102,6 +102,7 @@ export default defineConfig({
 			transformers: [copy({ duration: 1500 })]
 		}
 	},
+	session: false,
 	vite: {
 		plugins: [yaml(), tailwindcss()]
 	},
@@ -146,8 +147,8 @@ export default defineConfig({
 			name: "Playwrite MX",
 			provider: fontProviders.google(),
 			weights: [100],
+			subsets: ["menu", "fallback"],
 			display: "block",
-			subsets: ["fallback"],
 			fallbacks: ["Apple Chancery", "Segoe Script", "cursive"],
 			cssVariable: "--font-playwrite-mx"
 		},

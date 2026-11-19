@@ -13,6 +13,7 @@ The theme's custom configuration is located in the `site.config.ts` file in the 
 
 | Configuration Item | Type | Description |
 |:- |:- |:- |
+| `site` | `string` | Site URL. |
 | `title` | `string` | Site title. |
 | `prologue` | `string` | Homepage slogan; supports `\n` for line breaks. |
 | `author.name` | `string` | Author name. |
@@ -27,6 +28,7 @@ The theme's custom configuration is located in the `site.config.ts` file in the 
 | `heatmap` | `Heatmap` | Heatmap display configuration. |
 | `feed.section` | `"*" \| Section[]` | Content sections included in the feed; `*` indicates all. |
 | `feed.limit` | `number` | Maximum number of items displayed in the feed. |
+| `comment.enable` | `boolean` | Enable the comment system (switches build to Cloudflare Workers SSR mode). |
 | `comment.max-length` | `number` | Maximum comment length. |
 | `comment.hide-deleted` | `boolean` | Hide deleted comments. |
 | `comment.history` | `boolean` | Show comment history. |
@@ -54,7 +56,7 @@ The theme's custom configuration is located in the `site.config.ts` file in the 
 | `unit` | `weeks` | `years` |
 |:- | - | - |
 | `day` | Total number of weeks to display | × |
-| `week` | *Fixed display of 51 weeks* | × |
+| `week` | *Fixed display of 52 weeks* | × |
 | `month` | × | Total number of years to display |
 
 ## Icon Generation

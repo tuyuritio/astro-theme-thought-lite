@@ -46,13 +46,10 @@ const CANCEL_MESSAGE = t("new.cancel");
 		});
 
 		// Exit if user cancels the selection
-		if (isCancel(selected)) {
-			cancel(CANCEL_MESSAGE);
-			process.exit(0);
-		}
+		isCancel(selected) && (cancel(CANCEL_MESSAGE), process.exit(0));
+		locale = selected;
 
 		// Update path based on selected locale
-		locale = selected;
 		path = join(path, locale);
 	}
 
@@ -107,10 +104,7 @@ const CANCEL_MESSAGE = t("new.cancel");
 		});
 
 		// Exit if user cancels the input
-		if (isCancel(id)) {
-			cancel(CANCEL_MESSAGE);
-			process.exit(0);
-		}
+		isCancel(id) && (cancel(CANCEL_MESSAGE), process.exit(0));
 
 		// If content type is Note, allow user to specify a series
 		if (contentType === "note") {
@@ -207,7 +201,7 @@ ${content}
 `;
 
 	// Display the generated content to the user for review
-	`${note(content, t("new.preview", { path }))}:`;
+	note(content, t("new.preview", { path }));
 
 	// Confirm with user to proceed with file creation
 	const proceed = await confirm({

@@ -24,38 +24,38 @@ const route = Astro.url.pathname;
 ---
 
 <style>
-	#sidebar {
-		transform: translateX(100%);
+#sidebar {
+	transform: translateX(100%);
 
-		&:is([dir="rtl"] *) {
-			transform: translateX(-100%);
-		}
-
-		&.active {
-			transform: translateX(0);
-		}
+	&:is([dir="rtl"] *) {
+		transform: translateX(-100%);
 	}
 
-	#sidebar-overlay {
-		pointer-events: none;
-		background-color: transparent;
-
-		&.active {
-			pointer-events: auto;
-			background-color: #aaaaaa88;
-		}
+	&.active {
+		transform: translateX(0);
 	}
+}
+
+#sidebar-overlay {
+	pointer-events: none;
+	background-color: transparent;
+
+	&.active {
+		pointer-events: auto;
+		background-color: #aaaaaa88;
+	}
+}
 </style>
 
 <header class="sticky top-0 flex items-center justify-between pt-3 pb-1 mb-4 bg-background z-150 sm:static sm:mb-12">
 	<a href={getRelativeLocaleUrl(locale)} class="text-lg sm:text-2xl font-bold">{title}</a>
 
-	<button id="sidebar-open" aria-label="Open Sidebar" class="sm:hidden"><Icon name="lucide--align-justify" /></button>
+	<button type="button" id="sidebar-open" aria-label="Open Sidebar" class="sm:hidden"><Icon name="lucide--align-justify" /></button>
 	<div id="sidebar-overlay" aria-hidden="true" class="sm:hidden fixed top-0 inset-s-0 w-screen h-screen transition-[background-color]"></div>
 
 	<nav id="sidebar" class="fixed top-0 inset-e-0 flex flex-col justify-between items-start gap-5 p-5 bg-background h-full sm:contents overflow-hidden transition-transform">
 		<header class="grid gap-5 sm:text-secondary grid-rows-[repeat(5,1fr)] sm:grid-rows-none sm:grid-cols-[repeat(4,1fr)]">
-			<button id="sidebar-close" class="sm:hidden"><Icon name="lucide--x" /></button>
+			<button type="button" id="sidebar-close" aria-label="Close Sidebar" class="sm:hidden"><Icon name="lucide--x" /></button>
 			<Navigator {route} {routes} client:load />
 		</header>
 
@@ -64,35 +64,33 @@ const route = Astro.url.pathname;
 
 			<a href={getRelativeLocaleUrl(locale, "/feed.xml")} target="_blank" rel="noopener noreferrer" aria-label="Subscription" class="inline-flex"><Icon name="lucide--rss" /></a>
 
-			{
-				!monolocale && (
-					<Menu label="Language switcher">
-						<Icon name="lucide--earth" slot="trigger" />
-						<LanguagePicker {locale} client:load />
-					</Menu>
-				)
-			}
+			{!monolocale && (
+				<Menu label="Language switcher">
+					<Icon name="lucide--earth" slot="trigger" />
+					<LanguagePicker {locale} client:load />
+				</Menu>
+			)}
 		</footer>
 	</nav>
 </header>
 
 <script>
-	const sidebar = document.getElementById("sidebar")!;
-	const overlay = document.getElementById("sidebar-overlay")!;
-	const open = document.getElementById("sidebar-open")!;
-	const close = document.getElementById("sidebar-close")!;
+const sidebar = document.getElementById("sidebar")!;
+const overlay = document.getElementById("sidebar-overlay")!;
+const open = document.getElementById("sidebar-open")!;
+const close = document.getElementById("sidebar-close")!;
 
-	function handleOpen() {
-		overlay.classList.add("active");
-		sidebar.classList.add("active");
-	}
+function handleOpen() {
+	overlay.classList.add("active");
+	sidebar.classList.add("active");
+}
 
-	function handleClose() {
-		overlay.classList.remove("active");
-		sidebar.classList.remove("active");
-	}
+function handleClose() {
+	overlay.classList.remove("active");
+	sidebar.classList.remove("active");
+}
 
-	open.addEventListener("click", handleOpen);
-	close.addEventListener("click", handleClose);
-	overlay.addEventListener("click", handleClose);
+open.addEventListener("click", handleOpen);
+close.addEventListener("click", handleClose);
+overlay.addEventListener("click", handleClose);
 </script>

@@ -3,6 +3,7 @@ import siteConfig, { providers } from "./src/lib/config";
 const env = import.meta.env ?? {};
 
 const config = siteConfig({
+	site: "https://thought-lite.ttio.workers.dev",
 	title: "ThoughtLite",
 	prologue: "If you need a website\nthat loads fast and has great SEO, then Astro is for you.",
 	author: {
@@ -33,7 +34,7 @@ const config = siteConfig({
 		limit: 20
 	},
 	comment: {
-		enable: true,
+		enable: false,
 		"max-length": 500,
 		"hide-deleted": true,
 		history: true

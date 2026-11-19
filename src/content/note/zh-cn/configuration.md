@@ -13,6 +13,7 @@ toc: true
 
 | 配置项 | 类型 | 描述 |
 |:- |:- |:- |
+| `site` | `string` | 站点 URL。 |
 | `title` | `string` | 站点标题。 |
 | `prologue` | `string` | 首页标语；支持 `\n` 换行。 |
 | `author.name` | `string` | 作者名称。 |
@@ -27,6 +28,7 @@ toc: true
 | `heatmap` | `Heatmap` | 热力图显示配置。 |
 | `feed.section` | `"*" \| Section[]` | 订阅源包含的内容板块；`*` 表示全部。 |
 | `feed.limit` | `number` | 订阅源中显示的最大条目数。 |
+| `comment.enable` | `boolean` | 启用评论系统（开启后切换为 Cloudflare Workers SSR 模式）。 |
 | `comment.max-length` | `number` | 评论最大字数。 |
 | `comment.hide-deleted` | `boolean` | 隐藏已删除的评论。 |
 | `comment.history` | `boolean` | 显示评论历史记录。 |
@@ -54,7 +56,7 @@ toc: true
 | `unit` | `weeks` | `years` |
 |:- | - | - |
 | `day` | 显示的总周数 | × |
-| `week` | *固定显示 51 周* | × |
+| `week` | *固定显示 52 周* | × |
 | `month` | × | 显示的总年数 |
 
 ## 图标生成

@@ -55,6 +55,11 @@ jobs:
         path: node_modules/.cache/og-fonts
         key: og-fonts-cache-v1
 
+    - name: Enable comment system for official demo
+      if: github.repository == 'tuyuritio/astro-theme-thought-lite'
+      run: |
+        sed -i '/comment:/,/}/ s/enable: false/enable: true/' site.config.ts
+
     - name: Build project
       run: pnpm run build
 
