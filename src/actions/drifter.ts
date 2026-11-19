@@ -98,7 +98,7 @@ export const drifter = {
 	// Action to update user profile settings
 	update: defineAction({
 		input: z.object({
-			homepage: z.string().nullish(), // User's personal homepage URL
+			homepage: z.union([z.url({ protocol: /^https?$/ }), z.literal("").transform(() => null)]).nullish(), // User's personal homepage URL
 			notify: z.boolean().nullish() // Whether to notify user via email
 		}),
 		handler: async ({ homepage, notify }, { cookies }) => {

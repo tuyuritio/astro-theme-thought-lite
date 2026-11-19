@@ -107,7 +107,7 @@ async function remove() {
 							<Icon name="lucide--signature" title={t("comment.author")} />
 						{/if}
 						{#if comment.homepage}
-							<a href={comment.homepage} target="_blank" class="inline-flex"><Icon name="lucide--house" /></a>
+							<a href={comment.homepage} target="_blank" rel="noopener noreferrer nofollow" class="inline-flex"><Icon name="lucide--house" /></a>
 						{/if}
 						<span>·</span>
 						<time class="text-xs">{Time.toString(comment.updated ?? comment.timestamp, true).replace("-", " ")}</time>
