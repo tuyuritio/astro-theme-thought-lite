@@ -17,8 +17,7 @@ export const push = {
 			// Initialize database connection
 			const db = drizzle(env.DB);
 
-			// Insert new push subscription
-			// Use onConflictDoNothing to handle duplicate subscriptions gracefully
+			// Assign the same endpoint on conflict so RETURNING yields the existing ID.
 			const subscription = await db
 				.insert(PushSubscription)
 				.values({
@@ -26,7 +25,10 @@ export const push = {
 					p256dh,
 					auth
 				})
-				.onConflictDoNothing()
+				.onConflictDoUpdate({
+					target: PushSubscription.endpoint,
+					set: { endpoint }
+				})
 				.returning({ id: PushSubscription.id })
 				.get();
 
