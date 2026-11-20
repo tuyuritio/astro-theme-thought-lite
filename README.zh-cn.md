@@ -84,9 +84,12 @@ pnpm dev
 - [Astro 配置参考](https://docs.astro.build/zh-cn/reference/configuration-reference/)
 - [站点配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/configuration)
 - [国际化配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/internationalization)
-- [评论系统配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/comment) *(开启评论系统时)*
-- [通知配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/notification) *(开启评论系统时)*
-- [OAuth 配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/oauth) *(开启评论系统时)*
+
+### 评论系统
+
+- [评论系统配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/comment)
+- [通知配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/notification)
+- [OAuth 配置指南](https://thought-lite.ttio.workers.dev/zh-cn/note/oauth)
 
 ## 💻 命令
 
@@ -103,11 +106,16 @@ pnpm dev
 | `pnpm preview` | 预览构建后的站点 |
 | `pnpm format` | 代码格式化 |
 | `pnpm lint` | 代码检查 |
-| `pnpm deploy` | 部署到 Cloudflare *(开启评论系统时)* |
-| `pnpm deploy:dry` | 模拟部署 *(开启评论系统时)* |
-| `pnpm db:migration` | 生成数据库迁移文件 *(开启评论系统时)* |
-| `pnpm db:migrate:local` | 在本地应用数据库迁移 *(开启评论系统时)* |
-| `pnpm db:migrate:remote` | 在远程应用数据库迁移 *(开启评论系统时)* |
+
+### 评论系统
+
+| 命令 | 行为 |
+| --- | --- |
+| `pnpm deploy` | 部署到 Cloudflare |
+| `pnpm deploy:dry` | 模拟部署 |
+| `pnpm db:migration` | 生成数据库迁移文件 |
+| `pnpm db:migrate:local` | 在本地应用数据库迁移 |
+| `pnpm db:migrate:remote` | 在远程应用数据库迁移 |
 
 ## 🚀 部署
 
@@ -121,7 +129,8 @@ pnpm dev
 ### SSR（启用评论系统）
 
 ```sh
-pnpm build
+pnpm build &&
+pnpm db:migrate:remote &&
 pnpm deploy
 ```
 

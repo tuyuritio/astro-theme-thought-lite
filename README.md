@@ -84,9 +84,12 @@ Related theme configuration can be found in the following documents:
 - [Astro Configuration Reference](https://docs.astro.build/en/reference/configuration-reference/)
 - [Site Configuration Guide](https://thought-lite.ttio.workers.dev/note/configuration)
 - [Internationalization Configuration Guide](https://thought-lite.ttio.workers.dev/note/internationalization)
-- [Comment System Configuration Guide](https://thought-lite.ttio.workers.dev/note/comment) *(when comments are enabled)*
-- [Notification Configuration Guide](https://thought-lite.ttio.workers.dev/note/notification) *(when comments are enabled)*
-- [OAuth Configuration Guide](https://thought-lite.ttio.workers.dev/note/oauth) *(when comments are enabled)*
+
+### Comment System
+
+- [Comment System Configuration Guide](https://thought-lite.ttio.workers.dev/note/comment)
+- [Notification Configuration Guide](https://thought-lite.ttio.workers.dev/note/notification)
+- [OAuth Configuration Guide](https://thought-lite.ttio.workers.dev/note/oauth)
 
 ## 💻 Commands
 
@@ -103,11 +106,16 @@ The theme provides the following commonly used commands:
 | `pnpm preview` | Preview the built site |
 | `pnpm format` | Format code |
 | `pnpm lint` | Lint code |
-| `pnpm deploy` | Deploy to Cloudflare *(when comments are enabled)* |
-| `pnpm deploy:dry` | Simulate Cloudflare deployment *(when comments are enabled)* |
-| `pnpm db:migration` | Generate database migration files *(when comments are enabled)* |
-| `pnpm db:migrate:local` | Apply database migrations locally *(when comments are enabled)* |
-| `pnpm db:migrate:remote` | Apply database migrations remotely *(when comments are enabled)* |
+
+### Comment System
+
+| Command | Action |
+| --- | --- |
+| `pnpm deploy` | Deploy to Cloudflare |
+| `pnpm deploy:dry` | Simulate Cloudflare deployment |
+| `pnpm db:migration` | Generate database migration files |
+| `pnpm db:migrate:local` | Apply database migrations locally |
+| `pnpm db:migrate:remote` | Apply database migrations remotely |
 
 ## 🚀 Deployment
 
@@ -121,7 +129,8 @@ The default configuration builds into a pure static site and can be deployed to 
 ### SSR (Comment System Enabled)
 
 ```sh
-pnpm build
+pnpm build &&
+pnpm db:migrate:remote &&
 pnpm deploy
 ```
 

@@ -84,9 +84,12 @@ pnpm dev
 - [Astro 設定リファレンス](https://docs.astro.build/ja/reference/configuration-reference/)
 - [サイト設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/configuration)
 - [国際化設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/internationalization)
-- [コメントシステム設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/comment) *(コメント有効時)*
-- [通知設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/notification) *(コメント有効時)*
-- [OAuth 設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/oauth) *(コメント有効時)*
+
+### コメントシステム
+
+- [コメントシステム設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/comment)
+- [通知設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/notification)
+- [OAuth 設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/oauth)
 
 ## 💻 コマンド
 
@@ -103,11 +106,16 @@ pnpm dev
 | `pnpm preview` | ビルドしたサイトをプレビュー |
 | `pnpm format` | コードフォーマット |
 | `pnpm lint` | コードリント |
-| `pnpm deploy` | Cloudflare にデプロイ *(コメント有効時)* |
-| `pnpm deploy:dry` | デプロイをシミュレート *(コメント有効時)* |
-| `pnpm db:migration` | データベースマイグレーションファイルを生成 *(コメント有効時)* |
-| `pnpm db:migrate:local` | データベースマイグレーションをローカルで適用 *(コメント有効時)* |
-| `pnpm db:migrate:remote` | データベースマイグレーションをリモートで適用 *(コメント有効時)* |
+
+### コメントシステム
+
+| コマンド | アクション |
+| --- | --- |
+| `pnpm deploy` | Cloudflare にデプロイ |
+| `pnpm deploy:dry` | デプロイをシミュレート |
+| `pnpm db:migration` | データベースマイグレーションファイルを生成 |
+| `pnpm db:migrate:local` | データベースマイグレーションをローカルで適用 |
+| `pnpm db:migrate:remote` | データベースマイグレーションをリモートで適用 |
 
 ## 🚀 デプロイ
 
@@ -121,7 +129,8 @@ pnpm dev
 ### SSR（コメントシステム有効時）
 
 ```sh
-pnpm build
+pnpm build &&
+pnpm db:migrate:remote &&
 pnpm deploy
 ```
 
