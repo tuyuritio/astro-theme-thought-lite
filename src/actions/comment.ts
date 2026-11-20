@@ -335,10 +335,13 @@ export const comment = {
 	history: defineAction({
 		input: z.string(), // The comment ID to get history for
 		handler: async id => {
+			// Check if comment edit history is enabled
+			if (!config.comment?.history) throw new ActionError({ code: "FORBIDDEN" });
+
 			// Initialize database connection
 			const db = drizzle(env.DB);
 
-			// Fetch all history entries for this comment
+			// Fetch all history entries for this comment, excluding deleted comments
 			const history = await db
 				.select({
 					id: CommentHistory.id,
@@ -347,7 +350,8 @@ export const comment = {
 					content: CommentHistory.content
 				})
 				.from(CommentHistory)
-				.where(eq(CommentHistory.comment, id))
+				.innerJoin(Comment, eq(CommentHistory.comment, Comment.id))
+				.where(and(eq(CommentHistory.comment, id), or(isNull(Comment.deleted), eq(Comment.deleted, false))))
 				.orderBy(CommentHistory.timestamp);
 
 			return history;
