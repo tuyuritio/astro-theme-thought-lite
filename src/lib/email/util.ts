@@ -24,13 +24,14 @@ export default async function sendEmail(
 	const t = i18nit(locale, "email");
 
 	const policyURL = new URL(getRelativeLocaleUrl(locale, "/policy"), site);
-	const unsubscribeURL = new URL(getRelativeLocaleUrl(locale, "/email/unsubscribe"), site);
+	let unsubscribeURL: URL | undefined;
 
 	if (payload.unsubscribe) {
 		const claim = new TextEncoder().encode(`${drifter}|${email}`);
 		const pass = AESEncryption.encrypt(claim);
 		if (!pass) throw new Error("Failed to generate unsubscribe token");
 
+		unsubscribeURL = new URL(getRelativeLocaleUrl(locale, "/email/unsubscribe"), site);
 		unsubscribeURL.searchParams.set("pass", Buffer.from(pass).toString("base64url"));
 	}
 

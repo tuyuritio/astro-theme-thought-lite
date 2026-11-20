@@ -28,7 +28,7 @@ export class Resend implements EmailProvider {
 				text,
 				headers: this.unsubscribeURL
 					? { "List-Unsubscribe": `<${this.unsubscribeURL}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" }
-					: null
+					: undefined
 			})
 		});
 
