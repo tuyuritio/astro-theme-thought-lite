@@ -204,8 +204,8 @@ async function submit() {
 async function toggleSubscription() {
 	context.subscription = undefined;
 
-	const registration = await navigator.serviceWorker.getRegistration();
-	if (!registration) return pushTip("error", t("push.enable.failure"));
+	const registration = await navigator.serviceWorker?.getRegistration();
+	if (!registration?.pushManager) return pushTip("error", t("push.enable.failure"));
 
 	let subscription = await registration.pushManager.getSubscription();
 	if (subscription) {

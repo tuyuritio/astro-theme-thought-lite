@@ -56,9 +56,13 @@ async function deactivate() {
 	const { error } = await actions.drifter.deactivate();
 	if (!error) {
 		// Clean up push notification subscription before account deletion
-		const registration = await navigator.serviceWorker.ready;
-		let subscription = await registration.pushManager.getSubscription();
-		if (subscription) await subscription.unsubscribe();
+		try {
+			const registration = await navigator.serviceWorker?.getRegistration();
+			const subscription = await registration?.pushManager?.getSubscription();
+			if (subscription) await subscription.unsubscribe();
+		} catch (error) {
+			console.warn("Failed to clean up push subscription:", error);
+		}
 
 		pushTip("success", t("drifter.deactivate.success"));
 		// Redirect to home page after account deactivation
