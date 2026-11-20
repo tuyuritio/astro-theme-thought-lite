@@ -6,7 +6,7 @@ import { drizzle } from "drizzle-orm/d1";
 import { OAuth, type OAuthAccount } from "$lib/oauth";
 import { random, Token } from "$lib/token";
 import { safeRedirect } from "$lib/url";
-import { Drifter, Email } from "$db/schema";
+import { Drifter } from "$db/schema";
 
 export const prerender = false;
 
@@ -59,11 +59,6 @@ export const GET: APIRoute = async ({ cookies, params, url, redirect, request })
 			})
 			.returning({ id: Drifter.id })
 			.get();
-
-		// If email is available from OAuth provider, insert into Email table
-		if (user.email) {
-			await db.insert(Email).values({ drifter: drifter.id, address: user.email, state: "verified" }).onConflictDoNothing();
-		}
 
 		// Issue passport token with user visa for authentication
 		await Token.issue(cookies, "passport", { visa: drifter.id });

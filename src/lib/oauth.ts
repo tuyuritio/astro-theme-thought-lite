@@ -14,7 +14,6 @@ export interface OAuthAccount {
 	name: string; // Display name
 	description?: string; // User bio/description (if applicable)
 	image: string; // Profile image URL
-	email?: string; // User email address (if available)
 }
 
 // OAuth redirect URI for all providers
@@ -60,10 +59,10 @@ export class OAuth {
 	url(state: string, codeVerifier: string): URL {
 		if (this.provider instanceof GitHub) {
 			// https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
-			return this.provider.createAuthorizationURL(state, ["user:email"]);
+			return this.provider.createAuthorizationURL(state, []);
 		} else if (this.provider instanceof Google) {
 			// https://developers.google.com/identity/protocols/oauth2/scopes#google-sign-in
-			const url = this.provider.createAuthorizationURL(state, codeVerifier, ["email", "openid", "profile"]);
+			const url = this.provider.createAuthorizationURL(state, codeVerifier, ["openid", "profile"]);
 			url.searchParams.set("access_type", "offline"); // Request refresh token
 			return url;
 		} else {
@@ -90,14 +89,6 @@ export class OAuth {
 			});
 			const user: any = await response.json();
 
-			// Fetch user email addresses to find primary verified email
-			// https://docs.github.com/en/rest/users/emails#list-email-addresses-for-the-authenticated-user
-			const responseEmail = await fetch("https://api.github.com/user/emails", {
-				headers: { authorization: `Bearer ${accessToken}`, "user-agent": USER_AGENT }
-			});
-			const emails: any[] = await responseEmail.json();
-			const email = emails.find(email => email.primary && email.verified)?.email;
-
 			return {
 				provider: "GitHub",
 				access: accessToken,
@@ -105,8 +96,7 @@ export class OAuth {
 				handle: user.login,
 				name: user.name,
 				description: user.bio,
-				image: user.avatar_url,
-				email: email
+				image: user.avatar_url
 			};
 		} else if (this.provider instanceof Google) {
 			// Extract token information and decode ID token
@@ -121,8 +111,7 @@ export class OAuth {
 				refresh: refreshToken,
 				account: user.sub,
 				name: user.name,
-				image: user.picture,
-				email: user.email
+				image: user.picture
 			};
 		} else {
 			throw new Error("Invalid Provider");
