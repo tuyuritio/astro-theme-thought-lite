@@ -11,8 +11,7 @@ INSERT INTO `push_subscription` (`endpoint`, `p256dh`, `auth`)
 SELECT `endpoint`, `p256dh`, `auth`
 FROM `notification`
 WHERE rowid IN (SELECT MAX(rowid) FROM `notification` GROUP BY `endpoint`);--> statement-breakpoint
-DROP TABLE `notification`;--> statement-breakpoint
-CREATE TABLE `notification` (
+CREATE TABLE `__new_notification` (
 	`comment` text NOT NULL,
 	`subscription` integer NOT NULL,
 	`timestamp` integer NOT NULL,
@@ -20,6 +19,14 @@ CREATE TABLE `notification` (
 	FOREIGN KEY (`subscription`) REFERENCES `push_subscription`(`id`) ON UPDATE cascade ON DELETE cascade
 );
 --> statement-breakpoint
+-- Preserve the legacy reply recipients and start the retention window at migration time.
+INSERT INTO `__new_notification` (`comment`, `subscription`, `timestamp`)
+SELECT `comment`.`id`, `push_subscription`.`id`, unixepoch() * 1000
+FROM `comment`
+INNER JOIN `notification` ON `notification`.`drifter` = `comment`.`drifter`
+INNER JOIN `push_subscription` ON `push_subscription`.`endpoint` = `notification`.`endpoint`;--> statement-breakpoint
+DROP TABLE `notification`;--> statement-breakpoint
+ALTER TABLE `__new_notification` RENAME TO `notification`;--> statement-breakpoint
 CREATE TABLE `__new_comment` (
 	`id` text PRIMARY KEY NOT NULL,
 	`section` text NOT NULL,
