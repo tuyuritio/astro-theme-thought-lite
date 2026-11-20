@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { AstroIntegration } from "astro";
-import { comment as enabled } from "../../site.config";
+import siteConfig, { comment as enabled } from "../../site.config";
 
 /**
  * Astro integration that switches the comment system between static and Cloudflare SSR modes based on `site.config.ts`.
@@ -40,16 +40,19 @@ export default function commentIntegration(): AstroIntegration {
 					entrypoint: "./src/comment/@/reach/[provider].ts",
 					prerender: false
 				});
-				injectRoute({
-					pattern: "/[...locale]/email",
-					entrypoint: "./src/comment/[...locale]/email/index.astro",
-					prerender: false
-				});
-				injectRoute({
-					pattern: "/[...locale]/email/unsubscribe",
-					entrypoint: "./src/comment/[...locale]/email/unsubscribe.astro",
-					prerender: false
-				});
+				for (const locale of siteConfig.i18n.locales) {
+					const prefix = locale === siteConfig.i18n.defaultLocale ? "" : `/${locale}`;
+					injectRoute({
+						pattern: `${prefix}/email`,
+						entrypoint: "./src/comment/email/index.astro",
+						prerender: false
+					});
+					injectRoute({
+						pattern: `${prefix}/email/unsubscribe`,
+						entrypoint: "./src/comment/email/unsubscribe.astro",
+						prerender: false
+					});
+				}
 			},
 			"astro:config:done": ({ config, injectTypes }) => {
 				if (enabled) return;

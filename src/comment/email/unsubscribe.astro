@@ -10,12 +10,7 @@ import i18nit from "$i18n";
 
 export const prerender = false;
 
-export async function getStaticPaths() {
-	// Create path for each locale, omitting default locale from URL
-	return config.i18n.locales.map(locale => ({ params: { locale: config.i18n.defaultLocale === locale ? undefined : locale } }));
-}
-
-const { locale = config.i18n.defaultLocale } = Astro.params;
+const locale = Astro.currentLocale ?? config.i18n.defaultLocale;
 
 const t = i18nit(locale);
 
