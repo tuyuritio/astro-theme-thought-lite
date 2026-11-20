@@ -103,11 +103,13 @@ onMount(async () => {
 
 			if (subscription) {
 				// Verify subscription is still valid on server
-				const { data } = await actions.push.check(subscription.endpoint);
+				const { data, error } = await actions.push.check(subscription.endpoint);
+				if (error) return;
+
 				if (data) {
 					context.subscription = data;
 				} else {
-					// Clean up invalid subscription
+					// Clean up only after the server confirms the subscription is missing
 					await subscription.unsubscribe();
 				}
 			}
