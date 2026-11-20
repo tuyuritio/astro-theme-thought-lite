@@ -79,6 +79,7 @@ export const comment = {
 			const { success } = await env.COMMENT_LIMIT.limit({ key: drifter ?? ip ?? "unknown" });
 			if (!success) throw new ActionError({ code: "TOO_MANY_REQUESTS" });
 
+			if (!content.trim()) throw new ActionError({ code: "BAD_REQUEST" });
 			if (content.length > Number(config.comment?.["max-length"])) throw new ActionError({ code: "CONTENT_TOO_LARGE" });
 
 			// Generate unique comment ID
@@ -265,8 +266,17 @@ export const comment = {
 			const drifter = (await Token.check(cookies, "passport"))?.visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
+			// Apply rate limiting to prevent spam
+			const { success } = await env.COMMENT_LIMIT.limit({ key: drifter });
+			if (!success) throw new ActionError({ code: "TOO_MANY_REQUESTS" });
+
+			if (!content.trim()) throw new ActionError({ code: "BAD_REQUEST" });
+			if (content.length > Number(config.comment?.["max-length"])) throw new ActionError({ code: "CONTENT_TOO_LARGE" });
+
 			// Initialize database connection
 			const db = drizzle(env.DB);
+
+			const editable = and(eq(Comment.id, id), eq(Comment.drifter, drifter), or(isNull(Comment.deleted), eq(Comment.deleted, false)));
 
 			// Store the original comment in the history table
 			const inserted = await db
@@ -280,11 +290,11 @@ export const comment = {
 							content: Comment.content
 						})
 						.from(Comment)
-						.where(and(eq(Comment.id, id), eq(Comment.drifter, drifter)))
+						.where(editable)
 				)
 				.returning();
 
-			// If no history was inserted, the comment doesn't exist or user doesn't own it
+			// If no history was inserted, the comment doesn't exist, was deleted, or user doesn't own it
 			if (inserted.length === 0) throw new ActionError({ code: "NOT_FOUND" });
 
 			// Update the original comment
@@ -294,7 +304,7 @@ export const comment = {
 					updated: new Date(),
 					content
 				})
-				.where(and(eq(Comment.id, id), eq(Comment.drifter, drifter)));
+				.where(editable);
 		}
 	}),
 
