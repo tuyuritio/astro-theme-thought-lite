@@ -123,7 +123,8 @@
 		"sharp": "^0.35.5",
 		"tsx": "^4.23.15",
 		"unifont": "^1.0.3",
-		"wrangler": "^4.163.0"
+		"wrangler": "^4.163.0",
+		"yaml": "^2.9.1"
 	},
 	"lint-staged": {
 		"*.{js,ts,json,jsonc,css,svelte,astro}": [
