@@ -1,5 +1,4 @@
 import type { AstroCookies } from "astro";
-import { site } from "astro:config/server";
 import crypto from "node:crypto";
 import ms, { type StringValue } from "ms";
 import { EncryptJWT, jwtDecrypt, type JWTPayload } from "jose";
@@ -62,10 +61,9 @@ export namespace Token {
 			.setExpirationTime(expiration)
 			.encrypt(JWT_KEY!);
 
-		// Set secure HTTP-only cookie with proper domain and security settings
+		// Set secure host-only HTTP-only cookie
 		cookies.set(name, token, {
 			path: "/",
-			domain: new URL(site!).hostname,
 			maxAge: typeof expiration === "number" ? expiration : ms(expiration) / 1000,
 			secure: true,
 			httpOnly: true,
@@ -109,7 +107,7 @@ export namespace Token {
 	 */
 	export async function revoke(name: string, cookies: AstroCookies): Promise<void> {
 		if (!cookies.has(name)) return;
-		cookies.delete(name, { path: "/", domain: new URL(site!).hostname });
+		cookies.delete(name, { path: "/" });
 	}
 }
 
