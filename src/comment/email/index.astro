@@ -26,20 +26,22 @@ if (!ticket) return new Response(null, { status: 404, statusText: "Not Found" })
 async function validate(ticket: string) {
 	// Decrypt ticket
 	const claim = AESEncryption.decrypt(new Uint8Array(Buffer.from(ticket, "base64url")));
-	if (!claim) return t("email.verify.invalid");
+	if (!claim || claim.byteLength < 8) return t("email.verify.invalid");
 
 	// Initialize database connection
 	const db = drizzle(env.DB);
 
 	// Parse drifter and address from claim
-	const timestamp = new DataView(claim.buffer).getBigUint64(0, false);
+	const timestamp = new DataView(claim.buffer, claim.byteOffset, claim.byteLength).getBigUint64(0, false);
 	const identity = new TextDecoder().decode(claim.slice(8));
 	const [drifter, address] = identity.split("|");
 	if (!drifter || !address) return t("email.verify.invalid");
 
 	// Check expiration
+	const now = BigInt(Date.now());
 	const ExpirationDuration = 5 * 60 * 1000;
-	if (BigInt(Date.now()) - timestamp > BigInt(ExpirationDuration)) return t("email.verify.expired");
+	if (timestamp > now) return t("email.verify.invalid");
+	if (now - timestamp > BigInt(ExpirationDuration)) return t("email.verify.expired");
 
 	// Update email state to verified if drifter and address match and state is pending
 	const result = await db
