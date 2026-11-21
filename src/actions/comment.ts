@@ -28,9 +28,9 @@ export const comment = {
 			content: z.string(), // The comment content
 			push: z
 				.object({
-					endpoint: z.url(), // Push service endpoint URL
-					p256dh: z.string(), // Public key for encryption
-					auth: z.string() // Authentication secret for encryption
+					endpoint: z.url({ protocol: /^https$/ }), // Push service endpoint URL
+					p256dh: z.string().min(1), // Public key for encryption
+					auth: z.string().min(1) // Authentication secret for encryption
 				})
 				.optional(), // Push subscription for notifications
 			passer: z

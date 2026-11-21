@@ -1,19 +1,28 @@
-import { defineAction } from "astro:actions";
+import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro/zod";
 import { env } from "cloudflare:workers";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
+import { push as enabled } from "$config";
 import { PushSubscription } from "$db/schema";
+
+const endpointSchema = z.url({ protocol: /^https$/ });
 
 export const push = {
 	// Action to subscribe to push notifications
 	subscribe: defineAction({
 		input: z.object({
-			endpoint: z.url(), // Push service endpoint URL
-			p256dh: z.string(), // Public key for encryption
-			auth: z.string() // Authentication secret for encryption
+			endpoint: endpointSchema, // Push service endpoint URL
+			p256dh: z.string().min(1), // Public key for encryption
+			auth: z.string().min(1) // Authentication secret for encryption
 		}),
-		handler: async ({ endpoint, p256dh, auth }) => {
+		handler: async ({ endpoint, p256dh, auth }, { request }) => {
+			if (!enabled) throw new ActionError({ code: "FORBIDDEN" });
+
+			const ip = request.headers.get("CF-Connecting-IP") ?? "unknown";
+			const { success } = await env.COMMENT_LIMIT.limit({ key: `push:${ip}` });
+			if (!success) throw new ActionError({ code: "TOO_MANY_REQUESTS" });
+
 			// Initialize database connection
 			const db = drizzle(env.DB);
 
@@ -39,8 +48,14 @@ export const push = {
 
 	// Action to unsubscribe a push notification
 	unsubscribe: defineAction({
-		input: z.url(), // Push service endpoint URL to remove
-		handler: async endpoint => {
+		input: endpointSchema, // Push service endpoint URL to remove
+		handler: async (endpoint, { request }) => {
+			if (!enabled) throw new ActionError({ code: "FORBIDDEN" });
+
+			const ip = request.headers.get("CF-Connecting-IP") ?? "unknown";
+			const { success } = await env.COMMENT_LIMIT.limit({ key: `push:${ip}` });
+			if (!success) throw new ActionError({ code: "TOO_MANY_REQUESTS" });
+
 			// Initialize database connection
 			const db = drizzle(env.DB);
 
