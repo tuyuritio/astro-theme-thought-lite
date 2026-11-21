@@ -6,8 +6,7 @@ description: Configure GitHub Actions for automatic deployment to Cloudflare Wor
 ---
 
 > [!TIP]
-> The theme enables GitHub Actions automatic deployment to Cloudflare Workers by default.\
-> To disable, simply delete the `.github/workflows/deploy.yaml` file.
+> To enable automatic deployment to Cloudflare Workers in your own repository, remove or update the `if: github.repository == 'tuyuritio/astro-theme-thought-lite'` condition in `.github/workflows/deploy.yaml`.
 
 ## Request API Token
 

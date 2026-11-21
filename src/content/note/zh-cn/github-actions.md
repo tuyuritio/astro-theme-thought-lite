@@ -6,8 +6,7 @@ description: 配置 GitHub Actions 实现自动部署到 Cloudflare Workers，�
 ---
 
 > [!TIP]
-> 主题默认启用 GitHub Actions 自动部署到 Cloudflare Workers。\
-> 如需禁用，请直接删除 `.github/workflows/deploy.yaml` 文件。
+> 如需在自己的仓库启用自动部署到 Cloudflare Workers，请移除或修改 `.github/workflows/deploy.yaml` 中的 `if: github.repository == 'tuyuritio/astro-theme-thought-lite'` 条件。
 
 ## 申请 API 令牌
 

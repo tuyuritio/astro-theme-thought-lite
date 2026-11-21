@@ -6,8 +6,7 @@ description: Cloudflare Workers への自動デプロイのための GitHub Acti
 ---
 
 > [!TIP]
-> テーマはデフォルトで GitHub Actions による Cloudflare Workers への自動デプロイを有効にしています。\
-> 無効にするには、`.github/workflows/deploy.yaml` ファイルを削除してください。
+> ご自身のリポジトリで Cloudflare Workers への自動デプロイを有効にするには、`.github/workflows/deploy.yaml` の `if: github.repository == 'tuyuritio/astro-theme-thought-lite'` 条件を削除または変更してください。
 
 ## API トークンの申請
 
