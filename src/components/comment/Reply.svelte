@@ -130,7 +130,8 @@ async function submit() {
 	if (!context.drifter) {
 		// For unauthenticated users, validate captcha and nickname
 		if (!captcha) return pushTip("error", t("comment.verify.failure"));
-		if (!nickname?.trim()) return pushTip("warning", t("comment.nickname.empty"));
+		const trimmedNickname = nickname?.trim();
+		if (!trimmedNickname) return pushTip("warning", t("comment.nickname.empty"));
 
 		({ error } = await actions.comment.create({
 			locale: context.locale,
@@ -139,7 +140,7 @@ async function submit() {
 			reply,
 			content,
 			push: context.subscription,
-			passer: { nickname, captcha }
+			passer: { nickname: trimmedNickname, captcha }
 		}));
 
 		// Only reset turnstile for top-level comments (when reply is undefined) or if there was an error
@@ -148,7 +149,7 @@ async function submit() {
 			captcha = undefined;
 		}
 
-		localStorage.setItem("nickname", nickname!);
+		localStorage.setItem("nickname", trimmedNickname);
 	} else if (edit) {
 		// For authenticated users editing a comment
 		({ error } = await actions.comment.edit({ id: edit, content }));
@@ -359,7 +360,7 @@ onMount(() => {
 					{#if context.turnstile}
 						<Turnstile siteKey={context.turnstile} bind:reset={resetTurnstile} on:expired={() => (captcha = undefined)} on:error={() => (captcha = undefined)} on:callback={({ detail }) => (captcha = detail.token)} />
 					{/if}
-					<input type="text" placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35 text-sm">
+					<input type="text" maxlength={50} placeholder={t("comment.nickname.name")} bind:value={nickname} class="input border-weak w-35 text-sm">
 					{#if context.oauth.length}
 						<button type="button" onclick={() => (reachView = true)}><Icon name="lucide--user-round" title={t("drifter.signin")} /></button>
 					{/if}

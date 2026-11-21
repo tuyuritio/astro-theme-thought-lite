@@ -24,7 +24,7 @@ export const comment = {
 			locale: z.string(), // Current locale for notifications
 			section: z.enum(["note", "jotting", "preface"]), // The section this comment belongs to
 			item: z.string(), // The item ID this comment belongs to
-			reply: z.string().nullish(), // ID of replied comment if this is a reply
+			reply: z.string().trim().min(1).nullish(), // ID of replied comment if this is a reply
 			content: z.string(), // The comment content
 			push: z
 				.object({
@@ -35,20 +35,21 @@ export const comment = {
 				.optional(), // Push subscription for notifications
 			passer: z
 				.object({
-					nickname: z.string().nullish(), // Nickname for unauthenticated users
+					nickname: z.string().trim().max(50).nullish(), // Nickname for unauthenticated users
 					captcha: z.string().nullish() // CAPTCHA token for unauthenticated users
 				})
 				.optional()
 		}),
 		handler: async ({ locale, section, item, reply, content, push: subscription, passer }, { cookies, request, locals, site }) => {
 			if (!(config.i18n.locales as readonly string[]).includes(locale)) throw new ActionError({ code: "BAD_REQUEST" });
+			if (!monolocale && !item.startsWith(`${locale}/`)) throw new ActionError({ code: "BAD_REQUEST" });
 
 			const t = i18nit(locale, "email");
 			const tIndex = i18nit(locale);
 
-			// Check if the target entry exists
+			// Check if the target entry exists and is published
 			const entry = await getEntry(section, item);
-			if (!entry) throw new ActionError({ code: "NOT_FOUND" });
+			if (!entry || (entry.collection !== "preface" && entry.data.draft)) throw new ActionError({ code: "NOT_FOUND" });
 			const title = entry.collection === "preface" ? tIndex("navigation.preface") : entry.data.title;
 
 			// Check if commenting is enabled
@@ -61,7 +62,7 @@ export const comment = {
 			const drifter: string | undefined = oauth.length ? (await Token.check(cookies, "passport"))?.visa : undefined;
 
 			if (!drifter) {
-				if (turnstile && passer?.captcha && passer.nickname?.trim()) {
+				if (turnstile && passer?.captcha && passer.nickname) {
 					const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
@@ -72,6 +73,7 @@ export const comment = {
 						})
 					});
 
+					if (!response.ok) throw new ActionError({ code: "BAD_GATEWAY" });
 					const result: { success: boolean } = await response.json();
 					if (!result.success) throw new ActionError({ code: "BAD_REQUEST" });
 				} else {
@@ -99,8 +101,28 @@ export const comment = {
 			// Initialize database connection
 			const db = drizzle(env.DB);
 
+			// Verify the replied comment exists under the same entry and has not been deleted
+			if (reply) {
+				const parent = await db
+					.select({ id: Comment.id })
+					.from(Comment)
+					.where(
+						and(
+							eq(Comment.id, reply),
+							eq(Comment.section, section),
+							eq(Comment.item, item),
+							or(isNull(Comment.deleted), eq(Comment.deleted, false))
+						)
+					)
+					.get();
+
+				if (!parent) throw new ActionError({ code: "NOT_FOUND" });
+			}
+
+			const nickname = drifter ? null : (passer?.nickname ?? null);
+
 			// Insert the new comment
-			await db.insert(Comment).values({ id, section, item, reply, drifter, nickname: passer?.nickname, timestamp: new Date(), content });
+			await db.insert(Comment).values({ id, section, item, reply: reply ?? null, drifter, nickname, timestamp: new Date(), content });
 
 			// The `ctx.waitUntil()` method is specific to Cloudflare Workers.
 			locals.cfContext.waitUntil(
@@ -179,7 +201,7 @@ export const comment = {
 									name: sql<string>`COALESCE(${Drifter.name}, ${Drifter.handle})`,
 									image: Drifter.image,
 									email: Email.address,
-									replier: sql<string>`COALESCE(${Replier.name}, ${Replier.handle}, ${passer?.nickname ?? ""})`,
+									replier: sql<string>`COALESCE(${Replier.name}, ${Replier.handle}, ${nickname ?? ""})`,
 									replierImage: Replier.image
 								})
 								.from(Email)
@@ -232,7 +254,7 @@ export const comment = {
 									id: Drifter.id,
 									name: sql<string>`COALESCE(${Drifter.name}, ${Drifter.handle})`,
 									email: Email.address,
-									commenter: sql<string>`COALESCE(${Commenter.name}, ${Commenter.handle}, ${passer?.nickname ?? ""})`,
+									commenter: sql<string>`COALESCE(${Commenter.name}, ${Commenter.handle}, ${nickname ?? ""})`,
 									commenterImage: Commenter.image
 								})
 								.from(Email)
