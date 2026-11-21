@@ -14,7 +14,7 @@ const config = siteConfig({
 	description: "A modern Astro theme focused on content creation.",
 	copyright: {
 		type: "CC BY-NC-ND 4.0",
-		year: "2025"
+		year: "2026"
 	},
 	timezone: "UTC",
 	i18n: {
