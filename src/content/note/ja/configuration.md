@@ -28,6 +28,10 @@ toc: true
 | `heatmap` | `Heatmap` | ヒートマップの表示設定。 |
 | `feed.section` | `"*" \| Section[]` | フィードに含まれるコンテンツセクション；`*` はすべてを示します。 |
 | `feed.limit` | `number` | フィードに表示される最大アイテム数。 |
+| `comment.enable` | `boolean` | コメントシステムを有効化（有効にすると Cloudflare Workers SSR モードになります）。 |
+| `comment.max-length` | `number` | コメントの最大文字数。 |
+| `comment.hide-deleted` | `boolean` | 削除されたコメントを非表示にする。 |
+| `comment.history` | `boolean` | コメントの履歴を表示する。 |
 | `latest` | `"*" \| Section[]` | ホームページの「最新記事」に表示されるセクション；`*` はすべてを示します。 |
 
 ### 型の説明

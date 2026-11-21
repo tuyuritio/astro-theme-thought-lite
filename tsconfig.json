@@ -7,10 +7,12 @@
 			"$config": ["./site.config.ts"],
 			"$public/*": ["./public/*"],
 			"$assets/*": ["./src/assets/*"],
+			"$actions/*": ["./src/actions/*"],
 			"$icons/*": ["./src/icons/*"],
 			"$graph/*": ["./src/graph/*"],
 			"$lib/*": ["./src/lib/*"],
 			"$components/*": ["./src/components/*"],
+			"$db/*": ["./src/db/*"],
 			"$i18n": ["./src/i18n/index"],
 			"$layouts/*": ["./src/layouts/*"],
 			"$styles/*": ["./src/styles/*"]

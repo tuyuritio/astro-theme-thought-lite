@@ -1,0 +1,30 @@
+comment:
+  html:
+    button: 押して感想を確認しましょう
+    comment: '{name} 曰く：'
+    greeting: うっす、{name} さん！
+    notify: 「{content}」に、新たな声がそっと綴られました。
+  subject: 文の下に、そっと新しい声
+  text: |-
+    「{content}」に、新たな声がそっと綴られました。
+    感想を確認しましょう：{link}
+policy: 規約
+reply:
+  html:
+    button: 押して交流記録を辿りましょう
+    greeting: うっす、{name} さん！
+    notify: 「{content}」への片言が、響きとなって返ってきました。
+    reply: '{name} さんからの返信：'
+    yours: あなたの感想：
+  subject: 片言が響きとなって返ってきました
+  text: |-
+    「{content}」への片言が、響きとなって返ってきました。
+    交流記録: {link}
+unsubscribe: 配信停止
+verification:
+  html:
+    button: 電子書簡を確認する
+    instruction: 下記のボタンをクリックして、認証を完了してください：
+    title: 電子書簡をご確認ください
+  subject: 電子書簡の確認をお願いします
+  text: 以下の連結に訪問して、認証を完了してください：{link}

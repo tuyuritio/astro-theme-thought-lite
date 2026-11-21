@@ -19,10 +19,10 @@
 </div>
 
 > [!NOTE]
-> - `main` branch✅: Static build, can be deployed on any static hosting platform.
-> - `cloudflare` branch: Enables built-in comment system, only deployable on Cloudflare.
+> - Static build by default, deployable to any static hosting platform.
+> - Optional built-in comment system (Cloudflare deployment only).
 
-🎬 **Live Demo**: [Vercel](https://thought-lite.vercel.app)
+🎬 **Live Demo**: [Cloudflare Workers](https://thought-lite.ttio.workers.dev)
 
 ## ✨ Features
 
@@ -32,6 +32,21 @@
 - [x] **i18n Support** - Extensible multilingual support, also works perfectly in monolingual mode.
 - [x] **Sitemap & Feed Subscription** - Automated generation of Sitemap and Atom Feed.
 - [x] **OpenGraph Support** - Built-in Open Graph meta tags for optimized social media sharing.
+
+### Comment System
+
+Powered by Cloudflare D1 — easy to deploy with privacy control.
+
+- [x] **Lightweight User System** - Supports OAuth authentication and guest comments.
+- [x] **Desktop Notifications** - Real-time notifications using Web Push API.
+- [x] **Email Notifications** - Send email notifications using RESTful API.
+
+## 📋 Prerequisites
+
+If you plan to enable the comment system, make sure you have:
+
+- [Cloudflare Account](https://dash.cloudflare.com/sign-up) - For Cloudflare Workers deployment and D1 database hosting
+- [GitHub Account](https://github.com/signup) - For code hosting and automated deployment
 
 ## ⚡️ Quick Start
 
@@ -45,6 +60,7 @@ pnpm create astro --template tuyuritio/astro-theme-thought-lite
 # Follow the interactive prompts to create the project
 
 cd <your-project-name>
+# pnpm db:migrate:local  # Initialize local database if the comment system is enabled
 pnpm dev
 ```
 
@@ -57,6 +73,7 @@ pnpm dev
 git clone <your-repo-url>
 cd <your-repo-name>
 pnpm install
+# pnpm db:migrate:local  # Initialize local database if the comment system is enabled
 pnpm dev
 ```
 
@@ -65,8 +82,14 @@ pnpm dev
 Related theme configuration can be found in the following documents:
 
 - [Astro Configuration Reference](https://docs.astro.build/en/reference/configuration-reference/)
-- [Site Configuration Guide](https://thought-lite.vercel.app/note/configuration)
-- [Internationalization Configuration Guide](https://thought-lite.vercel.app/note/internationalization)
+- [Site Configuration Guide](https://thought-lite.ttio.workers.dev/note/configuration)
+- [Internationalization Configuration Guide](https://thought-lite.ttio.workers.dev/note/internationalization)
+
+### Comment System
+
+- [Comment System Configuration Guide](https://thought-lite.ttio.workers.dev/note/comment)
+- [Notification Configuration Guide](https://thought-lite.ttio.workers.dev/note/notification)
+- [OAuth Configuration Guide](https://thought-lite.ttio.workers.dev/note/oauth)
 
 ## 💻 Commands
 
@@ -84,14 +107,34 @@ The theme provides the following commonly used commands:
 | `pnpm format` | Format code |
 | `pnpm lint` | Lint code |
 
+### Comment System
+
+| Command | Action |
+| --- | --- |
+| `pnpm deploy` | Deploy to Cloudflare |
+| `pnpm deploy:dry` | Simulate Cloudflare deployment |
+| `pnpm db:migration` | Generate database migration files |
+| `pnpm db:migrate:local` | Apply database migrations locally |
+| `pnpm db:migrate:remote` | Apply database migrations remotely |
+
 ## 🚀 Deployment
 
-The current branch can be fully static built and deployed on any static hosting platform.
+### Static Build
 
-For deployment methods on various platforms, refer to the [Astro Official Deployment Guide](https://docs.astro.build/en/guides/deploy/).
+The default configuration builds into a pure static site and can be deployed to any static hosting platform. Refer to the [Astro Official Deployment Guide](https://docs.astro.build/en/guides/deploy/).
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/tuyuritio/astro-theme-thought-lite&project-name=astro-blog-thought-lite&repository-name=astro-blog-thought-lite&teamSlug=tuyuritios-projects)
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/integration/start/deploy?repository=https://github.com/tuyuritio/astro-theme-thought-lite)
+
+### SSR (Comment System Enabled)
+
+```sh
+pnpm build &&
+pnpm db:migrate:remote &&
+pnpm deploy
+```
+
+For **automated deployment** using GitHub Actions, refer to [GitHub Actions Configuration Guide](https://thought-lite.ttio.workers.dev/note/github-actions).
 
 ## 🔄 Updates
 
@@ -100,8 +143,9 @@ Run the following commands to sync upstream updates:
 ```sh
 git remote add theme https://github.com/tuyuritio/astro-theme-thought-lite.git
 git fetch theme
-git merge theme/main    # Add `--allow-unrelated-histories` flag for first update
+git merge theme/main  # Add `--allow-unrelated-histories` flag for first update
 pnpm install
+# pnpm db:migrate:local  # Sync database migrations if the comment system is enabled
 ```
 
 ## ✍️ Content Creation
@@ -113,7 +157,7 @@ Content creation is centralized in the `src/content` directory, mainly including
 - `preface` - Displayed on the homepage as the first impression
 - `information` - Containing various descriptive content
 
-For details, refer to the [Content Creation Guide](https://thought-lite.vercel.app/note/content).
+For details, refer to the [Content Creation Guide](https://thought-lite.ttio.workers.dev/note/content).
 
 ## 🤝 Contributing
 
@@ -138,7 +182,10 @@ All kinds of contributions are welcome and appreciated!
 - **Image Viewer** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
 - **SPA Transitions** - [Swup](https://swup.js.org/)
 - **Code Quality** - [Biome](https://biomejs.dev/)
-- **Static Deployment** - [Vercel](https://vercel.com/)
+- **OAuth** - [Arctic](https://arcticjs.dev/)
+- **ORM** - [Drizzle ORM](https://orm.drizzle.team/)
+- **Database** - [Cloudflare D1](https://developers.cloudflare.com/d1/)
+- **Edge Deployment** - [Cloudflare Workers](https://workers.cloudflare.com/)
 
 ### Inspiration
 

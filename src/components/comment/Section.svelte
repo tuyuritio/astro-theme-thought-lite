@@ -1,0 +1,152 @@
+<script lang="ts">
+import { actions } from "astro:actions";
+import { onMount } from "svelte";
+import { flip } from "svelte/animate";
+import Icon from "$components/Icon.svelte";
+import { pushTip } from "$components/Tip.svelte";
+import i18nit from "$i18n";
+import CommentBlock, { type CommentItem } from "./Comment.svelte";
+import Reply from "./Reply.svelte";
+import context from "./context.svelte";
+
+let {
+	locale,
+	section,
+	item,
+	oauth,
+	turnstile,
+	push,
+	email,
+	compact = false
+}: {
+	locale: string;
+	section: "note" | "jotting" | "preface";
+	item: string;
+	oauth: any;
+	turnstile?: string;
+	push?: string;
+	email: boolean;
+	compact?: boolean;
+} = $props();
+
+context.locale = locale;
+context.oauth = oauth;
+context.turnstile = turnstile;
+context.push = push;
+context.email = email;
+
+const t = i18nit(locale);
+
+let loaded: boolean = $state(false);
+let expanded: boolean = $state(!compact);
+
+let count: number = $state(0);
+let comments: CommentItem[] = $state([]);
+let ascending: boolean = $state(false);
+let list: CommentItem[] = $derived(ascending ? comments : [...comments].reverse());
+
+/**
+ * Refresh comment list
+ * @param auto - Whether this is an automatic refresh (default true)
+ */
+async function refresh(auto: boolean = true) {
+	const { data, error } = await actions.comment.list({ section, item });
+	if (!error) {
+		if (!auto) {
+			if (data.count > count) {
+				pushTip("success", t("comment.reload.increase"));
+			} else {
+				pushTip("information", t("comment.reload.same"));
+			}
+		}
+
+		count = data.count;
+		comments = data.treeification;
+	} else {
+		pushTip("error", t("comment.fetch.failure"));
+	}
+}
+
+onMount(async () => {
+	let loadDrifter = false;
+	let loadComments = false;
+
+	// Initial load of user authentication status
+	const { data: drifterProfile, error: drifterError } = await actions.drifter.profile();
+	if (!drifterError) {
+		context.drifter = drifterProfile;
+
+		loadDrifter = true;
+	} else {
+		pushTip("error", t("drifter.fetch.failure"));
+	}
+
+	// Initial load of comments
+	const { data: commentList, error: commentError } = await actions.comment.list({ section, item });
+	if (!commentError) {
+		count = commentList.count;
+		comments = commentList.treeification;
+
+		loadComments = true;
+	} else {
+		pushTip("error", t("comment.fetch.failure"));
+	}
+
+	// Initial load of push subscription status
+	if (push && "serviceWorker" in navigator && "PushManager" in window) {
+		try {
+			const registration = await navigator.serviceWorker.register("/sw.js");
+			const subscription = await registration.pushManager?.getSubscription();
+			const keys = subscription?.toJSON().keys;
+
+			context.subscription = subscription && keys?.p256dh && keys?.auth ? { endpoint: subscription.endpoint, p256dh: keys.p256dh, auth: keys.auth } : undefined;
+		} catch (error) {
+			context.subscription = undefined;
+		}
+	}
+
+	loaded = loadComments && loadDrifter;
+});
+</script>
+
+<main>
+	{#if (!compact || expanded) && loaded}
+		<Reply {section} {item} {refresh} />
+	{/if}
+
+	{#if loaded}
+		{#if compact || comments.length}
+			<div class="flex items-center justify-between mt-6">
+				<p class="flex items-center gap-2"><b>{t("comment.name")}</b> · {count}</p>
+
+				{#if compact}
+					<button type="button" onclick={() => (expanded = !expanded)}>
+						{#if expanded}
+							<Icon name="lucide--chevrons-down" title={t("comment.collapse")} />
+						{:else}
+							<Icon name="lucide--chevrons-up" title={t("comment.expand")} />
+						{/if}
+					</button>
+				{/if}
+
+				<p class="flex gap-4">
+					<button type="button" onclick={() => refresh(false)}><Icon name="lucide--refresh-cw" title={t("comment.reload.name")} /></button>
+					<button type="button" onclick={() => (ascending = !ascending)}>
+						{#if ascending}
+							<Icon name="lucide--clock-arrow-down" title={t("comment.sort.asc")} />
+						{:else}
+							<Icon name="lucide--clock-arrow-up" title={t("comment.sort.desc")} />
+						{/if}
+					</button>
+				</p>
+			</div>
+		{/if}
+		{#each list as comment (comment.id)}
+			<div animate:flip={{ duration: 150 }}>
+				<CommentBlock {section} {item} {comment} {refresh} />
+			</div>
+		{/each}
+	{:else}
+		<i class="block w-full text-center mt-10"><Icon name="svg-spinners--3-dots-move" size={25} /></i>
+	{/if}
+</main>

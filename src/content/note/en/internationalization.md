@@ -69,7 +69,7 @@ content/
 
 > [!Tip]
 > - In single language mode, the language switcher will be automatically hidden.
-> - Translation files already created for other languages can be kept; they will not affect site operation.
+> - You can keep the interface translation files under `src/i18n/`.
 
 ## Adding a New Language
 

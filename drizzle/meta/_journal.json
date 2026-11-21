@@ -1,0 +1,55 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1752722005960,
+      "tag": "0000_thankful_zuras",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1753455965699,
+      "tag": "0001_calm_bloodstorm",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1764624061760,
+      "tag": "0002_watery_lord_hawal",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1766561642679,
+      "tag": "0003_lame_darkhawk",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1766844367763,
+      "tag": "0004_massive_maggott",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1766930259603,
+      "tag": "0005_omniscient_randall",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1767086617949,
+      "tag": "0006_clean_karen_page",
+      "breakpoints": true
+    }
+  ]
+}

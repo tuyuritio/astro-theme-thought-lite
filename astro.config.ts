@@ -1,10 +1,10 @@
 // @ts-check
 import { defineConfig, fontProviders } from "astro/config";
+import cloudflare from "@astrojs/cloudflare";
 import yaml from "@rollup/plugin-yaml";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
-import { unified, rehypeHeadingIds as ids } from "@astrojs/markdown-remark";
 import tailwindcss from "@tailwindcss/vite";
 import swup from "@swup/astro";
 
@@ -22,6 +22,7 @@ import footnote from "remark-footnotes-extra";
 import abbr from "@tuyuritio/remark-abbreviation";
 import { remarkExtendedTable as table, extendedTableHandlers as tableHandler } from "remark-extended-table";
 import alerts from "@tuyuritio/remark-github-alert";
+import { rehypeHeadingIds as ids, unified, type RehypePlugin } from "@astrojs/markdown-remark";
 import anchor from "rehype-autolink-headings";
 import links from "rehype-external-links";
 import katex from "rehype-katex";
@@ -31,12 +32,19 @@ import sectionize from "@hbsnow/rehype-sectionize";
 import copy from "@tuyuritio/shiki-code-copy";
 
 import reading from "./src/lib/reading";
+import commentIntegration from "./src/integrations/comment";
 
-import siteConfig from "./site.config";
+import siteConfig, { comment } from "./site.config";
 import ZeoSevenFonts from "./src/fonts/zeo-seven-fonts";
 
 // https://astro.build/config
 export default defineConfig({
+	adapter: comment
+		? cloudflare({
+				prerenderEnvironment: "node",
+				imageService: "compile"
+			})
+		: undefined,
 	site: siteConfig.site,
 	trailingSlash: "never",
 	i18n: {
@@ -80,9 +88,9 @@ export default defineConfig({
 				[anchor, { behavior: "wrap" }],
 				[links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] }],
 				katex,
-				figure,
-				wrapper,
-				sectionize
+				figure as RehypePlugin,
+				wrapper as RehypePlugin,
+				sectionize as RehypePlugin
 			],
 			smartypants: false
 		}),
@@ -94,10 +102,12 @@ export default defineConfig({
 			transformers: [copy({ duration: 1500 })]
 		}
 	},
+	session: false,
 	vite: {
 		plugins: [yaml(), tailwindcss()]
 	},
 	integrations: [
+		commentIntegration(),
 		svelte(),
 		mdx(),
 		sitemap(),
@@ -135,9 +145,8 @@ export default defineConfig({
 		},
 		{
 			name: "Playwrite MX",
-			provider: fontProviders.google(),
+			provider: fontProviders.fontsource(),
 			weights: [100],
-			subsets: ["menu", "fallback"],
 			display: "block",
 			fallbacks: ["Apple Chancery", "Segoe Script", "cursive"],
 			cssVariable: "--font-playwrite-mx"

@@ -1,7 +1,113 @@
 about:
   introduction: ○○自述
   linkroll: ○○连结
+cancel: 取消
+comment:
+  author: 笔者
+  collapse: 合上笔谈
+  disabled: 想法归档，暂不新增
+  edit:
+    history: 编辑历史
+    name: 编辑
+  empty: 想法内容为空
+  expand: 展开思绪
+  failure: 抱歉，想法未能送达
+  fetch:
+    failure: 获取想法出错
+  history: 历史
+  limit: 发表过于频繁
+  name: 想法
+  nickname:
+    empty: 昵称不能为空
+    name: 昵称
+  overlength: |
+    想法过长
+    可于回复中续写
+  placeholder: 于此留下想法
+  preview:
+    empty: 等待您的 Markdown 灵感
+    name: Markdown 预览
+  reload:
+    increase: 获取到新的想法！
+    name: 刷新想法
+    same: 暂无新的想法
+  remove:
+    failure: 删除想法失败
+    name: 删除想法
+    success: 想法删除成功
+  removed: 想法被删除
+  reply: 回复
+  share:
+    name: 分享
+    success: 链接已复制
+  signin: 登录以传递想法
+  sort:
+    asc: 时间升序
+    desc: 时间降序
+  submit: 发表
+  success: 想法已送达
+  time: 发送时间
+  verify:
+    failure: 人机校验失败
+    progress: 正在自动进行人机校验
+confirm: 确认
 contents: 目录
+delete: 删除
+drifter:
+  deactivate:
+    cancel: 继续驻足
+    confirm: 确认注销
+    consequences:
+      comment: 无法再使用当前账号发布想法
+      comments: 所有想法都将保留但匿名化处理
+      data: 所有个人信息将被清除
+      new: 重新授权登录将创建全新账号
+      notification: 无法再接收邮件通知
+    description: 若确认注销，您的账号将会：
+    done: 归隐旅人
+    failure: 注销失败
+    name: 注销
+    success: 账号已注销
+    title: 您确定要注销账号吗？
+    warning: 这是不可逆的操作！
+  fetch:
+    failure: 获取旅人档案出错
+  homepage: 个人主页
+  profile: 旅人档案
+  signin: 登录
+  signout: 登出
+  sync:
+    failure: 同步失败
+    fetch: 信息同步中
+    name: 同步
+    success: 同步成功
+  update:
+    failure: 更新失败
+    name: 更新
+    success: 更新成功
+email:
+  empty: 邮箱地址不能为空
+  name: 电子邮箱
+  notify: 邮件通知
+  remove:
+    failure: 邮箱删除失败
+    name: 删除邮箱
+    success: 邮箱删除成功
+  unsubscribe:
+    invalid: 取消订阅链接无效
+    success: 您已成功取消订阅！
+  verify:
+    already: 您已完成验证
+    conflict: 与旧邮箱地址重复
+    done: 邮箱已验证
+    expired: 验证链接已过期
+    invalid: 验证链接无效
+    limit: 请稍后重试
+    resend: 重新发送验证邮件
+    send:
+      failure: 无法发送验证邮件
+      success: 验证邮件已发送，链接将在 5 分钟后过期，请尽快查收
+    success: 邮箱验证成功！
 home:
   heatmap:
     empty: 无字
@@ -17,16 +123,37 @@ jotting:
 language: 简体中文
 navigation:
   about: 絮述
+  email: 邮箱
   home: 序章
   jotting: 随笔
   note: 文记
   policy: 政策
   preface: 序文
 note:
+  comment: 前往想法
   empty: 暂无文记
   series: 系列
   tag: 标签
   top: 回到顶部
+oauth:
+  benefit:
+    captcha: 无需进行人机验证
+    comment: 编辑和删除自己的想法
+    homepage: 展示自己的个人主页
+    notification: 接收想法回复的邮件通知
+  signin: 使用 {provider} 登录
+push:
+  denied: 您已拒绝桌面通知权限
+  disable:
+    name: 桌面通知已禁用
+    success: 桌面通知已禁用
+  enable:
+    failure: 桌面通知启用失败
+    name: 桌面通知已启用
+    success: 桌面通知已启用
+  reply:
+    body: 点击回溯交流轨迹
+    title: 片语有声，回响已至
 read:
   words:
     other: '{count} 字'

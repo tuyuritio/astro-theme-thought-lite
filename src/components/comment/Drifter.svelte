@@ -1,0 +1,141 @@
+<script lang="ts">
+import { actions } from "astro:actions";
+import Icon from "$components/Icon.svelte";
+import Modal from "$components/Modal.svelte";
+import { pushTip } from "$components/Tip.svelte";
+import i18nit from "$i18n";
+import Email from "./Email.svelte";
+import context from "./context.svelte";
+
+let { open = $bindable() }: { open: boolean } = $props();
+
+const t = i18nit(context.locale);
+
+const drifter = $derived(context.drifter!);
+
+/**
+ * Fetch and update user profile data from OAuth provider
+ */
+async function synchronize() {
+	pushTip("information", t("drifter.sync.fetch"));
+
+	const { data, error } = await actions.drifter.synchronize();
+	if (!error && data) {
+		// Update local drifter object with fresh data from OAuth provider
+		drifter.name = data.name;
+		drifter.description = data.description;
+		drifter.image = data.image;
+		pushTip("success", t("drifter.sync.success"));
+	} else {
+		pushTip("error", t("drifter.sync.failure"));
+	}
+}
+
+// Track information update state
+let updating: boolean = $state(false);
+
+// Update user information
+async function update() {
+	updating = true;
+	const { error } = await actions.drifter.update({ homepage: drifter.homepage, notify: drifter.notify });
+	updating = false;
+
+	if (!error) {
+		pushTip("success", t("drifter.update.success"));
+	} else {
+		pushTip("error", t("drifter.update.failure"));
+	}
+}
+
+// Control deactivation confirmation modal
+let deactivateView = $state(false);
+
+/**
+ * Permanently deactivate user account and clean up data
+ */
+async function deactivate() {
+	const { error } = await actions.drifter.deactivate();
+	if (!error) {
+		// Clean up push notification subscription before account deletion
+		try {
+			const registration = await navigator.serviceWorker?.getRegistration();
+			const subscription = await registration?.pushManager?.getSubscription();
+			if (subscription) await subscription.unsubscribe();
+		} catch (error) {
+			console.warn("Failed to clean up push subscription:", error);
+		}
+
+		pushTip("success", t("drifter.deactivate.success"));
+		// Redirect to home page after account deactivation
+		setTimeout(() => (location.href = "/"), 2000);
+	} else {
+		pushTip("error", t("drifter.deactivate.failure"));
+	}
+
+	deactivateView = false;
+}
+</script>
+
+<Modal bind:open={deactivateView}>
+	<div class="flex flex-col items-center justify-center gap-5">
+		<h2>{t("drifter.deactivate.title")}</h2>
+		<div class="flex flex-col gap-4">
+			<p class="self-center font-bold text-red-500">{t("drifter.deactivate.warning")}</p>
+			<p>{t("drifter.deactivate.description")}</p>
+			<ul class="ms-5 space-y-1">
+				<li>{t("drifter.deactivate.consequences.data")}</li>
+				<li>{t("drifter.deactivate.consequences.comments")}</li>
+				<li>{t("drifter.deactivate.consequences.comment")}</li>
+				<li>{t("drifter.deactivate.consequences.notification")}</li>
+				<li>{t("drifter.deactivate.consequences.new")}</li>
+			</ul>
+		</div>
+		<section class="flex gap-5">
+			<button type="button" class="form-button" onclick={() => (deactivateView = false)}>{t("drifter.deactivate.cancel")}</button>
+			<button type="button" class="form-button bg-red-500 text-white" onclick={deactivate}>{t("drifter.deactivate.confirm")}</button>
+		</section>
+	</div>
+</Modal>
+
+<Modal bind:open>
+	<main class="flex flex-col grow gap-5">
+		<header class="flex flex-col sm:flex-row gap-5">
+			<img src={drifter.image} alt={drifter.id} class="self-center w-20 h-20 border-2 border-solid border-weak rounded-full" onerror={e => (((e.currentTarget as HTMLImageElement).onerror = null), ((e.currentTarget as HTMLImageElement).src = "/akkarin.webp"))}>
+			<aside class="grow flex flex-col justify-center gap-2">
+				<menu class="flex items-center gap-2 font-bold">
+					{#each context.oauth as provider}
+						{#if provider.name === drifter.provider}
+							<Icon name={provider.logo} />
+						{/if}
+					{/each}
+					{drifter.name}
+					<button type="button" onclick={synchronize}><Icon name="lucide--refresh-cw" title={t("drifter.sync.name")} /></button>
+					<button type="button" onclick={() => (location.href = "/@/depart")}><Icon name="lucide--log-out" title={t("drifter.signout")} /></button>
+					<button type="button" onclick={() => (deactivateView = true)} class="ms-auto text-red-500"><Icon name="lucide--user-round-x" title={t("drifter.deactivate.name")} /></button>
+				</menu>
+				{#if drifter.description}
+					<span class="text-sm">{drifter.description}</span>
+				{/if}
+			</aside>
+		</header>
+		<hr class="border-b border-weak">
+		<div class="flex flex-col items-start gap-5">
+			<label class="flex items-center gap-1 flex-wrap">{t("drifter.homepage")}: <input type="url" class="input" bind:value={drifter.homepage}></label>
+			{#if context.email}
+				<Email />
+				{#if drifter.emailState === "verified"}
+					<label class="flex items-center gap-1 flex-wrap">{t("email.notify")}: <input type="checkbox" class="switch" bind:checked={drifter.notify}></label>
+				{/if}
+			{/if}
+		</div>
+		<div class="self-center flex gap-5">
+			<button type="button" onclick={() => (open = false)} class="form-button">{t("cancel")}</button>
+			<button type="button" disabled={updating} onclick={update} class:bg-weak={updating} class="relative form-button transition-[background-color]">
+				<span class:opacity-0={updating} class="opacity-100 transition-[color,opacity]">{t("drifter.update.name")}</span>
+				{#if updating}
+					<span class="absolute inset-0 inline-flex items-center justify-center text-secondary"><Icon name="svg-spinners--ring-resize" /></span>
+				{/if}
+			</button>
+		</div>
+	</main>
+</Modal>

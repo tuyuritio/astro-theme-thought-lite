@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @plugin "@iconify/tailwind4" {
-	prefixes: lucide, simple-icons, fa6-brands;
+	prefixes: lucide, simple-icons, fa6-brands, svg-spinners;
 }
 
 /*
@@ -150,6 +150,19 @@
 		cursor: not-allowed;
 	}
 
+	input,
+	textarea {
+		color: var(--primary-color);
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	textarea {
+		line-height: 1.5;
+	}
+
 	img {
 		max-width: 100%;
 		height: auto;
@@ -162,6 +175,48 @@
 
 	hr {
 		border: none;
+	}
+}
+
+input[type="checkbox"].switch {
+	position: relative;
+	appearance: none;
+	cursor: pointer;
+	margin: 0px 5px;
+	width: 1.8rem;
+	height: 0.9rem;
+	color: inherit;
+	display: inline-flex;
+	align-items: center;
+
+	&::before {
+		position: absolute;
+		content: "";
+		box-sizing: border-box;
+		inset-inline-start: 0;
+		width: 0.9rem;
+		height: 0.9rem;
+		border: 2px solid currentColor;
+		border-radius: 50%;
+		background-color: var(--background-color);
+		z-index: 1;
+		transition:
+			inset-inline-start 0.15s ease-in,
+			border-width 0.15s ease-in,
+			background-color 0.15s ease-in;
+	}
+
+	&::after {
+		content: "";
+		position: absolute;
+		width: 100%;
+		border-top: 2px solid currentColor;
+	}
+
+	&:checked::before {
+		inset-inline-start: 0.9rem;
+		border-width: 0.45rem;
+		background-color: currentColor;
 	}
 }
 
@@ -268,6 +323,14 @@
 @layer components {
 	.link {
 		@apply underline decoration-transparent decoration-[0.05em] underline-offset-[0.15em] transition-[text-decoration-color] hover:decoration-current;
+	}
+
+	.input {
+		@apply border-b-2 border-b-primary py-0.5 bg-transparent;
+	}
+
+	.form-button {
+		@apply m-auto rounded py-1 px-2 text-background bg-secondary;
 	}
 
 	.pop {

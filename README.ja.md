@@ -19,10 +19,10 @@
 </div>
 
 > [!NOTE]
-> - `main` ブランチ✅：静的ビルド、任意の静的ホスティングプラットフォームにデプロイ可能。
-> - `cloudflare` ブランチ：内蔵コメントシステムを有効にし、Cloudflare のみでデプロイ可能。
+> - デフォルトでは静的ビルドとなり、任意の静的ホスティングプラットフォームにデプロイできます。
+> - オプションで内蔵のコメントシステムを有効にできます（Cloudflare へのデプロイのみ対応）。
 
-🎬 **ライブデモ**：[Vercel](https://thought-lite.vercel.app/ja)
+🎬 **ライブデモ**：[Cloudflare Workers](https://thought-lite.ttio.workers.dev/ja)
 
 ## ✨ 機能
 
@@ -32,6 +32,21 @@
 - [x] **i18n サポート** - 拡張可能な多言語対応、単一言語モードでも完璧に動作。
 - [x] **サイトマップ & フィード購読** - サイトマップと Atom フィードの自動生成。
 - [x] **OpenGraph サポート** - 組み込みの Open Graph メタタグでソーシャルメディア共有を最適化。
+
+### コメントシステム
+
+Cloudflare D1 ベースで、デプロイが簡単かつプライバシーも制御可能です。
+
+- [x] **軽量ユーザーシステム** - OAuth 認証とゲストコメントをサポート。
+- [x] **デスクトップ通知** - Web Push API を使用したリアルタイム通知。
+- [x] **メール通知** - RESTful API を使用したメール通知の送信。
+
+## 📋 前提条件
+
+コメントシステムを有効にする場合は、以下のアカウントをご用意ください：
+
+- [Cloudflare アカウント](https://dash.cloudflare.com/sign-up) - Cloudflare Workers のデプロイと D1 データベースホスティング用
+- [GitHub アカウント](https://github.com/signup) - コードホスティングと自動デプロイ用
 
 ## ⚡️ クイックスタート
 
@@ -45,6 +60,7 @@ pnpm create astro --template tuyuritio/astro-theme-thought-lite
 # 対話型プロンプトに従ってプロジェクトを作成
 
 cd <your-project-name>
+# pnpm db:migrate:local  # コメントシステムを有効にする場合は、先にローカルデータベースを初期化
 pnpm dev
 ```
 
@@ -57,6 +73,7 @@ pnpm dev
 git clone <your-repo-url>
 cd <your-repo-name>
 pnpm install
+# pnpm db:migrate:local  # コメントシステムを有効にする場合は、先にローカルデータベースを初期化
 pnpm dev
 ```
 
@@ -65,8 +82,14 @@ pnpm dev
 テーマ関連の構成については、次のドキュメントを参照してください：
 
 - [Astro 設定リファレンス](https://docs.astro.build/ja/reference/configuration-reference/)
-- [サイト設定ガイド](https://thought-lite.vercel.app/ja/note/configuration)
-- [国際化設定ガイド](https://thought-lite.vercel.app/ja/note/internationalization)
+- [サイト設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/configuration)
+- [国際化設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/internationalization)
+
+### コメントシステム
+
+- [コメントシステム設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/comment)
+- [通知設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/notification)
+- [OAuth 設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/oauth)
 
 ## 💻 コマンド
 
@@ -84,14 +107,34 @@ pnpm dev
 | `pnpm format` | コードフォーマット |
 | `pnpm lint` | コードリント |
 
+### コメントシステム
+
+| コマンド | アクション |
+| --- | --- |
+| `pnpm deploy` | Cloudflare にデプロイ |
+| `pnpm deploy:dry` | デプロイをシミュレート |
+| `pnpm db:migration` | データベースマイグレーションファイルを生成 |
+| `pnpm db:migrate:local` | データベースマイグレーションをローカルで適用 |
+| `pnpm db:migrate:remote` | データベースマイグレーションをリモートで適用 |
+
 ## 🚀 デプロイ
 
-現在のブランチは完全に静的ビルドが可能で、任意の静的ホスティングプラットフォームにデプロイできます。
+### 静的ビルド
 
-各プラットフォームのデプロイ方法については、[Astro 公式デプロイガイド](https://docs.astro.build/ja/guides/deploy/)を参照してください。
+デフォルト設定では純粋な静的サイトとしてビルドされ、任意の静的ホスティングプラットフォームにデプロイできます。各プラットフォームでのデプロイ方法は [Astro 公式デプロイガイド](https://docs.astro.build/ja/guides/deploy/) を参照してください。
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/tuyuritio/astro-theme-thought-lite&project-name=astro-blog-thought-lite&repository-name=astro-blog-thought-lite&teamSlug=tuyuritios-projects)
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/integration/start/deploy?repository=https://github.com/tuyuritio/astro-theme-thought-lite)
+
+### SSR（コメントシステム有効時）
+
+```sh
+pnpm build &&
+pnpm db:migrate:remote &&
+pnpm deploy
+```
+
+GitHub Actions による**自動デプロイ**の設定については、[GitHub Actions 設定ガイド](https://thought-lite.ttio.workers.dev/ja/note/github-actions)を参照してください。
 
 ## 🔄 更新
 
@@ -100,8 +143,9 @@ pnpm dev
 ```sh
 git remote add theme https://github.com/tuyuritio/astro-theme-thought-lite.git
 git fetch theme
-git merge theme/main    # 初回更新時は `--allow-unrelated-histories` フラグを追加
+git merge theme/main  # 初回更新時は `--allow-unrelated-histories` フラグを追加
 pnpm install
+# pnpm db:migrate:local  # コメントシステムを有効にする場合は、データベースマイグレーションを同期
 ```
 
 ## ✍️ コンテンツ作成
@@ -113,7 +157,7 @@ pnpm install
 - `preface` - 序文、第一印象としてサイトのホームページに表示
 - `information` - 情報、各種説明的なコンテンツを含む
 
-詳細は[コンテンツ作成ガイド](https://thought-lite.vercel.app/ja/note/content)を参照してください。
+詳細は[コンテンツ作成ガイド](https://thought-lite.ttio.workers.dev/ja/note/content)を参照してください。
 
 ## 🤝 貢献
 
@@ -138,7 +182,10 @@ pnpm install
 - **画像ビューア** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
 - **SPA トランジション** - [Swup](https://swup.js.org/)
 - **コード品質** - [Biome](https://biomejs.dev/)
-- **静的デプロイ** - [Vercel](https://vercel.com/)
+- **OAuth 認証** - [Arctic](https://arcticjs.dev/)
+- **ORM** - [Drizzle ORM](https://orm.drizzle.team/)
+- **データベース** - [Cloudflare D1](https://developers.cloudflare.com/d1/)
+- **エッジ展開** - [Cloudflare Workers](https://workers.cloudflare.com/)
 
 ### インスピレーション
 

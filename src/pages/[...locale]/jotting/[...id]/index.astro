@@ -1,8 +1,9 @@
 ---
 import { getCollection, render } from "astro:content";
-import config, { monolocale } from "$config";
+import config, { comment, monolocale } from "$config";
 import Time from "$lib/time";
 import Base from "$layouts/Base.astro";
+import Comments from "$components/comment/Section.astro";
 import Position from "$components/Position.astro";
 import Icon from "$components/Icon.svelte";
 import Sensitive from "$components/Sensitive.svelte";
@@ -46,21 +47,26 @@ const t = i18nit(locale);
 			<h1 class="select-text">{jotting.data.title}</h1>
 			<div class="flex flex-col gap-3 sm:flex-row *:flex *:items-center *:gap-1 *:text-[0.875rem] *:text-secondary">
 				<time datetime={jotting.data.timestamp.toISOString()}><Icon name="lucide--calendar" />{Time.toString(jotting.data.timestamp)}</time>
-				{
-					!!jotting.data.tags?.length && (
-						<span>
-							<Icon name="lucide--hash" />
-							{jotting.data.tags?.join("; ")}
-						</span>
-					)
-				}
+				{!!jotting.data.tags?.length && (
+					<span>
+						<Icon name="lucide--hash" />
+						{jotting.data.tags?.join("; ")}
+					</span>
+				)}
 				<span><Icon name="lucide--pilcrow" />{t("read.words", { count: frontmatter.words })}</span>
 			</div>
-			<hr class="border-b border-weak" />
+			<hr class="border-b border-weak">
 		</header>
 
 		<Sensitive {locale} back={getRelativeLocaleUrl(locale, "/jotting")} sensitive={jotting.data.sensitive} client:load>
-			<section id="markdown-content" class="markdown"><Content /></section>
+			<div class="contents">
+				<section id="markdown-content" class="markdown"><Content /></section>
+				{comment && (
+					<blockquote id="comment-section">
+						<Comments {locale} section="jotting" item={jotting.id} />
+					</blockquote>
+				)}
+			</div>
 		</Sensitive>
 
 		<Position {locale} />

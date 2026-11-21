@@ -7,8 +7,7 @@ import { z } from "astro/zod";
  * Represents main blog articles with comprehensive metadata
  */
 const note = defineCollection({
-	// Load all markdown files except those starting with underscore (private/draft files)
-	loader: glob({ pattern: ["**/*.md", "!**/_*.md", "!**/_*/*.md"], base: "./src/content/note" }),
+	loader: glob({ pattern: ["**/*.md", "!**/_*.md", "!**/_*/**"], base: "./src/content/note" }),
 	schema: z.object({
 		title: z.string(), // Post title (required)
 		timestamp: z.date(), // Publication date (required)
@@ -27,8 +26,7 @@ const note = defineCollection({
  * Represents shorter posts, quick thoughts, or micro-blog entries
  */
 const jotting = defineCollection({
-	// Load all markdown files except those starting with underscore
-	loader: glob({ pattern: ["**/*.md", "!**/_*.md", "!**/_*/*.md"], base: "./src/content/jotting" }),
+	loader: glob({ pattern: ["**/*.md", "!**/_*.md", "!**/_*/**"], base: "./src/content/jotting" }),
 	schema: z.object({
 		title: z.string(), // Jotting title (required)
 		timestamp: z.date(), // Publication date (required)

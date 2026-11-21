@@ -1,0 +1,30 @@
+comment:
+  html:
+    button: Click to see the thought
+    comment: 'From {name}:'
+    greeting: Hi {name},
+    notify: A new voice has quietly left its mark on "{content}".
+  subject: A quiet new voice beneath your words
+  text: |-
+    A new voice has quietly left its mark on "{content}".
+    To see the thought: {link}
+policy: Policy
+reply:
+  html:
+    button: Click to trace back the communication
+    greeting: Hi {name},
+    notify: Your thoughts on "{content}" have returned as an echo.
+    reply: '{name} replied:'
+    yours: 'Your thoughts:'
+  subject: A fragment speaks, and the echo has come
+  text: |-
+    Your thoughts on "{content}" have returned as an echo.
+    To trace back the communication: {link}
+unsubscribe: Unsubscribe
+verification:
+  html:
+    button: Confirm Email Address
+    instruction: 'Verify your email by clicking the button below:'
+    title: Verify your email address
+  subject: Confirm your email address
+  text: 'Please visit the link to verify your email address: {link}'

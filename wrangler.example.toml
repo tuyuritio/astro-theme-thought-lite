@@ -1,0 +1,27 @@
+name = "$PROJECT_NAME"
+compatibility_date = "2026-05-07"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+binding = "ASSETS"
+directory = "./dist"
+html_handling = "drop-trailing-slash" # See https://developers.cloudflare.com/workers/static-assets/routing/advanced/html-handling/
+
+[observability]
+enabled = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "$DATABASE_NAME"
+database_id = "$DATABASE_ID"
+migrations_dir = "drizzle"
+
+[[ratelimits]]
+name = "COMMENT_LIMIT"
+namespace_id = "0001"
+simple = { limit = 2, period = 10 }
+
+[[ratelimits]]
+name = "EMAIL_LIMIT"
+namespace_id = "0002"
+simple = { limit = 1, period = 60 }

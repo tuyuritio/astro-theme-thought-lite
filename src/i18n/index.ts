@@ -2,29 +2,35 @@
 import en from "./en/index.yaml";
 import enScript from "./en/script.yaml";
 import enLinkroll from "./en/linkroll.yaml";
+import enEmail from "./en/email.yaml";
 import zhCN from "./zh-cn/index.yaml";
 import zhCNScript from "./zh-cn/script.yaml";
-import zhLinkroll from "./zh-cn/linkroll.yaml";
+import zhCNLinkroll from "./zh-cn/linkroll.yaml";
+import zhCNEmail from "./zh-cn/email.yaml";
 import ja from "./ja/index.yaml";
 import jaScript from "./ja/script.yaml";
 import jaLinkroll from "./ja/linkroll.yaml";
+import jaEmail from "./ja/email.yaml";
 
 // Translation object mapping locale codes to their respective translation data
 const translations = {
 	en: {
 		index: en,
 		script: enScript,
-		linkroll: enLinkroll
+		linkroll: enLinkroll,
+		email: enEmail
 	},
 	"zh-cn": {
 		index: zhCN,
 		script: zhCNScript,
-		linkroll: zhLinkroll
+		linkroll: zhCNLinkroll,
+		email: zhCNEmail
 	},
 	ja: {
 		index: ja,
 		script: jaScript,
-		linkroll: jaLinkroll
+		linkroll: jaLinkroll,
+		email: jaEmail
 	}
 };
 
@@ -36,7 +42,7 @@ type TranslationNamespace = keyof (typeof translations)[Language];
 
 /**
  * Validate if the provided language is supported
- * @param language - The target language/locale code (e.g., "en", "zh-cn", "ja")
+ * @param language - The target language/locale code
  * @throws Error if the language is not supported
  */
 function validateLanguage(language: string): asserts language is Language {
@@ -45,8 +51,8 @@ function validateLanguage(language: string): asserts language is Language {
 
 /**
  * Create an internationalization function for a specific language
- * @param language - The target language/locale code (e.g., "en", "zh-cn", "ja")
- * @param namespace - Optional namespace prefix to prepend to all translation keys (e.g., "script")
+ * @param language - The target language/locale code
+ * @param namespace - Optional namespace prefix to prepend to all translation keys
  * @returns Translation function that can translate keys with parameter substitution
  */
 export default function i18nit(
@@ -65,7 +71,7 @@ export default function i18nit(
 	/**
 	 * Main translation function with parameter interpolation
 	 * Navigates through nested translation object using dot notation and supports parameter substitution
-	 * @param key - Dot-separated key path to look up translation (e.g., "notification.reply.title")
+	 * @param key - Dot-separated key path to look up translation
 	 * @param params - Optional parameters for string interpolation (replaces {paramName} placeholders)
 	 * @returns Translated and interpolated string, or the original key if translation not found
 	 */

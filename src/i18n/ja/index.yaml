@@ -1,7 +1,113 @@
 about:
   introduction: ○○紹介
   linkroll: ○○連結
+cancel: 取消
+comment:
+  author: 筆者
+  collapse: 思いをたたむ
+  disabled: アイデア保存中・投稿不可
+  edit:
+    history: 編集歴史
+    name: 編集
+  empty: 感想内容が空です
+  expand: 思いをひらく
+  failure: 申し訳ありませんが、感想を送信できませんでした
+  fetch:
+    failure: 感想取得に失敗しました
+  history: 履歴
+  limit: 投稿が頻繁すぎます
+  name: 感想
+  nickname:
+    empty: 渾名は空にすることはできません
+    name: 渾名
+  overlength: |
+    長すぎます
+    続きは返信で
+  placeholder: 感想をここに刻印しましょう
+  preview:
+    empty: Markdown のインスピレーションをお待ちしています
+    name: Markdown 試写
+  reload:
+    increase: 新しい感想があります！
+    name: 感想を更新します
+    same: 新しい感想はまだありません
+  remove:
+    failure: 感想削除に失敗しました
+    name: 感想削除
+    success: 感想を削除しました
+  removed: 感想が削除されました
+  reply: 返信
+  share:
+    name: 共有
+    success: 連結を複写しました
+  signin: 登録して感想を共有しましょう
+  sort:
+    asc: 時間昇順
+    desc: 時間降序
+  submit: 投稿
+  success: 感想を投稿しました
+  time: 送信時間
+  verify:
+    failure: 人間判定に失敗しました
+    progress: 自動で人間判定を実行中
+confirm: 確認
 contents: 目次
+delete: 削除
+drifter:
+  deactivate:
+    cancel: 佇み続ける
+    confirm: 無効化を確認
+    consequences:
+      comment: このアカウントでコメントを投稿できなくなります
+      comments: すべてのコメントは保持されますが匿名化されます
+      data: すべての個人情報が削除されます
+      new: 再認証すると新しいアカウントが作成されます
+      notification: 電子書簡通知を受け取れなくなります
+    description: 無効化を確認すると、あなたのアカウントは：
+    done: 旅立った人
+    failure: 無効化に失敗しました
+    name: 退会
+    success: アカウントが無効化されました
+    title: アカウントを無効化してもよろしいですか？
+    warning: この操作は元に戻せません！
+  fetch:
+    failure: 旅人情報取得に失敗しました
+  homepage: 公式本頁
+  profile: 旅人情報
+  signin: ログイン
+  signout: 退出
+  sync:
+    failure: 同期に失敗しました
+    fetch: 情報同期中
+    name: 同期
+    success: 同期しました
+  update:
+    failure: 更新に失敗しました
+    name: 更新
+    success: 更新しました
+email:
+  empty: 電子書簡は必須です
+  name: 電子書簡
+  notify: 電書通知
+  remove:
+    failure: 電子書簡の削除に失敗しました
+    name: 電子書簡を削除
+    success: 電子書簡を削除しました
+  unsubscribe:
+    invalid: 配信停止連結が無効です
+    success: 配信停止が完了しました！
+  verify:
+    already: 既に認証済みです
+    conflict: 旧電子書簡アドレスと同じです
+    done: 電子書簡認証済み
+    expired: 認証リンクの期限が切れました
+    invalid: 無効な認証リンクです
+    limit: しばらくしてからもう一度お試しください
+    resend: 認証電書を再送
+    send:
+      failure: 認証電書を送信できませんでした
+      success: 認証電書を送信しました。リンクは 5 分以内に期限切れになりますので、お早めにご確認ください。
+    success: 電子書簡の認証に成功しました！
 home:
   heatmap:
     empty: 無字
@@ -17,16 +123,37 @@ jotting:
 language: 日本語
 navigation:
   about: 情報
+  email: 電書
   home: 玄関
   jotting: 随筆
   note: 文記
   policy: 規約
   preface: 序文
 note:
+  comment: 感想
   empty: 文記がありません
   series: 系列
   tag: 付札
   top: 至頂
+oauth:
+  benefit:
+    captcha: 人間判定が不要
+    comment: 自分の感想を編集・削除できます
+    homepage: 自分の公式本頁を表示できます
+    notification: 感想返信の電書通知を受信できます
+  signin: '{provider} でログイン'
+push:
+  denied: 机上通知の許可を拒否しました
+  disable:
+    name: 机上通知は無効です
+    success: 机上通知を無効にしました
+  enable:
+    failure: 机上通知の有効化に失敗した
+    name: 机上通知は有効です
+    success: 机上通知を有効にしました
+  reply:
+    body: 押して交流記録を辿りましょう
+    title: 片言が響きとなって返ってきました
 read:
   words:
     other: '{count} 文字'

@@ -99,6 +99,21 @@ interface SiteConfigOptions<Locales extends readonly string[] = readonly string[
 		limit?: number;
 	};
 
+	/** Comment Configuration */
+	comment?: {
+		/** Enable Comment System (requires SSR / Cloudflare adapter) */
+		enable?: boolean;
+
+		/** Maximum Comment Length */
+		"max-length"?: number;
+
+		/** Hide top-level deleted comments without replies */
+		"hide-deleted"?: boolean;
+
+		/** Show edit history */
+		history?: boolean;
+	};
+
 	/** Latest Content Display */
 	latest?: "*" | Section[];
 }
@@ -115,4 +130,17 @@ export default function siteConfig<const Locales extends string[]>(config: SiteC
 	// Validate that `site` is a well-formed absolute URL at startup
 	new URL(config.site);
 	return config;
+}
+
+/**
+ * Processes the list of clients and returns valid authentication providers.
+ * It filters out any clients missing a `clientID` or `clientSecret`.
+ *
+ * @param clients - The raw array of client configuration objects.
+ * @returns An array of sanitized provider objects.
+ */
+export function providers(
+	clients: Array<{ name: string; logo: string; clientID: string; clientSecret: string }>
+): Array<{ name: string; logo: string }> {
+	return clients.filter(client => client.clientID && client.clientSecret).map(({ name, logo }) => ({ name, logo }));
 }

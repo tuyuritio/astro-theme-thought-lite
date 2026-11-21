@@ -1,3 +1,5 @@
+2025-12-01:
+  - Comment draft saving
 2025-11-29:
   - OpenGraph image support
 2025-11-06:
@@ -8,8 +10,20 @@
   - Feed stylesheet
 2025-08-28:
   - Sensitive content warning
+2025-07-26:
+  - Unauthenticated comments
+2025-07-12:
+  - Desktop notification
 2025-01-08:
   - Internationalization support
+2025-01-07:
+  - Comment system
+  - Email notification
+2025-01-06:
+  - OAuth 2.0
+2025-01-05:
+  - Cloudflare Workers
+  - Cloudflare D1
 2025-01-04:
   - Atom subscription
   - ~RSS subscription

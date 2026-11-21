@@ -65,11 +65,11 @@ const route = Astro.url.pathname;
 			<a href={getRelativeLocaleUrl(locale, "/feed.xml")} target="_blank" rel="noopener noreferrer" aria-label="Subscription" class="inline-flex"><Icon name="lucide--rss" /></a>
 
 			{!monolocale && (
-	<Menu label="Language switcher">
-		<Icon name="lucide--earth" slot="trigger" />
-		<LanguagePicker {locale} client:load />
-	</Menu>
-)}
+				<Menu label="Language switcher">
+					<Icon name="lucide--earth" slot="trigger" />
+					<LanguagePicker {locale} client:load />
+				</Menu>
+			)}
 		</footer>
 	</nav>
 </header>
