@@ -135,12 +135,20 @@ export const drifter = {
 			// Initialize database connection
 			const db = drizzle(env.DB);
 
-			// Get user's OAuth provider and access token for revocation
-			const drifter = await db.select({ provider: Drifter.provider, access: Drifter.access }).from(Drifter).where(eq(Drifter.id, id)).get();
+			// Get user's OAuth provider and tokens for revocation
+			const drifter = await db
+				.select({ provider: Drifter.provider, access: Drifter.access, refresh: Drifter.refresh })
+				.from(Drifter)
+				.where(eq(Drifter.id, id))
+				.get();
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
-			// Revoke OAuth access token with the provider
-			await new OAuth(drifter.provider).revoke(drifter.access);
+			// Best-effort token revocation: prefer refresh token and do not block deactivation if already expired or revoked
+			try {
+				await new OAuth(drifter.provider).revoke(drifter.refresh ?? drifter.access);
+			} catch (error) {
+				console.warn(`Failed to revoke OAuth token for ${drifter.provider}:`, error);
+			}
 
 			// Delete user record from database
 			await db.delete(Drifter).where(eq(Drifter.id, id));

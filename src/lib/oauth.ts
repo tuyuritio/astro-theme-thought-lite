@@ -175,8 +175,8 @@ export class OAuth {
 	}
 
 	/**
-	 * Revoke OAuth access token to invalidate authorization
-	 * @param token - Access token to revoke
+	 * Revoke OAuth token to invalidate authorization
+	 * @param token - Refresh token or access token to revoke
 	 * @throws Error if provider is invalid or revocation fails
 	 */
 	async revoke(token: string): Promise<void> {
