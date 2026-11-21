@@ -4,7 +4,7 @@ import { getRelativeLocaleUrl } from "astro:i18n";
 import { env } from "cloudflare:workers";
 import { and, eq, ne } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { email as enabled } from "$config";
+import config, { email as enabled } from "$config";
 import { Email } from "$db/schema";
 import { render } from "$lib/email";
 import sendEmail from "$lib/email/util";
@@ -25,6 +25,9 @@ export const email = {
 			// Verify user authentication
 			const drifter = (await Token.check(cookies, "passport"))?.visa;
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
+
+			// Validate locale against configured locales before rate-limiting or mutating state
+			if (!(config.i18n.locales as readonly string[]).includes(locale)) throw new ActionError({ code: "BAD_REQUEST" });
 
 			// Apply rate limiting to prevent spam
 			const { success } = await env.EMAIL_LIMIT.limit({ key: drifter });
