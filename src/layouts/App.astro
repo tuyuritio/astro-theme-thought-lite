@@ -18,7 +18,7 @@ const route = Astro.url.pathname.slice(`/${locale === config.i18n.defaultLocale 
 
 <html lang={locale} dir={["ar", "he", "fa", "ur"].includes(locale) ? "rtl" : "ltr"}>
 	<head>
-		<title>{subtitle && `${subtitle} |`} {title}</title>
+		<title>{subtitle ? `${subtitle} | ${title}` : title}</title>
 		<meta name="description" content={description}>
 
 		<meta charset="utf-8">
@@ -26,7 +26,7 @@ const route = Astro.url.pathname.slice(`/${locale === config.i18n.defaultLocale 
 		<meta name="generator" content={Astro.generator}>
 		<link rel="alternate" type="application/atom+xml" {title} href={getRelativeLocaleUrl(locale, "/feed.xml")}>
 
-		<meta property="og:title" content={`${subtitle && `${subtitle} | `}${title}`}>
+		<meta property="og:title" content={subtitle ? `${subtitle} | ${title}` : title}>
 		<meta property="og:type" content={(article && "article") || "website"}>
 		<meta property="og:url" content={new URL(Astro.url.pathname, config.site)}>
 		<meta property="og:description" content={description}>
