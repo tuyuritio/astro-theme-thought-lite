@@ -1,5 +1,57 @@
 # Changelog
 
+## [1.0.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.42.1...v1.0.0) (2026-11-21)
+
+
+### Features
+
+* **comment:** support toggling between static and SSR modes ([b235c6b](https://github.com/tuyuritio/astro-theme-thought-lite/commit/b235c6ba850b3ea4027538e6a157123c786bbac5))
+
+
+### Bug Fixes
+
+* **auth:** prefer refresh token and tolerate revocation errors on deactivation ([56665c7](https://github.com/tuyuritio/astro-theme-thought-lite/commit/56665c7942f132923f0851b2f17edb61e31d0402))
+* **auth:** remove default PASS_KEY fallback and fix JWT renewal ([927fcc8](https://github.com/tuyuritio/astro-theme-thought-lite/commit/927fcc88f840a31722ea5006492b868624327bbb))
+* **auth:** stop collecting email during OAuth login ([f01ea06](https://github.com/tuyuritio/astro-theme-thought-lite/commit/f01ea0609a0dfe0a9111b9e0f811effae60c7687))
+* **auth:** use host-only cookies for auth tokens ([ca21185](https://github.com/tuyuritio/astro-theme-thought-lite/commit/ca21185c943cb5e79fc57367f5747cd9aef22074))
+* **auth:** validate redirect targets ([fbb0e4f](https://github.com/tuyuritio/astro-theme-thought-lite/commit/fbb0e4f6006f0b4609ae4dd9a59a00d040ac168b))
+* **comment:** build notification link on server ([7a68392](https://github.com/tuyuritio/astro-theme-thought-lite/commit/7a683920c5c068bbc27d8baf982ca690f89a5761))
+* **comment:** enforce content validation, rate limiting, and deletion checks ([45df538](https://github.com/tuyuritio/astro-theme-thought-lite/commit/45df538653da877e4847a59189666607bb34b0ee))
+* **comment:** enforce history toggle and filter deleted comments ([6ccfd28](https://github.com/tuyuritio/astro-theme-thought-lite/commit/6ccfd285de9166c05be29ed174d1351a3fb8410a))
+* **comment:** guard service worker registration and push subscription ([1a3c8b7](https://github.com/tuyuritio/astro-theme-thought-lite/commit/1a3c8b789fa4e9b63803661e1eb87199cc81fa29))
+* **comment:** preserve push subscriptions on lookup errors ([e809eab](https://github.com/tuyuritio/astro-theme-thought-lite/commit/e809eabca0946b10cf7bfa6a05b973c76d5a95d9))
+* **comment:** register explicit locale routes for SSR email pages ([3a35538](https://github.com/tuyuritio/astro-theme-thought-lite/commit/3a35538180af64b306ec98284d3972f87bbd5493))
+* **comment:** restrict reply push notifications to linked subscriptions ([dafb7c9](https://github.com/tuyuritio/astro-theme-thought-lite/commit/dafb7c92d2ffd6490ea2d29d5d64a91375e3386e))
+* **comment:** sanitize rendered markdown HTML ([89d1361](https://github.com/tuyuritio/astro-theme-thought-lite/commit/89d136196a4bcc2d39053cf3ee429fe36e11270e))
+* **comment:** tighten comment creation validation ([58b8b03](https://github.com/tuyuritio/astro-theme-thought-lite/commit/58b8b03dccc66c97dad31fcd42d9e9ef3e066e27))
+* **comment:** validate homepage URL protocol and add link rel attributes ([a9b79ac](https://github.com/tuyuritio/astro-theme-thought-lite/commit/a9b79acfa56b61853d39f69325cbe6fa2bb08960))
+* **content:** exclude posts under underscore-prefixed directories ([7b2229d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/7b2229d6d5029f713423a0daa326a0ca2138956e))
+* **content:** serialize creation wizard frontmatter as YAML ([ff88158](https://github.com/tuyuritio/astro-theme-thought-lite/commit/ff881580ad2acbb589a5f20dad129694e12198d8))
+* **database:** preserve push links for existing comments ([1d43e2a](https://github.com/tuyuritio/astro-theme-thought-lite/commit/1d43e2aabecae7c09508b36266ab547ce68592a6))
+* **database:** prevent data loss and failures when migrating existing databases ([19d1e5e](https://github.com/tuyuritio/astro-theme-thought-lite/commit/19d1e5e51c8b903b33b65a4fecf19287b5333736))
+* **email:** escape HTML variables in email templates ([645037f](https://github.com/tuyuritio/astro-theme-thought-lite/commit/645037f8b1f8a62f1f36e9d229ca1081a6a6b423))
+* **email:** handle provider HTTP errors ([db5be57](https://github.com/tuyuritio/astro-theme-thought-lite/commit/db5be5700be51a238670fc23802cf8849feda17e))
+* **email:** omit unsubscribe header when unsubscribe is disabled ([953f118](https://github.com/tuyuritio/astro-theme-thought-lite/commit/953f118e55d518de3b24b619350fb7f277ce02b5))
+* **email:** validate decrypted verification ticket bounds and timestamp ([9a4e3ef](https://github.com/tuyuritio/astro-theme-thought-lite/commit/9a4e3ef9dcb95bee479aee63743f94c77bd4d7db))
+* **email:** validate locale before email verification ([9f97073](https://github.com/tuyuritio/astro-theme-thought-lite/commit/9f97073fa97b7f54b51c0f1a8a4c4c05701a48e4))
+* **feed:** keep rendered content with its entry ([8636b63](https://github.com/tuyuritio/astro-theme-thought-lite/commit/8636b630736657bc28afa18b57239983ea0ef450))
+* **fonts:** switch Playwrite MX provider to Fontsource ([030f6c5](https://github.com/tuyuritio/astro-theme-thought-lite/commit/030f6c5f45a25a2c3d4bf4d2171db9254fff93ba))
+* **oauth:** harden provider validation, API checks, and profile sync ([8e71f1c](https://github.com/tuyuritio/astro-theme-thought-lite/commit/8e71f1cc0d1679ba5229e8af9f53a7463ab3c9bc))
+* **oauth:** persist refreshed Google OAuth tokens ([f02adba](https://github.com/tuyuritio/astro-theme-thought-lite/commit/f02adbae00c0ed826691d816f3a7b721bb21468b))
+* **push:** format VAPID subject as valid URI ([ac9df6d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/ac9df6d93cfa4d7132a3eda24b27636db148f970))
+* **push:** return the existing ID for duplicate subscriptions ([64fff9d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/64fff9d4d989d9d7abb2fd6ad5a984ed24ccf638))
+* **push:** validate HTTPS endpoints and guard push actions ([bee48d1](https://github.com/tuyuritio/astro-theme-thought-lite/commit/bee48d1bd0c2136da32f380a3516d1f7d4ec44fd))
+* **seo:** handle empty subtitle in page and Open Graph titles ([cc6436d](https://github.com/tuyuritio/astro-theme-thought-lite/commit/cc6436d88560cf6725c0181723d4e7f8827dff2a))
+
+
+### Miscellaneous Chores
+
+* **config:** update default copyright year to 2026 ([2cbefd5](https://github.com/tuyuritio/astro-theme-thought-lite/commit/2cbefd5dbbbe5d145ad6721143f8387adddc195c))
+* declare minimum Node.js engine version ([8c92a5c](https://github.com/tuyuritio/astro-theme-thought-lite/commit/8c92a5c65c186c28717633d730c835e0448549dd))
+* merge cloudflare branch into main ([b87aafb](https://github.com/tuyuritio/astro-theme-thought-lite/commit/b87aafbb8403cd6ef69c83f842da293e73dbaee1))
+* **release:** prepare 1.0.0 release ([916049e](https://github.com/tuyuritio/astro-theme-thought-lite/commit/916049e3f612818df0a160cd75888d9d357a7078))
+* sync main updates ([2fc8199](https://github.com/tuyuritio/astro-theme-thought-lite/commit/2fc81996bdd774c0e5393b4cbcd14ac28b57d8c9))
+
 ## [0.42.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.42.0...v0.42.1) (2026-11-19)
 
 
