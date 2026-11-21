@@ -17,7 +17,11 @@ const context: {
 		emailState: "pending" | "verified" | "bounced" | "suspended" | null;
 		notify: boolean | null;
 	};
-	subscription?: number;
+	subscription?: {
+		endpoint: string;
+		p256dh: string;
+		auth: string;
+	};
 } = $state({
 	locale: "",
 	oauth: [],

@@ -26,7 +26,13 @@ export const comment = {
 			item: z.string(), // The item ID this comment belongs to
 			reply: z.string().nullish(), // ID of replied comment if this is a reply
 			content: z.string(), // The comment content
-			push: z.number().optional(), // Push subscription ID for notifications
+			push: z
+				.object({
+					endpoint: z.url(), // Push service endpoint URL
+					p256dh: z.string(), // Public key for encryption
+					auth: z.string() // Authentication secret for encryption
+				})
+				.optional(), // Push subscription for notifications
 			passer: z
 				.object({
 					nickname: z.string().nullish(), // Nickname for unauthenticated users
@@ -103,7 +109,16 @@ export const comment = {
 					(async () => {
 						// If no subscription provided or push notifications are disabled, skip storage process
 						if (!push || !subscription) return;
-						await db.insert(Notification).values({ comment: id, subscription, timestamp: new Date() });
+						const record = await db
+							.insert(PushSubscription)
+							.values(subscription)
+							.onConflictDoUpdate({
+								target: PushSubscription.endpoint,
+								set: { p256dh: subscription.p256dh, auth: subscription.auth }
+							})
+							.returning({ id: PushSubscription.id })
+							.get();
+						await db.insert(Notification).values({ comment: id, subscription: record.id, timestamp: new Date() });
 					})(),
 
 					// Notifying original commenter of replies via Web Push API

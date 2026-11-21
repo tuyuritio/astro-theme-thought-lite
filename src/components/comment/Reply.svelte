@@ -202,44 +202,41 @@ async function submit() {
  * Toggle push subscription on/off
  */
 async function toggleSubscription() {
-	context.subscription = undefined;
-
 	const registration = await navigator.serviceWorker?.getRegistration();
 	if (!registration?.pushManager) return pushTip("error", t("push.enable.failure"));
-
 	let subscription = await registration.pushManager.getSubscription();
-	if (subscription) {
-		// Unsubscribe from existing push subscription
-		await subscription.unsubscribe();
 
-		// Wether unsubscription succeeded or not, clear local state
+	if (context.subscription) {
+		// Unsubscribe if already subscribed
+		const endpoint = subscription?.endpoint ?? context.subscription.endpoint;
+		await subscription?.unsubscribe();
+
+		context.subscription = undefined;
+
 		pushTip("success", t("push.disable.success"));
 
 		// Notify server to remove subscription
-		await actions.push.unsubscribe(subscription.endpoint);
+		await actions.push.unsubscribe(endpoint);
 	} else if (context.push) {
-		// Request push notification permission before subscribing
+		// Request permission for push notifications
 		const permission = await Notification.requestPermission();
 		if (permission !== "granted") return pushTip("information", t("push.denied"));
 
 		try {
 			// Create push subscription with VAPID key
-			subscription = await registration.pushManager.subscribe({
+			subscription ??= await registration.pushManager.subscribe({
 				userVisibleOnly: true,
 				applicationServerKey: context.push
 			});
 
 			// Extract keys from subscription
-			const keys = subscription.toJSON().keys;
+			const { p256dh, auth } = subscription.toJSON().keys!;
+			const payload = { endpoint: subscription.endpoint, p256dh, auth };
 
 			// Register subscription with server
-			const { data } = await actions.push.subscribe({
-				endpoint: subscription.endpoint!,
-				p256dh: keys!.p256dh,
-				auth: keys!.auth
-			});
+			const { data } = await actions.push.subscribe(payload);
 			if (data) {
-				context.subscription = data;
+				context.subscription = payload;
 				pushTip("success", t("push.enable.success"));
 			} else {
 				// Rollback on failure

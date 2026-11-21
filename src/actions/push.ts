@@ -1,7 +1,7 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro/zod";
 import { env } from "cloudflare:workers";
-import { and, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { PushSubscription } from "$db/schema";
 
@@ -17,7 +17,7 @@ export const push = {
 			// Initialize database connection
 			const db = drizzle(env.DB);
 
-			// Assign the same endpoint on conflict so RETURNING yields the existing ID.
+			// Refresh keys on conflict so RETURNING yields the existing ID.
 			const subscription = await db
 				.insert(PushSubscription)
 				.values({
@@ -27,7 +27,7 @@ export const push = {
 				})
 				.onConflictDoUpdate({
 					target: PushSubscription.endpoint,
-					set: { endpoint }
+					set: { p256dh, auth }
 				})
 				.returning({ id: PushSubscription.id })
 				.get();
@@ -46,25 +46,6 @@ export const push = {
 
 			// Delete the specific notification subscription
 			await db.delete(PushSubscription).where(eq(PushSubscription.endpoint, endpoint));
-		}
-	}),
-
-	// Action to check if a user is subscribed to notifications for a specific endpoint
-	check: defineAction({
-		input: z.url(), // Push service endpoint URL to check
-		handler: async endpoint => {
-			// Initialize database connection
-			const db = drizzle(env.DB);
-
-			// Query for existing subscription matching user and endpoint
-			const subscription = await db
-				.select({ id: PushSubscription.id })
-				.from(PushSubscription)
-				.where(and(eq(PushSubscription.endpoint, endpoint)))
-				.get();
-
-			// Return the subscription ID if found, otherwise undefined
-			return subscription?.id;
 		}
 	})
 };

@@ -92,31 +92,20 @@ onMount(async () => {
 		pushTip("error", t("comment.fetch.failure"));
 	}
 
-	loaded = loadComments && loadDrifter;
-
 	// Initial load of push subscription status
-	// Register service worker for push notifications only when enabled and supported
 	if (push && "serviceWorker" in navigator && "PushManager" in window) {
 		try {
 			const registration = await navigator.serviceWorker.register("/sw.js");
 			const subscription = await registration.pushManager?.getSubscription();
+			const keys = subscription?.toJSON().keys;
 
-			if (subscription) {
-				// Verify subscription is still valid on server
-				const { data, error } = await actions.push.check(subscription.endpoint);
-				if (error) return;
-
-				if (data) {
-					context.subscription = data;
-				} else {
-					// Clean up only after the server confirms the subscription is missing
-					await subscription.unsubscribe();
-				}
-			}
+			context.subscription = subscription && keys?.p256dh && keys?.auth ? { endpoint: subscription.endpoint, p256dh: keys.p256dh, auth: keys.auth } : undefined;
 		} catch (error) {
-			console.warn("Push notification initialization skipped:", error);
+			context.subscription = undefined;
 		}
 	}
+
+	loaded = loadComments && loadDrifter;
 });
 </script>
 
