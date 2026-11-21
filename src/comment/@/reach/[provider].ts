@@ -3,6 +3,7 @@ import { generateCodeVerifier, generateState } from "arctic";
 import { env } from "cloudflare:workers";
 import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
+import { oauth } from "$config";
 import { OAuth, type OAuthAccount } from "$lib/oauth";
 import { random, Token } from "$lib/token";
 import { safeRedirect } from "$lib/url";
@@ -12,6 +13,7 @@ export const prerender = false;
 
 export const GET: APIRoute = async ({ cookies, params, url, redirect, request }) => {
 	const { provider } = params;
+	if (!provider || !oauth.some(item => item.name === provider)) return new Response("Not Found", { status: 404 });
 
 	const code = url.searchParams.get("code");
 	const state = url.searchParams.get("state");
@@ -23,7 +25,7 @@ export const GET: APIRoute = async ({ cookies, params, url, redirect, request })
 
 	if (code) {
 		// Validate state parameter to prevent CSRF attacks
-		if (escort?.state !== state) return new Response("Unauthorized", { status: 401 });
+		if (!state || !escort || escort.state !== state) return new Response("Unauthorized", { status: 401 });
 
 		// Exchange authorization code for user account information
 		const user: OAuthAccount = await new OAuth(provider).validate(code, escort.codeVerifier);

@@ -87,7 +87,9 @@ export class OAuth {
 			const response = await fetch("https://api.github.com/user", {
 				headers: { authorization: `Bearer ${accessToken}`, "user-agent": USER_AGENT }
 			});
+			if (!response.ok) throw new Error(`Failed to fetch GitHub user profile: HTTP ${response.status}`);
 			const user: any = await response.json();
+			if (!user?.id) throw new Error("Invalid GitHub user profile response");
 
 			return {
 				provider: "GitHub",
@@ -132,7 +134,9 @@ export class OAuth {
 			const response = await fetch("https://api.github.com/user", {
 				headers: { authorization: `Bearer ${token}`, "user-agent": USER_AGENT }
 			});
+			if (!response.ok) throw new Error(`Failed to fetch GitHub user profile: HTTP ${response.status}`);
 			const user: any = await response.json();
+			if (!user?.id) throw new Error("Invalid GitHub user profile response");
 
 			return {
 				provider: "GitHub",
@@ -158,7 +162,9 @@ export class OAuth {
 			const response = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
 				headers: { authorization: `Bearer ${token}`, "user-agent": USER_AGENT }
 			});
+			if (!response.ok) throw new Error(`Failed to fetch Google user profile: HTTP ${response.status}`);
 			const user: any = await response.json();
+			if (!user?.sub) throw new Error("Invalid Google user profile response");
 
 			return {
 				provider: "Google",

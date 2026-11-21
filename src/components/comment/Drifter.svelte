@@ -20,10 +20,11 @@ async function synchronize() {
 	pushTip("information", t("drifter.sync.fetch"));
 
 	const { data, error } = await actions.drifter.synchronize();
-	if (!error) {
+	if (!error && data) {
 		// Update local drifter object with fresh data from OAuth provider
 		drifter.name = data.name;
 		drifter.description = data.description;
+		drifter.image = data.image;
 		pushTip("success", t("drifter.sync.success"));
 	} else {
 		pushTip("error", t("drifter.sync.failure"));

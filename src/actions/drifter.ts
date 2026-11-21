@@ -96,7 +96,11 @@ export const drifter = {
 					image: profile.image
 				})
 				.where(eq(Drifter.id, id))
-				.returning({ name: Drifter.name, description: Drifter.description })
+				.returning({
+					name: sql<string>`COALESCE(${Drifter.name}, ${Drifter.handle})`,
+					description: Drifter.description,
+					image: Drifter.image
+				})
 				.get();
 
 			return newProfile;
