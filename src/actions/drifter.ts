@@ -3,7 +3,7 @@ import { z } from "astro/zod";
 import { env } from "cloudflare:workers";
 import { eq, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { OAuth, type OAuthAccount } from "$lib/oauth";
+import { identity } from "$lib/oauth";
 import { Token } from "$lib/token";
 import { Drifter, Email } from "$db/schema";
 import { oauth } from "$config";
@@ -61,6 +61,7 @@ export const drifter = {
 			const drifter = await db
 				.select({
 					provider: Drifter.provider,
+					account: Drifter.account,
 					access: Drifter.access,
 					expire: Drifter.expire,
 					refresh: Drifter.refresh
@@ -69,31 +70,35 @@ export const drifter = {
 				.where(eq(Drifter.id, id))
 				.get();
 
-			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
+			const provider = drifter?.provider.toLowerCase();
+			if (!drifter || !provider || !identity.has(provider)) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Check if access token has expired
-			const expire = drifter.expire ? drifter.expire < Date.now() : false;
+			const expired = drifter.expire ? drifter.expire < Date.now() : false;
 
 			// Require refresh token when access token has expired
-			if (expire && !drifter.refresh) throw new ActionError({ code: "UNAUTHORIZED" });
+			if (expired && !drifter.refresh) throw new ActionError({ code: "UNAUTHORIZED" });
 
-			// Fetch updated profile from OAuth provider
-			// Use refresh token if access token expired, otherwise use access token
-			const profile: OAuthAccount = await new OAuth(drifter.provider).update(expire ? drifter.refresh! : drifter.access, expire);
+			// Refresh expired access token if needed, then fetch updated user info from OAuth provider
+			const refreshed = expired ? await identity.refreshAccessToken(provider, drifter.refresh!) : undefined;
+			const userInfo = await identity.getUserInfo(provider, {
+				accessToken: refreshed?.accessToken ?? drifter.access,
+				expectedSubject: drifter.account
+			});
 
 			// Update user profile in database with latest OAuth data
 			const newProfile = await db
 				.update(Drifter)
 				.set({
-					...(expire && {
-						access: profile.access,
-						expire: profile.expire?.getTime(),
-						...(profile.refresh && { refresh: profile.refresh })
+					...(refreshed && {
+						access: refreshed.accessToken,
+						expire: refreshed.expiresAt,
+						...(refreshed.refreshToken && { refresh: refreshed.refreshToken })
 					}),
-					handle: profile.handle,
-					name: profile.name,
-					description: profile.description,
-					image: profile.image
+					handle: userInfo.preferred_username,
+					name: userInfo.name,
+					description: userInfo.description,
+					image: userInfo.picture
 				})
 				.where(eq(Drifter.id, id))
 				.returning({
@@ -148,10 +153,16 @@ export const drifter = {
 			if (!drifter) throw new ActionError({ code: "UNAUTHORIZED" });
 
 			// Best-effort token revocation: prefer refresh token and do not block deactivation if already expired or revoked
-			try {
-				await new OAuth(drifter.provider).revoke(drifter.refresh ?? drifter.access);
-			} catch (error) {
-				console.warn(`Failed to revoke OAuth token for ${drifter.provider}:`, error);
+			const provider = drifter.provider.toLowerCase();
+			if (identity.has(provider)) {
+				try {
+					await identity.revokeToken(
+						provider,
+						drifter.refresh ? { type: "refresh_token", token: drifter.refresh } : { type: "access_token", token: drifter.access }
+					);
+				} catch (error) {
+					console.warn(`Failed to revoke OAuth token for ${drifter.provider}:`, error);
+				}
 			}
 
 			// Delete user record from database

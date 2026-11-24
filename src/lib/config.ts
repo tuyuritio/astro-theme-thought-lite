@@ -1,3 +1,5 @@
+import type { ProviderName } from "@tuyuritio/identity";
+
 /**
  * Creative Commons 4.0 License Type
  */
@@ -140,7 +142,9 @@ export default function siteConfig<const Locales extends string[]>(config: SiteC
  * @returns An array of sanitized provider objects.
  */
 export function providers(
-	clients: Array<{ name: string; logo: string; clientID: string; clientSecret: string }>
-): Array<{ name: string; logo: string }> {
-	return clients.filter(client => client.clientID && client.clientSecret).map(({ name, logo }) => ({ name, logo }));
+	clients: Partial<Record<ProviderName, { name: string; logo: string; clientID: string; clientSecret: string; scopes: readonly string[] }>>
+): Array<{ id: ProviderName; name: string; logo: string; scopes: readonly string[] }> {
+	return Object.entries(clients).flatMap(([id, client]) =>
+		client?.clientID && client.clientSecret ? [{ id: id as ProviderName, name: client.name, logo: client.logo, scopes: client.scopes }] : []
+	);
 }

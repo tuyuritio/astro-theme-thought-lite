@@ -26,142 +26,29 @@ OAuth 2.0 認証を使用して訪問者のログインとコメントをサポ�
 
 ## OAuth プロバイダーの拡張
 
-新しい OAuth プロバイダーを追加する必要がある場合は、以下の手順または [Arctic ドキュメント](https://arcticjs.dev/)を参照し、`src/lib/oauth.ts` で対応するロジックを補完してください。
+認証は [`@tuyuritio/identity`](https://github.com/tuyuritio/thought-lite-toolkit/tree/main/packages/identity) に基づいています。別の組み込みプロバイダーを有効にする場合：
 
 ### 1. 環境変数の設定
 
-まず、環境変数に新しいプロバイダーのクライアント認証情報を追加します：
+`.env` ファイルに大文字の `<PROVIDER>_CLIENT_ID` / `<PROVIDER>_CLIENT_SECRET` 形式でクライアント認証情報を追加します：
 
 ```sh
-PROVIDER_CLIENT_ID=client_id
-PROVIDER_CLIENT_SECRET=client_secret
+DISCORD_CLIENT_ID=client_id
+DISCORD_CLIENT_SECRET=client_secret
 ```
 
-### 2. OAuth クラスコンストラクタの拡張
+### 2. `site.config.ts` に設定を追加
 
-`OAuth` クラスのコンストラクタに新しいプロバイダーのサポートを追加します：
-
-```ts
-import { PROVIDER } from "arctic";   // Arctic ライブラリがこのプロバイダーをサポートしていることを確認
-
-constructor(provider?: string) {
-    // ...
-
-    // 新しいプロバイダーを追加
-    else if (provider == "PROVIDER") {
-        if (!(env.PROVIDER_CLIENT_ID && env.PROVIDER_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
-        this.provider = new PROVIDER(env.PROVIDER_CLIENT_ID, env.PROVIDER_CLIENT_SECRET, `${REDIRECT_URI}/PROVIDER`);
-    }
-
-    // ...
-}
-```
-
-### 3. 認証URL生成の実装
-
-`URL` メソッドに新しいプロバイダーの認証リンク生成ロジックを追加します：
+`site.config.ts` の `oauth` リストに表示名、アイコン、必要な `scopes` を追加します：
 
 ```ts
-url(state: string, codeVerifier: string): URL {
-    // ...
-
-    else if (this.provider instanceof PROVIDER) {
-        // 認証リクエストスコープを提出
-        return this.provider.createAuthorizationURL(state, code_verifier, ["identify"]);
-    }
-
-    // ...
-}
-```
-
-### 4. ユーザー情報検証の実装
-
-`validate` メソッドに新しいプロバイダーのユーザー情報取得ロジックを追加します：
-
-```ts
-async validate(code: string, verifier: string): Promise<OAuthAccount> {
-    const tokens = await this.provider.validateAuthorizationCode(code, verifier);
-    const access_token = tokens.accessToken();
-
-    // ...
-
-    else if (this.provider instanceof PROVIDER) {
-        // トークンに有効期限がある場合、有効期限とリフレッシュトークンを取得
-        const expire_at = tokens.hasRefreshToken() ? tokens.accessTokenExpiresAt() : undefined;
-        const refresh_token = tokens.hasRefreshToken() ? tokens.refreshToken() : undefined;
-
-        // 一部のプロバイダーは API を通じてユーザー情報を取得する必要がある
-        const response = await fetch("https://provider.com/api/user", { headers: { Authorization: `Bearer ${access_token}`,"User-Agent": USER_AGENT } });
-        const user = await response.json();
-
-        // 実際の状況に応じて情報を調整して返す
-        return { provider: "PROVIDER", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
-    } else if (this.provider instanceof PROVIDER) {
-        // 一部のプロバイダーはトークンにユーザー情報を埋め込む
-        const user: any = decodeIdToken(tokens.idToken());
-
-        return { provider: "PROVIDER", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
-    }
-
-    // ...
-}
-```
-
-### 5. ユーザー情報更新の実装
-
-`update` メソッドに新しいプロバイダーのユーザー情報更新ロジックを追加します：
-
-```ts
-async update(token: string, expire: boolean): Promise<OAuthAccount> {
-    // ...
-
-    else if (this.provider instanceof PROVIDER) {
-        let expire_at: Date | undefined = undefined;
-
-        // トークンが期限切れの場合、更新する
-        if (expire) {
-            const tokens = await this.provider.refreshAccessToken(token);
-            token = tokens.accessToken();
-            expire_at = tokens.accessTokenExpiresAt();
-        }
-
-        // 最新のユーザー情報を取得
-        const response = await fetch("https://provider.com/api/user", { headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT } });
-        const user = await response.json();
-
-        return { provider: "PROVIDER", access: token, expire: expire_at, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
-    }
-
-    // ...
-}
-```
-
-### 6. トークン失効の実装
-
-`revoke` メソッドに新しいプロバイダーのトークン失効ロジックを追加します：
-
-```ts
-async revoke(token: string): Promise<void> {
-    // ...
-
-    else if (this.provider instanceof PROVIDER) {
-        // プロバイダーがトークン失効をサポートしている場合、対応する API を呼び出す
-        await this.provider.revokeToken(token);
-    }
-
-    // ...
-}
-```
-
-### 7. 統合の設定
-
-サイト設定（`site.config.ts`）でプロバイダを有効化し、情報を追加します：
-
-```ts
-const oauth = providers([
-    // ...
-    { name: "PROVIDER", logo: "simple-icons--PROVIDER", clientID: env.PROVIDER_CLIENT_ID, clientSecret: env.PROVIDER_CLIENT_SECRET }
-]);
+const oauth = comment
+	? providers({
+			github: { name: "GitHub", logo: "simple-icons--github", clientID: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET, scopes: ["read:user"] },
+			google: { name: "Google", logo: "simple-icons--google", clientID: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET, scopes: ["profile"] },
+			discord: { name: "Discord", logo: "simple-icons--discord", clientID: env.DISCORD_CLIENT_ID, clientSecret: env.DISCORD_CLIENT_SECRET, scopes: ["identify"] }
+		})
+	: [];
 ```
 
 ### テスト

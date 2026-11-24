@@ -182,7 +182,6 @@ All kinds of contributions are welcome and appreciated!
 - **Image Viewer** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
 - **SPA Transitions** - [Swup](https://swup.js.org/)
 - **Code Quality** - [Biome](https://biomejs.dev/)
-- **OAuth** - [Arctic](https://arcticjs.dev/)
 - **ORM** - [Drizzle ORM](https://orm.drizzle.team/)
 - **Database** - [Cloudflare D1](https://developers.cloudflare.com/d1/)
 - **Edge Deployment** - [Cloudflare Workers](https://workers.cloudflare.com/)

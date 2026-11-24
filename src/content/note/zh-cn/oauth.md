@@ -26,142 +26,29 @@ description: 详细介绍如何配置 OAuth 2.0 认证，支持 GitHub、Google 
 
 ## 扩展 OAuth 提供商
 
-如果需要添加新的 OAuth 提供商，请参考以下步骤或 [Arctic 文档](https://arcticjs.dev/)，并在 `src/lib/oauth.ts` 中补充相应逻辑。
+认证基于 [`@tuyuritio/identity`](https://github.com/tuyuritio/thought-lite-toolkit/tree/main/packages/identity)，如需启用其他内置提供商：
 
-### 1. 环境变量配置
+### 1. 配置环境变量
 
-首先，在环境变量中添加新提供商的客户端凭证：
+在 `.env` 中按 `<PROVIDER>_CLIENT_ID` / `<PROVIDER>_CLIENT_SECRET`（全大写）添加客户端凭证：
 
 ```sh
-PROVIDER_CLIENT_ID=client_id
-PROVIDER_CLIENT_SECRET=client_secret
+DISCORD_CLIENT_ID=client_id
+DISCORD_CLIENT_SECRET=client_secret
 ```
 
-### 2. 扩展 OAuth 类构造函数
+### 2. 在 `site.config.ts` 中添加配置
 
-在 `OAuth` 类的构造函数中添加新的提供商支持：
-
-```ts
-import { PROVIDER } from "arctic";   // 确保 Arctic 库支持该提供商
-
-constructor(provider?: string) {
-    // ...
-
-    // 添加新提供商
-    else if (provider == "PROVIDER") {
-        if (!(env.PROVIDER_CLIENT_ID && env.PROVIDER_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
-        this.provider = new PROVIDER(env.PROVIDER_CLIENT_ID, env.PROVIDER_CLIENT_SECRET, `${REDIRECT_URI}/PROVIDER`);
-    }
-
-    // ...
-}
-```
-
-### 3. 实现授权 URL 生成
-
-在 `URL` 方法中添加新提供商的授权链接生成逻辑：
+在 `site.config.ts` 的 `oauth` 列表中补充展示名称、图标与所需 `scopes`：
 
 ```ts
-url(state: string, codeVerifier: string): URL {
-    // ...
-
-    else if (this.provider instanceof PROVIDER) {
-        // 提交授权请求范围
-        return this.provider.createAuthorizationURL(state, code_verifier, ["identify"]);
-    }
-
-    // ...
-}
-```
-
-### 4. 实现用户信息验证
-
-在 `validate` 方法中添加新提供商的用户信息获取逻辑：
-
-```ts
-async validate(code: string, verifier: string): Promise<OAuthAccount> {
-    const tokens = await this.provider.validateAuthorizationCode(code, verifier);
-    const access_token = tokens.accessToken();
-
-    // ...
-
-    else if (this.provider instanceof PROVIDER) {
-        // 如果令牌存在有效期，获取过期时间和刷新令牌
-        const expire_at = tokens.hasRefreshToken() ? tokens.accessTokenExpiresAt() : undefined;
-        const refresh_token = tokens.hasRefreshToken() ? tokens.refreshToken() : undefined;
-
-        // 有些提供商需要通过 API 获取用户信息
-        const response = await fetch("https://provider.com/api/user", { headers: { Authorization: `Bearer ${access_token}`,"User-Agent": USER_AGENT } });
-        const user = await response.json();
-
-        // 返回信息根据实际情况调整
-        return { provider: "PROVIDER", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
-    } else if (this.provider instanceof PROVIDER) {
-        // 有些提供商将用户信息嵌入在令牌中
-        const user: any = decodeIdToken(tokens.idToken());
-
-        return { provider: "PROVIDER", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
-    }
-
-    // ...
-}
-```
-
-### 5. 实现用户信息更新
-
-在 `update` 方法中添加新提供商的用户信息更新逻辑：
-
-```ts
-async update(token: string, expire: boolean): Promise<OAuthAccount> {
-    // ...
-
-    else if (this.provider instanceof PROVIDER) {
-        let expire_at: Date | undefined = undefined;
-
-        // 如果令牌过期，进行刷新
-        if (expire) {
-            const tokens = await this.provider.refreshAccessToken(token);
-            token = tokens.accessToken();
-            expire_at = tokens.accessTokenExpiresAt();
-        }
-
-        // 获取最新用户信息
-        const response = await fetch("https://provider.com/api/user", { headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT } });
-        const user = await response.json();
-
-        return { provider: "PROVIDER", access: token, expire: expire_at, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
-    }
-
-    // ...
-}
-```
-
-### 6. 实现令牌撤销
-
-在 `revoke` 方法中添加新提供商的令牌撤销逻辑：
-
-```ts
-async revoke(token: string): Promise<void> {
-    // ...
-
-    else if (this.provider instanceof PROVIDER) {
-        // 如果提供商支持令牌撤销，调用相应的 API
-        await this.provider.revokeToken(token);
-    }
-
-    // ...
-}
-```
-
-### 7. 配置集成
-
-在站点配置文件（`site.config.ts`）中启用并添加新提供商的相关信息：
-
-```ts
-const oauth = providers([
-    // ...
-	{ name: "PROVIDER", logo: "simple-icons--PROVIDER", clientID: env.PROVIDER_CLIENT_ID, clientSecret: env.PROVIDER_CLIENT_SECRET }
-]);
+const oauth = comment
+	? providers({
+			github: { name: "GitHub", logo: "simple-icons--github", clientID: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET, scopes: ["read:user"] },
+			google: { name: "Google", logo: "simple-icons--google", clientID: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET, scopes: ["profile"] },
+			discord: { name: "Discord", logo: "simple-icons--discord", clientID: env.DISCORD_CLIENT_ID, clientSecret: env.DISCORD_CLIENT_SECRET, scopes: ["identify"] }
+		})
+	: [];
 ```
 
 ### 测试

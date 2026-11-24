@@ -182,7 +182,6 @@ pnpm install
 - **画像ビューア** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
 - **SPA トランジション** - [Swup](https://swup.js.org/)
 - **コード品質** - [Biome](https://biomejs.dev/)
-- **OAuth 認証** - [Arctic](https://arcticjs.dev/)
 - **ORM** - [Drizzle ORM](https://orm.drizzle.team/)
 - **データベース** - [Cloudflare D1](https://developers.cloudflare.com/d1/)
 - **エッジ展開** - [Cloudflare Workers](https://workers.cloudflare.com/)

@@ -26,142 +26,29 @@ In provider configuration, fill in the site URL for `Website URL`, and fill in `
 
 ## Extend OAuth Providers
 
-If you need to add a new OAuth provider, please refer to the following steps or [Arctic documentation](https://arcticjs.dev/), and supplement the corresponding logic in `src/lib/oauth.ts`.
+Authentication is powered by [`@tuyuritio/identity`](https://github.com/tuyuritio/thought-lite-toolkit/tree/main/packages/identity). To enable another built-in provider:
 
 ### 1. Environment Variable Configuration
 
-First, add the new provider's client credentials to the environment variables:
+Add the provider's client credentials to `.env` using uppercase `<PROVIDER>_CLIENT_ID` / `<PROVIDER>_CLIENT_SECRET`:
 
 ```sh
-PROVIDER_CLIENT_ID=client_id
-PROVIDER_CLIENT_SECRET=client_secret
+DISCORD_CLIENT_ID=client_id
+DISCORD_CLIENT_SECRET=client_secret
 ```
 
-### 2. Extend OAuth Class Constructor
+### 2. Add the Provider in `site.config.ts`
 
-Add new provider support in the `OAuth` class constructor:
-
-```ts
-import { PROVIDER } from "arctic";   // Ensure Arctic library supports this provider
-
-constructor(provider?: string) {
-    // ...
-
-    // Add new provider
-    else if (provider == "PROVIDER") {
-        if (!(env.PROVIDER_CLIENT_ID && env.PROVIDER_CLIENT_SECRET)) throw new Error("Missing Environment Variables");
-        this.provider = new PROVIDER(env.PROVIDER_CLIENT_ID, env.PROVIDER_CLIENT_SECRET, `${REDIRECT_URI}/PROVIDER`);
-    }
-
-    // ...
-}
-```
-
-### 3. Implement Authorization URL Generation
-
-Add authorization link generation logic for the new provider in the `URL` method:
+Add the provider's display name, icon, and required `scopes` to `oauth` in `site.config.ts`:
 
 ```ts
-url(state: string, codeVerifier: string): URL {
-    // ...
-
-    else if (this.provider instanceof PROVIDER) {
-        // Submit authorization request scope
-        return this.provider.createAuthorizationURL(state, code_verifier, ["identify"]);
-    }
-
-    // ...
-}
-```
-
-### 4. Implement User Information Validation
-
-Add user information retrieval logic for the new provider in the `validate` method:
-
-```ts
-async validate(code: string, verifier: string): Promise<OAuthAccount> {
-    const tokens = await this.provider.validateAuthorizationCode(code, verifier);
-    const access_token = tokens.accessToken();
-
-    // ...
-
-    else if (this.provider instanceof PROVIDER) {
-        // If token has expiration, get expiration time and refresh token
-        const expire_at = tokens.hasRefreshToken() ? tokens.accessTokenExpiresAt() : undefined;
-        const refresh_token = tokens.hasRefreshToken() ? tokens.refreshToken() : undefined;
-
-        // Some providers need to get user info through API
-        const response = await fetch("https://provider.com/api/user", { headers: { Authorization: `Bearer ${access_token}`,"User-Agent": USER_AGENT } });
-        const user = await response.json();
-
-        // Return information adjusted according to actual situation
-        return { provider: "PROVIDER", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
-    } else if (this.provider instanceof PROVIDER) {
-        // Some providers embed user info in tokens
-        const user: any = decodeIdToken(tokens.idToken());
-
-        return { provider: "PROVIDER", access: access_token, expire: expire_at, refresh: refresh_token, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
-    }
-
-    // ...
-}
-```
-
-### 5. Implement User Information Update
-
-Add user information update logic for the new provider in the `update` method:
-
-```ts
-async update(token: string, expire: boolean): Promise<OAuthAccount> {
-    // ...
-
-    else if (this.provider instanceof PROVIDER) {
-        let expire_at: Date | undefined = undefined;
-
-        // If token expired, refresh it
-        if (expire) {
-            const tokens = await this.provider.refreshAccessToken(token);
-            token = tokens.accessToken();
-            expire_at = tokens.accessTokenExpiresAt();
-        }
-
-        // Get latest user info
-        const response = await fetch("https://provider.com/api/user", { headers: { Authorization: `Bearer ${token}`, "User-Agent": USER_AGENT } });
-        const user = await response.json();
-
-        return { provider: "PROVIDER", access: token, expire: expire_at, account: user.id, handle: user.login, name: user.username, description: user.description, image: user.avatar_url };
-    }
-
-    // ...
-}
-```
-
-### 6. Implement Token Revocation
-
-Add token revocation logic for the new provider in the `revoke` method:
-
-```ts
-async revoke(token: string): Promise<void> {
-    // ...
-
-    else if (this.provider instanceof PROVIDER) {
-        // If provider supports token revocation, call corresponding API
-        await this.provider.revokeToken(token);
-    }
-
-    // ...
-}
-```
-
-### 7. Configure integration
-
-Enable and add the provider in your site configuration (`site.config.ts`):
-
-```ts
-const oauth = providers([
-    // ...
-    { name: "PROVIDER", logo: "simple-icons--PROVIDER", clientID: env.PROVIDER_CLIENT_ID, clientSecret: env.PROVIDER_CLIENT_SECRET }
-]);
+const oauth = comment
+	? providers({
+			github: { name: "GitHub", logo: "simple-icons--github", clientID: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET, scopes: ["read:user"] },
+			google: { name: "Google", logo: "simple-icons--google", clientID: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET, scopes: ["profile"] },
+			discord: { name: "Discord", logo: "simple-icons--discord", clientID: env.DISCORD_CLIENT_ID, clientSecret: env.DISCORD_CLIENT_SECRET, scopes: ["identify"] }
+		})
+	: [];
 ```
 
 ### Testing

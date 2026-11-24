@@ -53,10 +53,22 @@ const push = comment && env.VAPID_PRIVATE_KEY ? env.VAPID_PUBLIC_KEY : undefined
 const email = comment && Boolean(env.EMAIL_FROM);
 
 const oauth = comment
-	? providers([
-			{ name: "GitHub", logo: "simple-icons--github", clientID: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET },
-			{ name: "Google", logo: "simple-icons--google", clientID: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET }
-		])
+	? providers({
+			github: {
+				name: "GitHub",
+				logo: "simple-icons--github",
+				clientID: env.GITHUB_CLIENT_ID,
+				clientSecret: env.GITHUB_CLIENT_SECRET,
+				scopes: ["read:user"]
+			},
+			google: {
+				name: "Google",
+				logo: "simple-icons--google",
+				clientID: env.GOOGLE_CLIENT_ID,
+				clientSecret: env.GOOGLE_CLIENT_SECRET,
+				scopes: ["profile"]
+			}
+		})
 	: [];
 
 if ((oauth.length > 0 || email) && !env.PASS_KEY) {

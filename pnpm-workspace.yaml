@@ -3,3 +3,5 @@ allowBuilds:
   sharp: true
   swup: true
   workerd: true
+minimumReleaseAgeExclude:
+  - '@tuyuritio/*'

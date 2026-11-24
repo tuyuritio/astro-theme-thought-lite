@@ -182,7 +182,6 @@ pnpm install
 - **图片查看器** - [Medium Zoom](https://github.com/francoischalifour/medium-zoom)
 - **SPA 过渡** - [Swup](https://swup.js.org/)
 - **代码质量** - [Biome](https://biomejs.dev/)
-- **OAuth 认证** - [Arctic](https://arcticjs.dev/)
 - **对象关系映射** - [Drizzle ORM](https://orm.drizzle.team/)
 - **数据库** - [Cloudflare D1](https://developers.cloudflare.com/d1/)
 - **边缘部署** - [Cloudflare Workers](https://workers.cloudflare.com/)

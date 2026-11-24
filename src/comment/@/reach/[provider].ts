@@ -1,10 +1,9 @@
 import type { APIRoute } from "astro";
-import { generateCodeVerifier, generateState } from "arctic";
+import type { OAuthTokens, OAuthUserInfo } from "@tuyuritio/identity";
 import { env } from "cloudflare:workers";
 import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { oauth } from "$config";
-import { OAuth, type OAuthAccount } from "$lib/oauth";
+import { identity } from "$lib/oauth";
 import { random, Token } from "$lib/token";
 import { safeRedirect } from "$lib/url";
 import { Drifter } from "$db/schema";
@@ -13,41 +12,53 @@ export const prerender = false;
 
 export const GET: APIRoute = async ({ cookies, params, url, redirect, request }) => {
 	const { provider } = params;
-	if (!provider || !oauth.some(item => item.name === provider)) return new Response("Not Found", { status: 404 });
-
-	const code = url.searchParams.get("code");
-	const state = url.searchParams.get("state");
-	const errorStatus = url.searchParams.get("error");
+	const providerKey = provider?.toLowerCase();
+	if (!provider || !providerKey || !identity.has(providerKey)) return new Response("Not Found", { status: 404 });
 
 	// Retrieve and clean up escort token containing OAuth state
 	const escort = await Token.check(cookies, "escort");
 	await Token.revoke("escort", cookies);
 
-	if (code) {
-		// Validate state parameter to prevent CSRF attacks
-		if (!state || !escort || escort.state !== state) return new Response("Unauthorized", { status: 401 });
+	// Handle OAuth errors returned by the provider
+	const error = url.searchParams.get("error");
+	if (error) {
+		if (error === "access_denied") return redirect(safeRedirect(escort?.referrer, url.origin), 302);
+		if (error === "redirect_uri_mismatch" || error === "application_suspended") return new Response("Internal Server Error", { status: 500 });
+		return new Response("Unauthorized", { status: 401 });
+	}
 
-		// Exchange authorization code for user account information
-		const user: OAuthAccount = await new OAuth(provider).validate(code, escort.codeVerifier);
+	// Handle OAuth authorization callback
+	if (url.searchParams.has("code")) {
+		if (!escort) return new Response("Unauthorized", { status: 401 });
+
+		let userInfo: OAuthUserInfo;
+		let tokens: OAuthTokens;
+		try {
+			({ userInfo, tokens } = await identity.handleAuthorizationResponse(providerKey, url, {
+				state: escort.state,
+				codeVerifier: escort.codeVerifier,
+				nonce: escort.nonce
+			}));
+		} catch {
+			return new Response("Unauthorized", { status: 401 });
+		}
 
 		const db = drizzle(env.DB);
-		// Insert or update user account in database with conflict resolution
 		const drifter = await db
 			.insert(Drifter)
 			.values({
 				id: random(16),
-				provider: user.provider,
-				account: user.account,
-				refresh: user.refresh,
-				access: user.access,
-				expire: user.expire?.getTime(),
-				handle: user.handle,
-				name: user.name,
-				description: user.description,
-				image: user.image
+				provider,
+				account: userInfo.sub,
+				access: tokens.accessToken,
+				expire: tokens.expiresAt,
+				refresh: tokens.refreshToken,
+				handle: userInfo.preferred_username,
+				name: userInfo.name,
+				description: userInfo.description,
+				image: userInfo.picture
 			})
 			.onConflictDoUpdate({
-				// Update existing user if provider+account combination exists
 				target: [Drifter.provider, Drifter.account],
 				set: {
 					access: sql`excluded.access`,
@@ -62,42 +73,25 @@ export const GET: APIRoute = async ({ cookies, params, url, redirect, request })
 			.returning({ id: Drifter.id })
 			.get();
 
-		// Issue passport token with user visa for authentication
 		await Token.issue(cookies, "passport", { visa: drifter.id });
-
-		// Redirect to original page or home after successful authentication
 		return redirect(safeRedirect(escort.referrer, url.origin), 302);
-	} else if (errorStatus) {
-		// Handle OAuth errors from provider
-		switch (errorStatus) {
-			case "access_denied":
-				// User denied access, redirect back to referrer
-				return redirect(safeRedirect(escort?.referrer, url.origin), 302);
-
-			case "redirect_uri_mismatch":
-			case "application_suspended":
-				// OAuth configuration errors
-				return new Response("Internal Server Error", { status: 500 });
-
-			default:
-				// Other OAuth errors
-				return new Response("Unauthorized", { status: 401 });
-		}
-	} else {
-		// Initialize OAuth flow with PKCE parameters
-		const state = generateState();
-		const codeVerifier = generateCodeVerifier();
-
-		// Store OAuth state and referrer in escort token
-		await Token.issue(
-			cookies,
-			"escort",
-			{ state, codeVerifier, referrer: safeRedirect(request.headers.get("referer"), url.origin) },
-			"5 minutes"
-		);
-
-		// Generate OAuth authorization URL and redirect user
-		const link: URL = new OAuth(provider).url(state, codeVerifier);
-		return redirect(link.toString(), 302);
 	}
+
+	// Initialize OAuth flow with PKCE parameters
+	const {
+		url: link,
+		transaction: { state, codeVerifier, nonce }
+	} = await identity.buildAuthorizationRequest(providerKey, {
+		// biome-ignore lint/style/useNamingConvention: Google OAuth query parameter
+		parameters: providerKey === "google" ? { access_type: "offline" } : undefined
+	});
+
+	await Token.issue(
+		cookies,
+		"escort",
+		{ state, codeVerifier, nonce, referrer: safeRedirect(request.headers.get("referer"), url.origin) },
+		"5 minutes"
+	);
+
+	return redirect(link.toString(), 302);
 };
