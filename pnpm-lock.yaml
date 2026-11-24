@@ -51,8 +51,8 @@ importers:
         specifier: ^4.3.5
         version: 4.3.5(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.2)(tsx@4.23.15)(yaml@2.9.1))
       '@tuyuritio/identity':
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: ^0.2.1
+        version: 0.2.1
       '@tuyuritio/rehype-image-figure':
         specifier: ^1.0.0
         version: 1.0.0(unified@11.0.5)
@@ -2474,8 +2474,8 @@ packages:
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7 || ^8
 
-  '@tuyuritio/identity@0.2.0':
-    resolution: {integrity: sha512-ASrIq/dO4Xwqw+wtVGmTmkJzsBWNuMsYGpQ2N4+is5xfhshPWHOJ+QV1a4/dOR8AOkIlopiHLl8OjbmQq6sptw==}
+  '@tuyuritio/identity@0.2.1':
+    resolution: {integrity: sha512-cJKP/RQOk+Z36QFHEUPsphGdwLxyNRh1Qb0uguiPjZD3FZyH6q5Hx7p1u99c1hgp2qgmoBJkwrREKmIhmtLDxQ==}
 
   '@tuyuritio/rehype-image-figure@1.0.0':
     resolution: {integrity: sha512-B9zzZLi0trhLQ7HvdGwtjP+baTDeT09hIC9nhYu6aBh3pcjdFX5bLbPlaa16b2Gv1uN6TOP/R+NwpUeImmnD5g==}
@@ -8451,7 +8451,7 @@ snapshots:
       tailwindcss: 4.3.5
       vite: 8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.46.2)(tsx@4.23.15)(yaml@2.9.1)
 
-  '@tuyuritio/identity@0.2.0':
+  '@tuyuritio/identity@0.2.1':
     dependencies:
       openid-client: 6.9.1
 
