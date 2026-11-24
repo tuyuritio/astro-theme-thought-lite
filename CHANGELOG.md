@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v1.0.0...v1.1.0) (2026-11-24)
+
+
+### Features
+
+* **oauth:** migrate IdP flow from Arctic to @tuyuritio/identity ([2e697f1](https://github.com/tuyuritio/astro-theme-thought-lite/commit/2e697f168b89e73accada14d5e63f4ddc9f70139))
+
 ## [1.0.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v0.42.1...v1.0.0) (2026-11-21)
 
 
