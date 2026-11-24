@@ -52,7 +52,7 @@ const push = comment && env.VAPID_PRIVATE_KEY ? env.VAPID_PUBLIC_KEY : undefined
 
 const email = comment && Boolean(env.EMAIL_FROM);
 
-const oauth = comment
+const { oauth, oauthConfig } = comment
 	? providers({
 			github: {
 				name: "GitHub",
@@ -69,12 +69,12 @@ const oauth = comment
 				scopes: ["profile"]
 			}
 		})
-	: [];
+	: { oauth: [], oauthConfig: {} };
 
 if ((oauth.length > 0 || email) && !env.PASS_KEY) {
 	throw new Error("PASS_KEY is required when OAuth or email notification is enabled");
 }
 
-export { comment, turnstile, oauth, monolocale, push, email };
+export { comment, turnstile, oauth, oauthConfig, monolocale, push, email };
 
 export default config;

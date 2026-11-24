@@ -134,17 +134,29 @@ export default function siteConfig<const Locales extends string[]>(config: SiteC
 	return config;
 }
 
+interface OAuthProviderOption {
+	name: string;
+	logo: string;
+	clientID: string;
+	clientSecret: string;
+	scopes: readonly string[];
+}
+
 /**
- * Processes the list of clients and returns valid authentication providers.
- * It filters out any clients missing a `clientID` or `clientSecret`.
- *
- * @param clients - The raw array of client configuration objects.
- * @returns An array of sanitized provider objects.
+ * Processes the configured OAuth providers, filtering out entries missing `clientID` or `clientSecret`,
+ * and splits them into client-safe display metadata (`oauth`) and server-only credentials (`oauthConfig`).
  */
-export function providers(
-	clients: Partial<Record<ProviderName, { name: string; logo: string; clientID: string; clientSecret: string; scopes: readonly string[] }>>
-): Array<{ id: ProviderName; name: string; logo: string; scopes: readonly string[] }> {
-	return Object.entries(clients).flatMap(([id, client]) =>
-		client?.clientID && client.clientSecret ? [{ id: id as ProviderName, name: client.name, logo: client.logo, scopes: client.scopes }] : []
+export function providers(clients: Partial<Record<ProviderName, OAuthProviderOption>>): {
+	oauth: Array<{ name: string; logo: string }>;
+	oauthConfig: Partial<Record<ProviderName, Omit<OAuthProviderOption, "logo">>>;
+} {
+	const enabled = Object.entries(clients).filter((entry): entry is [ProviderName, OAuthProviderOption] =>
+		Boolean(entry[1]?.clientID && entry[1].clientSecret)
 	);
+	return {
+		oauth: enabled.map(([, { name, logo }]) => ({ name, logo })),
+		oauthConfig: Object.fromEntries(
+			enabled.map(([id, { name, clientID, clientSecret, scopes }]) => [id, { name, clientID, clientSecret, scopes }])
+		)
+	};
 }
