@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v1.2.0...v1.2.1) (2026-11-25)
+
+
+### Bug Fixes
+
+* **style:** prevent vertical clipping in KaTeX display math ([8ec90f5](https://github.com/tuyuritio/astro-theme-thought-lite/commit/8ec90f5629f5b89ad69befcef12cc35f33058f1d))
+* **theme:** cancel view transition animation after completion ([1b7832e](https://github.com/tuyuritio/astro-theme-thought-lite/commit/1b7832e6704fcb615df27cb560fd1a0e5c7fe4ba))
+
 ## [1.2.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v1.1.0...v1.2.0) (2026-11-25)
 
 
