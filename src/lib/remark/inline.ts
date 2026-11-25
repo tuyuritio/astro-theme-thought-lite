@@ -1,17 +1,11 @@
-import abbr from "@tuyuritio/remark-abbreviation";
-import attr from "@tuyuritio/remark-attribute";
 import ruby from "@tuyuritio/remark-ruby";
 import spoiler from "@tuyuritio/remark-spoiler";
-import links from "rehype-external-links";
-import katex from "rehype-katex";
 import stringify from "rehype-stringify";
 import CJK from "remark-cjk-friendly";
 import CJKStrikethrough from "remark-cjk-friendly-gfm-strikethrough";
 import mark from "remark-flexible-markers";
-import gemoji from "remark-gemoji";
 import GFM from "remark-gfm";
 import ins from "remark-ins";
-import math from "remark-math";
 import parse from "remark-parse";
 import rehype from "remark-rehype";
 import { type Plugin, unified } from "unified";
@@ -32,12 +26,6 @@ export default unified()
 	.use(CJK)
 	.use(CJKStrikethrough, { singleTilde: false })
 	.use(ruby)
-	.use(attr)
-	.use(math)
-	.use(gemoji)
-	.use(abbr)
 	.use(rehype)
-	.use(links, { target: "_blank", rel: ["nofollow", "noopener", "noreferrer"] })
-	.use(katex)
 	.use(unwrapParagraph)
 	.use(stringify);
