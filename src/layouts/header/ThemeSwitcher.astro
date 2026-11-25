@@ -59,24 +59,28 @@ function toggle() {
 	// Get click coordinates for radial animation origin
 	const x = rectangular.left + rectangular.width / 2;
 	const y = rectangular.top + rectangular.height / 2;
-	transition.ready.then(() => {
-		// Create expanding circle animation from click point
-		const path = [`circle(0% at ${x}px ${y}px)`, `circle(130% at ${x}px ${y}px)`];
-		document.documentElement.animate(
-			{
-				// Reverse animation direction based on theme transition
-				clipPath: target === "dark" ? [...path].reverse() : path
-			},
-			{
-				duration: 400,
-				easing: "ease-in",
-				// Keep end state after animation completes to avoid flicker
-				fill: "forwards",
-				// Target different pseudo-elements for incoming/outgoing content
-				pseudoElement: target === "dark" ? "::view-transition-old(root)" : "::view-transition-new(root)"
-			}
-		);
-	});
+	transition.ready
+		.then(() => {
+			// Create expanding circle animation from click point
+			const path = [`circle(0% at ${x}px ${y}px)`, `circle(130% at ${x}px ${y}px)`];
+			const animation = document.documentElement.animate(
+				{
+					// Reverse animation direction based on theme transition
+					clipPath: target === "dark" ? [...path].reverse() : path
+				},
+				{
+					duration: 400,
+					easing: "ease-in",
+					// Hold start and end states during the transition to avoid flicker
+					fill: "both",
+					// Target different pseudo-elements for incoming/outgoing content
+					pseudoElement: target === "dark" ? "::view-transition-old(root)" : "::view-transition-new(root)"
+				}
+			);
+			// Cancel the forwards-filled animation after completion so it cannot persist onto subsequent transitions
+			transition.finished.finally(() => animation.cancel());
+		})
+		.catch(() => {});
 }
 
 // Initial theme setup (avoid persisting system default to localStorage until user toggles)
