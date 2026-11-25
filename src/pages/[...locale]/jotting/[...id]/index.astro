@@ -55,6 +55,7 @@ const t = i18nit(locale);
 				)}
 				<span><Icon name="lucide--pilcrow" />{t("read.words", { count: frontmatter.words })}</span>
 			</div>
+			{jotting.data.description && <p class="border-s-2 border-weak ps-3 text-sm text-secondary select-text">{jotting.data.description}</p>}
 			<hr class="border-b border-weak">
 		</header>
 
