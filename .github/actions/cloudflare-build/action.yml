@@ -1,0 +1,49 @@
+name: Build for Cloudflare
+description: Setup project, configure environment and wrangler.toml, and build for Cloudflare Workers
+
+inputs:
+  env:
+    description: Contents of .env file
+    required: false
+    default: ''
+  project-name:
+    description: Cloudflare Workers project name
+    required: true
+  database-name:
+    description: Cloudflare D1 database name
+    required: false
+    default: ''
+  database-id:
+    description: Cloudflare D1 database ID
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - name: Setup project
+      uses: ./.github/actions/setup
+
+    - name: Export Environment Variables
+      shell: bash
+      env:
+        ENV_CONTENT: ${{ inputs.env }}
+      run: printf '%s\n' "$ENV_CONTENT" > .env
+
+    - name: Create wrangler.toml from template
+      shell: bash
+      env:
+        PROJECT_NAME: ${{ inputs.project-name }}
+        DATABASE_NAME: ${{ inputs.database-name }}
+        DATABASE_ID: ${{ inputs.database-id }}
+      run: envsubst < wrangler.example.toml > wrangler.toml
+
+    - name: Enable comment system for official demo
+      if: github.repository == 'tuyuritio/astro-theme-thought-lite'
+      shell: bash
+      run: |
+        sed -i '/comment:/,/}/ s/enable: false/enable: true/' site.config.ts
+
+    - name: Build project
+      shell: bash
+      run: pnpm run build

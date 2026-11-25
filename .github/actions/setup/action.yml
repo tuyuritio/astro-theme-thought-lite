@@ -1,0 +1,44 @@
+name: Setup project
+description: Setup pnpm, Node.js, dependencies, and optional font caches
+
+inputs:
+  cache-fonts:
+    description: Whether to cache Astro and OG fonts
+    required: false
+    default: 'true'
+
+runs:
+  using: composite
+  steps:
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v6
+      with:
+        run_install: false
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: '26'
+        cache: 'pnpm'
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile
+
+    - name: Cache Astro Fonts
+      if: inputs.cache-fonts == 'true'
+      uses: actions/cache@v5
+      with:
+        path: .astro/fonts
+        key: astro-fonts-${{ hashFiles('astro.config.ts', 'src/fonts/**') }}
+        restore-keys: |
+          astro-fonts-
+
+    - name: Cache OG Fonts
+      if: inputs.cache-fonts == 'true'
+      uses: actions/cache@v5
+      with:
+        path: node_modules/.cache/og-fonts
+        key: og-fonts-${{ hashFiles('src/graph/**') }}
+        restore-keys: |
+          og-fonts-

@@ -6,7 +6,7 @@ description: Configure GitHub Actions for automatic deployment to Cloudflare Wor
 ---
 
 > [!TIP]
-> To enable automatic deployment to Cloudflare Workers in your own repository, remove or update the `if: github.repository == 'tuyuritio/astro-theme-thought-lite'` condition in `.github/workflows/deploy.yaml`.
+> To enable automatic deployment to Cloudflare Workers in your own repository, remove or update the `if: github.repository == 'tuyuritio/astro-theme-thought-lite'` condition in `.github/workflows/cloudflare-deploy.yaml`.
 
 ## Request API Token
 

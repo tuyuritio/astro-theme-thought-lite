@@ -1,0 +1,55 @@
+name: Preview
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: preview-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    if: github.repository == 'tuyuritio/astro-theme-thought-lite' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository)
+    runs-on: ubuntu-latest
+    name: Preview
+    environment:
+      name: preview
+      url: ${{ steps.upload.outputs.deployment-url }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Build for Cloudflare
+        uses: ./.github/actions/cloudflare-build
+        with:
+          env: ${{ secrets.ENV }}
+          project-name: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
+          database-name: ${{ secrets.CLOUDFLARE_DATABASE_NAME }}
+          database-id: ${{ secrets.CLOUDFLARE_DATABASE_ID }}
+
+      - name: Upload preview to Cloudflare Workers
+        id: upload
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: versions upload
+
+      - name: Comment preview URL on PR
+        if: github.event_name == 'pull_request' && steps.upload.outputs.deployment-url != ''
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: cloudflare-preview
+          message: |
+            **Cloudflare Workers Preview**: ${{ steps.upload.outputs.deployment-url }}
