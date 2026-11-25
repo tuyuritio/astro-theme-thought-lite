@@ -22,13 +22,16 @@ description: Cloudflare Workers への自動デプロイのための GitHub Acti
 8. **トークンを作成**をクリックします。
 9. 生成されたトークンを**コピー**して保存します。
 
-## リポジトリシークレットの設定
+## リポジトリシークレットと変数の設定
 
-GitHub リポジトリの *Settings > Secrets and variables > Actions* で、以下の Repository secrets を追加します：
+GitHub リポジトリの *Settings > Secrets and variables > Actions* で、以下の **Repository secrets** を追加します：
 
 - `ENV`: `.env` ファイルのすべての内容
-- `CLOUDFLARE_PROJECT_NAME`: プロジェクト名
 - `CLOUDFLARE_ACCOUNT_ID`: Cloudflare アカウント ID
 - `CLOUDFLARE_API_TOKEN`: Cloudflare API トークン
-- `CLOUDFLARE_DATABASE_NAME`: D1 データベース名
 - `CLOUDFLARE_DATABASE_ID`: D1 データベース ID
+
+また、以下の **Repository variables** を追加します：
+
+- `CLOUDFLARE_PROJECT_NAME`: プロジェクト名
+- `CLOUDFLARE_DATABASE_NAME`: D1 データベース名

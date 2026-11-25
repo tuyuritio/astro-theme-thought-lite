@@ -34,8 +34,8 @@ jobs:
         uses: ./.github/actions/cloudflare-build
         with:
           env: ${{ secrets.ENV }}
-          project-name: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
-          database-name: ${{ secrets.CLOUDFLARE_DATABASE_NAME }}
+          project-name: ${{ vars.CLOUDFLARE_PROJECT_NAME }}
+          database-name: ${{ vars.CLOUDFLARE_DATABASE_NAME }}
           database-id: ${{ secrets.CLOUDFLARE_DATABASE_ID }}
 
       - name: Upload preview to Cloudflare Workers

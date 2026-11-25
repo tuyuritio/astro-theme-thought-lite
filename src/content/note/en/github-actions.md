@@ -22,13 +22,16 @@ description: Configure GitHub Actions for automatic deployment to Cloudflare Wor
 8. Click **Create Token**.
 9. **Copy** and save the generated token.
 
-## Configure Repository Secrets
+## Configure Repository Secrets and Variables
 
-In your GitHub repository's *Settings > Secrets and variables > Actions*, add the following Repository secrets:
+In your GitHub repository's *Settings > Secrets and variables > Actions*, add the following **Repository secrets**:
 
 - `ENV`: All contents from the `.env` file
-- `CLOUDFLARE_PROJECT_NAME`: Project name
 - `CLOUDFLARE_ACCOUNT_ID`: Cloudflare account ID
 - `CLOUDFLARE_API_TOKEN`: Cloudflare API Token
-- `CLOUDFLARE_DATABASE_NAME`: D1 database name
 - `CLOUDFLARE_DATABASE_ID`: D1 database ID
+
+And add the following **Repository variables**:
+
+- `CLOUDFLARE_PROJECT_NAME`: Project name
+- `CLOUDFLARE_DATABASE_NAME`: D1 database name

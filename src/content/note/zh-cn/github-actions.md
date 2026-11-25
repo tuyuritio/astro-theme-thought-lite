@@ -22,13 +22,16 @@ description: 配置 GitHub Actions 实现自动部署到 Cloudflare Workers，�
 8. 点击**创建令牌**。
 9. **复制**并保存生成的令牌，也可根据提示测试令牌能否正常工作。
 
-## 配置仓库密钥
+## 配置仓库密钥与变量
 
-在 GitHub 仓库的 *Settings > Secrets and variables > Actions* 中，添加以下 Repository secrets：
+在 GitHub 仓库的 *Settings > Secrets and variables > Actions* 中，添加以下 **Repository secrets**：
 
 - `ENV`：`.env` 文件中的所有内容
-- `CLOUDFLARE_PROJECT_NAME`：项目名称
 - `CLOUDFLARE_ACCOUNT_ID`：Cloudflare 账户 ID
 - `CLOUDFLARE_API_TOKEN`：Cloudflare API 令牌
-- `CLOUDFLARE_DATABASE_NAME`：D1 数据库名称
 - `CLOUDFLARE_DATABASE_ID`：D1 数据库 ID
+
+并添加以下 **Repository variables**：
+
+- `CLOUDFLARE_PROJECT_NAME`：项目名称
+- `CLOUDFLARE_DATABASE_NAME`：D1 数据库名称
