@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v1.1.0...v1.2.0) (2026-11-25)
+
+
+### Features
+
+* **chronicle:** parse chronicle items as inline markdown ([5c1ee46](https://github.com/tuyuritio/astro-theme-thought-lite/commit/5c1ee469004368e212d340386420ff53ae02fb9d)), closes [#133](https://github.com/tuyuritio/astro-theme-thought-lite/issues/133)
+
+
+### Bug Fixes
+
+* **remark:** remove unused imports ([d831138](https://github.com/tuyuritio/astro-theme-thought-lite/commit/d831138fdea1ee4d184a8eb9aa655dddb19ae809))
+
 ## [1.1.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v1.0.0...v1.1.0) (2026-11-24)
 
 
