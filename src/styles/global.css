@@ -53,6 +53,12 @@
 		background-color: var(--selection-color);
 	}
 
+	::highlight(search) {
+		color: var(--primary-color);
+		background-color: var(--block-color);
+		text-decoration: underline;
+	}
+
 	::-webkit-scrollbar {
 		background-color: transparent;
 		width: 5px;
