@@ -57,7 +57,7 @@ let list: any[] = $derived.by(() => {
 
 	if (terms.length > 0) {
 		filtered = filtered.filter(jotting => {
-			const text = [jotting.data.title, ...(jotting.data.tags ?? []), corpus?.[jotting.id]].filter(Boolean).join(" ").toLowerCase();
+			const text = [jotting.data.title, corpus?.[jotting.id]].filter(Boolean).join(" ").toLowerCase();
 			return terms.every(term => text.includes(term));
 		});
 	}

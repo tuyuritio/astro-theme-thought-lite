@@ -23,7 +23,7 @@ export function excerpt(content: string | undefined, pattern: RegExp | null, rad
 	return `${start > 0 ? "…" : ""}${content.slice(start, end).trim()}${end < content.length ? "…" : ""}`;
 }
 
-/** Svelte 5 attachment applying CSS Custom Highlight API across `<section>` text nodes */
+/** Svelte 5 attachment applying CSS Custom Highlight API across title and excerpt text nodes */
 export function highlight(pattern: RegExp | null, ..._deps: unknown[]): Attachment<HTMLElement> {
 	return element => {
 		if (typeof CSS === "undefined" || !("highlights" in CSS)) return;
@@ -33,11 +33,10 @@ export function highlight(pattern: RegExp | null, ..._deps: unknown[]): Attachme
 		}
 
 		const ranges: Range[] = [];
-		for (const section of element.querySelectorAll("section")) {
-			const walker = document.createTreeWalker(section, NodeFilter.SHOW_TEXT);
+		for (const target of element.querySelectorAll("section a, section p")) {
+			const walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT);
 			let node: Node | null;
 			while ((node = walker.nextNode())) {
-				if (node.parentElement?.tagName === "TIME") continue;
 				const text = node.textContent;
 				if (!text) continue;
 

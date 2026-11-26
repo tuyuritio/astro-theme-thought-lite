@@ -81,7 +81,7 @@ let list: any[] = $derived.by(() => {
 
 	if (terms.length > 0) {
 		filtered = filtered.filter(note => {
-			const text = [note.data.title, note.data.series, ...(note.data.tags ?? []), corpus?.[note.id]].filter(Boolean).join(" ").toLowerCase();
+			const text = [note.data.title, corpus?.[note.id]].filter(Boolean).join(" ").toLowerCase();
 			return terms.every(term => text.includes(term));
 		});
 	}
