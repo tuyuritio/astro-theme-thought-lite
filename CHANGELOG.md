@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v1.3.0...v1.3.1) (2026-11-26)
+
+
+### Bug Fixes
+
+* **search:** exclude series and tags ([bec8267](https://github.com/tuyuritio/astro-theme-thought-lite/commit/bec82672c823f58f55f2ac83f5ea9b750f03e6f0))
+
 ## [1.3.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v1.2.1...v1.3.0) (2026-11-26)
 
 
