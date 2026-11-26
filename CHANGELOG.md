@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v1.2.1...v1.3.0) (2026-11-26)
+
+
+### Features
+
+* **article:** display description ([55da324](https://github.com/tuyuritio/astro-theme-thought-lite/commit/55da32475d031ec40da275ee7273de1df8fb7cb8))
+* **search:** add local full-text search ([c0033ee](https://github.com/tuyuritio/astro-theme-thought-lite/commit/c0033ee39795c7d4b39a3cd902a4eb3e05e11be2))
+
 ## [1.2.1](https://github.com/tuyuritio/astro-theme-thought-lite/compare/v1.2.0...v1.2.1) (2026-11-25)
 
 
