@@ -33,6 +33,7 @@ import copy from "@tuyuritio/shiki-code-copy";
 
 import reading from "./src/lib/reading";
 import commentIntegration from "./src/integrations/comment";
+import searchIntegration from "./src/integrations/search";
 
 import siteConfig, { comment } from "./site.config";
 import ZeoSevenFonts from "./src/fonts/zeo-seven-fonts";
@@ -108,6 +109,7 @@ export default defineConfig({
 	},
 	integrations: [
 		commentIntegration(),
+		searchIntegration(),
 		svelte(),
 		mdx(),
 		sitemap(),

@@ -3,11 +3,16 @@ import { untrack } from "svelte";
 import { flip } from "svelte/animate";
 import config from "$config";
 import Time from "$lib/time";
+import { buildPattern, excerpt, highlight, tokenize } from "$lib/search";
 import Icon from "$components/Icon.svelte";
 import Pagination from "$components/Pagination.svelte";
+import Search from "$components/Search.svelte";
 import i18nit from "$i18n";
+import loaders from "virtual:search/note";
 
 let { locale, notes, series: seriesList, tags: tagList }: { locale: string; notes: any[]; series: string[]; tags: string[] } = $props();
+
+let corpus = $state.raw<Record<string, string>>();
 
 const t = i18nit(locale);
 
@@ -17,11 +22,15 @@ let initial = $state(true);
 /** Pagination size */
 const size: number = config.pagination?.note || 15;
 
+let query: string = $state("");
 let pages: number = $state(1);
 let page: number = $state(1);
 let pageParam: boolean = $state(false);
 let series: string | null = $state(null);
 let tags: string[] = $state([]);
+
+let terms: string[] = $derived(tokenize(query));
+let pattern: RegExp | null = $derived(buildPattern(terms));
 
 /**
  * Toggle tag inclusion/exclusion in the filter list
@@ -70,6 +79,13 @@ let list: any[] = $derived.by(() => {
 		// Sort by timestamp (newest first)
 		.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
 
+	if (terms.length > 0) {
+		filtered = filtered.filter(note => {
+			const text = [note.data.title, note.data.series, ...(note.data.tags ?? []), corpus?.[note.id]].filter(Boolean).join(" ").toLowerCase();
+			return terms.every(term => text.includes(term));
+		});
+	}
+
 	untrack(() => {
 		// Ensure page is within valid range
 		pages = Math.ceil(filtered.length / size);
@@ -95,17 +111,23 @@ $effect(() => {
 
 		series = params.get("series");
 		tags = params.getAll("tag");
+		query = params.get("query") || "";
 
 		initial = false;
 	} else {
-		// Build URL with current page, series, and tag filters using URLSearchParams
+		// Load corpus if not already loaded and query is present
+		if (!corpus && query.trim()) loaders[locale]?.().then(({ default: data }) => (corpus = data));
+
+		// Build URL with current page, series, tag, and query filters using URLSearchParams
 		const url = new URL(window.location.href);
 		url.searchParams.delete("series");
 		url.searchParams.delete("tag");
 		url.searchParams.delete("page");
+		url.searchParams.delete("query");
 
 		if (series) url.searchParams.set("series", series);
 		for (const tag of tags) url.searchParams.append("tag", tag);
+		if (query.trim()) url.searchParams.set("query", query);
 
 		if (page > 1) pageParam = true;
 		if (pageParam) url.searchParams.set("page", String(page));
@@ -119,8 +141,9 @@ $effect(() => {
 </script>
 
 <div class="flex flex-col-reverse sm:flex-row gap-10 grow">
-	<article class="flex flex-col gap-5 grow">
+	<article {@attach highlight(pattern, list, corpus)} class="flex flex-col gap-5 grow">
 		{#each list as note (note.id)}
+			{@const snippet = excerpt(corpus?.[note.id], pattern)}
 			<section animate:flip={{ duration: 150 }} class="flex flex-col">
 				<div class="*:inline *:align-middle font-bold">
 					{#if note.data.top > 0}
@@ -140,6 +163,9 @@ $effect(() => {
 						<button type="button" onclick={() => switchTag(tag, true)} class="text-secondary text-sm">#{tag}</button>
 					{/each}
 				</span>
+				{#if snippet}
+					<p class="mt-1 text-xs leading-relaxed text-secondary line-clamp-2">{snippet}</p>
+				{/if}
 				<time datetime={note.data.timestamp.toISOString()} class="mt-1 font-mono text-[0.65rem] text-secondary">{Time.toString(note.data.timestamp)}</time>
 			</section>
 		{:else}
@@ -150,6 +176,14 @@ $effect(() => {
 	</article>
 
 	<aside class="sm:basis-50 shrink-0 flex flex-col gap-5">
+		<Search
+			bind:query
+			onchange={() => {
+				pageParam = false;
+				page = 1;
+			}}
+		/>
+
 		<section>
 			<h4>{t("note.series")}</h4>
 			<p>

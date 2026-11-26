@@ -2,11 +2,16 @@
 import { untrack } from "svelte";
 import { flip } from "svelte/animate";
 import config from "$config";
+import { buildPattern, excerpt, highlight, tokenize } from "$lib/search";
 import Icon from "$components/Icon.svelte";
 import Pagination from "$components/Pagination.svelte";
+import Search from "$components/Search.svelte";
 import i18nit from "$i18n";
+import loaders from "virtual:search/jotting";
 
 let { locale, jottings, tags: tagList }: { locale: string; jottings: any[]; tags: string[] } = $props();
+
+let corpus = $state.raw<Record<string, string>>();
 
 const t = i18nit(locale);
 
@@ -16,10 +21,14 @@ let initial = $state(true);
 /** Pagination size */
 const size: number = config.pagination?.jotting || 24;
 
+let query: string = $state("");
 let pages: number = $state(1);
 let page: number = $state(1);
 let pageParam: boolean = $state(false);
 let tags: string[] = $state([]);
+
+let terms: string[] = $derived(tokenize(query));
+let pattern: RegExp | null = $derived(buildPattern(terms));
 
 /**
  * Toggle tag inclusion/exclusion in the filter list
@@ -46,6 +55,13 @@ let list: any[] = $derived.by(() => {
 		// Sort by timestamp (newest first)
 		.sort((a, b) => b.data.top - a.data.top || b.data.timestamp.getTime() - a.data.timestamp.getTime());
 
+	if (terms.length > 0) {
+		filtered = filtered.filter(jotting => {
+			const text = [jotting.data.title, ...(jotting.data.tags ?? []), corpus?.[jotting.id]].filter(Boolean).join(" ").toLowerCase();
+			return terms.every(term => text.includes(term));
+		});
+	}
+
 	untrack(() => {
 		// Ensure page is within valid range
 		pages = Math.ceil(filtered.length / size);
@@ -70,15 +86,21 @@ $effect(() => {
 		}
 
 		tags = params.getAll("tag");
+		query = params.get("query") || "";
 
 		initial = false;
 	} else {
+		// Load corpus if not already loaded and query is present
+		if (!corpus && query.trim()) loaders[locale]?.().then(({ default: data }) => (corpus = data));
+
 		// Build URL with current page, series, and tag filters using URLSearchParams
 		const url = new URL(window.location.href);
 		url.searchParams.delete("tag");
 		url.searchParams.delete("page");
+		url.searchParams.delete("query");
 
 		for (const tag of tags) url.searchParams.append("tag", tag);
+		if (query.trim()) url.searchParams.set("query", query);
 
 		if (page > 1) pageParam = true;
 		if (pageParam) url.searchParams.set("page", String(page));
@@ -92,9 +114,10 @@ $effect(() => {
 </script>
 
 <div class="flex flex-col-reverse sm:flex-row gap-10 grow">
-	<article class="flex flex-col grow">
+	<article {@attach highlight(pattern, list, corpus)} class="flex flex-col grow">
 		<header class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-5">
 			{#each list as jotting (jotting.id)}
+				{@const snippet = excerpt(corpus?.[jotting.id], pattern, 36)}
 				<section animate:flip={{ duration: 150 }} class="flex flex-col justify-center border-b border-dashed border-b-weak pb-1">
 					<span class="flex items-center gap-1">
 						{#if jotting.data.top > 0}
@@ -110,6 +133,9 @@ $effect(() => {
 							<button type="button" onclick={() => switchTag(tag, true)} class="text-[0.825rem] text-secondary">#{tag}</button>
 						{/each}
 					</span>
+					{#if snippet}
+						<p class="mt-1 text-xs leading-relaxed text-secondary line-clamp-2">{snippet}</p>
+					{/if}
 				</section>
 			{:else}
 				<div class="col-span-full pt-[10vh] text-center text-secondary font-bold text-xl">{t("jotting.empty")}</div>
@@ -120,6 +146,14 @@ $effect(() => {
 	</article>
 
 	<aside class="sm:basis-50 shrink-0 flex flex-col gap-5">
+		<Search
+			bind:query
+			onchange={() => {
+				pageParam = false;
+				page = 1;
+			}}
+		/>
+
 		<section>
 			<h4>{t("jotting.tag")}</h4>
 			<p>
